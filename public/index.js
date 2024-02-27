@@ -15,11 +15,13 @@ const config = {
         },
         login: {
             href: '/login',
-            text: 'Авторизация'
+            text: 'Авторизация',
+            render: renderLogin
         },
         signup: {
             href: '/signup',
-            text: 'Регистрация'
+            text: 'Регистрация',
+            render: renderSignup
         },
         profile: {
             href: '/me',
@@ -53,15 +55,7 @@ function createInput(type, text, name) {
     return input;
 }
 
-const loginMenuItem = menuElement.querySelector('[data-section="login"]');
-loginMenuItem.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    contentElement.innerHTML = '';
-
-    document.querySelector('.active').classList.remove('active');
-    e.target.classList.add('active');
-
+function renderLogin() {
     const form = document.createElement('form');
 
     const emailInput = createInput('email', 'Почта', 'email');
@@ -75,18 +69,11 @@ loginMenuItem.addEventListener('click', (e) => {
     form.appendChild(passwordInput);
     form.appendChild(submitBtn);
 
-    contentElement.appendChild(form);
-})
+    return form;
+}
 
-const signupMenuItem = menuElement.querySelector('[data-section="signup"]');
-signupMenuItem.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    contentElement.innerHTML = '';
-
-    document.querySelector('.active').classList.remove('active');
-    e.target.classList.add('active');
-
+function renderSignup() {
+    
     const form = document.createElement('form');
 
     const emailInput = createInput('email', 'Почта', 'email');
@@ -102,5 +89,21 @@ signupMenuItem.addEventListener('click', (e) => {
     form.appendChild(ageInput);
     form.appendChild(submitBtn);
 
-    contentElement.appendChild(form);
+    return form;
+}
+
+menuElement.addEventListener('click', (e) => {
+    const {target} = e;
+
+    if (target.tagName.toLowerCase() === 'a') {
+        e.preventDefault();
+        
+        contentElement.innerHTML = '';
+
+        document.querySelector('.active').classList.remove('active');
+        e.target.classList.add('active');
+
+        const element = config.menu[target.dataset.section].render();
+        contentElement.appendChild(element);
+    }
 })
