@@ -20,6 +20,10 @@ const config = {
         signup: {
             href: '/signup',
             text: 'Регистрация'
+        },
+        profile: {
+            href: '/me',
+            text: 'Профиль'
         }
     }
 };
