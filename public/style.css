@@ -28,3 +28,7 @@ a {
     padding-left: 30px;
     color: black;
 }
+
+.active {
+    font-weight: bold;
+}

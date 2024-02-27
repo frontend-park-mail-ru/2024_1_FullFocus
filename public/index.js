@@ -30,10 +30,14 @@ const config = {
 
 Object
     .entries(config.menu)
-    .forEach(([key, {href, text}]) => {
+    .forEach(([key, {href, text}], index) => {
         const menuItemElement = document.createElement('a');
         menuItemElement.href = href;
         menuItemElement.textContent = text;
+
+        if (index === 0) {
+            menuItemElement.classList.add('active');
+        }
 
         menuElement.appendChild(menuItemElement);
     });
