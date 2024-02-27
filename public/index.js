@@ -32,6 +32,10 @@ const config = {
     }
 };
 
+const state = {
+    activeMenuItem: null,
+};
+
 Object
     .entries(config.menu)
     .forEach(([key, {href, text}], index) => {
@@ -42,6 +46,7 @@ Object
 
         if (index === 0) {
             menuItemElement.classList.add('active');
+            state.activeMenuItem = menuItemElement;
         }
 
         menuElement.appendChild(menuItemElement);
@@ -107,8 +112,9 @@ menuElement.addEventListener('click', (e) => {
         
         contentElement.innerHTML = '';
 
-        document.querySelector('.active').classList.remove('active');
+        state.activeMenuItem.classList.remove('active');
         e.target.classList.add('active');
+        state.activeMenuItem = e.target;
 
         const element = config.menu[target.dataset.section].render();
         contentElement.appendChild(element);
