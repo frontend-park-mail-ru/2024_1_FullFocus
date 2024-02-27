@@ -78,3 +78,29 @@ loginMenuItem.addEventListener('click', (e) => {
     contentElement.appendChild(form);
 })
 
+const signupMenuItem = menuElement.querySelector('[data-section="signup"]');
+signupMenuItem.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    contentElement.innerHTML = '';
+
+    document.querySelector('.active').classList.remove('active');
+    e.target.classList.add('active');
+
+    const form = document.createElement('form');
+
+    const emailInput = createInput('email', 'Почта', 'email');
+    const passwordInput = createInput('password', 'Пароль', 'password');
+    const ageInput = createInput('num', 'Возраст', 'age');
+
+    const submitBtn = document.createElement('input');
+    submitBtn.type = 'submit';
+    submitBtn.value = 'Зарегистрироваться';
+
+    form.appendChild(emailInput);
+    form.appendChild(passwordInput);
+    form.appendChild(ageInput);
+    form.appendChild(submitBtn);
+
+    contentElement.appendChild(form);
+})
