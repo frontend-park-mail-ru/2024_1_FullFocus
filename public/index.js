@@ -2,18 +2,29 @@ console.log('epic');
 
 const rootElement = document.getElementById('root');
 
-const menuElement1 = document.createElement('a');
-menuElement1.href = '/';
-menuElement1.textContent = 'Ozon';
+const config = {
+    menu: {
+        main: {
+            href: '/',
+            text: 'Ozon'
+        },
+        login: {
+            href: '/login',
+            text: 'Авторизация'
+        },
+        signup: {
+            href: '/signup',
+            text: 'Регистрация'
+        }
+    }
+};
 
-const menuLogin = document.createElement('a');
-menuLogin.href = '/login';
-menuLogin.textContent = 'Авторизация';
+Object
+    .entries(config.menu)
+    .forEach(([key, {href, text}]) => {
+        const menuElement = document.createElement('a');
+        menuElement.href = href;
+        menuElement.textContent = text;
 
-const menuRegister = document.createElement('a');
-menuRegister.href = '/signup';
-menuRegister.textContent = 'Регистрация';
-
-rootElement.appendChild(menuElement1);
-rootElement.appendChild(menuLogin);
-rootElement.appendChild(menuRegister);
+        rootElement.appendChild(menuElement);
+    });
