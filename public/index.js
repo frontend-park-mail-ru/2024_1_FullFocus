@@ -11,7 +11,8 @@ const config = {
     menu: {
         main: {
             href: '/',
-            text: 'Ozon'
+            text: 'Ozon',
+            render: renderDefault
         },
         login: {
             href: '/login',
@@ -25,7 +26,8 @@ const config = {
         },
         profile: {
             href: '/me',
-            text: 'Профиль'
+            text: 'Профиль',
+            render: renderDefault
         }
     }
 };
@@ -90,6 +92,11 @@ function renderSignup() {
     form.appendChild(submitBtn);
 
     return form;
+}
+
+function renderDefault() {
+    const container = document.createElement('div');
+    return container;
 }
 
 menuElement.addEventListener('click', (e) => {
