@@ -34,6 +34,7 @@ Object
         const menuItemElement = document.createElement('a');
         menuItemElement.href = href;
         menuItemElement.textContent = text;
+        menuItemElement.dataset.section = key;
 
         if (index === 0) {
             menuItemElement.classList.add('active');
@@ -41,3 +42,39 @@ Object
 
         menuElement.appendChild(menuItemElement);
     });
+
+
+function createInput(type, text, name) {
+    const input = document.createElement('input');
+    input.type = type;
+    input.name = name;
+    input.placeholder = text;
+
+    return input;
+}
+
+const loginMenuItem = menuElement.querySelector('[data-section="login"]');
+loginMenuItem.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    contentElement.innerHTML = '';
+
+    document.querySelector('.active').classList.remove('active');
+    e.target.classList.add('active');
+
+    const form = document.createElement('form');
+
+    const emailInput = createInput('email', 'Почта', 'email');
+    const passwordInput = createInput('password', 'Пароль', 'password');
+
+    const submitBtn = document.createElement('input');
+    submitBtn.type = 'submit';
+    submitBtn.value = 'Войти';
+
+    form.appendChild(emailInput);
+    form.appendChild(passwordInput);
+    form.appendChild(submitBtn);
+
+    contentElement.appendChild(form);
+})
+
