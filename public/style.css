@@ -1,3 +1,30 @@
+body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#root {
+    display: grid;
+
+    grid-template-areas: 
+        "menu"
+        "content";
+
+    grid-template-rows: min-content 1fr;
+}
+
+header {
+    grid-area: menu;
+    font-size: 40px;
+    padding: 20px 10px;
+}
+
+main {
+    grid-area: content;
+    padding: 10px 50px;
+}
+
 a {
-    display: block;
+    text-decoration: none;
+    padding-left: 30px;
+    color: black;
 }

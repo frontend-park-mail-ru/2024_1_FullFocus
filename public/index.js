@@ -1,6 +1,11 @@
 console.log('epic');
 
 const rootElement = document.getElementById('root');
+const menuElement = document.createElement('header');
+const contentElement = document.createElement('main');
+
+rootElement.appendChild(menuElement);
+rootElement.appendChild(contentElement);
 
 const config = {
     menu: {
@@ -22,9 +27,9 @@ const config = {
 Object
     .entries(config.menu)
     .forEach(([key, {href, text}]) => {
-        const menuElement = document.createElement('a');
-        menuElement.href = href;
-        menuElement.textContent = text;
+        const menuItemElement = document.createElement('a');
+        menuItemElement.href = href;
+        menuItemElement.textContent = text;
 
-        rootElement.appendChild(menuElement);
+        menuElement.appendChild(menuItemElement);
     });
