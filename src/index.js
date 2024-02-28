@@ -202,11 +202,16 @@ function renderMain() {
     ajax('GET', '/feed', null, (status, responseString) => {
         const products = JSON.parse(responseString);
         if (products && Array.isArray(products)) {
+            const h = document.createElement('h1');
+            feedElement.appendChild(h);
+            h.innerText = 'Популярные'
+
             const div = document.createElement('div');
             feedElement.appendChild(div);
 
             products.forEach(({name, cost}) => {
                 const prodPara = document.createElement('p');
+                prodPara.classList.add('product-item')
                 prodPara.innerText = `${name} - ${cost} руб.`;
                 div.appendChild(prodPara);
             })

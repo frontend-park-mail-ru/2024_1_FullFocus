@@ -21,6 +21,7 @@ header {
 main {
     grid-area: content;
     padding: 10px 50px;
+    background-color: #f2f6f9;
 }
 
 input {
@@ -38,4 +39,14 @@ a {
 
 .active {
     font-weight: bold;
+}
+
+.product-item {
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 8px;
+    background-color: white;
 }
