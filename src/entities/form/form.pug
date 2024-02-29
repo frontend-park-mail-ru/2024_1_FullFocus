@@ -1,0 +1,4 @@
+form(class=`${formClass}` novalidate)
+    each field, name in fields
+        input&attributes(field)
+    input(type="submit" value=`${submitText}`)
