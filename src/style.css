@@ -1,0 +1,52 @@
+body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#root {
+    display: grid;
+
+    grid-template-areas: 
+        "menu"
+        "content";
+
+    grid-template-rows: min-content 1fr;
+}
+
+header {
+    grid-area: menu;
+    font-size: 40px;
+    padding: 20px 10px;
+}
+
+main {
+    grid-area: content;
+    padding: 10px 50px;
+    background-color: #f2f6f9;
+}
+
+input {
+    display: block;
+    height: 30px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    padding-left: 30px;
+    color: black;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.product-item {
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 8px;
+    background-color: white;
+}
