@@ -1,5 +1,12 @@
+@font-face {
+  font-family: 'GTEestiPro';
+  src: url('./gteestiprodisplay_regular.otf') format('otf');
+  font-weight: 600;
+  font-style: normal;
+}
+
 body {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family:'GTEestiPro', sans-serif;
 }
 
 #root {
@@ -10,6 +17,11 @@ body {
         "content";
 
     grid-template-rows: min-content 1fr;
+}
+
+.form-errors {
+    color: rgb(143, 0, 0);
+    font-weight: 700;
 }
 
 header {
@@ -41,12 +53,45 @@ a {
     font-weight: bold;
 }
 
-.product-item {
-    font-size: 20px;
-    margin-top: 20px;
-    padding: 10px 20px;
-    border-style: solid;
-    border-color: grey;
-    border-radius: 8px;
+.product-card-section {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.product-card-outer {
+    display: inline-block;
     background-color: white;
+    border-radius: 5px;
+    width: 251.19px;
+    height: 345.19px;
+}
+
+.product-card-inner {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.product-card-img {
+    width: 251.19px;
+    border-radius: 5px;
+}
+
+.product-card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 8px;
+    padding-bottom: 10px;
+}
+
+.product-card-info-cost {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.product-card-info-description {
+    flex: 1;
+    font-size: 16px;
 }
