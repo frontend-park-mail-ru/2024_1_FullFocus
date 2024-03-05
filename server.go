@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -25,6 +25,8 @@ func main() {
 	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/", fs)
 
-	fmt.Println("starting server at :8080")
-	http.ListenAndServe(":8080", nil)
+	log.Printf("server is running...")
+	if err := http.ListenAndServe("0.0.0.0:80", nil); err != nil {
+		log.Printf("HTTP server ListenAndServe Error: %s", err.Error())
+	}
 }
