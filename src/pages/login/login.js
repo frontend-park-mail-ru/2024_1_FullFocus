@@ -1,5 +1,5 @@
-import { ajax } from "../../shared/api/ajax";
-import { LoginForm } from "../../widgets/components/loginForm/loginForm";
+import { ajaxMultipartForm } from "../../shared/api/ajax";
+import { LoginForm } from "../../widgets/loginForm/loginForm";
 import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
 
 export class Login {
@@ -20,18 +20,15 @@ export class Login {
         this.htmlElement.addEventListener('submit', (e) => {
             e.preventDefault();
             this.errorsElement.textContent = '';
-            const emailInput = this.formObj.emailElement();
-            const email = emailInput.value.trim();
-            const passwordInput = this.formObj.passwordElement();
-            const password = passwordInput.value;
+            this.formEl = document.getElementsByClassName('login-form')[0];
 
-            ajax('POST', '/login', {password: password, email: email}, (status) => {
+            ajaxMultipartForm('POST', '/api/auth/login', this.formEl, (status, msg, msgrus) => {
                 if (status === 200) {
-                    this.parentItem.goToPage('profile');
+                    this.parentItem.goToPage('main');
                     return;
                 }
-
-                this.errorsElement.textContent = 'Введены неверные почта или пароль'
+                console.error(msg);
+                this.errorsElement.textContent = msgrus;
             })
         })
 

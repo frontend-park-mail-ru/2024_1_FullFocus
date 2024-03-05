@@ -1,5 +1,5 @@
 import { ajax } from "../../shared/api/ajax";
-import { ProfileCard } from "../../widgets/components/profileCard/profileCard";
+import { ProfileCard } from "../../widgets/profileCard/profileCard";
 import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
 
 export class Profile {

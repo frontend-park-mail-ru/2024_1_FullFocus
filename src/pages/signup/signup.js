@@ -1,5 +1,5 @@
-import { ajax } from "../../shared/api/ajax";
-import { SignUpForm } from '../../widgets/components/signupForm/signupForm'
+import { ajaxMultipartForm } from "../../shared/api/ajax";
+import { SignUpForm } from "../../widgets/signupForm/signupForm";
 import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
 
 export class SignUp {
@@ -26,18 +26,16 @@ export class SignUp {
                 return;
             }
 
-            const emailInput = this.formObj.emailElement();
-            const email = emailInput.value.trim();
-            const passwordInput = this.formObj.passwordElement();
-            const password = passwordInput.value;
+            const formEl = document.getElementsByClassName('signup-form')[0];
 
-            ajax('POST', '/signup', {email: email, password: password}, (status) => {
+            ajaxMultipartForm('POST', '/api/auth/signup', formEl, (status, msg, msgrus) => {
                 if (status === 200) {
-                    this.parentItem.goToPage('profile');
+                    this.parentItem.goToPage('main');
                     return;
                 }
+                console.error(msg);
+                this.errorsElement.textContent = msgrus;
 
-                alert('error');
             })
         })
 
