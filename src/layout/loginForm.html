@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<style>
+   .flex-container {
+      margin-left: 650px;
+      margin-top: 220px;
+      display: flex;
+      flex-direction: column;
+      width: 420px;
+      height: 505px;
+      padding: 10px;
+      background-color: #ffffff;
+      border-radius: 20px;
+    }
+    .BizonID{
+      margin-top: 20px;
+      padding: 10px;
+      margin-left: 45px;
+      width: 200px;
+      height: 40px;
+    }
+    .headerForm {
+      margin-left: 45px;
+      padding: 10px;
+      width: 300px;
+      height: 35px;
+    }
+    .subheaderForm {
+      margin-left: 45px;
+      padding: 10px;
+      width: 300px;
+      height: 55px;
+    }
+    .inputemailForm{
+      text-align: center;
+      width: 420px;
+      height: 65px;
+    }
+    .inputpasswordForm{
+      text-align: center;
+      width: 420px;
+      height: 65px;
+    }
+    .submitForm{
+      text-align: center;
+      width: 420px;
+      height: 85px;
+    }
+    .RegForm{
+      text-align: center;
+      width: 420px;
+      height: 35px;
+   
+       }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<html lang="ru">
+   <head>
+      <meta charset="UTF-8">
+      <title>LoginForm</title>
+   </head>
+   <body style="background-color: #efefef;">
+      <div class="flex-container">
+         <div class="BizonID">
+            <span style="font-family: 'Jua', sans-serif; font-size: 36px">
+               <span style="color: #5DCEC6">Bizon</span> ID
+            </span>
+         </div>
+         <div class="headerForm">
+            <span style="font-size: 27px">
+               <span style="color: #000000"><b>Войдите по почте</b></span>
+            </span>
+         </div>
+         <div class="subheaderForm">
+            <span style="font-size:18px">
+               <span style="color: #000000">Только для зарегестрированных пользователей</span>
+            </span>
+         </div>
+         <div class="inputemailForm">
+           <input type="email" placeholder=" Электронная почта" style="border: 2px solid rgb(157, 157, 157); height: 40px; width: 300px; font-size: 18px; border-radius: 8px;">
+         </div>
+         <div class="inputpasswordForm">
+            <input type="password" placeholder=" Пароль" style="border: 2px solid rgb(157, 157, 157); height: 40px; width: 300px; font-size: 18px; border-radius: 8px;">
+         </div>
+         <div class="submitForm">
+            <button type="submit" style="border: none; background: #5DCEC6; height: 48px; width: 308px; border-radius: 10px;">
+               <span style="color: #ffffff; height: 20px; width: 150px; font-size: 18px">
+                  Войти
+               </span>
+            </button>
+         </div>
+         <div class="RegForm">
+            <span style="font-size:18px">
+               <button style="border: none; background-color: #ffffff">
+                  <span style="color: #000000; height: 20px; width: 150px; font-size: 18px">Регистрация</span>
+               </button>
+            </span>
+         </div>
+      </div>
+   </body>
+</html>
