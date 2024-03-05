@@ -9,7 +9,6 @@ export function ajax(method, url, queryParams = null, body = null, callback) {
             newUrl.searchParams.append(name, value);
         });
         fullUrl = newUrl.toString();
-        console.log(fullUrl);
     }
 
     const headers = {};
@@ -33,7 +32,6 @@ export function ajax(method, url, queryParams = null, body = null, callback) {
         .catch((error) => {
             const {status, body} = error;
             const parsedBody = body;
-            console.error(error);
             return {status, parsedBody};
         });
 
@@ -49,14 +47,12 @@ export function ajaxMultipartForm(method, url, form, callback) {
             return response.json();
         })
         .then((data) => {
-            console.log(data);
             const {Status, Msg, MsgRus} = data;
             callback(Status, Msg, MsgRus);
         })
         .catch((error) => {
             const {status, body} = error;
             const parsedBody = body;
-            console.error(error);
             return {status, parsedBody};
         })
 }
