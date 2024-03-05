@@ -1,4 +1,4 @@
-import { ProductsSection } from "../../widgets/components/productsSection/productsSection";
+import { ProductsSection } from "../../widgets/productsSection/productsSection";
 
 export class Main {
     constructor(parent, name) {

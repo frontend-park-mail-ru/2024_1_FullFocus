@@ -1,14 +1,14 @@
-import { Form } from "../../../entities/form/form";
-import { domFromHtml } from "../../../shared/lib/domFromHtml/domFromHtml";
+import { Form } from '../../entities/form/form';
+import { domFromHtml } from '../../shared/lib/domFromHtml/domFromHtml';
 
-export class SignUpForm {
+export class LoginForm {
     constructor(parent) {
         this.parentItem = parent;
-        this.form = new Form('signup-form', 'Зарегистрироваться');
+        this.form = new Form('login-form', 'Войти');
     }
 
     render() {
-        this.form.addField('email', 'Почта', 'email');
+        this.form.addField('login', 'Логин', 'text');
         this.form.addField('password', 'Пароль', 'password');
         const component = this.form.getElement();
         return domFromHtml(component);
@@ -21,9 +21,4 @@ export class SignUpForm {
     passwordElement() {
         return this.form.getFieldByName('password');
     }
-
-    validate() {
-        return this.form.validate();
-    }
 }
-

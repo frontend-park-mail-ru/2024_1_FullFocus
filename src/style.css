@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'GTEestiPro';
-  src: url('./gteestiprodisplay_regular.otf') format('otf');
+  src: url('./shared/fonts/gteestiprodisplay_regular.otf') format('otf');
   font-weight: 600;
   font-style: normal;
 }

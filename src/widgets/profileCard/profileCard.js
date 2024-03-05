@@ -1,5 +1,5 @@
 import profileCardTmpl from './profileCard.pug'
-import { domFromHtml } from '../../../shared/lib/domFromHtml/domFromHtml';
+import { domFromHtml } from '../../shared/lib/domFromHtml/domFromHtml';
 
 export class ProfileCard {
     constructor(parent, email) {
