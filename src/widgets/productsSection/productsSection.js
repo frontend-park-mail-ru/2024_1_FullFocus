@@ -15,8 +15,8 @@ export class ProductsSection {
             if (status === 200) {
                 const products = data;
                 if (products && Array.isArray(products)) {
-                    products.forEach(({name, price}) => {
-                        const productCardObj = new ProductCard(this, name, price);
+                    products.forEach((product) => {
+                        const productCardObj = new ProductCard(this, product['name'], product['price'], product['img-link']);
                         component.appendChild(productCardObj.render());
                     })
                 }

@@ -27,7 +27,6 @@ export class Login {
                     this.parentItem.goToPage('main');
                     return;
                 }
-                console.error(msg);
                 this.errorsElement.textContent = msgrus;
             })
         })
