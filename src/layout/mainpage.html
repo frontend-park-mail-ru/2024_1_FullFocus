@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+<style>
+    .flex-container {
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        background-color: #ffffff;
+        margin: 10px;
+        
+    }
+    header {
+        width: 100%;
+        background-color: #ffffff;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px 0;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .flex-container-small {
+        display: flex;
+        text-align: center;
+        padding: 10px;
+        flex-direction: row;
+        border-radius: 8px;
+        height: 110px;
+        background-color: #ffffff;
+    }
+    .flex-container-head, .flex-container-foot{
+        display: flex;
+        justify-content: center; 
+        padding: 10px;
+        flex-direction: row;
+        height: 50px;
+        margin: 10px;
+        background-color: #ffffff;
+    }
+    .Katalog, .Profile {
+        margin-right: 40px;
+    }
+
+    .product {
+        border-radius: 8px;
+        height: 100px;
+        width: 210px;
+        background-color: #FFD673;
+        margin: 10px;
+    }
+
+    .page-wrapper {
+        display: flex;
+        justify-content: space-between;
+      }
+      .left-panel-wrapper {
+        width: 300px;
+      }
+      .right-panel-wrapper {
+        width: 300px;
+      }
+      .content-wrapper {
+        width: calc(100% - 600px);
+        padding: 0 30px;
+      }
+</style>
+<html lang="ru">
+    <header>
+            <div class="flex-container-head">
+                <div class="Katalog">
+                    <button type="submit" style="border: none; background: #5DCEC6; height: 48px; width: 150px; border-radius: 10px;">
+                       <span style="color: #ffffff; width: 150px; font-size: 18px">
+                          Katalog
+                       </span>
+                    </button>
+                 </div>
+                 <div class="Profile">
+                    <button type="submit" style="border: none; background: #5DCEC6; height: 48px; width: 150px; border-radius: 10px;">
+                       <span style="color: #ffffff; width: 150px; font-size: 18px">
+                          Profile
+                       </span>
+                    </button>
+            </div>
+        </div>
+    </header>
+    <body style="background-color: #efefef;">
+        <div class="page-wrapper">
+            <div class="left-panel-wrapper">
+              <div class="left-panel">
+              </div>
+            </div>
+            
+            <div class="content-wrapper">
+                
+              <div class="content">
+                <div class="flex-container">
+                    <span style="font-size:18px; padding: 15px; height: 10px;">
+                        <span style="color: #000000"><b>Специальные предложения!</b></span>
+                     </span>
+                    <div class="flex-container-small">
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                     </div>
+                </div>
+                <div class="flex-container">
+                    <span style="font-size:18px; padding: 15px; height: 10px;">
+                        <span style="color: #000000"><b>Рекомендуем для вас</b></span>
+                     </span>
+                    <div class="flex-container-small">
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                     </div>
+                </div>
+                <div class="flex-container">
+                    <span style="font-size:18px; padding: 15px; height: 10px;">
+                        <span style="color: #000000"><b>Каталог</b></span>
+                     </span>
+                    <div class="flex-container-small">
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                     </div>
+                     <div class="flex-container-small">
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                     </div>
+                     <div class="flex-container-small">
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                        <div class="product"><span>Value</span></div>
+                     </div>
+                </div>
+              </div>
+              <div class="flex-container">
+                <div class="flex-container-foot">
+                 
+                    <div class="BizonID">
+                        <span style="font-family: 'Jua', sans-serif; font-size: 36px">
+                           <span style="color: #5DCEC6">Bizon</span> Lab
+                        </span>
+                  
+                 </div>
+            </div>
+        </div>
+    </div>
+            <div class="right-panel-wrapper">
+              <div class="right-panel">
+                
+              </div>
+            </div>
+          </div>
+    </body>
+</html>
