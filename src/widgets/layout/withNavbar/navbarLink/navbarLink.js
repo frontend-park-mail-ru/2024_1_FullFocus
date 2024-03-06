@@ -1,3 +1,4 @@
+import './style.css'
 import navbarLinkTmpl from './navbarLink.pug'
 import { domFromHtml } from '../../../../shared/lib/domFromHtml/domFromHtml';
 

@@ -20,12 +20,6 @@ export class SignUp {
             e.preventDefault();
             this.errorsElement.textContent = '';
 
-            const errorFields = this.formObj.validate();
-            if (errorFields != null) {
-                this.errorsElement.textContent = `Ошибки в полях: ${errorFields.join(', ')}`;
-                return;
-            }
-
             const formEl = document.getElementsByClassName('signup-form')[0];
 
             ajaxMultipartForm('POST', '/api/auth/signup', formEl, (status, msg, msgrus) => {

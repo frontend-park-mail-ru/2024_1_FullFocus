@@ -1,3 +1,4 @@
+import './style.css';
 import { domFromHtml } from '../../../shared/lib/domFromHtml/domFromHtml';
 import productItemTmpl from './productCard.pug'
 

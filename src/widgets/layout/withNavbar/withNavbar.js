@@ -1,7 +1,9 @@
+import './style.css';
 import { config } from './../../../shared/constants/config'
 import { domFromHtml } from '../../../shared/lib/domFromHtml/domFromHtml';
 import { NavbarLink } from './navbarLink/navbarLink';
 import withNavbarTmpl from './withNavbar.pug'
+import { ajax } from '../../../shared/api/ajax';
 
 export class WithNavbar {
     constructor(parent) {
@@ -24,6 +26,7 @@ export class WithNavbar {
     goToPage(pageName) {
         this.htmlElement.innerHTML = '';
 
+        this.updateNavbar();
         this.activeItem.deactivate();
         this.activeItem = this.navbarLinkItems[pageName];
         this.activeItem.activate();
@@ -33,28 +36,8 @@ export class WithNavbar {
 
     render() {
         const element = domFromHtml(withNavbarTmpl());
-        this.navbarElement = element.getElementsByTagName('header')[0];
-        this.htmlElement = element.getElementsByTagName('main')[0];
-
-        Object
-            .keys(this.pageItems)
-            .forEach((pageName, index) => {
-                const navbarLinkItem = new NavbarLink(
-                        this,
-                        pageName,
-                        config.menu[pageName].href,
-                        config.menu[pageName].text
-                    );
-                const navbarLinkElement = navbarLinkItem.render();
-
-                if (index === 0) {
-                    navbarLinkItem.activate();
-                    this.activeItem = navbarLinkItem;
-                }
-
-                this.navbarElement.appendChild(navbarLinkElement);
-                this.navbarLinkItems[pageName] = navbarLinkItem;
-            });
+        this.navbarElement = element.getElementsByClassName('navbar__navigation')[0];
+        this.htmlElement = element.getElementsByClassName('content')[0];
         
         this.navbarElement.addEventListener('click', (e) => {
             const { target } = e;
@@ -66,8 +49,43 @@ export class WithNavbar {
             }
         })
 
-        this.parentElement.appendChild(this.navbarElement);
+       
+        this.parentElement.appendChild(element.getElementsByClassName('navbar')[0]);
         this.parentElement.appendChild(this.htmlElement);
         this.goToPage('main');
+    }
+
+    updateNavbar() {
+        const isLoggedIn = false;
+        this.navbarElement.innerHTML = '';
+        ajax('GET', '/api/auth/check', null, null, (data, status) => {
+            isLoggedIn = status === 200;
+        })
+        var linksCount = 0;
+
+        Object
+            .keys(this.pageItems)
+            .forEach((pageName) => {
+                if (config.menu[pageName].userLogged === isLoggedIn || config.menu[pageName].userLogged == null) {
+                    const navbarLinkItem = new NavbarLink(
+                            this,
+                            pageName,
+                            config.menu[pageName].href,
+                            config.menu[pageName].text
+                        );
+                    
+                    const navbarLinkElement = navbarLinkItem.render();
+                    
+                    if (linksCount === 0) {
+                        navbarLinkItem.activate();
+                        this.activeItem = navbarLinkItem;
+                    }
+                    
+                    this.navbarElement.appendChild(navbarLinkElement);
+                    this.navbarLinkItems[pageName] = navbarLinkItem;
+
+                    linksCount++;
+                }
+            });
     }
 }
