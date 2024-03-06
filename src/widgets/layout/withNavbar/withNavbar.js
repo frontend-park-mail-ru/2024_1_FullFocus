@@ -54,8 +54,8 @@ export class WithNavbar {
     }
 
     updateNavbar() {
-        this.navbarElement.innerHTML = '';
         ajax('GET', '/api/auth/check', null, null, (data, status) => {
+            this.navbarElement.innerHTML = '';
             this.isLoggedIn = status === 200;
             var linksCount = 0;
     

@@ -2,7 +2,7 @@ div(class="products-section__inner__card")
     div(class="products-section__inner__card__inner")
         img(class="products-section__inner__card__inner__img" src=`${src}` alt="img")
         div(class="products-section__inner__card__inner__info")
-            div(class="products-section__inner__card__inner__info__cost") #{price}
+            div(class="products-section__inner__card__inner__info__cost") #{price} ₽
             if name.length > 50
                 div(class="products-section__inner__card__inner__info__description") #{name.substr(0, 50)}...
             else
