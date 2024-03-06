@@ -13,6 +13,7 @@ export class WithNavbar {
         this.navbarLinkItems = {};
         this.navbarElement = null;
         this.htmlElement = null;
+        this.isLoggedIn = false;
     }
 
     addPage(pageItem) {
@@ -27,9 +28,6 @@ export class WithNavbar {
         this.htmlElement.innerHTML = '';
 
         this.updateNavbar();
-        this.activeItem.deactivate();
-        this.activeItem = this.navbarLinkItems[pageName];
-        this.activeItem.activate();
         
         this.htmlElement.appendChild(this.pageItems[pageName].render());
     }
@@ -56,36 +54,35 @@ export class WithNavbar {
     }
 
     updateNavbar() {
-        const isLoggedIn = false;
-        this.navbarElement.innerHTML = '';
         ajax('GET', '/api/auth/check', null, null, (data, status) => {
-            isLoggedIn = status === 200;
-        })
-        var linksCount = 0;
-
-        Object
-            .keys(this.pageItems)
-            .forEach((pageName) => {
-                if (config.menu[pageName].userLogged === isLoggedIn || config.menu[pageName].userLogged == null) {
-                    const navbarLinkItem = new NavbarLink(
-                            this,
-                            pageName,
-                            config.menu[pageName].href,
-                            config.menu[pageName].text
-                        );
-                    
-                    const navbarLinkElement = navbarLinkItem.render();
-                    
-                    if (linksCount === 0) {
-                        navbarLinkItem.activate();
-                        this.activeItem = navbarLinkItem;
+            this.navbarElement.innerHTML = '';
+            this.isLoggedIn = status === 200;
+            var linksCount = 0;
+    
+            Object
+                .keys(this.pageItems)
+                .forEach((pageName) => {
+                    if (config.menu[pageName].userLogged === this.isLoggedIn || config.menu[pageName].userLogged == null) {
+                        const navbarLinkItem = new NavbarLink(
+                                this,
+                                pageName,
+                                config.menu[pageName].href,
+                                config.menu[pageName].text
+                            );
+                        
+                        const navbarLinkElement = navbarLinkItem.render();
+                        
+                        if (linksCount === 0) {
+                            navbarLinkItem.activate();
+                            this.activeItem = navbarLinkItem;
+                        }
+                        
+                        this.navbarElement.appendChild(navbarLinkElement);
+                        this.navbarLinkItems[pageName] = navbarLinkItem;
+    
+                        linksCount++;
                     }
-                    
-                    this.navbarElement.appendChild(navbarLinkElement);
-                    this.navbarLinkItems[pageName] = navbarLinkItem;
-
-                    linksCount++;
-                }
-            });
+                });
+        })
     }
 }
