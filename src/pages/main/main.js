@@ -8,7 +8,7 @@ export class Main {
     }
 
     render() {
-        const productsSection = new ProductsSection();
+        const productsSection = new ProductsSection('Популярные товары');
         this.htmlElement = productsSection.render();
         return this.htmlElement;
     }

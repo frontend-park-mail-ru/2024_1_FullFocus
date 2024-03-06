@@ -1,0 +1,48 @@
+.form-card {
+    margin: 70px auto;
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    padding: 60px;
+    background-color: #ffffff;
+    border-radius: 20px;
+}
+
+.form-card__header {
+    font-weight: 700px;
+    margin-top: 20px;
+    padding: 10px;
+    margin-left: 45px;
+    font-size: 36px;
+}
+
+.form-card__header__left {
+    color:#5DCEC6;
+}
+
+.form-card__main {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-card__main input {
+    display: inline-block;
+    height: 65px;
+    width: 100%;
+    border: 2px solid rgb(157, 157, 157);
+    font-size: 18px;
+    border-radius: 8px;
+}
+
+.form-card__main__submit {
+    display: inline-block;
+    margin-top: 10px;
+    width: 308px;
+    height: 48px;
+    background-color: #5DCEC6;
+    color: #ffffff;
+    font-size: 18px;
+}
+      
