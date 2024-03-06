@@ -1,4 +1,9 @@
-form(class=`${formClass}` novalidate)
-    each field, name in fields
-        input&attributes(field)
-    input(type="submit" value=`${submitText}`)
+div(class="form-card")
+    span(class="form-card__header")
+        span(class="form-card__header__left") Bizon
+        span(class="form-card__header__right") ID 
+    div(class="form-card__main")
+        form(class=`${formClass}` novalidate)
+            each field, name in fields
+                input&attributes(field)
+            input(type="submit" value=`${submitText}` class="form-card__main__submit")

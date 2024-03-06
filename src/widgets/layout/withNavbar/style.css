@@ -1,0 +1,17 @@
+.navbar {
+    width: 100%;
+    background-color: #ffffff;
+    display: block;
+}
+
+.navbar__navigation {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.content {
+    display: block;
+    height: 100%;
+    padding: 20px 220px;
+}

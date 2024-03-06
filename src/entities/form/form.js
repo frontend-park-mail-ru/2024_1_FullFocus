@@ -1,3 +1,4 @@
+import './style.css'
 import { validateEmail } from "../../shared/lib/validate/validateEmail";
 import { validatePassword } from "../../shared/lib/validate/validatePassword";
 import { validateText } from "../../shared/lib/validate/validateText";

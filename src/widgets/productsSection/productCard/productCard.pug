@@ -1,6 +1,9 @@
-div(class="product-card-outer")
-    div(class="product-card-inner")
-        img(class="product-card-img" src=`${src}` alt="img")
-        div(class="product-card-info")
-            div(class="product-card-info-cost") #{price} руб.
-            div(class="product-card-info-description") #{name}
+div(class="products-section__inner__card")
+    div(class="products-section__inner__card__inner")
+        img(class="products-section__inner__card__inner__img" src=`${src}` alt="img")
+        div(class="products-section__inner__card__inner__info")
+            div(class="products-section__inner__card__inner__info__cost") #{price}
+            if name.length > 50
+                div(class="products-section__inner__card__inner__info__description") #{name.substr(0, 50)}...
+            else
+                div(class="products-section__inner__card__inner__info__description") #{name}
