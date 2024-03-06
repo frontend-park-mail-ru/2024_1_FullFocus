@@ -8,7 +8,7 @@ export class SignUpForm {
     }
 
     render() {
-        this.form.addField('login', 'Логин', 'login');
+        this.form.addField('login', 'Логин', 'text');
         this.form.addField('password', 'Пароль', 'password');
         const component = this.form.getElement();
         return domFromHtml(component);

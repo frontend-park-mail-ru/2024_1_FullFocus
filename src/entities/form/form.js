@@ -1,10 +1,12 @@
 import { validateEmail } from "../../shared/lib/validate/validateEmail";
 import { validatePassword } from "../../shared/lib/validate/validatePassword";
+import { validateText } from "../../shared/lib/validate/validateText";
 import formTmpl from './form.pug'
 
 export const INPUTS = {
     PASSWORD: 'password',
-    EMAIL: 'email'
+    EMAIL: 'email',
+    TEXT: 'text'
 };
 
 export class Form {
@@ -41,6 +43,10 @@ export class Form {
                         wrongFields.push(name);
                     }
                     break;
+                case INPUTS.TEXT:
+                    if (!validateText(element)) {
+                        wrongFields.push(name);
+                    }
             }
         }
         if (wrongFields.length != 0) {
