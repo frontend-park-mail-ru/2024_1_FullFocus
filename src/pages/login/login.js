@@ -3,6 +3,11 @@ import { LoginForm } from "../../widgets/loginForm/loginForm";
 import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
 
 export class Login {
+    /**
+     * Constructor for Login page object
+     * @param {any} parent - parent object
+     * @param {string} name - name of the page
+     */
     constructor(parent, name) {
         this.parentItem = parent;
         this.name = name;
@@ -11,6 +16,10 @@ export class Login {
         this.errorsElement = null;
     }
 
+    /**
+     * Renders login page
+     * @returns {HTMLElement} html element of the page
+     */
     render() {
         this.formObj = new LoginForm(this);
         this.htmlElement = this.formObj.render();

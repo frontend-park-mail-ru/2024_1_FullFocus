@@ -6,6 +6,10 @@ import withNavbarTmpl from './withNavbar.pug'
 import { ajax } from '../../../shared/api/ajax';
 
 export class WithNavbar {
+    /**
+     * Constructor for WithNavbar object
+     * @param {htmlElement} parent - parent html element
+     */
     constructor(parent) {
         this.parentElement = parent;
         this.pageItems = {};
@@ -16,14 +20,18 @@ export class WithNavbar {
         this.isLoggedIn = false;
     }
 
+    /**
+     * Adds page
+     * @param {any} pageItem - page object
+     */
     addPage(pageItem) {
         this.pageItems[pageItem.name] = pageItem;
     }
 
-    addChild(element) {
-        this.htmlElement.appendChild(element);
-    }
-
+    /**
+     * Change page
+     * @param {string} pageName - name of the page to go
+     */
     goToPage(pageName) {
         this.htmlElement.innerHTML = '';
 
@@ -32,6 +40,9 @@ export class WithNavbar {
         this.htmlElement.appendChild(this.pageItems[pageName].render());
     }
 
+    /**
+     * Renders page with navbar
+     */
     render() {
         const element = domFromHtml(withNavbarTmpl());
         this.navbarElement = element.getElementsByClassName('navbar__navigation')[0];
@@ -53,6 +64,9 @@ export class WithNavbar {
         this.goToPage('main');
     }
 
+    /**
+     * Updates navbar
+     */
     updateNavbar() {
         ajax('GET', '/api/auth/check', null, null, (data, status) => {
             this.navbarElement.innerHTML = '';

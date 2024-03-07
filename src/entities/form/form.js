@@ -12,8 +12,9 @@ export const INPUTS = {
 
 export class Form {
     /**
-     * 
-     * @param {string} formClass class associated with form
+     * Form class constructor
+     * @param {string} formClass - class associated with a form
+     * @param {string} submitText - text for a submit button
      */
     constructor(formClass, submitText='Submit') {
         this.submitText = submitText;
@@ -21,14 +22,28 @@ export class Form {
         this.fields = {};
     }
 
+    /**
+     * Add field to form
+     * @param {string} name - name of the html input
+     * @param {string} text - placeholder text for input
+     * @param {string} type - html type of input
+     */
     addField(name, text, type) {
         this.fields[name] = {name: name, placeholder: text, type: type, class: this.formClass.concat('__', name)};
     }
 
+    /**
+     * Get raw html of the form
+     * @returns {string} generated html
+     */
     getElement() {
         return formTmpl({formClass: this.formClass, fields: this.fields, submitText: this.submitText});
     }
 
+    /**
+     * Validate form
+     * @returns {Array|null} array of input fields name with errors
+     */
     validate() {
         const wrongFields = [];
         for (const [name, field] of Object.entries(this.fields)) { 
@@ -56,6 +71,11 @@ export class Form {
         return null;
     }
 
+    /**
+     * Get input field by its name
+     * @param {string} name - name of input field
+     * @returns {HTMLElement} input html element
+     */
     getFieldByName(name) {
         return document.getElementsByClassName(this.fields[name].class)[0];
     }

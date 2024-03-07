@@ -3,6 +3,11 @@ import { SignUpForm } from "../../widgets/signupForm/signupForm";
 import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
 
 export class SignUp {
+    /**
+     * Constructor for SignUp page object
+     * @param {any} parent - parent object
+     * @param {string} name - name of the page
+     */
     constructor(parent, name) {
         this.parentItem = parent;
         this.name = name;
@@ -10,6 +15,10 @@ export class SignUp {
         this.errorsElement = null;
     }
 
+    /**
+     * Renders signup page
+     * @returns {HTMLElement} html element of the page
+     */
     render() {
         this.formObj = new SignUpForm(this);
         this.htmlElement = this.formObj.render();
