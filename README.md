@@ -16,3 +16,5 @@
   <li>Абдуллин Хасбулат - Backend</li>
   <li>Пётр Памужак - UX</li>
 </ul>
+
+[Репозиторий Бэкенда](https://github.com/go-park-mail-ru/2024_1_FullFocus)

@@ -1,5 +1,14 @@
 const BACKEND_URL = 'http://62.233.46.235:8080';
 
+/**
+ * Performs ajax request
+ * @param {string} method - HTTP method
+ * @param {string} url - url for request
+ * @param {object} queryParams - query GET params for requesst
+ * @param {object} body - body for POST request
+ * @param {Function} callback - callback function
+ * @returns callback return or object with error
+ */
 export function ajax(method, url, queryParams = null, body = null, callback) {
     let fullUrl = BACKEND_URL + url;
     if (queryParams) {
@@ -37,6 +46,14 @@ export function ajax(method, url, queryParams = null, body = null, callback) {
 
 }
 
+/**
+ * Performs ajax request sending form data
+ * @param {string} method - HTTP method
+ * @param {string} url - url for request
+ * @param {HTMLElement} form - html form to send
+ * @param {Function} callback - callback function
+ * @returns callback return or object with error
+ */
 export function ajaxMultipartForm(method, url, form, callback) {
     return fetch(BACKEND_URL + url, {
         method,
