@@ -3,17 +3,14 @@
     display: flex;
     flex-direction: column;
     width: 420px;
-    padding: 60px;
+    padding: 40px 45px 40px 55px;
     background-color: #ffffff;
-    border-radius: 20px;
+    border-radius: 32px;
 }
 
 .form-card__header {
-    font-weight: 700px;
-    margin-top: 20px;
-    padding: 10px;
-    margin-left: 45px;
-    font-size: 36px;
+    font-weight: 700;
+    font-size: 32px;
 }
 
 .form-card__header__left {
@@ -22,27 +19,45 @@
 
 .form-card__main {
     margin-top: 30px;
+}
+
+.form-card__main__form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.form-card__main input {
+.form-card__main__form__input-block__input {
     display: inline-block;
-    height: 65px;
-    width: 100%;
+    height: 50px;
     border: 2px solid rgb(157, 157, 157);
     font-size: 18px;
     border-radius: 8px;
+    width: 100%;
+    padding-left: 15px;
 }
 
-.form-card__main__submit {
-    display: inline-block;
-    margin-top: 10px;
-    width: 308px;
-    height: 48px;
+.form-card__main__form__input-block__error {
+    color: rgb(255, 0, 0);
+    font-size: 12px;
+}
+
+.form-card__main__form__submit {
+    border-radius: 8px;
+    margin-top: 20px;
+    height: 50px;
     background-color: #5DCEC6;
     color: #ffffff;
     font-size: 18px;
+    font-weight: 700;
+    border: 0;
+}
+
+.form-card__main .form-card__main__form__input-block input.invalid {
+    border-color: rgb(255, 0, 0);
+}
+
+.form-card__main__form__input-block input.valid {
+    border-color: rgb(93, 206, 198);
 }
       
