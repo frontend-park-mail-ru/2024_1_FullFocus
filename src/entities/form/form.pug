@@ -1,11 +1,7 @@
-div(class="form-card")
-    span(class="form-card__header")
-        span(class="form-card__header__left") Bizon
-        span(class="form-card__header__right") ID 
-    div(class="form-card__main")
-        form(class=`form-card__main__form ${formClass}` novalidate)
-            each field, name in fields
-                div(class="form-card__main__form__input-block")
-                    input(class=`form-card__main__form__input-block__input ${field.class}` placeholder=`${field.placeholder}` name=`${field.name}` type=`${field.type}`)
-                    div(class=`form-card__main__form__input-block__error ${field.class}-error`)
-            input(type="submit" value=`${submitText}` class="form-card__main__form__submit")
+form(class=`${formClass}` novalidate)
+    each field, name in fields
+        div(class="input-block")
+            input&attributes(field)
+            div(class=`input-block__error ${field.class}-error`)
+    button(type="submit" class="btn-submit") 
+        span(class="btn-submit__text") #{submitText}

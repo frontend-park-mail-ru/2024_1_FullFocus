@@ -1,36 +1,18 @@
 @font-face {
-  font-family: 'GTEestiPro';
-  src: url('./shared/fonts/gteestiprodisplay_regular.otf') format('otf');
-  font-weight: 600;
-  font-style: normal;
+    font-family: 'GTEestiPro';
+    src: url('./shared/fonts/gteestiprodisplay_regular.otf') format('otf');
+    font-weight: 600;
+    font-style: normal;
 }
 
 body {
-    font-family:'GTEestiPro', sans-serif;
+    font-family: 'GTEestiPro', sans-serif;
     background-color: #efefef;
     margin: 0;
     min-width: 1372px;
 }
 
-.form-errors {
-    color: rgb(143, 0, 0);
-    font-weight: 700;
-}
-
-input {
-    display: block;
-    height: 30px;
-    font-size: 20px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
 a {
     text-decoration: none;
     color: black;
-}
-
-.active {
-    font-weight: bold;
-    color: #5DCEC6;
 }

@@ -1,3 +1,17 @@
 .navbar__navigation__link {
     font-size: 26px;
+    transition: color 0.2s;
+}
+
+.navbar__navigation__link:hover {
+    color: #3a817c;
+}
+
+.active {
+    font-weight: bold;
+    color: #5dcec6;
+}
+
+.active:hover {
+    color: #5dcec6;
 }
