@@ -22,7 +22,9 @@ export class LoginForm {
         this.form.addField('password', 'Пароль', 'password');
         const component = domFromHtml(loginFormTmpl());
         const formComponent = this.form.getElement();
-        component.getElementsByClassName('login-form-card__main')[0].insertAdjacentHTML('beforeend', formComponent);
+        component
+            .getElementsByClassName('login-form-card__main')[0]
+            .appendChild(formComponent);
         return component;
     }
 }

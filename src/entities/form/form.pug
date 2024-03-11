@@ -1,7 +1,1 @@
 form(class=`${formClass}` novalidate)
-    each field, name in fields
-        div(class="input-block")
-            input&attributes(field)
-            div(class=`input-block__error ${field.class}-error`)
-    button(type="submit" class="btn-submit") 
-        span(class="btn-submit__text") #{submitText}
