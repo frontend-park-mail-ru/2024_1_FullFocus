@@ -1,7 +1,11 @@
-import { ajaxMultipartForm } from "../../shared/api/ajax";
-import { SignUpForm } from "../../widgets/signupForm/signupForm";
-import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
-import { validateLogin, validatePassword } from "../../shared/lib/validate/validate";
+import './style.css';
+import { ajaxMultipartForm } from '../../shared/api/ajax';
+import { SignUpForm } from '../../widgets/signupForm/signupForm';
+import { EmptyContainer } from '../../shared/uikit/emptyContainer/emptyContainer';
+import {
+    validateLogin,
+    validatePassword,
+} from '../../shared/lib/validate/validate';
 
 export class SignUp {
     /**
@@ -23,7 +27,9 @@ export class SignUp {
     render() {
         this.formObj = new SignUpForm(this);
         this.htmlElement = this.formObj.render();
-        this.errorsElement = new EmptyContainer('form-errors').render();
+        this.errorsElement = new EmptyContainer(
+            'signup-form-card__errors',
+        ).render();
         this.htmlElement.appendChild(this.errorsElement);
 
         this.htmlElement.addEventListener('submit', (e) => {
@@ -31,43 +37,63 @@ export class SignUp {
             this.errorsElement.textContent = '';
 
             const loginField = this.formObj.form.getFieldByName('login');
-            
             let error = validateLogin(loginField.value);
             let isValid = true;
             if (error != null) {
                 isValid = false;
                 loginField.classList.add('invalid');
-                this.formObj.form.getErrorFieldByInputName('login').textContent = error;
+                this.formObj.form.getErrorFieldByInputName(
+                    'login',
+                ).textContent = error;
             } else {
                 loginField.classList.remove('invalid');
                 loginField.classList.add('valid');
-                this.formObj.form.getErrorFieldByInputName('login').textContent = '';
+                this.formObj.form.getErrorFieldByInputName(
+                    'login',
+                ).textContent = '';
             }
-            
+
             const passwordField = this.formObj.form.getFieldByName('password');
             error = validatePassword(passwordField.value);
             if (error != null) {
                 isValid = false;
                 passwordField.classList.add('invalid');
-                this.formObj.form.getErrorFieldByInputName('password').textContent = error;
+                this.formObj.form.getErrorFieldByInputName(
+                    'password',
+                ).textContent = error;
             } else {
                 passwordField.classList.remove('invalid');
                 passwordField.classList.add('valid');
-                this.formObj.form.getErrorFieldByInputName('password').textContent = '';
+                this.formObj.form.getErrorFieldByInputName(
+                    'password',
+                ).textContent = '';
             }
 
             if (isValid) {
-                const formEl = document.getElementsByClassName('signup-form')[0];
-                ajaxMultipartForm('POST', '/api/auth/signup', formEl, (status, msg, msgrus) => {
-                    if (status === 200) {
-                        this.parentItem.goToPage('main');
-                        return;
-                    }
-                    this.errorsElement.textContent = msgrus;
-                })
+                const formEl =
+                    document.getElementsByClassName('signup-form')[0];
+                const submitBtn =
+                    formEl.getElementsByClassName('btn-submit')[0];
+                submitBtn.disabled = true;
+                submitBtn.classList.add('btn-submit--loading');
+                ajaxMultipartForm(
+                    'POST',
+                    '/api/auth/signup',
+                    formEl,
+                    (status, msg, msgrus) => {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('btn-submit--loading');
+                        if (status === 200) {
+                            this.parentItem.goToPage('main');
+                            return;
+                        }
+                        loginField.classList.add('invalid');
+                        passwordField.classList.add('invalid');
+                        this.errorsElement.textContent = msgrus;
+                    },
+                );
             }
-        })
-
+        });
         return this.htmlElement;
     }
 }

@@ -1,4 +1,3 @@
-import './style.css'
 import formTmpl from './form.pug'
 
 export const INPUTS = {
