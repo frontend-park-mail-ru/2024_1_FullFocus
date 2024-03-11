@@ -9,6 +9,7 @@ body {
     font-family:'GTEestiPro', sans-serif;
     background-color: #efefef;
     margin: 0;
+    min-width: 1372px;
 }
 
 .form-errors {
@@ -21,11 +22,11 @@ input {
     height: 30px;
     font-size: 20px;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 a {
     text-decoration: none;
-    padding-left: 30px;
     color: black;
 }
 
@@ -33,5 +34,3 @@ a {
     font-weight: bold;
     color: #5DCEC6;
 }
-
-
