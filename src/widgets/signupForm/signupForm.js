@@ -24,7 +24,7 @@ export class SignUpForm {
         const formComponent = this.form.getElement();
         component
             .getElementsByClassName('signup-form-card__main')[0]
-            .insertAdjacentHTML('beforeend', formComponent);
+            .appendChild(formComponent);
         return component;
     }
 }

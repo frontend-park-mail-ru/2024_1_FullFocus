@@ -37,17 +37,37 @@
     gap: 15px;
 }
 
+.login-form-card__main form .input-block__input {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+}
+
 .login-form-card__main form .input-block input {
     display: inline-block;
     height: 50px;
     border: 2px solid rgb(157, 157, 157);
     font-size: 18px;
     border-radius: 8px;
-    width: 100%;
+    flex-grow: 1;
     padding-left: 15px;
     box-sizing: border-box;
     transition: border-color 0.1s;
     outline: none;
+}
+
+.login-form-card__main form .input-block .hide-show-password-btn {
+    outline: none;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 2px solid rgb(157, 157, 157);
+    width: 50px;
+    transition: background-color 0.2s;
+}
+
+.login-form-card__main form .input-block .hide-show-password-btn:hover {
+    cursor: pointer;
+    background-color: #dbdbdb;
 }
 
 .login-form-card__main form input:focus {
