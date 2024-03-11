@@ -5,10 +5,18 @@ import { ajax } from '../../shared/api/ajax';
 import { ProductCard } from './productCard/productCard';
 
 export class ProductsSection {
+    /**
+     * Constructor for ProductsSection
+     * @param {string} header - products section header
+     */
     constructor(header = '') {
         this.header = header;
     }
 
+    /**
+     * Renders products section
+     * @returns {HTMLElement} rendered products section
+     */
     render() {
         const component = domFromHtml(productsSectionTmpl({header: this.header}));
         const section = component.getElementsByClassName('products-section__inner')[0];

@@ -1,24 +1,30 @@
 import { Form } from '../../entities/form/form';
 import { domFromHtml } from '../../shared/lib/domFromHtml/domFromHtml';
+import './style.css';
+import loginFormTmpl from './loginForm.pug';
 
 export class LoginForm {
+    /**
+     * Constructor for LoginForm
+     * @param {any} parent - parent object
+     */
     constructor(parent) {
         this.parentItem = parent;
         this.form = new Form('login-form', 'Войти');
     }
 
+    /**
+     * Renders Login form
+     * @returns {HTMLElement} rendered login form
+     */
     render() {
         this.form.addField('login', 'Логин', 'text');
         this.form.addField('password', 'Пароль', 'password');
-        const component = this.form.getElement();
-        return domFromHtml(component);
-    }
-
-    emailElement() {
-        return this.form.getFieldByName('email');
-    }
-
-    passwordElement() {
-        return this.form.getFieldByName('password');
+        const component = domFromHtml(loginFormTmpl());
+        const formComponent = this.form.getElement();
+        component
+            .getElementsByClassName('login-form-card__main')[0]
+            .appendChild(formComponent);
+        return component;
     }
 }

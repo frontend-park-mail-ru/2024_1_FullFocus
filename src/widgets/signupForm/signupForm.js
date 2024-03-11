@@ -1,29 +1,30 @@
-import { Form } from "../../entities/form/form";
-import { domFromHtml } from "../../shared/lib/domFromHtml/domFromHtml";
+import { Form } from '../../entities/form/form';
+import { domFromHtml } from '../../shared/lib/domFromHtml/domFromHtml';
+import './style.css';
+import signupFormTmpl from './signupForm.pug';
 
 export class SignUpForm {
+    /**
+     * Constructor for SignUp
+     * @param {any} parent - parent object
+     */
     constructor(parent) {
         this.parentItem = parent;
         this.form = new Form('signup-form', 'Зарегистрироваться');
     }
 
+    /**
+     * Renders signup form
+     * @returns {HTMLElement} rendered html element
+     */
     render() {
         this.form.addField('login', 'Логин', 'text');
         this.form.addField('password', 'Пароль', 'password');
-        const component = this.form.getElement();
-        return domFromHtml(component);
-    }
-
-    emailElement() {
-        return this.form.getFieldByName('email');
-    }
-
-    passwordElement() {
-        return this.form.getFieldByName('password');
-    }
-
-    validate() {
-        return this.form.validate();
+        const component = domFromHtml(signupFormTmpl());
+        const formComponent = this.form.getElement();
+        component
+            .getElementsByClassName('signup-form-card__main')[0]
+            .appendChild(formComponent);
+        return component;
     }
 }
-
