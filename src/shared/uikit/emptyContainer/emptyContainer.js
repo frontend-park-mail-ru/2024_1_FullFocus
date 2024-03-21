@@ -1,13 +1,15 @@
-import { domFromHtml } from "../../lib/domFromHtml/domFromHtml";
-import emptyContainerTmpl from './emptyContainer.pug'
+import emptyContainerTmpl from './emptyContainer.pug';
 
 export class EmptyContainer {
     /**
      * Empty container constructor
+     * @param {HTMLElement} parent - parent html element
      * @param {string} elementClass - html class of the element
      */
-    constructor(elementClass) {
+    constructor(parent, elementClass) {
+        this.parent = parent;
         this.class = elementClass;
+        this.htmlElement = null;
     }
 
     /**
@@ -15,6 +17,10 @@ export class EmptyContainer {
      * @returns {HTMLElement} rendered html element
      */
     render() {
-        return domFromHtml(emptyContainerTmpl({elementClass: this.class}));
+        this.parent.insertAdjacentHTML(
+            'beforeend',
+            emptyContainerTmpl({ elementClass: this.class }),
+        );
+        this.htmlElement = this.parent.getElementsByClassName(this.class)[0];
     }
 }
