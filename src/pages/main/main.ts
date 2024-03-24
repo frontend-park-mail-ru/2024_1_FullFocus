@@ -1,12 +1,17 @@
-import { ProductsSection } from '../../widgets/productsSection/productsSection';
+import { WithNavbar } from '@/widgets/layout/withNavbar/withNavbar';
+import { ProductsSection } from '@/widgets/productsSection/productsSection';
 
 export class Main {
+    parentItem: WithNavbar;
+    name: string;
+    htmlElement: HTMLDivElement;
+
     /**
      * Constructor for Main page object
      * @param {any} parent - parent object
      * @param {string} name - name of the page
      */
-    constructor(parent, name) {
+    constructor(parent: WithNavbar, name: string) {
         this.parentItem = parent;
         this.name = name;
         this.htmlElement = null;
@@ -14,7 +19,6 @@ export class Main {
 
     /**
      * Renders main page
-     * @returns {HTMLElement} html element of the page
      */
     render() {
         const productsSection = new ProductsSection(

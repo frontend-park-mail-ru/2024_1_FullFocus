@@ -19,7 +19,7 @@ export class Input {
 
     /**
      * Renders Input
-     * @returns {HTMLElement} rendered html element
+     * @returns {Element} rendered html element
      */
     render() {
         this.parent.insertAdjacentHTML(

@@ -3,24 +3,29 @@ import emptyContainerTmpl from './emptyContainer.pug';
 export class EmptyContainer {
     /**
      * Empty container constructor
-     * @param {HTMLElement} parent - parent html element
+     * @param {Element} parent - parent html element
      * @param {string} elementClass - html class of the element
      */
-    constructor(parent, elementClass) {
+    parent: Element;
+    class: string;
+    htmlElement: HTMLDivElement;
+
+    constructor(parent: Element, elementClass?: string) {
         this.parent = parent;
-        this.class = elementClass;
+        this.class = elementClass ?? '';
         this.htmlElement = null;
     }
 
     /**
      * Renders EmptyContainer
-     * @returns {HTMLElement} rendered html element
      */
-    render() {
+    render(): void {
         this.parent.insertAdjacentHTML(
             'beforeend',
             emptyContainerTmpl({ elementClass: this.class }),
         );
-        this.htmlElement = this.parent.getElementsByClassName(this.class)[0];
+        this.htmlElement = this.parent.getElementsByClassName(
+            this.class,
+        )[0] as HTMLDivElement;
     }
 }

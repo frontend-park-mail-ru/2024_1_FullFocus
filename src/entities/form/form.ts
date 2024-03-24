@@ -1,22 +1,37 @@
 import formTmpl from './form.pug';
-import { Input } from '../../shared/uikit/input/input';
-import { Button } from '../../shared/uikit/button/button';
-import { EmptyContainer } from '../../shared/uikit/emptyContainer/emptyContainer';
+import { Input } from '@/shared/uikit/input/input';
+import { Button } from '@/shared/uikit/button/button';
+import { EmptyContainer } from '@/shared/uikit/emptyContainer/emptyContainer';
 
-export const INPUTS = {
-    PASSWORD: 'password',
-    EMAIL: 'email',
-    TEXT: 'text',
+type InputType = 'password' | 'email' | 'text';
+
+type Fields = {
+    [key: string]: {
+        name: string;
+        placeholder: string;
+        type: InputType;
+        elClass: string;
+    };
 };
 
 export class Form {
+    parent: Element;
+    submitText: string;
+    formClass: string;
+    fields: Fields;
+    htmlElement: Element;
+
     /**
      * Form class constructor
-     * @param {HTMLElement} parent - parent html element
+     * @param {Element} parent - parent html element
      * @param {string} formClass - class associated with a form
      * @param {string} submitText - text for a submit button
      */
-    constructor(parent, formClass, submitText = 'Submit') {
+    constructor(
+        parent: Element,
+        formClass: string,
+        submitText: string = 'Submit',
+    ) {
         this.parent = parent;
         this.submitText = submitText;
         this.formClass = formClass;
@@ -28,10 +43,10 @@ export class Form {
      * Add field to form
      * @param {string} name - name of the html input
      * @param {string} text - placeholder text for input
-     * @param {string} type - html type of input
+     * @param {InputType} type - html type of input
      * @param {string} elClass - html element class
      */
-    addField(name, text, type, elClass) {
+    addField(name: string, text: string, type: InputType, elClass: string) {
         this.fields[name] = {
             name: name,
             placeholder: text,
@@ -42,7 +57,6 @@ export class Form {
 
     /**
      * Get raw html of the form
-     * @returns {string} generated html
      */
     render() {
         this.parent.insertAdjacentHTML(
@@ -84,8 +98,8 @@ export class Form {
                 btn.addEventListener('click', (e) => {
                     const inputField = input.getElementsByClassName(
                         attrs.elClass,
-                    )[0];
-                    const target = e.target;
+                    )[0] as HTMLInputElement;
+                    const target = e.target as HTMLButtonElement;
                     if (inputField.type === 'password') {
                         inputField.type = 'text';
                         target.textContent = 'hide';
@@ -119,10 +133,10 @@ export class Form {
      * @param {string} name - name of input field
      * @returns {HTMLElement} input html element
      */
-    getFieldByName(name) {
+    getFieldByName(name: string): HTMLInputElement {
         return this.htmlElement.getElementsByClassName(
             'input-block__' + this.fields[name].elClass,
-        )[0];
+        )[0] as HTMLInputElement;
     }
 
     /**
@@ -130,7 +144,7 @@ export class Form {
      * @param {string} name - name of input field
      * @returns {HTMLElement} error field html element
      */
-    getErrorFieldByInputName(name) {
+    getErrorFieldByInputName(name: string): Element {
         return document.getElementsByClassName(
             this.fields[name].elClass + '-error',
         )[0];
