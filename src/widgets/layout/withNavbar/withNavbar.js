@@ -1,6 +1,5 @@
 import './style.css';
 import { config } from './../../../shared/constants/config';
-import { domFromHtml } from '../../../shared/lib/domFromHtml/domFromHtml';
 import { NavbarLink } from './navbarLink/navbarLink';
 import withNavbarTmpl from './withNavbar.pug';
 import { ajax } from '../../../shared/api/ajax';
@@ -8,10 +7,10 @@ import { ajax } from '../../../shared/api/ajax';
 export class WithNavbar {
     /**
      * Constructor for WithNavbar object
-     * @param {htmlElement} parent - parent html element
+     * @param {HTMLElement} parent - parent html element
      */
     constructor(parent) {
-        this.parentElement = parent;
+        this.parent = parent;
         this.pageItems = {};
         this.activePageName = '';
         this.navbarLinkItems = {};
@@ -36,17 +35,18 @@ export class WithNavbar {
         this.htmlElement.innerHTML = '';
         this.activePageName = pageName;
         this.updateNavbar();
-        this.htmlElement.appendChild(this.pageItems[pageName].render());
+
+        this.pageItems[pageName].render();
     }
 
     /**
      * Renders page with navbar
      */
     render() {
-        const element = domFromHtml(withNavbarTmpl());
+        this.parent.insertAdjacentHTML('beforeend', withNavbarTmpl());
         this.navbarElement =
-            element.getElementsByClassName('navbar__navigation')[0];
-        this.htmlElement = element.getElementsByClassName('content')[0];
+            this.parent.getElementsByClassName('navbar__navigation')[0];
+        this.htmlElement = this.parent.getElementsByClassName('content')[0];
 
         this.navbarElement.addEventListener('click', (e) => {
             const { target } = e;
@@ -58,11 +58,7 @@ export class WithNavbar {
             }
         });
 
-        this.parentElement.appendChild(
-            element.getElementsByClassName('navbar')[0],
-        );
-        this.parentElement.appendChild(this.htmlElement);
-        this.goToPage('main');
+        this.goToPage('login');
     }
 
     /**
@@ -79,20 +75,19 @@ export class WithNavbar {
                     config.menu[pageName].userLogged == null
                 ) {
                     const navbarLinkItem = new NavbarLink(
-                        this,
+                        this.navbarElement,
                         pageName,
                         config.menu[pageName].href,
                         config.menu[pageName].text,
                     );
 
-                    const navbarLinkElement = navbarLinkItem.render();
+                    navbarLinkItem.render();
 
                     if (pageName === this.activePageName) {
                         navbarLinkItem.activate();
                         this.activeItem = navbarLinkItem;
                     }
 
-                    this.navbarElement.appendChild(navbarLinkElement);
                     this.navbarLinkItems[pageName] = navbarLinkItem;
                 }
             });

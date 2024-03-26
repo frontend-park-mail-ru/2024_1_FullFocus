@@ -1,30 +1,41 @@
 import { Form } from '../../entities/form/form';
-import { domFromHtml } from '../../shared/lib/domFromHtml/domFromHtml';
 import './style.css';
 import signupFormTmpl from './signupForm.pug';
 
 export class SignUpForm {
     /**
-     * Constructor for SignUp
-     * @param {any} parent - parent object
+     * Constructor for SignUp form
+     * @param {HTMLElement} parent - parent html element
      */
     constructor(parent) {
-        this.parentItem = parent;
-        this.form = new Form('signup-form', 'Зарегистрироваться');
+        this.parent = parent;
+        this.htmlElement = null;
+        this.form = null;
     }
 
     /**
      * Renders signup form
-     * @returns {HTMLElement} rendered html element
      */
     render() {
-        this.form.addField('login', 'Логин', 'text');
-        this.form.addField('password', 'Пароль', 'password');
-        const component = domFromHtml(signupFormTmpl());
-        const formComponent = this.form.getElement();
-        component
-            .getElementsByClassName('signup-form-card__main')[0]
-            .appendChild(formComponent);
-        return component;
+        this.parent.insertAdjacentHTML('beforeend', signupFormTmpl());
+        this.htmlElement =
+            this.parent.getElementsByClassName('signup-form-card')[0];
+
+        this.form = new Form(
+            this.htmlElement.getElementsByClassName(
+                'signup-form-card__main',
+            )[0],
+            'signup-form',
+            'Зарегистрироваться',
+        );
+
+        this.form.addField('login', 'Логин', 'text', 'input-block__login');
+        this.form.addField(
+            'password',
+            'Пароль',
+            'password',
+            'input-block__password',
+        );
+        this.form.render();
     }
 }

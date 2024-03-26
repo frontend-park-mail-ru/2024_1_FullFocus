@@ -1,21 +1,20 @@
-import './style.css'
-import navbarLinkTmpl from './navbarLink.pug'
-import { domFromHtml } from '../../../../shared/lib/domFromHtml/domFromHtml';
+import './style.css';
+import navbarLinkTmpl from './navbarLink.pug';
 
 export class NavbarLink {
     /**
      * Constructor for NavbarLink
-     * @param {any} parent - parent object
+     * @param {HTMLElement} parent - parent html element
      * @param {string} section - associated with navbar link page name
      * @param {string} href - href html link attribute
      * @param {string} text - navbar link text
      */
     constructor(parent, section, href, text) {
-        this.parentItem = parent;
+        this.parent = parent;
         this.href = href;
         this.section = section;
         this.text = text;
-        this.element = null;
+        this.htmlElement = null;
     }
 
     /**
@@ -23,27 +22,31 @@ export class NavbarLink {
      * @returns {HTMLElement} rendered html element
      */
     render() {
-        const component = navbarLinkTmpl({
+        this.parent.insertAdjacentHTML(
+            'beforeend',
+            navbarLinkTmpl({
                 href: this.href,
                 section: this.section,
-                text: this.text
-            });
-        this.element = domFromHtml(component);
-        return this.element;
+                text: this.text,
+            }),
+        );
+
+        this.htmlElement = this.parent.getElementsByClassName(
+            'navigation-link-' + this.section,
+        )[0];
     }
 
     /**
      * Activates navbar link
      */
     activate() {
-        this.element.classList.add('active');
+        this.htmlElement.classList.add('navigation-link_active');
     }
-    
+
     /**
      * Deactivate navbar link
      */
     deactivate() {
-        this.element.classList.remove('active');
+        this.htmlElement.classList.remove('navigation-link_active');
     }
 }
-

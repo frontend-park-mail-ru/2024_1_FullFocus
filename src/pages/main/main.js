@@ -1,4 +1,4 @@
-import { ProductsSection } from "../../widgets/productsSection/productsSection";
+import { ProductsSection } from '../../widgets/productsSection/productsSection';
 
 export class Main {
     /**
@@ -11,14 +11,18 @@ export class Main {
         this.name = name;
         this.htmlElement = null;
     }
-    
+
     /**
      * Renders main page
      * @returns {HTMLElement} html element of the page
      */
     render() {
-        const productsSection = new ProductsSection('Популярные товары');
-        this.htmlElement = productsSection.render();
-        return this.htmlElement;
+        const productsSection = new ProductsSection(
+            this.parentItem.htmlElement,
+            'Популярные товары',
+        );
+
+        productsSection.render();
+        this.htmlElement = productsSection.htmlElement;
     }
 }

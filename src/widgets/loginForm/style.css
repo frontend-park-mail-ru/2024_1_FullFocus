@@ -8,46 +8,36 @@
     border-radius: 32px;
 }
 
-.login-form-card__logo {
-    font-weight: 700;
-    font-size: 32px;
-}
-
-.login-form-card__logo__left {
+.login-form-card__logo-left {
     color: #5dcec6;
 }
 
 .login-form-card__header {
-    font-size: 27px;
-    font-weight: 700;
     margin: 40px 0 16px 0;
-}
-
-.login-form-card__subheader {
-    font-size: 16px;
 }
 
 .login-form-card__main {
     margin-top: 30px;
 }
 
-.login-form-card__main form {
+.login-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.login-form-card__main form .input-block__input {
-    width: 100%;
+.input-block {
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
 }
 
-.login-form-card__main form .input-block input {
+.input-block__input {
     display: inline-block;
+    font-family: inherit;
+    font-size: inherit;
     height: 50px;
     border: 2px solid rgb(157, 157, 157);
-    font-size: 18px;
     border-radius: 8px;
     flex-grow: 1;
     padding-left: 15px;
@@ -56,7 +46,7 @@
     outline: none;
 }
 
-.login-form-card__main form .input-block .hide-show-password-btn {
+.hide-show-password-btn {
     outline: none;
     background-color: #fff;
     border-radius: 8px;
@@ -65,60 +55,68 @@
     transition: background-color 0.2s;
 }
 
-.login-form-card__main form .input-block .hide-show-password-btn:hover {
+.hide-show-password-btn__text {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.hide-show-password-btn:hover {
     cursor: pointer;
     background-color: #dbdbdb;
 }
 
-.login-form-card__main form input:focus {
+.input-block__input:focus {
     border-color: #5dcec6;
 }
 
-.login-form-card__main form input:focus:hover {
+.input-block__input:focus:hover {
     border-color: #5dcec6;
 }
 
-.login-form-card__main form input:hover {
+.input-block__input:hover {
     border-color: #3a817c;
 }
 
-.login-form-card__main form .input-block .input-block__error {
+.input-block__error {
     color: rgb(150, 0, 0);
-    font-size: 12px;
-    font-weight: 700;
 }
 
-.login-form-card__main form button.btn-submit {
+.btn-submit {
     position: relative;
     border-radius: 8px;
     margin-top: 20px;
     height: 50px;
     background-color: #5dcec6;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
     border: 0;
     transition: background-color 0.2s;
     outline: none;
 }
 
-.login-form-card__main form button.btn-submit:hover {
+.btn-submit__text {
+    color: white;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.btn-submit:hover {
     cursor: pointer;
     background-color: #68e7dd;
 }
 
-.login-form-card__main form button.btn-submit:focus {
+.btn-submit:focus {
     cursor: pointer;
     background-color: #68e7dd;
 }
 
 /* Loading animation */
-.login-form-card__main form button.btn-submit--loading .btn-submit__text {
+.btn-submit--loading .btn-submit__text {
     visibility: hidden;
     opacity: 0;
 }
 
-.login-form-card__main form button.btn-submit--loading::after {
+button.btn-submit--loading::after {
     content: '';
     position: absolute;
     width: 16px;
@@ -144,34 +142,34 @@
     }
 }
 
-.login-form-card__main form .input-block input.invalid {
+.input-block__input_invalid {
     border-color: rgb(200, 0, 0);
 }
 
-.login-form-card__main form .input-block input.invalid:hover {
+.input-block__input_invalid:hover {
     border-color: rgb(150, 0, 0);
 }
 
-.login-form-card__main form .input-block input.invalid:focus {
+.input-block__input_invalid:focus {
     border-color: rgb(255, 0, 0);
 }
 
-.login-form-card__main form .input-block input.invalid:focus:hover {
+.input-block__input_invalid:focus:hover {
     border-color: rgb(255, 0, 0);
 }
 
-.login-form-card__main form input.valid {
+.input-block__input_valid {
     border-color: rgb(0, 180, 0);
 }
 
-.login-form-card__main form input.valid:hover {
+.input-block__input_valid:hover {
     border-color: rgb(0, 150, 0);
 }
 
-.login-form-card__main form input.valid:focus {
+.input-block__input_valid:focus {
     border-color: rgb(0, 225, 0);
 }
 
-.login-form-card__main form input.valid:focus:hover {
+.input-block__input_valid:focus:hover {
     border-color: rgb(0, 225, 0);
 }

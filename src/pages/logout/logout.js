@@ -1,5 +1,5 @@
-import { EmptyContainer } from "../../shared/uikit/emptyContainer/emptyContainer";
-import { ajax } from "../../shared/api/ajax";
+import { EmptyContainer } from '../../shared/uikit/emptyContainer/emptyContainer';
+import { ajax } from '../../shared/api/ajax';
 
 export class LogOut {
     /**
@@ -12,7 +12,7 @@ export class LogOut {
         this.name = name;
         this.htmlElement = null;
     }
-    
+
     /**
      * Renders logout page
      * @returns {HTMLElement} html element of the page
@@ -20,10 +20,10 @@ export class LogOut {
     render() {
         ajax('POST', '/api/auth/logout', null, null, (data, status) => {
             this.parentItem.goToPage('main');
-        })
-        
-        const cont = new EmptyContainer;
-        this.htmlElement = cont.render();
-        return this.htmlElement;
+        });
+
+        const cont = new EmptyContainer(this.parentItem.htmlElement);
+        cont.render();
+        this.htmlElement = cont.htmlElement;
     }
 }
