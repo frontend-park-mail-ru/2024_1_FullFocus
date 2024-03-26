@@ -1,34 +1,47 @@
-export const config = {
+type UserLogged = 'logged' | 'unlogged' | 'both';
+
+type Config = {
+    [segment: string]: {
+        [page: string]: {
+            href: string;
+            text: string;
+            name: string;
+            userLogged: UserLogged;
+        };
+    };
+};
+
+export const config: Config = {
     menu: {
         main: {
             href: '/',
             text: 'Главная',
             name: 'main',
-            userLogged: null,
+            userLogged: 'both',
         },
         login: {
             href: '/login',
             text: 'Авторизация',
             name: 'login',
-            userLogged: false,
+            userLogged: 'unlogged',
         },
         signup: {
             href: '/signup',
             text: 'Регистрация',
             name: 'signup',
-            userLogged: false,
+            userLogged: 'unlogged',
         },
         profile: {
             href: '/me',
             text: 'Профиль',
             name: 'profile',
-            userLogged: true,
+            userLogged: 'logged',
         },
         logout: {
             href: '/isLoggedIn',
             text: 'Выйти',
             name: 'logout',
-            userLogged: true,
-        }
-    }
-}
+            userLogged: 'logged',
+        },
+    },
+};

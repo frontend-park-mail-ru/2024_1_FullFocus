@@ -1,15 +1,37 @@
-import './style.css';
-import { config } from './../../../shared/constants/config';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import './style.scss';
+import { config } from '@/shared/constants/config';
 import { NavbarLink } from './navbarLink/navbarLink';
 import withNavbarTmpl from './withNavbar.pug';
-import { ajax } from '../../../shared/api/ajax';
+import { ajax } from '@/shared/api/ajax';
+
+interface PageItems {
+    [name: string]: any;
+}
+
+interface NavbarLinkItems {
+    [name: string]: NavbarLink;
+}
 
 export class WithNavbar {
+    parent: Element;
+    pageItems: PageItems;
+    activePageName: string;
+    navbarLinkItems: NavbarLinkItems;
+    navbarElement: Element;
+    htmlElement: Element;
+    isLoggedIn: boolean;
+    activeItem: NavbarLink;
+
     /**
      * Constructor for WithNavbar object
-     * @param {HTMLElement} parent - parent html element
+     * @param {Element} parent - parent html element
      */
-    constructor(parent) {
+    constructor(parent: Element) {
         this.parent = parent;
         this.pageItems = {};
         this.activePageName = '';
@@ -17,13 +39,14 @@ export class WithNavbar {
         this.navbarElement = null;
         this.htmlElement = null;
         this.isLoggedIn = false;
+        this.activeItem = null;
     }
 
     /**
      * Adds page
      * @param {any} pageItem - page object
      */
-    addPage(pageItem) {
+    addPage(pageItem: any) {
         this.pageItems[pageItem.name] = pageItem;
     }
 
@@ -31,7 +54,7 @@ export class WithNavbar {
      * Change page
      * @param {string} pageName - name of the page to go
      */
-    goToPage(pageName) {
+    goToPage(pageName: string) {
         this.htmlElement.innerHTML = '';
         this.activePageName = pageName;
         this.updateNavbar();
@@ -48,8 +71,8 @@ export class WithNavbar {
             this.parent.getElementsByClassName('navbar__navigation')[0];
         this.htmlElement = this.parent.getElementsByClassName('content')[0];
 
-        this.navbarElement.addEventListener('click', (e) => {
-            const { target } = e;
+        this.navbarElement.addEventListener('click', (e: Event) => {
+            const target = e.target as HTMLLinkElement;
 
             if (target.tagName.toLowerCase() === 'a') {
                 e.preventDefault();
@@ -65,14 +88,19 @@ export class WithNavbar {
      * Updates navbar
      */
     updateNavbar() {
-        ajax('GET', '/api/auth/check', null, null, (data, status) => {
+        const p = ajax('GET', '/api/auth/check', null, null);
+
+        p.then(({ Status }) => {
             this.navbarElement.innerHTML = '';
-            this.isLoggedIn = status === 200;
+            this.isLoggedIn = Status === 200;
 
             Object.keys(this.pageItems).forEach((pageName) => {
                 if (
-                    config.menu[pageName].userLogged === this.isLoggedIn ||
-                    config.menu[pageName].userLogged == null
+                    (this.isLoggedIn &&
+                        config.menu[pageName].userLogged === 'unlogged') ||
+                    (!this.isLoggedIn &&
+                        config.menu[pageName].userLogged === 'unlogged') ||
+                    config.menu[pageName].userLogged === 'both'
                 ) {
                     const navbarLinkItem = new NavbarLink(
                         this.navbarElement,
@@ -91,6 +119,6 @@ export class WithNavbar {
                     this.navbarLinkItems[pageName] = navbarLinkItem;
                 }
             });
-        });
+        }).catch((error) => console.log(error));
     }
 }

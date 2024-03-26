@@ -1,13 +1,16 @@
-import { Form } from '../../entities/form/form';
-import './style.css';
+import { Form } from '@/entities/form/form';
+import './style.scss';
 import signupFormTmpl from './signupForm.pug';
 
 export class SignUpForm {
+    parent: Element;
+    htmlElement: HTMLDivElement;
+    form: Form;
+
     /**
-     * Constructor for SignUp form
-     * @param {HTMLElement} parent - parent html element
+     * Constructor for SignUpForm
      */
-    constructor(parent) {
+    constructor(parent: Element) {
         this.parent = parent;
         this.htmlElement = null;
         this.form = null;
@@ -18,8 +21,9 @@ export class SignUpForm {
      */
     render() {
         this.parent.insertAdjacentHTML('beforeend', signupFormTmpl());
-        this.htmlElement =
-            this.parent.getElementsByClassName('signup-form-card')[0];
+        this.htmlElement = this.parent.getElementsByClassName(
+            'signup-form-card',
+        )[0] as HTMLDivElement;
 
         this.form = new Form(
             this.htmlElement.getElementsByClassName(
