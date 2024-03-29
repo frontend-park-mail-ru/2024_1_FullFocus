@@ -4,13 +4,24 @@
         "es2021": true
     },
     "root": true,
-    "extends": ["eslint:recommended", "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended-type-checked",
+        "prettier"
+    ],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": true
     },
+    "ignorePatterns": ["webpack.config.ts"],
+    "overrides": [
+        {
+            "files": ["*.js"],
+            "extends": ["plugin:@typescript-eslint/disable-type-checked"]
+        }
+    ],
     "rules": {
-        "init-declarations": ["error", "always"],
         "max-lines-per-function": ["warn", 90],
         "multiline-comment-style": "error",
         "no-else-return": "error",

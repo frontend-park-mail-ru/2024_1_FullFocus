@@ -1,15 +1,21 @@
-import './style.css';
+import './style.scss';
 import navbarLinkTmpl from './navbarLink.pug';
 
 export class NavbarLink {
+    parent: Element;
+    section: string;
+    href: string;
+    text: string;
+    htmlElement: HTMLLinkElement;
+
     /**
      * Constructor for NavbarLink
-     * @param {HTMLElement} parent - parent html element
+     * @param {Element} parent - parent html element
      * @param {string} section - associated with navbar link page name
      * @param {string} href - href html link attribute
      * @param {string} text - navbar link text
      */
-    constructor(parent, section, href, text) {
+    constructor(parent: Element, section: string, href: string, text: string) {
         this.parent = parent;
         this.href = href;
         this.section = section;
@@ -19,7 +25,6 @@ export class NavbarLink {
 
     /**
      * Renders NavbarLink
-     * @returns {HTMLElement} rendered html element
      */
     render() {
         this.parent.insertAdjacentHTML(
@@ -33,7 +38,7 @@ export class NavbarLink {
 
         this.htmlElement = this.parent.getElementsByClassName(
             'navigation-link-' + this.section,
-        )[0];
+        )[0] as HTMLLinkElement;
     }
 
     /**

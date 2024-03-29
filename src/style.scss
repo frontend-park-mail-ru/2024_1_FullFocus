@@ -8,9 +8,14 @@
     src: url('./shared/fonts/Montserrat-VariableFont_wght.ttf');
 }
 
+$bg-color: #efefef;
+
 body {
-    background-color: #efefef;
     margin: 0;
+    background-color: $bg-color;
+}
+
+.root {
     min-width: 1372px;
 }
 
