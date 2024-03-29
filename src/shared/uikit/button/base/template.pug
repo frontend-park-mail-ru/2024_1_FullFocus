@@ -1,0 +1,8 @@
+- var buttonClass = 'btn ' + className
+case btnStyle
+    when 'withOutline'
+        - buttonClass = buttonClass + ' btn_with-outline'
+    when 'bright'
+        - buttonClass = buttonClass + ' btn_bright'
+button(type=`${type}` class=buttonClass) 
+    span(class=`btn__text`) #{btnText}

@@ -1,5 +1,5 @@
 {
-    "include": ["src/**/*", "./*"],
+    "include": ["src/**/*", "./*", "../*"],
     "compilerOptions": {
         "outDir": "./dist/",
         "noImplicitAny": true,
@@ -14,7 +14,8 @@
         "skipLibCheck": true,
         "paths": {
             "@/*": ["./src/*"]
-        }
+        },
+        "typeRoots": ["src/shared/@types", "node_modules/@types"]
     },
     "ts-node": {
         "compilerOptions": {
