@@ -1,8 +1,0 @@
-div(class="product-card")
-    img(class="product-card__img" src=`${src}` alt="img")
-    div(class="product-card__info")
-        div(class="product-card__info-cost") #{price} ₽
-        if name.length > 50
-            div(class="product-card__info-description") #{name.substr(0, 50)}...
-        else
-            div(class="product-card__info-description") #{name}

@@ -1,0 +1,1 @@
+export { WithNavbar } from './withNavbar';
