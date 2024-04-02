@@ -1,8 +1,5 @@
-import { parseForm } from '@/entities/form';
 import './style.scss';
 import signupFormTmpl from './template.pug';
-import { WithNavbar } from '@/widgets/layout';
-import { signupUser } from '@/features/auth';
 import { SignUpFormCardProps } from './types';
 import { SignUpForm } from '@/features/auth';
 import { Component } from '@/shared/@types/component';
@@ -13,19 +10,12 @@ export class SignUpFormCard extends Component<
 > {
     errorElement: HTMLDivElement;
     form: SignUpForm;
-    private listener: (e: SubmitEvent) => void;
-    private layoutItem: WithNavbar;
 
     /**
      * Constructor for SignUpFormCard
      */
-    constructor(
-        parent: Element,
-        layoutItem: WithNavbar,
-        props: SignUpFormCardProps,
-    ) {
+    constructor(parent: Element, props: SignUpFormCardProps) {
         super(parent, signupFormTmpl, props);
-        this.layoutItem = layoutItem;
     }
 
     addError(error: string): void {
@@ -34,38 +24,6 @@ export class SignUpFormCard extends Component<
 
     clearError(): void {
         this.errorElement.textContent = '';
-    }
-
-    private componentDidMount() {
-        this.listener = (e: SubmitEvent) => {
-            e.preventDefault();
-            this.clearError();
-
-            const formData = parseForm(this.form);
-
-            if (formData.isValid) {
-                this.form.setReadonly();
-
-                signupUser(this.form.htmlElement)
-                    .then(({ status, msgRus }) => {
-                        this.form.setNotReadonly();
-                        if (status === 200) {
-                            this.layoutItem.goToPage('main');
-                            return;
-                        }
-
-                        this.form.setInvalid();
-                        this.addError(msgRus);
-                    })
-                    .catch(() => {});
-            }
-        };
-
-        this.htmlElement.addEventListener('submit', this.listener);
-    }
-
-    private componentWillUnmount() {
-        this.htmlElement.removeEventListener('submit', this.listener);
     }
 
     /**
@@ -85,12 +43,5 @@ export class SignUpFormCard extends Component<
         );
 
         this.form.render();
-
-        this.componentDidMount();
-    }
-
-    destroy(): void {
-        super.destroy();
-        this.componentWillUnmount();
     }
 }

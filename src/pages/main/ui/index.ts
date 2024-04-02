@@ -1,9 +1,7 @@
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
-import { WithNavbar } from '@/widgets/layout';
 import { ProductsSection } from '@/widgets/productsSection';
 
 export class Main extends EmptyContainer {
-    parentItem: WithNavbar;
     name: string;
 
     /**
@@ -11,9 +9,8 @@ export class Main extends EmptyContainer {
      * @param {any} parent - parent object
      * @param {string} name - name of the page
      */
-    constructor(parent: WithNavbar, name: string) {
-        super(parent.contentElement, { className: 'main-page' });
-        this.parentItem = parent;
+    constructor(parent: Element, name: string) {
+        super(parent, { className: 'main-page' });
         this.name = name;
     }
 
@@ -27,6 +24,5 @@ export class Main extends EmptyContainer {
             className: 'products-section-popular',
             header: 'Популярные товары',
         }).render();
-        // this.htmlElement = productsSection.htmlElement;
     }
 }

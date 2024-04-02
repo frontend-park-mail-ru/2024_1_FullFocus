@@ -45,7 +45,6 @@ export class Input extends Component<HTMLInputElement, InputProps> {
         this.props.status = 'notValidated';
         this.htmlElement.classList.remove('input-block__input_valid');
         this.htmlElement.classList.remove('input-block__input_invalid');
-        // this.update();
     }
 
     get htmlInput(): HTMLInputElement {

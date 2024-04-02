@@ -1,20 +1,19 @@
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
-import { WithNavbar } from '@/widgets/layout';
 import { logoutUser } from '@/features/auth';
 
 export class LogOut extends EmptyContainer {
-    parentItem: WithNavbar;
     name: string;
+    private navigateToMain: () => void;
 
     /**
      * Constructor for LogOut page object
      * @param {any} parent - parent object
      * @param {string} name - name of the page
      */
-    constructor(parent: WithNavbar, name: string) {
-        super(parent.contentElement, { className: 'logout-page' });
-        this.parentItem = parent;
+    constructor(parent: Element, name: string, navigateToMain: () => void) {
+        super(parent, { className: 'logout-page' });
         this.name = name;
+        this.navigateToMain = navigateToMain;
     }
 
     /**
@@ -25,7 +24,7 @@ export class LogOut extends EmptyContainer {
 
         logoutUser()
             .then(() => {
-                this.parentItem.goToPage('main');
+                this.navigateToMain();
             })
             .catch(() => {});
     }

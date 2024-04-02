@@ -1,1 +1,1 @@
-export { EmptyContainer, ContainerProps } from './emptyContainer';
+export { EmptyContainer, ContainerProps } from './ui';
