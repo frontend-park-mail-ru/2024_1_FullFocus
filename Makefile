@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	npm run build
+	npm run build:prod
 
 .PHOBY: run
 run: build
