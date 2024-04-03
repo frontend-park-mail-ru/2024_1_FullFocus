@@ -2,16 +2,15 @@ import formTmpl from './template.pug';
 import './style.scss';
 import { Button } from '@/shared/uikit/button';
 import { Component } from '@/shared/@types/component';
-import { FormInput } from './formInput';
-import { FormProps, Inputs, InputItems, IFormField } from './types';
+import { FormInput, FormInputProps } from './formInput';
+import { FormProps, InputItems, IFormField } from './types';
 
 export { IFormField } from './types';
 
 export class Form extends Component<HTMLFormElement, FormProps> {
-    submitText: string;
-    inputProps: Inputs;
     inputItems: InputItems;
     submitBtn: Button;
+    inputsContainer: HTMLDivElement;
 
     /**
      * Form class constructor
@@ -26,10 +25,10 @@ export class Form extends Component<HTMLFormElement, FormProps> {
     ) {
         super(parent, formTmpl, {
             className: className,
+            submitText,
         });
-        this.inputProps = {};
+
         this.inputItems = {};
-        this.submitText = submitText;
     }
 
     /**
@@ -40,7 +39,7 @@ export class Form extends Component<HTMLFormElement, FormProps> {
      * @param {string} className - html element class
      */
     addInputBlock(params: IFormField) {
-        this.inputProps[params.name] = {
+        const props: FormInputProps = {
             placeholder: params.text,
             type: params.type,
             className: 'input-block ' + params.className,
@@ -50,28 +49,29 @@ export class Form extends Component<HTMLFormElement, FormProps> {
             errorBlockClassName:
                 'input-block__error ' + params.className + '-error',
         };
+
+        this.inputItems[params.name] = new FormInput(
+            this.inputsContainer,
+            props,
+        );
     }
 
     /**
      * Render Form element
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
-        Object.entries(this.inputProps).forEach(([name, props]) => {
-            const input = new FormInput(this.htmlElement, props);
-            input.render();
-
-            this.inputItems[name] = input;
-        });
+        this.inputsContainer = this.htmlElement.getElementsByClassName(
+            'form__inputs',
+        )[0] as HTMLDivElement;
 
         this.submitBtn = new Button(this.htmlElement, {
             type: 'submit',
             className: 'btn-submit',
-            btnText: this.submitText,
+            btnText: this.props.submitText,
             btnStyle: 'bright',
         });
-        this.submitBtn.render();
     }
 
     setReadonly() {

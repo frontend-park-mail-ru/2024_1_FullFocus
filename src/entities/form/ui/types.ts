@@ -3,6 +3,7 @@ import { InputType } from '@/shared/uikit/input';
 
 export interface FormProps {
     className: string;
+    submitText: string;
 }
 
 export type Inputs = {

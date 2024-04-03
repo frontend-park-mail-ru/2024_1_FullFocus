@@ -1,27 +1,27 @@
 import './style.scss';
 import { LoginFormCard } from '@/widgets/loginFormCard';
-import { EmptyContainer } from '@/shared/uikit/emptyContainer';
+import pageTmpl from './template.pug';
 import { loginUser } from '@/features/auth';
 import { parseForm } from '@/entities/form';
+import { LoginPageProps } from './types';
+import { Component } from '@/shared/@types/component';
 
-export class Login extends EmptyContainer {
-    name: string;
-    errorsElement: HTMLDivElement;
+export class Login extends Component<HTMLDivElement, LoginPageProps> {
     formObj: LoginFormCard;
+    protected errorsElement: HTMLDivElement;
     private navigateToMain: () => void;
     private listener: (e: SubmitEvent) => void;
 
     /**
      * Constructor for Login page object
      * @param {Element} parent - parent object
-     * @param {string} name - name of the page
      */
-    // TODO parent: Element
-    constructor(parent: Element, name: string, navigateToMain: () => void) {
-        super(parent, { className: 'login-page' });
+    constructor(parent: Element, navigateToMain: () => void) {
+        super(parent, pageTmpl, {
+            className: 'login-page',
+            navigateToMain: navigateToMain,
+        });
 
-        this.name = name;
-        this.errorsElement = null;
         this.navigateToMain = navigateToMain;
     }
 
@@ -60,15 +60,12 @@ export class Login extends EmptyContainer {
     /**
      * Renders login page
      */
-    // eslint-disable-next-line max-lines-per-function
-    render() {
-        // TODO parentItem.htmlElement -> parent
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         this.formObj = new LoginFormCard(this.htmlElement, {
             className: 'login-form-card-main',
         });
-        this.formObj.render();
 
         this.componentDidMount();
     }

@@ -7,12 +7,12 @@ import { isUserLogged } from '@/features/auth';
 import { UserLogged } from './types';
 
 export class Navbar extends Component<HTMLDivElement, NavbarProps> {
-    private linkProps: Array<{
+    protected linkProps: Array<{
         pageName: string;
         userLogged: UserLogged;
         props: NavbarLinkProps;
     }>;
-    private navbarItems: { [name: string]: NavbarLink };
+    protected navbarItems: { [name: string]: NavbarLink };
 
     constructor(parent: Element, props: NavbarProps) {
         super(parent, navbarTmplFunc, props);
@@ -42,8 +42,6 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
                             this.htmlElement,
                             props,
                         );
-
-                        this.navbarItems[pageName].render();
 
                         if (pageName === activePageName) {
                             this.navbarItems[pageName].activate();

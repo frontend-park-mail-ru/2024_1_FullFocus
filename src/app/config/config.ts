@@ -31,7 +31,7 @@ function createConfig(parent: Element) {
             },
             router: {
                 component: () => {
-                    return new Main(parent, 'main');
+                    return new Main(parent);
                 },
             },
         },
@@ -45,7 +45,7 @@ function createConfig(parent: Element) {
             router: {
                 navigation: 'main',
                 component: (navigateToMain: () => void) => {
-                    return new Login(parent, 'login', navigateToMain);
+                    return new Login(parent, navigateToMain);
                 },
             },
         },
@@ -59,7 +59,7 @@ function createConfig(parent: Element) {
             router: {
                 navigation: 'main',
                 component: (navigateToMain: () => void) => {
-                    return new SignUp(parent, 'signup', navigateToMain);
+                    return new SignUp(parent, navigateToMain);
                 },
             },
         },
@@ -73,7 +73,7 @@ function createConfig(parent: Element) {
             router: {
                 navigation: 'main',
                 component: (navigateToMain: () => void) => {
-                    return new LogOut(parent, 'logout', navigateToMain);
+                    return new LogOut(parent, navigateToMain);
                 },
             },
         },

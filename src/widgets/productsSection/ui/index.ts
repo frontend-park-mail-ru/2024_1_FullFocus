@@ -1,7 +1,7 @@
+import { useGetProductCards } from '@/features/product/api';
 import './style.scss';
 import productsSectionTmpl from './template.pug';
 import { ProductsSectionProps } from './types';
-import { ProductCard, productsRequest } from '@/entities/product';
 import { Component } from '@/shared/@types/component';
 
 export class ProductsSection extends Component<
@@ -14,25 +14,19 @@ export class ProductsSection extends Component<
      */
     constructor(parent: Element, props: ProductsSectionProps) {
         super(parent, productsSectionTmpl, props);
-        this.htmlElement = null;
+        // this.htmlElement = null;
     }
 
     /**
      * Renders products section
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         const section = this.htmlElement.getElementsByClassName(
             'products-section__inner',
         )[0];
 
-        productsRequest(1, 10)
-            .then((products) => {
-                products.forEach((product) => {
-                    new ProductCard(section, product).render();
-                });
-            })
-            .catch(() => {});
+        useGetProductCards(section, 1, 10);
     }
 }

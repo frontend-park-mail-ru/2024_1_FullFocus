@@ -9,19 +9,24 @@ export abstract class Component<
     Type extends Element,
     Props extends IProps = IProps,
 > {
-    parent: Element;
     htmlElement: Type;
-    tmplFunc: TmplFunc;
-    props: Props;
+    protected parent: Element;
+    protected tmplFunc: TmplFunc;
+    protected props: Props;
 
     constructor(parent: Element, tmplFunc: TmplFunc, props: Props) {
         this.parent = parent;
         this.tmplFunc = tmplFunc;
         this.props = props;
         this.htmlElement = null;
+        this.render();
     }
 
-    render() {
+    protected render() {
+        this.renderTemplate();
+    }
+
+    protected renderTemplate() {
         this.parent.insertAdjacentHTML('beforeend', this.tmplFunc(this.props));
         this.htmlElement = this.parent.getElementsByClassName(
             this.props.className,

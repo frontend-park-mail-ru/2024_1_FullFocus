@@ -9,7 +9,7 @@ export class LoginFormCard extends Component<
     LoginFormCardProps
 > {
     form: LoginForm;
-    errorElement: HTMLDivElement;
+    protected errorElement: HTMLDivElement;
 
     /**
      * Constructor for Login form
@@ -17,7 +17,6 @@ export class LoginFormCard extends Component<
      */
     constructor(parent: Element, props: LoginFormCardProps) {
         super(parent, loginFormTmpl, props);
-        this.form = null;
     }
 
     addError(error: string): void {
@@ -31,8 +30,8 @@ export class LoginFormCard extends Component<
     /**
      * Renders Login form
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         this.errorElement = this.htmlElement.getElementsByClassName(
             'login-form-card__error',
@@ -41,7 +40,5 @@ export class LoginFormCard extends Component<
         this.form = new LoginForm(
             this.htmlElement.getElementsByClassName('login-form-card__main')[0],
         );
-
-        this.form.render();
     }
 }

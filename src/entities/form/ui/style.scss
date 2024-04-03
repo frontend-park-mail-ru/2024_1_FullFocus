@@ -1,3 +1,15 @@
+.form {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+}
+
+.form__inputs {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
 /* Loading animation */
 .btn-submit--loading {
     position: relative;

@@ -1,13 +1,13 @@
 import './style.scss';
 import { SignUpFormCard } from '@/widgets/signupFormCard';
-import { EmptyContainer } from '@/shared/uikit/emptyContainer';
+import pageTmpl from './template.pug';
 import { signupUser } from '@/features/auth';
 import { parseForm } from '@/entities/form';
+import { SignUpPageProps } from './types';
+import { Component } from '@/shared/@types/component';
 
-export class SignUp extends EmptyContainer {
-    name: string;
+export class SignUp extends Component<HTMLDivElement, SignUpPageProps> {
     formObj: SignUpFormCard;
-    private navigateToMain: () => void;
     private listener: (e: SubmitEvent) => void;
 
     /**
@@ -15,11 +15,11 @@ export class SignUp extends EmptyContainer {
      * @param {Element} parent - parent object
      * @param {string} name - name of the page
      */
-    constructor(parent: Element, name: string, navigateToMain: () => void) {
-        super(parent, { className: 'signup-page' });
-
-        this.name = name;
-        this.navigateToMain = navigateToMain;
+    constructor(parent: Element, navigateToMain: () => void) {
+        super(parent, pageTmpl, {
+            className: 'signup-page',
+            navigateToMain: navigateToMain,
+        });
     }
 
     private componentDidMount() {
@@ -36,7 +36,7 @@ export class SignUp extends EmptyContainer {
                     .then(({ status, msgRus }) => {
                         this.formObj.form.setNotReadonly();
                         if (status === 200) {
-                            this.navigateToMain();
+                            this.props.navigateToMain();
                             return;
                         }
 
@@ -57,13 +57,12 @@ export class SignUp extends EmptyContainer {
     /**
      * Renders signup page
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         this.formObj = new SignUpFormCard(this.htmlElement, {
             className: 'signup-form-card-main',
         });
-        this.formObj.render();
 
         this.componentDidMount();
     }

@@ -1,30 +1,30 @@
-import { EmptyContainer } from '@/shared/uikit/emptyContainer';
+import pageTmpl from './template.pug';
 import { logoutUser } from '@/features/auth';
+import { Component } from '@/shared/@types/component';
+import { LogOutPageProps } from './types';
 
-export class LogOut extends EmptyContainer {
-    name: string;
-    private navigateToMain: () => void;
-
+export class LogOut extends Component<HTMLDivElement, LogOutPageProps> {
     /**
      * Constructor for LogOut page object
      * @param {any} parent - parent object
      * @param {string} name - name of the page
      */
-    constructor(parent: Element, name: string, navigateToMain: () => void) {
-        super(parent, { className: 'logout-page' });
-        this.name = name;
-        this.navigateToMain = navigateToMain;
+    constructor(parent: Element, navigateToMain: () => void) {
+        super(parent, pageTmpl, {
+            className: 'logout-page',
+            navigateToMain: navigateToMain,
+        });
     }
 
     /**
      * Renders logout page
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         logoutUser()
             .then(() => {
-                this.navigateToMain();
+                this.props.navigateToMain();
             })
             .catch(() => {});
     }
