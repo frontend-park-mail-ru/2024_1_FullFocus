@@ -1,10 +1,10 @@
-import './style.scss';
+import './index.style.scss';
 import { SignUpFormCard } from '@/widgets/signupFormCard';
-import pageTmpl from './template.pug';
-import { signupUser } from '@/features/auth';
+import pageTmpl from './index.template.pug';
+import { useSignupUser } from '@/features/signup';
 import { parseForm } from '@/entities/form';
-import { SignUpPageProps } from './types';
-import { Component } from '@/shared/@types/component';
+import { SignUpPageProps } from './index.types';
+import { Component } from '@/shared/@types/index.component';
 
 export class SignUp extends Component<HTMLDivElement, SignUpPageProps> {
     formObj: SignUpFormCard;
@@ -28,11 +28,15 @@ export class SignUp extends Component<HTMLDivElement, SignUpPageProps> {
             this.formObj.clearError();
 
             const formData = parseForm(this.formObj.form);
+            formData.inputs['login'].value;
 
             if (formData.isValid) {
                 this.formObj.form.setReadonly();
 
-                signupUser(this.formObj.form.htmlElement)
+                useSignupUser(
+                    formData.inputs['login'].value,
+                    formData.inputs['password'].value,
+                )
                     .then(({ status, msgRus }) => {
                         this.formObj.form.setNotReadonly();
                         if (status === 200) {

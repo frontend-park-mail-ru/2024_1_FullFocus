@@ -1,0 +1,1 @@
+export { useGetProductCards } from './ui';

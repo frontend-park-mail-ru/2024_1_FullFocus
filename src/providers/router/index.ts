@@ -1,6 +1,6 @@
-import { Page } from './types';
+import { Page } from './index.types';
 
-export { Page } from './types';
+export { Page } from './index.types';
 
 export class Router {
     private activePage: string;

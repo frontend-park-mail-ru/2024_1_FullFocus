@@ -1,8 +1,8 @@
-import './style.scss';
-import signupFormTmpl from './template.pug';
-import { SignUpFormCardProps } from './types';
-import { SignUpForm } from '@/features/auth';
-import { Component } from '@/shared/@types/component';
+import './index.style.scss';
+import signupFormTmpl from './index.template.pug';
+import { SignUpFormCardProps } from './index.types';
+import { SignUpForm } from '@/features/signup';
+import { Component } from '@/shared/@types/index.component';
 
 export class SignUpFormCard extends Component<
     HTMLDivElement,

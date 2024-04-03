@@ -1,3 +1,4 @@
+import './index.style.scss';
 import { Input, InputType, InputStatus } from '@/shared/uikit/input';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { Button } from '@/shared/uikit/button';

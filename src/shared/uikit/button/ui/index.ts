@@ -1,6 +1,6 @@
-import buttonTmpl from './template.pug';
-import { Component } from '@/shared/@types/component';
-import './style.scss';
+import buttonTmpl from './index.template.pug';
+import { Component } from '@/shared/@types/index.component';
+import './index.style.scss';
 
 export interface ButtonProps {
     className: string;

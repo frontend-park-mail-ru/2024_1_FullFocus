@@ -4,8 +4,8 @@ export interface QueryParam {
 }
 
 export interface DataResponce<T> {
-    Status: number;
-    Data?: T;
-    Msg?: string;
-    MsgRus?: string;
+    status: number;
+    data?: T;
+    msg?: string;
+    msgRus?: string;
 }

@@ -1,16 +1,22 @@
-import { USER_API_URLS } from './constants';
-import { ajaxGet, ajaxMultipartForm, ajaxPost } from '@/shared/api';
+import { USER_API_URLS } from './index.constants';
+import { ajaxGet, ajaxPost } from '@/shared/api';
 
 export async function checkAuthRequest() {
     return ajaxGet(USER_API_URLS.checkAuth, null);
 }
 
-export async function signupRequest(form: HTMLFormElement) {
-    return ajaxMultipartForm('POST', USER_API_URLS.signup, form);
+export async function signupRequest(login: string, password: string) {
+    return ajaxPost(USER_API_URLS.signup, null, {
+        login: login,
+        password: password,
+    });
 }
 
-export async function loginRequest(form: HTMLFormElement) {
-    return ajaxMultipartForm('POST', USER_API_URLS.login, form);
+export async function loginRequest(login: string, password: string) {
+    return ajaxPost(USER_API_URLS.login, null, {
+        login: login,
+        password: password,
+    });
 }
 
 export async function logoutRequest() {

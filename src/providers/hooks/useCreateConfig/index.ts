@@ -2,12 +2,11 @@ import { Main } from '@/pages/main';
 import { Login } from '@/pages/login';
 import { SignUp } from '@/pages/signup';
 import { LogOut } from '@/pages/logout';
-import { Page } from '@/providers';
-import { Component } from '@/shared/@types/component';
-import { NavbarLinkProps } from '@/widgets/navbar/ui/navbarLink/types';
-import { UserLogged } from '@/widgets/navbar/ui/types';
+import { Component } from '@/shared/@types/index.component';
+import { UserLogged } from '@/widgets/navbar/ui/index.types';
+import { Profile } from '@/pages/profile';
 
-function createConfig(parent: Element) {
+export function createConfig(parent: Element) {
     const config: {
         [name: string]: {
             url: string;
@@ -63,6 +62,19 @@ function createConfig(parent: Element) {
                 },
             },
         },
+        profile: {
+            url: '/profile',
+            navbarLink: {
+                className: 'navbar-link-profile',
+                text: 'Профиль',
+                logged: 'logged',
+            },
+            router: {
+                component: () => {
+                    return new Profile(parent);
+                },
+            },
+        },
         logout: {
             url: '/logout',
             navbarLink: {
@@ -80,32 +92,4 @@ function createConfig(parent: Element) {
     };
 
     return config;
-}
-
-export function getConfig(parent: Element) {
-    const config = createConfig(parent);
-
-    const routerConfig: { [name: string]: Page } = {};
-    const navbarConfig: {
-        [name: string]: { props: NavbarLinkProps; logged: UserLogged };
-    } = {};
-
-    Object.entries(config).forEach(([name, item]) => {
-        routerConfig[name] = {
-            url: item.url,
-            navigation: item.router.navigation ?? null,
-            component: item.router.component,
-        };
-
-        navbarConfig[name] = {
-            props: {
-                className: item.navbarLink.className,
-                text: item.navbarLink.text,
-                href: item.url,
-            },
-            logged: item.navbarLink.logged,
-        };
-    });
-
-    return { routerConfig, navbarConfig };
 }

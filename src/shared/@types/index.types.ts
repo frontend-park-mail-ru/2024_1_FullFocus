@@ -8,7 +8,7 @@ declare module '*.module.scss' {
 }
 
 declare module '*.pug' {
-    const value: import('./templateFunction').TmplFunc;
+    const value: import('./index.templateFunction').TmplFunc;
     export = value;
 }
 

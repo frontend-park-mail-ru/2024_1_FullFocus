@@ -1,8 +1,8 @@
 import { ajaxGet } from '@/shared/api';
-import { IProductResponse } from './types';
-import { PRODUCTS_URL } from './constants';
+import { IProductResponse } from './index.types';
+import { PRODUCTS_URL } from './index.constants';
 
-export { IProductResponse } from './types';
+export { IProductResponse } from './index.types';
 
 export async function productsRequest(lastId: number, limit: number) {
     return ajaxGet<Array<IProductResponse>>(PRODUCTS_URL.getProducts, [

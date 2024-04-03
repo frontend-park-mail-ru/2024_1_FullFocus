@@ -1,10 +1,10 @@
-import './style.scss';
+import './index.style.scss';
+import pageTmpl from './index.template.pug';
 import { LoginFormCard } from '@/widgets/loginFormCard';
-import pageTmpl from './template.pug';
-import { loginUser } from '@/features/auth';
+import { useLoginUser } from '@/features/login';
 import { parseForm } from '@/entities/form';
-import { LoginPageProps } from './types';
-import { Component } from '@/shared/@types/component';
+import { LoginPageProps } from './index.types';
+import { Component } from '@/shared/@types/index.component';
 
 export class Login extends Component<HTMLDivElement, LoginPageProps> {
     formObj: LoginFormCard;
@@ -35,7 +35,10 @@ export class Login extends Component<HTMLDivElement, LoginPageProps> {
             if (formData.isValid) {
                 this.formObj.form.setReadonly();
 
-                loginUser(this.formObj.form.htmlElement)
+                useLoginUser(
+                    formData.inputs['login'].value,
+                    formData.inputs['password'].value,
+                )
                     .then(({ status, msgRus }) => {
                         this.formObj.form.setNotReadonly();
                         if (status === 200) {

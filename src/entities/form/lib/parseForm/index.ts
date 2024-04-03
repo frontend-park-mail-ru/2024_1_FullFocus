@@ -1,11 +1,8 @@
-import { FormData } from './types';
+import { FormData } from './index.types';
 import { Form } from './../../ui';
-import {
-    validateLogin,
-    validatePassword,
-} from '@/shared/lib/validate/validate';
+import { validateLogin, validatePassword } from '@/shared/lib/validate/core';
 
-export { FormData } from './types';
+export { FormData } from './index.types';
 
 export function parseForm(form: Form): FormData {
     const formData: FormData = {

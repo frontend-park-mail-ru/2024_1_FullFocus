@@ -1,11 +1,11 @@
-import formTmpl from './template.pug';
-import './style.scss';
+import formTmpl from './index.template.pug';
+import './index.style.scss';
 import { Button } from '@/shared/uikit/button';
-import { Component } from '@/shared/@types/component';
+import { Component } from '@/shared/@types/index.component';
 import { FormInput, FormInputProps } from './formInput';
-import { FormProps, InputItems, IFormField } from './types';
+import { FormProps, InputItems, IFormField } from './index.types';
 
-export { IFormField } from './types';
+export { IFormField } from './index.types';
 
 export class Form extends Component<HTMLFormElement, FormProps> {
     inputItems: InputItems;

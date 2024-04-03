@@ -1,4 +1,4 @@
-import { Component } from '@/shared/@types/component';
+import { Component } from '@/shared/@types/index.component';
 
 export interface Page {
     url: string;

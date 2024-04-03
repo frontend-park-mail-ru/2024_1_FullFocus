@@ -1,8 +1,8 @@
-import './style.scss';
-import productItemTmpl from './template.pug';
+import './index.style.scss';
+import productItemTmpl from './index.template.pug';
 import { IProduct } from '../model';
-import { Component } from '@/shared/@types/component';
-import { ProductProps } from './types';
+import { Component } from '@/shared/@types/index.component';
+import { ProductProps } from './index.types';
 
 export class ProductCard extends Component<HTMLDivElement, ProductProps> {
     productInfo: IProduct;

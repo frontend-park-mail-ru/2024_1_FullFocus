@@ -1,5 +1,5 @@
 import { Form } from '@/entities/form';
-import { LOGIN_FORM_FIELDS } from './config';
+import { LOGIN_FORM_FIELDS } from './index.config';
 
 export class LoginForm extends Form {
     constructor(parent: Element) {

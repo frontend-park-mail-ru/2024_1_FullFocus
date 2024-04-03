@@ -1,15 +1,15 @@
 import { ProductCard, productsRequest } from '@/entities/product';
 
-export function useGetProductCards(
+export async function useGetProductCards(
     parent: Element,
     lastId: number,
     limit: number,
 ) {
-    productsRequest(lastId, limit)
-        .then(({ Status, Data }) => {
-            if (Status === 200) {
+    return productsRequest(lastId, limit)
+        .then(({ status, data }) => {
+            if (status === 200) {
                 const products: Array<ProductCard> = [];
-                Data.forEach((product) => {
+                data.forEach((product) => {
                     products.push(
                         new ProductCard(parent, {
                             id: product['id'],

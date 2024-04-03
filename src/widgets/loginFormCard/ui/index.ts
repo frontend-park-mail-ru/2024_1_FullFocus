@@ -1,8 +1,8 @@
-import { LoginFormCardProps } from './types';
-import './style.scss';
-import loginFormTmpl from './template.pug';
-import { Component } from '@/shared/@types/component';
-import { LoginForm } from '@/features/auth/ui';
+import { LoginFormCardProps } from './index.types';
+import './index.style.scss';
+import loginFormTmpl from './index.template.pug';
+import { Component } from '@/shared/@types/index.component';
+import { LoginForm } from '@/features/login';
 
 export class LoginFormCard extends Component<
     HTMLDivElement,

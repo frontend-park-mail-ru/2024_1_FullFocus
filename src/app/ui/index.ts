@@ -1,9 +1,9 @@
-import appTmplFunc from './template.pug';
-import './style.scss';
-import { Component } from '@/shared/@types/component';
+import appTmplFunc from './index.template.pug';
+import './index.style.scss';
+import { Component } from '@/shared/@types/index.component';
 import { Page, Router } from '@/providers';
 import { Navbar } from '@/widgets/navbar';
-import { getConfig } from '../config';
+import { getConfig } from '@/providers';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;

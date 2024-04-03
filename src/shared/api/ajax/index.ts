@@ -1,5 +1,5 @@
-import { QueryParam, DataResponce } from './types';
-import { BACKEND_URL, METHODS } from './config/constants';
+import { QueryParam, DataResponce } from './index.types';
+import { BACKEND_URL, METHODS } from './config/index.constants';
 
 /**
  * Performs ajax request

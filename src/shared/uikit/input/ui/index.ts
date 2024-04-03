@@ -1,5 +1,5 @@
-import inputTmpl from './template.pug';
-import { Component } from '@/shared/@types/component';
+import inputTmpl from './index.template.pug';
+import { Component } from '@/shared/@types/index.component';
 
 export type InputType = 'password' | 'email' | 'text';
 

@@ -1,5 +1,5 @@
 import { Form } from '@/entities/form';
-import { SIGNUP_FORM_FIELDS } from './config';
+import { SIGNUP_FORM_FIELDS } from './index.config';
 
 export class SignUpForm extends Form {
     constructor(parent: Element) {

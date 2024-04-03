@@ -1,5 +1,5 @@
-import { TmplFunc } from './templateFunction';
-import { domFromHtml } from '../lib/domFromHtml/domFromHtml';
+import { TmplFunc } from './index.templateFunction';
+import { domFromHtml } from '../lib/domFromHtml/core';
 
 interface IProps {
     className: string;

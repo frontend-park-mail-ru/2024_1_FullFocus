@@ -1,7 +1,7 @@
-import pageTmpl from './template.pug';
-import { logoutUser } from '@/features/auth';
-import { Component } from '@/shared/@types/component';
-import { LogOutPageProps } from './types';
+import pageTmpl from './index.template.pug';
+import { useLogoutUser } from '@/features/auth';
+import { Component } from '@/shared/@types/index.component';
+import { LogOutPageProps } from './index.types';
 
 export class LogOut extends Component<HTMLDivElement, LogOutPageProps> {
     /**
@@ -22,7 +22,7 @@ export class LogOut extends Component<HTMLDivElement, LogOutPageProps> {
     protected render() {
         this.renderTemplate();
 
-        logoutUser()
+        useLogoutUser()
             .then(() => {
                 this.props.navigateToMain();
             })
