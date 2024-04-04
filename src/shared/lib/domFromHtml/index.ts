@@ -1,0 +1,1 @@
+export { domFromHtml } from './core';

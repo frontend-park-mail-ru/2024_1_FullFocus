@@ -1,3 +1,4 @@
+import './index.style.scss';
 import { Input, InputType, InputStatus } from '@/shared/uikit/input';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { Button } from '@/shared/uikit/button';
@@ -15,14 +16,15 @@ export interface FormInputProps {
 export class FormInput extends EmptyContainer {
     props: FormInputProps;
     input: Input;
-    errorBlock: EmptyContainer;
+    protected errorBlock: EmptyContainer;
 
     constructor(parent: Element, props: FormInputProps) {
         super(parent, props);
     }
 
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
+
         this.input = new Input(this.htmlElement, {
             className: this.props.inputClassName,
             placeholder: this.props.placeholder,
@@ -30,7 +32,6 @@ export class FormInput extends EmptyContainer {
             name: this.props.name,
             status: this.props.status,
         });
-        this.input.render();
 
         if (this.props.type === 'password') {
             const btnItem = new Button(this.htmlElement, {
@@ -40,7 +41,6 @@ export class FormInput extends EmptyContainer {
                 btnStyle: 'withOutline',
             });
 
-            btnItem.render();
             const btn = btnItem.htmlElement;
 
             btn.addEventListener('click', (e) => {
@@ -59,7 +59,7 @@ export class FormInput extends EmptyContainer {
         this.errorBlock = new EmptyContainer(this.htmlElement, {
             className: this.props.errorBlockClassName,
         });
-        this.errorBlock.render();
+
         this.errorBlock.htmlElement.hidden = true;
     }
 

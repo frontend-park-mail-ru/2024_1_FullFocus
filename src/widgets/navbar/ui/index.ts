@@ -1,18 +1,18 @@
-import navbarTmplFunc from './template.pug';
-import { Component } from '@/shared/@types/component';
-import { NavbarProps } from './types';
+import navbarTmplFunc from './index.template.pug';
+import { Component } from '@/shared/@types/index.component';
+import { NavbarProps } from './index.types';
 import { NavbarLink } from './navbarLink';
-import { NavbarLinkProps } from './navbarLink/types';
-import { isUserLogged } from '@/features/auth';
-import { UserLogged } from './types';
+import { NavbarLinkProps } from './navbarLink';
+import { useCheckUserLogin } from '@/features/auth';
+import { UserLogged } from './index.types';
 
 export class Navbar extends Component<HTMLDivElement, NavbarProps> {
-    private linkProps: Array<{
+    protected linkProps: Array<{
         pageName: string;
         userLogged: UserLogged;
         props: NavbarLinkProps;
     }>;
-    private navbarItems: { [name: string]: NavbarLink };
+    protected navbarItems: { [name: string]: NavbarLink };
 
     constructor(parent: Element, props: NavbarProps) {
         super(parent, navbarTmplFunc, props);
@@ -29,12 +29,12 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     }
 
     updateNavbar(activePageName: string) {
-        isUserLogged()
+        useCheckUserLogin()
             .then((isLogged) => {
                 this.htmlElement.innerHTML = '';
                 this.linkProps.forEach(({ pageName, userLogged, props }) => {
                     if (
-                        (isLogged && userLogged === 'unlogged') ||
+                        (isLogged && userLogged === 'logged') ||
                         (!isLogged && userLogged === 'unlogged') ||
                         userLogged === 'both'
                     ) {
@@ -42,8 +42,6 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
                             this.htmlElement,
                             props,
                         );
-
-                        this.navbarItems[pageName].render();
 
                         if (pageName === activePageName) {
                             this.navbarItems[pageName].activate();

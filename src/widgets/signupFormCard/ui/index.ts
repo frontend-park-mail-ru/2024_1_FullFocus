@@ -1,15 +1,15 @@
-import './style.scss';
-import signupFormTmpl from './template.pug';
-import { SignUpFormCardProps } from './types';
-import { SignUpForm } from '@/features/auth';
-import { Component } from '@/shared/@types/component';
+import './index.style.scss';
+import signupFormTmpl from './index.template.pug';
+import { SignUpFormCardProps } from './index.types';
+import { SignUpForm } from '@/features/signup';
+import { Component } from '@/shared/@types/index.component';
 
 export class SignUpFormCard extends Component<
     HTMLDivElement,
     SignUpFormCardProps
 > {
-    errorElement: HTMLDivElement;
     form: SignUpForm;
+    protected errorElement: HTMLDivElement;
 
     /**
      * Constructor for SignUpFormCard
@@ -29,8 +29,8 @@ export class SignUpFormCard extends Component<
     /**
      * Renders signup form
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         this.errorElement = this.htmlElement.getElementsByClassName(
             'signup-form-card__error',
@@ -41,7 +41,5 @@ export class SignUpFormCard extends Component<
                 'signup-form-card__main',
             )[0],
         );
-
-        this.form.render();
     }
 }

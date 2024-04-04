@@ -1,38 +1,48 @@
-import './style.scss';
-import productsSectionTmpl from './template.pug';
-import { ProductsSectionProps } from './types';
-import { ProductCard, productsRequest } from '@/entities/product';
-import { Component } from '@/shared/@types/component';
+import { useGetProductCards } from '@/features/product';
+import './index.style.scss';
+import productsSectionTmpl from './index.template.pug';
+import { ProductsSectionProps } from './index.types';
+import { Component } from '@/shared/@types/index.component';
+import { ProductCard } from '@/entities/product';
 
 export class ProductsSection extends Component<
     HTMLDivElement,
     ProductsSectionProps
 > {
+    protected products: Array<ProductCard>;
+
     /**
      * Constructor for ProductsSection
      * @param {Element} parent - parent html element
      */
     constructor(parent: Element, props: ProductsSectionProps) {
         super(parent, productsSectionTmpl, props);
-        this.htmlElement = null;
+        this.products = [];
     }
 
     /**
      * Renders products section
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         const section = this.htmlElement.getElementsByClassName(
             'products-section__inner',
         )[0];
 
-        productsRequest(1, 10)
+        useGetProductCards(section, 1, 10)
             .then((products) => {
-                products.forEach((product) => {
-                    new ProductCard(section, product).render();
-                });
+                this.products = products;
             })
-            .catch(() => {});
+            .catch(() => {
+                this.products = [];
+            });
+    }
+
+    destroy(): void {
+        this.products.forEach((product) => {
+            product.destroy();
+        });
+        this.htmlElement.remove();
     }
 }

@@ -1,12 +1,13 @@
-import appTmplFunc from './template.pug';
-import './style.scss';
-import { Component } from '@/shared/@types/component';
+import appTmplFunc from './index.template.pug';
+import './index.style.scss';
+import { Component } from '@/shared/@types/index.component';
 import { Page, Router } from '@/providers';
 import { Navbar } from '@/widgets/navbar';
-import { getConfig } from '../config';
+import { getConfig } from '@/providers';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
+    private page: Component<Element>;
     private contentElement: HTMLDivElement;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
@@ -17,11 +18,12 @@ export class App extends Component<HTMLDivElement> {
     }
 
     changePage() {
+        this.contentElement.innerHTML = '';
+
         const { name, component } = this.router.currentActivePage;
         this.navbar.updateNavbar(name);
 
-        this.contentElement.innerHTML = '';
-        component.render();
+        this.page = component;
     }
 
     private componentDidMount() {
@@ -30,8 +32,8 @@ export class App extends Component<HTMLDivElement> {
         });
     }
 
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         this.contentElement = this.htmlElement.getElementsByClassName(
             'content',
@@ -46,8 +48,6 @@ export class App extends Component<HTMLDivElement> {
         this.navbar = new Navbar(this.headerElement, {
             className: 'navbar__navigation',
         });
-
-        this.navbar.render();
 
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);

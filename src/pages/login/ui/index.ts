@@ -1,27 +1,27 @@
-import './style.scss';
+import './index.style.scss';
+import pageTmpl from './index.template.pug';
 import { LoginFormCard } from '@/widgets/loginFormCard';
-import { EmptyContainer } from '@/shared/uikit/emptyContainer';
-import { loginUser } from '@/features/auth';
+import { useLoginUser } from '@/features/login';
 import { parseForm } from '@/entities/form';
+import { LoginPageProps } from './index.types';
+import { Component } from '@/shared/@types/index.component';
 
-export class Login extends EmptyContainer {
-    name: string;
-    errorsElement: HTMLDivElement;
+export class Login extends Component<HTMLDivElement, LoginPageProps> {
     formObj: LoginFormCard;
+    protected errorsElement: HTMLDivElement;
     private navigateToMain: () => void;
     private listener: (e: SubmitEvent) => void;
 
     /**
      * Constructor for Login page object
      * @param {Element} parent - parent object
-     * @param {string} name - name of the page
      */
-    // TODO parent: Element
-    constructor(parent: Element, name: string, navigateToMain: () => void) {
-        super(parent, { className: 'login-page' });
+    constructor(parent: Element, navigateToMain: () => void) {
+        super(parent, pageTmpl, {
+            className: 'login-page',
+            navigateToMain: navigateToMain,
+        });
 
-        this.name = name;
-        this.errorsElement = null;
         this.navigateToMain = navigateToMain;
     }
 
@@ -35,7 +35,10 @@ export class Login extends EmptyContainer {
             if (formData.isValid) {
                 this.formObj.form.setReadonly();
 
-                loginUser(this.formObj.form.htmlElement)
+                useLoginUser(
+                    formData.inputs['login'].value,
+                    formData.inputs['password'].value,
+                )
                     .then(({ status, msgRus }) => {
                         this.formObj.form.setNotReadonly();
                         if (status === 200) {
@@ -60,15 +63,12 @@ export class Login extends EmptyContainer {
     /**
      * Renders login page
      */
-    // eslint-disable-next-line max-lines-per-function
-    render() {
-        // TODO parentItem.htmlElement -> parent
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         this.formObj = new LoginFormCard(this.htmlElement, {
             className: 'login-form-card-main',
         });
-        this.formObj.render();
 
         this.componentDidMount();
     }

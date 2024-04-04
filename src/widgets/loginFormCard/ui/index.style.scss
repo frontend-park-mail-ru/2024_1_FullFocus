@@ -1,0 +1,21 @@
+.login-form-card {
+    margin: 70px auto;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 40px 45px 40px 55px;
+    background-color: #ffffff;
+    border-radius: 32px;
+}
+
+.login-form-card__logo-left {
+    color: #5dcec6;
+}
+
+.login-form-card__header {
+    margin: 40px 0 16px 0;
+}
+
+.login-form-card__main {
+    margin-top: 30px;
+}

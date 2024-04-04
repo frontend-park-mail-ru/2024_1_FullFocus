@@ -2,27 +2,23 @@ import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { ProductsSection } from '@/widgets/productsSection';
 
 export class Main extends EmptyContainer {
-    name: string;
-
     /**
      * Constructor for Main page object
      * @param {any} parent - parent object
-     * @param {string} name - name of the page
      */
-    constructor(parent: Element, name: string) {
+    constructor(parent: Element) {
         super(parent, { className: 'main-page' });
-        this.name = name;
     }
 
     /**
      * Renders main page
      */
-    render() {
-        super.render();
+    protected render() {
+        this.renderTemplate();
 
         new ProductsSection(this.htmlElement, {
             className: 'products-section-popular',
             header: 'Популярные товары',
-        }).render();
+        });
     }
 }
