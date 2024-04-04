@@ -1,0 +1,12 @@
+.profile-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-banner {
+    flex-basis: 512px;
+}
+
+.profile-info {
+    flex: 1;
+}

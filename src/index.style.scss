@@ -10,13 +10,35 @@
 
 $bg-color: #efefef;
 
+.container {
+    max-width: 1536px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+@media (max-width: 1536px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        width: 100%;
+    }
+}
+
 body {
     margin: 0;
     background-color: $bg-color;
-}
-
-.root {
-    min-width: 1372px;
 }
 
 /* Header styles */
