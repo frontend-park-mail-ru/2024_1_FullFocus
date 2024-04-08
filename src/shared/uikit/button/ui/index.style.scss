@@ -1,3 +1,4 @@
+@import '@/shared/style/rootVariables';
 $btn-default-bg-color: #fff;
 
 .btn {
@@ -25,16 +26,16 @@ $btn-default-bg-color: #fff;
 
 // Bright button
 .btn_bright {
-    background-color: #5dcec6;
+    background-color: $color-primary-normal;
     transition: background-color 0.2s;
 }
 
 .btn_bright:hover {
-    background-color: #68e7dd;
+    background-color: $color-primary-light;
 }
 
 .btn_bright:focus {
-    background-color: #68e7dd;
+    background-color: $color-primary-light;
 }
 
 .btn_bright .btn__text {
@@ -59,4 +60,23 @@ $btn-default-bg-color: #fff;
 
 .btn_with-outline .btn__text {
     font-size: 12px;
+}
+
+// Green button
+.btn_green {
+    background-color: $color-green-normal;
+    transition: background-color 0.2s;
+}
+
+.btn_green:hover {
+    background-color: $color-green-light;
+}
+
+.btn_green:focus {
+    background-color: $color-green-light;
+}
+
+.btn_green .btn__text {
+    color: white;
+    font-weight: 700;
 }

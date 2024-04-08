@@ -10,12 +10,16 @@
 
 $bg-color: #efefef;
 
+.section {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px 40px 25px 40px;
+}
+
 .container {
     max-width: 1536px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
 }
 
 @media (max-width: 1536px) {

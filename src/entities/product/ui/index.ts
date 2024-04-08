@@ -11,14 +11,19 @@ export class ProductCard extends Component<HTMLDivElement, ProductProps> {
      * Constructor for ProductCard
      * @param {Element} parent - parent object
      */
-    constructor(parent: Element, productInfo: IProduct) {
-        super(parent, productItemTmpl, {
-            className: `product-${productInfo.name}`,
-            src: productInfo.imgLink,
-            name: productInfo.name,
-            price: productInfo.price,
-        });
+    constructor(parent: Element, props: ProductProps) {
+        super(parent, productItemTmpl, props);
+    }
 
-        this.productInfo = productInfo;
+    protected render() {
+        this.renderTemplate();
+    }
+
+    get price() {
+        return this.props.price;
+    }
+
+    get id() {
+        return this.props.id;
     }
 }

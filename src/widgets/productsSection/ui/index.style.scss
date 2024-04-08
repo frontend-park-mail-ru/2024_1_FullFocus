@@ -1,13 +1,24 @@
 .products-section {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.products-section__categories {
+    width: 200px;
+}
+
+.products-section__section {
     background-color: #fff;
     border-radius: 15px;
     padding: 30px 40px 25px 40px;
+    flex: 1;
     display: flex;
     flex-direction: column;
     margin: 0 auto 10px auto;
 }
 
-.products-section__inner {
+.products-section__products {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
@@ -19,7 +30,7 @@
     margin-bottom: 35px;
 }
 
-.products-section__inner:empty {
+.products-section__products:empty {
     margin: auto;
     box-sizing: border-box;
     padding: 20px;

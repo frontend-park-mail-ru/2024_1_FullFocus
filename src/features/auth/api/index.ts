@@ -1,3 +1,3 @@
-export { useLogoutUser } from './index.useLogout';
+export { useLogoutUser } from './useLogout';
 
-export { useCheckUserLogin } from './index.useCheckLogin';
+export { useCheckUserLogin } from './useCheckLogin';

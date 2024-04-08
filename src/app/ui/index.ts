@@ -17,18 +17,21 @@ export class App extends Component<HTMLDivElement> {
         super(parent, appTmplFunc, { className: 'app-layout' });
     }
 
-    changePage() {
+    changePage(isLogged: boolean) {
         this.contentElement.innerHTML = '';
 
         const { name, component } = this.router.currentActivePage;
-        this.navbar.updateNavbar(name);
+        this.navbar.updateNavbar(name, isLogged);
 
         this.page = component;
     }
 
     private componentDidMount() {
-        this.navbar.htmlElement.addEventListener('click', (e: Event) => {
-            this.router.handleLinkClick(e);
+        this.htmlElement.addEventListener('click', (e: Event) => {
+            const target = e.target as HTMLElement;
+            if (target.tagName.toLowerCase() === 'a') {
+                this.router.handleLinkClick(e);
+            }
         });
     }
 
@@ -53,7 +56,10 @@ export class App extends Component<HTMLDivElement> {
             this.navbar.addLink(name, logged, props);
         });
 
-        this.router = new Router(() => this.changePage(), routerConfig);
+        this.router = new Router(
+            (isLogged: boolean) => this.changePage(isLogged),
+            routerConfig,
+        );
         this.router.start();
 
         this.componentDidMount();

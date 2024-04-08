@@ -1,7 +1,6 @@
-import { DataResponce } from '@/shared/api/ajax/index.types';
-import { IUser } from '../model';
 import { USER_API_URLS } from './index.constants';
-import { ajaxGet, ajaxPost } from '@/shared/api';
+import { ajaxGet, ajaxMultipartForm, ajaxPost } from '@/shared/api';
+import { IUpdateProfileBody, IUserResponse } from './index.types';
 
 export async function checkAuthRequest() {
     return ajaxGet(USER_API_URLS.checkAuth, null);
@@ -26,19 +25,13 @@ export async function logoutRequest() {
 }
 
 export async function getUserData() {
-    // TODO real request
-    console.log('hui');
-    return new Promise<DataResponce<IUser>>((resolve, reject) => {
-        const userData: DataResponce<IUser> = {
-            status: 200,
-            data: {
-                id: 2,
-                name: 'Сергей',
-                surname: 'Пупкович',
-                username: 'pupok_sergey14',
-                pictureSrc: './default-profile-pic.png',
-            },
-        };
-        resolve(userData);
-    });
+    return ajaxGet<IUserResponse>(USER_API_URLS.userData, []);
+}
+
+export async function updateProfile(body: IUpdateProfileBody) {
+    return ajaxPost<null>(USER_API_URLS.updateProfile, [], body);
+}
+
+export async function uploadProfilePicture(formData: FormData) {
+    return ajaxMultipartForm('POST', USER_API_URLS.updatePicture, formData);
 }

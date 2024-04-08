@@ -21,3 +21,10 @@ export function validatePassword(password: string): string | null {
     }
     return null;
 }
+
+export function validateDefault(sequence: string): string | null {
+    if (sequence.length < 1) {
+        return 'поле не должно быть пустым';
+    }
+    return null;
+}

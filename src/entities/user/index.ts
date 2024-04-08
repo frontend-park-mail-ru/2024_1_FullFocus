@@ -4,4 +4,6 @@ export {
     signupRequest,
     loginRequest,
     logoutRequest,
+    getUserData,
+    updateProfile,
 } from './api';

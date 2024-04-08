@@ -83,12 +83,12 @@ export async function ajaxPost<T>(
 export async function ajaxMultipartForm<T>(
     method: string,
     url: string,
-    form: HTMLFormElement,
+    formData: FormData,
 ) {
     return fetch(BACKEND_URL + url, {
         method,
         credentials: 'include',
-        body: new FormData(form),
+        body: formData,
     })
         .then((response) => {
             return response.json();

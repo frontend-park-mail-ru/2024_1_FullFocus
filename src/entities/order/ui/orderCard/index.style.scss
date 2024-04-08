@@ -1,0 +1,21 @@
+.order-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 20px 10px 20px;
+    background-color: #f2f6f9;
+    border-radius: 8px;
+    height: 80px;
+}
+
+.order-card__info-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-card__info-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}

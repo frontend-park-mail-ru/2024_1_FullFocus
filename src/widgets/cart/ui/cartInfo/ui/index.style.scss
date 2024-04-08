@@ -1,0 +1,16 @@
+.cart-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-info__money-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-info__confirm-btn-block {
+    .btn {
+        width: 100%;
+    }
+}

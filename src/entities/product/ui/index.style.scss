@@ -1,27 +1,16 @@
 .product-card {
     display: flex;
-    flex-direction: column;
     background-color: white;
     border-radius: 7px;
-    width: 251.19px;
-    height: 345.19px;
-}
-
-.product-card {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
 }
 
 .product-card__img {
-    height: 251.19px;
     border-radius: 5px;
 }
 
 .product-card__info {
     flex: 1;
     display: flex;
-    flex-direction: column;
     padding-top: 8px;
     padding-bottom: 10px;
 }
@@ -33,4 +22,34 @@
 .product-card__info-description {
     flex: 1;
     padding-top: 8px;
+}
+
+// Vertical card
+.product-card_vertical {
+    height: 345.19px;
+    width: 251.19px;
+    flex-direction: column;
+}
+
+.product-card__img_vertical {
+    height: 251.19px;
+}
+
+.product-card__info_vertical {
+    flex-direction: column;
+}
+
+// Horizontal card
+.product-card_horizontal {
+    width: 560px;
+    flex-direction: row;
+}
+
+.product-card__img_horizontal {
+    height: 100px;
+}
+
+.product-card__info_horizontal {
+    flex-direction: column-reverse;
+    padding-left: 20px;
 }

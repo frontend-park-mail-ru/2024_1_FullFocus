@@ -5,7 +5,7 @@ import profilePannerTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProfileBannerProps } from './index.types';
 import { ProfileCard } from './profileCard';
-import { useGetProfileInfo } from '@/features/profile/api';
+import { getUserData } from '@/entities/user/api';
 
 export class ProfileBanner extends Component<
     HTMLDivElement,
@@ -20,17 +20,17 @@ export class ProfileBanner extends Component<
     protected render() {
         this.renderTemplate();
 
-        useGetProfileInfo()
-            .then((data) => {
+        getUserData()
+            .then((response) => {
+                const { data } = response;
                 new ProfileCard(
                     this.htmlElement.getElementsByClassName(
                         'profile-banner__main',
                     )[0],
                     {
                         className: 'main__user-card',
-                        pictureSrc: data.pictureSrc,
-                        realName: data.name + ' ' + data.surname,
-                        login: data.login,
+                        pictureSrc: data.imgSrc,
+                        realName: data.fullName,
                     },
                 );
             })
