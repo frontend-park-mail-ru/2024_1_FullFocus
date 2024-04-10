@@ -11,6 +11,7 @@ export class EditProfileDialog extends Component<
     HTMLDialogElement,
     EditProfileDialogProps
 > {
+    protected errorElement: HTMLDivElement;
     protected formObj: EditProfileForm;
     protected closeBtn: Button;
     protected closeListener: (e: Event) => void;
@@ -29,6 +30,7 @@ export class EditProfileDialog extends Component<
 
         this.submitListener = (e: SubmitEvent) => {
             e.preventDefault();
+            this.formObj.setReadonly();
             const formData = parseForm(this.formObj);
             console.log(formData);
             if (formData.isValid) {
@@ -37,12 +39,18 @@ export class EditProfileDialog extends Component<
                     phoneNumber: formData.inputs['phoneNumber'].value,
                     email: formData.inputs['email'].value,
                 })
-                    .then(({ status }) => {
-                        if (status === 200) {
+                    .then((response) => {
+                        this.formObj.setNotReadonly();
+                        if (response.status === 200) {
                             this.htmlElement.close();
                             if (this.props.profileChangedCallback) {
                                 this.props.profileChangedCallback();
                             }
+                        }
+
+                        if (response.status !== 200) {
+                            this.formObj.setInvalid();
+                            this.errorElement.innerText = response.msgRus;
                         }
                     })
                     .catch(() => {});
@@ -54,7 +62,16 @@ export class EditProfileDialog extends Component<
     protected render() {
         this.renderTemplate();
 
-        this.formObj = new EditProfileForm(this.htmlElement);
+        this.formObj = new EditProfileForm(
+            this.htmlElement.getElementsByClassName(
+                'edit-dialog__form-place',
+            )[0],
+        );
+
+        this.errorElement = this.htmlElement.getElementsByClassName(
+            'edit-dialog__error',
+        )[0] as HTMLDivElement;
+
         this.closeBtn = new Button(
             this.htmlElement.getElementsByClassName(
                 'edit-dialog__btn-close',
