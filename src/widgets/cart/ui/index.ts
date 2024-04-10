@@ -6,6 +6,7 @@ import { useGetUserCart } from '@/features/cart';
 import { CartItemsSection } from './cartItemsSection';
 import { CartInfo } from './cartInfo';
 import { OrderOptions } from './orderOptions';
+import { createOrderRequest } from '@/entities/order';
 
 export class Cart extends Component<HTMLDivElement, CartProps> {
     protected cartItemsSection: CartItemsSection;
@@ -45,6 +46,15 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
             this.htmlElement.getElementsByClassName('cart__info')[0],
             {
                 className: 'cart-info__info',
+                orderCreatedCallback: () => {
+                    createOrderRequest(this.cartItemsSection.cartInfo)
+                        .then(({ status }) => {
+                            if (status === 200) {
+                                this.props.navigateToOrderPage();
+                            }
+                        })
+                        .catch(() => {});
+                },
                 navigateToMainPage: this.props.navigateToMainPage,
                 navigateToOrderPage: this.props.navigateToOrderPage,
             },
