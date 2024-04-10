@@ -11,8 +11,6 @@ export async function productsRequest(lastId: number, limit: number) {
     ]);
 }
 
-// TODO now mock
-
 // TODO move to productssection?
 export async function productsRequestCategory(categoryId: number) {
     return ajaxGet<IProductResponse[]>(

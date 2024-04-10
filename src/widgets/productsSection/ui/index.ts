@@ -95,10 +95,16 @@ export class ProductsSection extends Component<
 
         productsPromise
             .then((products) => {
-                products.forEach((product) => {
-                    const p = product(this.productsSection);
-                    this.products[p.id] = p;
-                });
+                if (products.length === 0) {
+                    this.productsSection.innerText = 'товары отсутсвуют';
+                }
+
+                if (products.length !== 0) {
+                    products.forEach((product) => {
+                        const p = product(this.productsSection);
+                        this.products[p.id] = p;
+                    });
+                }
             })
             .catch(() => {
                 this.products = [];
