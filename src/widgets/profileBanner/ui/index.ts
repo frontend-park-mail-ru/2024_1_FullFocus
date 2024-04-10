@@ -29,7 +29,10 @@ export class ProfileBanner extends Component<
                     )[0],
                     {
                         className: 'main__user-card',
-                        pictureSrc: data.imgSrc,
+                        pictureSrc:
+                            data.imgSrc === ''
+                                ? '/public/default-profile-pic.png'
+                                : data.imgSrc,
                         realName: data.fullName,
                     },
                 );

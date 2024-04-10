@@ -29,7 +29,12 @@ export async function getUserData() {
 }
 
 export async function updateProfile(body: IUpdateProfileBody) {
-    return ajaxPost<null>(USER_API_URLS.updateProfile, [], body);
+    return ajaxPost<null>(USER_API_URLS.updateProfile, [], {
+        fullName: body.fullName,
+        email: body.email,
+        phoneNumber: body.phoneNumber,
+        imgSrc: '',
+    });
 }
 
 export async function uploadProfilePicture(formData: FormData) {

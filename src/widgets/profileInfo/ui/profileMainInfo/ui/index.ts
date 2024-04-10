@@ -79,7 +79,10 @@ export class ProfileMainInfo extends Component<
                 this.fullName.innerText = data.fullName;
                 this.phoneNumber.innerText = data.phoneNumber;
                 this.email.innerText = data.email;
-                this.changePicture.pictureSrc = data.imgSrc;
+                this.changePicture.pictureSrc =
+                    data.imgSrc === ''
+                        ? '/public/default-profile-pic.png'
+                        : data.imgSrc;
             })
             .catch(() => {});
 
