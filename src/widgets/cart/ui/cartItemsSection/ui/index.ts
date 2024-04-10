@@ -119,13 +119,22 @@ export class CartItemsSection extends Component<
             id: number;
         })[],
     ) {
-        const parent = this.htmlElement.getElementsByClassName(
-            'cart-items-section__cart-items',
-        )[0];
-        cartItems.forEach((createItem) => {
-            const { card, id } = createItem(parent);
-            this.cartItems[id] = card;
-        });
+        if (cartItems.length === 0) {
+            (
+                this.htmlElement.getElementsByClassName(
+                    'cart-items-section__cart-items',
+                )[0] as HTMLDivElement
+            ).innerText = 'корзина пуста';
+        }
+        if (cartItems.length !== 0) {
+            const parent = this.htmlElement.getElementsByClassName(
+                'cart-items-section__cart-items',
+            )[0];
+            cartItems.forEach((createItem) => {
+                const { card, id } = createItem(parent);
+                this.cartItems[id] = card;
+            });
+        }
     }
 
     destroy(): void {

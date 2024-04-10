@@ -3,14 +3,14 @@ import { productsRequestCategory } from '@/entities/product/api';
 import { ProductCardType } from '@/entities/product/ui/index.types';
 import { ProductsSectionItem } from '@/entities/productsSection';
 
-export async function useGetProductCards(lastId: number, limit: number) {
-    return productsRequest(lastId, limit)
+export async function useGetProductCards(page: number, limit: number) {
+    return productsRequest(page, limit)
         .then(({ status, data }) => {
             const products: Array<
                 (parent: Element) => ProductsSectionItem<ProductCard>
             > = [];
             if (status === 200) {
-                data.forEach((product) => {
+                data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
                         const psi = new ProductsSectionItem<ProductCard>(
                             parent,
@@ -25,7 +25,7 @@ export async function useGetProductCards(lastId: number, limit: number) {
                                 id: product.id,
                                 name: product['name'],
                                 price: product['price'],
-                                src: product['img-link'],
+                                src: product['imgSrc'],
                                 style: 'vertical',
                             });
                             return { product: productCard, id: productCard.id };
@@ -69,7 +69,7 @@ export async function useGetProductCardsCategory(categoryId: number) {
                                 id: product.id,
                                 name: product['name'],
                                 price: product['price'],
-                                src: product['img-link'],
+                                src: product['imgSrc'],
                                 style: 'vertical',
                             });
                             return { product: productCard, id: productCard.id };
