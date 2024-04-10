@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -11,9 +10,6 @@ func main() {
 	http.Handle("/public/", http.StripPrefix("/public/", fs))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		path := r.URL.Path
-		fmt.Println(path)
-
 		p := "./public/index.html"
 		http.ServeFile(w, r, p)
 
