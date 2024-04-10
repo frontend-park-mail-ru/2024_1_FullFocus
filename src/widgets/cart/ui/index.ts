@@ -26,6 +26,7 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
                 className: 'cart__cart-items',
                 clearCartCallback: () => {
                     this.cartInfo.updateCartInfo(0, 0);
+                    this.cartItemsSection.update();
                 },
                 addItemCallback: (id: number) => {
                     this.cartInfo.addProduct(
