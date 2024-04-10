@@ -21,7 +21,7 @@ export class ProfileOneOrderInfo extends Component<
         this.products = [];
 
         useGetOrder(this.props.orderId)
-            .then(({ sum, itemsCount, status, products }) => {
+            .then(({ sum, status, products }) => {
                 (
                     this.htmlElement.getElementsByClassName(
                         'main-info__products-cost',
@@ -37,7 +37,7 @@ export class ProfileOneOrderInfo extends Component<
                     this.htmlElement.getElementsByClassName(
                         'products-info__total-items',
                     )[0] as HTMLDivElement
-                ).innerText = itemsCount.toString();
+                ).innerText = products.length.toString();
                 (
                     this.htmlElement.getElementsByClassName(
                         'profile-one-order-info__status',
