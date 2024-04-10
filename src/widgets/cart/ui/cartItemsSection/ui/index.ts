@@ -101,7 +101,7 @@ export class CartItemsSection extends Component<
     get cartInfo() {
         const t: { productId: number; count: number }[] = [];
         Object.entries(this.cartItems).forEach(([id, item]) => {
-            t.push({ productId: Number(id), count: item.counterValue });
+            t.push({ productId: Number(id), count: item.currentCounterValue });
         });
         return t;
     }
