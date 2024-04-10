@@ -14,3 +14,8 @@ declare module '*.pug' {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const PLATFORM: 'mobile' | 'desktop';
+
+declare module '*.png' {
+    const value: string;
+    export default value;
+}

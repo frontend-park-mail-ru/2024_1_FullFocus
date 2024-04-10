@@ -1,4 +1,5 @@
 export interface ProductsSectionProps {
     className: string;
-    header: string;
+    navigateToCart: () => void;
+    categoryId?: number;
 }

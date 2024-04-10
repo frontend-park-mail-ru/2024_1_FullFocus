@@ -1,0 +1,18 @@
+.navigation-link {
+    transition: color 0.2s;
+    color: black;
+    text-decoration: none;
+}
+
+.navigation-link:hover {
+    color: #3a817c;
+}
+
+.navigation-link_active {
+    font-weight: bold;
+    color: #5dcec6;
+}
+
+.navigation-link_active:hover {
+    color: #5dcec6;
+}

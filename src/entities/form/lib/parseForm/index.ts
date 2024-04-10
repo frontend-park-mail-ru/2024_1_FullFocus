@@ -1,6 +1,10 @@
 import { FormData } from './index.types';
 import { Form } from './../../ui';
-import { validateLogin, validatePassword } from '@/shared/lib/validate/core';
+import {
+    validateDefault,
+    validateLogin,
+    validatePassword,
+} from '@/shared/lib/validate/core';
 
 export { FormData } from './index.types';
 
@@ -27,7 +31,9 @@ export function parseForm(form: Form): FormData {
                 );
                 break;
             default:
-                formData.inputs[name].error = null;
+                formData.inputs[name].error = validateDefault(
+                    formData.inputs[name].value,
+                );
                 break;
         }
 

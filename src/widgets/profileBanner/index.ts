@@ -1,0 +1,1 @@
+export { ProfileBanner } from './ui';

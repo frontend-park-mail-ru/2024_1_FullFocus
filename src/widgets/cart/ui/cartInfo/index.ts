@@ -1,0 +1,1 @@
+export { CartInfo } from './ui';

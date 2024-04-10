@@ -37,7 +37,10 @@ export function buildLoaders(mode: BuildMode): ModuleOptions['rules'] {
 
     const imgAssetLoader = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        loader: 'file-loader',
+        options: {
+            name: '[name].[ext]',
+        },
     };
 
     return [

@@ -1,4 +1,11 @@
 section.container
-    div(class=`products-section ${className}`)
-        span(class="products-section__header header header_h3") #{header}
-        div.products-section__inner
+    div(class=`${className} products-section`)
+        div(class="products-section__categories")
+        div(class="products-section__section")
+            if !categoryId
+                span(class="products-section__header header header_h3") Все товары
+            else
+                div(class="products-section__header header header_h3")
+                    span Категория: 
+                    span(class="products-section__category-name") 
+            div.products-section__products

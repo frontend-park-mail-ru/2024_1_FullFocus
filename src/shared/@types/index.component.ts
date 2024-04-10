@@ -1,5 +1,4 @@
 import { TmplFunc } from './index.templateFunction';
-import { domFromHtml } from '../lib/domFromHtml/core';
 
 interface IProps {
     className: string;
@@ -34,7 +33,8 @@ export abstract class Component<
     }
 
     update() {
-        this.htmlElement.replaceWith(domFromHtml(this.tmplFunc(this.props)));
+        this.destroy();
+        this.render();
     }
 
     destroy() {

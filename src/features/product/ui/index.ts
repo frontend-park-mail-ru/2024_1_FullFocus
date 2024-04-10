@@ -1,25 +1,81 @@
 import { ProductCard, productsRequest } from '@/entities/product';
+import { productsRequestCategory } from '@/entities/product/api';
+import { ProductCardType } from '@/entities/product/ui/index.types';
+import { ProductsSectionItem } from '@/entities/productsSection';
 
-export async function useGetProductCards(
-    parent: Element,
-    lastId: number,
-    limit: number,
-) {
+export async function useGetProductCards(lastId: number, limit: number) {
     return productsRequest(lastId, limit)
         .then(({ status, data }) => {
+            const products: Array<
+                (parent: Element) => ProductsSectionItem<ProductCard>
+            > = [];
             if (status === 200) {
-                const products: Array<ProductCard> = [];
                 data.forEach((product) => {
-                    products.push(
-                        new ProductCard(parent, {
-                            id: product['id'],
-                            name: product['name'],
-                            price: product['price'],
-                            imgLink: product['img-link'],
-                            category: product['category'],
-                            description: product['description'],
-                        }),
-                    );
+                    products.push((parent: Element) => {
+                        const psi = new ProductsSectionItem<ProductCard>(
+                            parent,
+                            {
+                                className: 'product-section-item-' + product.id,
+                                isInCart: false,
+                            },
+                        );
+                        psi.insertProductCard((parent: Element) => {
+                            const productCard = new ProductCard(parent, {
+                                className: 'product-' + product.id,
+                                id: product.id,
+                                name: product['name'],
+                                price: product['price'],
+                                src: product['img-link'],
+                                style: 'vertical',
+                            });
+                            return { product: productCard, id: productCard.id };
+                        });
+                        return psi;
+                    });
+                });
+            }
+            return products;
+        })
+        .catch(() => {
+            const products: Array<
+                (
+                    parent: Element,
+                    productCardType: ProductCardType,
+                ) => ProductCard
+            > = [];
+            return products;
+        });
+}
+
+export async function useGetProductCardsCategory(categoryId: number) {
+    return productsRequestCategory(categoryId)
+        .then(({ status, data }) => {
+            if (status === 200) {
+                const products: Array<
+                    (parent: Element) => ProductsSectionItem<ProductCard>
+                > = [];
+                data.forEach((product) => {
+                    products.push((parent: Element) => {
+                        const psi = new ProductsSectionItem<ProductCard>(
+                            parent,
+                            {
+                                className: 'product-section-item-' + product.id,
+                                isInCart: false,
+                            },
+                        );
+                        psi.insertProductCard((parent: Element) => {
+                            const productCard = new ProductCard(parent, {
+                                className: 'product-' + product.id,
+                                id: product.id,
+                                name: product['name'],
+                                price: product['price'],
+                                src: product['img-link'],
+                                style: 'vertical',
+                            });
+                            return { product: productCard, id: productCard.id };
+                        });
+                        return psi;
+                    });
                 });
                 return products;
             }

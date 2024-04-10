@@ -1,0 +1,34 @@
+.profile-main-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-main-info__subheader {
+    margin-top: 6px;
+}
+
+.profile-main-info__main-info {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    .profile-main-info__user-data {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.profile-main-info__edit-icon {
+    cursor: pointer;
+    path {
+        transition: stroke 0.1s;
+    }
+}
+
+.profile-main-info__edit-icon:hover {
+    cursor: pointer;
+    path {
+        stroke: #5dcec6;
+    }
+}

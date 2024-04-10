@@ -1,1 +1,1 @@
-export { validateLogin, validatePassword } from './core';
+export { validateLogin, validatePassword, validateDefault } from './core';

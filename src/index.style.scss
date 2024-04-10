@@ -10,13 +10,39 @@
 
 $bg-color: #efefef;
 
+.section {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px 40px 25px 40px;
+}
+
+.container {
+    max-width: 1536px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 1536px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        width: 100%;
+    }
+}
+
 body {
     margin: 0;
     background-color: $bg-color;
-}
-
-.root {
-    min-width: 1372px;
 }
 
 /* Header styles */

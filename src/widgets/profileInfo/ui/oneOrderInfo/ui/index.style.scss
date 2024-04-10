@@ -1,0 +1,26 @@
+.profile-one-order-info__main-info {
+    margin-top: 20px;
+}
+
+.main-info {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
+
+.main-info__line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-one-order-info__products-info {
+    margin-top: 30px;
+}
+
+.products-info__products {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
