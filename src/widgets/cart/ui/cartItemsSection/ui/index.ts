@@ -119,7 +119,11 @@ export class CartItemsSection extends Component<
             item.destroy();
         });
         this.cartItems = {};
-        this.renderCartItems([]);
+        (
+            this.htmlElement.getElementsByClassName(
+                'cart-items-section__cart-items',
+            )[0] as HTMLDivElement
+        ).innerText = 'корзина пуста';
     }
 
     renderCartItems(
@@ -135,6 +139,7 @@ export class CartItemsSection extends Component<
                 )[0] as HTMLDivElement
             ).innerText = 'корзина пуста';
         }
+
         if (cartItems.length !== 0) {
             const parent = this.htmlElement.getElementsByClassName(
                 'cart-items-section__cart-items',
