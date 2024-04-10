@@ -1,1 +1,1 @@
-export { orderRequest, allOrdersRequest } from './api';
+export { orderRequest, allOrdersRequest, createOrderRequest } from './api';

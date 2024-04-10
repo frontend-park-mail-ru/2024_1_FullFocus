@@ -46,6 +46,7 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
             {
                 className: 'cart-info__info',
                 navigateToMainPage: this.props.navigateToMainPage,
+                navigateToOrderPage: this.props.navigateToOrderPage,
             },
         );
 

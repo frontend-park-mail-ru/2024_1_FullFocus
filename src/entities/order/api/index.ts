@@ -9,3 +9,7 @@ export async function allOrdersRequest() {
 export async function orderRequest(id: number) {
     return ajaxGet<IOrderResponse>(ORDER_API_URLS.getById + id.toString(), []);
 }
+
+export async function createOrderRequest() {
+    return ajaxGet<{ orderID: number }>(ORDER_API_URLS.create, []);
+}

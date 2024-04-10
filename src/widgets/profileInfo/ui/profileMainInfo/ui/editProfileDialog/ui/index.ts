@@ -30,10 +30,9 @@ export class EditProfileDialog extends Component<
 
         this.submitListener = (e: SubmitEvent) => {
             e.preventDefault();
-            this.formObj.setReadonly();
             const formData = parseForm(this.formObj);
-            console.log(formData);
             if (formData.isValid) {
+                this.formObj.setReadonly();
                 updateProfile({
                     fullName: formData.inputs['fullName'].value,
                     phoneNumber: formData.inputs['phoneNumber'].value,

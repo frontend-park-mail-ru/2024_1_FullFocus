@@ -5,5 +5,5 @@ export const USER_API_URLS = {
     logout: '/api/auth/v1/logout',
     userData: '/api/v1/profile/get',
     updateProfile: '/api/v1/profile/update',
-    updatePicture: '/api/avatar/upload',
+    updatePicture: '/api/v1/avatar/upload',
 };
