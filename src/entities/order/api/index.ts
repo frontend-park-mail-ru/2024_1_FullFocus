@@ -1,5 +1,5 @@
 import { IOrderResponse, IOrderInfoResponse } from './index.types';
-import { ajaxGet } from '@/shared/api';
+import { ajaxGet, ajaxPost } from '@/shared/api';
 import { ORDER_API_URLS } from './index.constants';
 
 export async function allOrdersRequest() {
@@ -11,5 +11,5 @@ export async function orderRequest(id: number) {
 }
 
 export async function createOrderRequest() {
-    return ajaxGet<{ orderID: number }>(ORDER_API_URLS.create, []);
+    return ajaxPost<{ orderID: number }>(ORDER_API_URLS.create, [], {});
 }
