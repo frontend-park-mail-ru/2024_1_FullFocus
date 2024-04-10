@@ -119,6 +119,7 @@ export class CartItemsSection extends Component<
             item.destroy();
         });
         this.cartItems = {};
+        this.renderCartItems([]);
     }
 
     renderCartItems(
