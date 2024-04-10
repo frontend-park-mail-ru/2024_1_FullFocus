@@ -49,10 +49,8 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
                 className: 'cart-info__info',
                 orderCreatedCallback: () => {
                     createOrderRequest(this.cartItemsSection.cartInfo)
-                        .then(({ status }) => {
-                            if (status === 200) {
-                                this.props.navigateToOrderPage();
-                            }
+                        .then(() => {
+                            this.props.navigateToOrderPage();
                         })
                         .catch(() => {});
                 },
