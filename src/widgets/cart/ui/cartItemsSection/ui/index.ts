@@ -98,6 +98,14 @@ export class CartItemsSection extends Component<
         this.componentDidMount();
     }
 
+    get cartInfo() {
+        const t: { productId: number; count: number }[] = [];
+        Object.entries(this.cartItems).forEach(([id, item]) => {
+            t.push({ productId: Number(id), count: item.counterValue });
+        });
+        return t;
+    }
+
     getItemById(id: number) {
         return this.cartItems[id];
     }

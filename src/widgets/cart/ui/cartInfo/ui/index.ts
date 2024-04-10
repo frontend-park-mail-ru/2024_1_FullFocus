@@ -3,7 +3,6 @@ import './index.style.scss';
 import cartInfoTmpl from './index.template.pug';
 import { CartInfoProps } from './index.types';
 import { Button } from '@/shared/uikit/button';
-import { createOrderRequest } from '@/entities/order';
 
 export class CartInfo extends Component<HTMLDivElement, CartInfoProps> {
     protected confirmButton: Button;
@@ -50,14 +49,8 @@ export class CartInfo extends Component<HTMLDivElement, CartInfoProps> {
             ) {
                 e.preventDefault();
                 this.confirmButton.setDisabled();
-                createOrderRequest()
-                    .then(({ status }) => {
-                        if (status === 200) {
-                            this.props.navigateToOrderPage();
-                        }
-                        this.confirmButton.setEnabled();
-                    })
-                    .catch(() => {});
+                this.props.orderCreatedCallback();
+                this.confirmButton.setEnabled();
             }
         };
 

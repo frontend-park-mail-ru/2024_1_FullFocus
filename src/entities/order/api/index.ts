@@ -10,6 +10,11 @@ export async function orderRequest(id: number) {
     return ajaxGet<IOrderResponse>(ORDER_API_URLS.getById + id.toString(), []);
 }
 
-export async function createOrderRequest() {
-    return ajaxPost<{ orderID: number }>(ORDER_API_URLS.create, [], {});
+export async function createOrderRequest(
+    items: { productId: number; count: number }[],
+) {
+    return ajaxPost<{ orderID: number }>(ORDER_API_URLS.create, [], {
+        items: items,
+        fromCart: true,
+    });
 }
