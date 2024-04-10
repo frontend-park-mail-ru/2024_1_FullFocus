@@ -49,6 +49,10 @@ export class CartItem<
         this.counter.counterValue = value;
     }
 
+    get currentCounterValue() {
+        return this.counter.counterValue;
+    }
+
     get id() {
         return this.productId;
     }
