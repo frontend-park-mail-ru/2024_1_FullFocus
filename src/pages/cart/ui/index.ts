@@ -8,10 +8,15 @@ export class CartPage extends Component<HTMLDivElement, CartPageProps> {
     protected cart: Cart;
     protected listener: (e: Event) => void;
 
-    constructor(parent: Element, navigateToMainPage: () => void) {
+    constructor(
+        parent: Element,
+        navigateToMainPage: () => void,
+        navigateToOrdePage: () => void,
+    ) {
         super(parent, cartPageTmpl, {
             className: 'cart-page',
             navigateToMainPage: navigateToMainPage,
+            navigateToOrderPage: navigateToOrdePage,
         });
     }
 
@@ -23,6 +28,7 @@ export class CartPage extends Component<HTMLDivElement, CartPageProps> {
             {
                 className: 'cart-section',
                 navigateToMainPage: this.props.navigateToMainPage,
+                navigateToOrderPage: this.props.navigateToOrderPage,
             },
         );
     }

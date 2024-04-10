@@ -135,12 +135,17 @@ export function createConfig(parent: Element) {
                     text: 'Корзина',
                 },
                 router: {
-                    navigation: ['main'],
+                    navigation: ['main', 'profileOrders'],
                     component: (
                         params: { [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToOrderPage: () => void,
                     ) => {
-                        return new CartPage(parent, navigateToMain);
+                        return new CartPage(
+                            parent,
+                            navigateToMain,
+                            navigateToOrderPage,
+                        );
                     },
                 },
             },
