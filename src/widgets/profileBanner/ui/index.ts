@@ -12,9 +12,7 @@ export class ProfileBanner extends Component<
     ProfileBannerProps
 > {
     constructor(parent: Element, props: ProfileBannerProps) {
-        super(parent, profilePannerTmpl, {
-            className: props.className,
-        });
+        super(parent, profilePannerTmpl, props);
     }
 
     protected render() {

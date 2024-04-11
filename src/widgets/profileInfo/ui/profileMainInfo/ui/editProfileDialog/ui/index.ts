@@ -65,6 +65,11 @@ export class EditProfileDialog extends Component<
             this.htmlElement.getElementsByClassName(
                 'edit-dialog__form-place',
             )[0],
+            {
+                email: this.props.email,
+                phoneNumber: this.props.phoneNumber,
+                fullName: this.props.fullName,
+            },
         );
 
         this.errorElement = this.htmlElement.getElementsByClassName(

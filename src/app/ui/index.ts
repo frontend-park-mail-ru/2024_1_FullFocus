@@ -8,6 +8,7 @@ import { getConfig } from '@/providers';
 export class App extends Component<HTMLDivElement> {
     router: Router;
     private page: Component<Element>;
+    private activePageName: string;
     private contentElement: HTMLDivElement;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
@@ -18,12 +19,24 @@ export class App extends Component<HTMLDivElement> {
     }
 
     changePage(isLogged: boolean) {
-        this.contentElement.innerHTML = '';
+        const { name, getComponent, renderChild, update } =
+            this.router.currentActivePage;
 
-        const { name, component } = this.router.currentActivePage;
+        if (name != this.activePageName) {
+            this.contentElement.innerHTML = '';
+            this.page = getComponent(this.contentElement);
+            this.activePageName = name;
+        }
+
+        if (renderChild) {
+            renderChild(this.page);
+        }
+
+        if (update) {
+            update(this.page);
+        }
+
         this.navbar.updateNavbar(name, isLogged);
-
-        this.page = component;
     }
 
     private componentDidMount() {
@@ -43,10 +56,10 @@ export class App extends Component<HTMLDivElement> {
         )[0] as HTMLDivElement;
 
         this.headerElement = this.htmlElement.getElementsByClassName(
-            'header',
+            'navbar-container',
         )[0] as HTMLDivElement;
 
-        const { routerConfig, navbarConfig } = getConfig(this.contentElement);
+        const { routerConfig, navbarConfig } = getConfig();
 
         this.navbar = new Navbar(this.headerElement, {
             className: 'navbar__navigation',

@@ -33,11 +33,13 @@ export class ProfileOneOrderInfo extends Component<
                         'main-info__products-total-cost',
                     )[0] as HTMLDivElement
                 ).innerText = sum.toString();
+
                 (
                     this.htmlElement.getElementsByClassName(
                         'products-info__total-items',
                     )[0] as HTMLDivElement
                 ).innerText = products.length.toString();
+
                 (
                     this.htmlElement.getElementsByClassName(
                         'profile-one-order-info__status',

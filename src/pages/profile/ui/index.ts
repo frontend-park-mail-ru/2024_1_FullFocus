@@ -21,6 +21,16 @@ export class Profile extends Component<HTMLDivElement, ProfilePageProps> {
         });
     }
 
+    changePage(profilePageName: string, params?: { [name: string]: string }) {
+        this.profileInfo.renderProfileInfoPage(
+            profilePageName,
+            params ? Number(params['id']) : 0,
+            () => {
+                this.profileBanner.update();
+            },
+        );
+    }
+
     protected render() {
         this.renderTemplate();
 
@@ -37,13 +47,7 @@ export class Profile extends Component<HTMLDivElement, ProfilePageProps> {
         );
 
         if (this.props.profilePageName) {
-            this.profileInfo.renderProfileInfoPage(
-                this.props.profilePageName,
-                this.props.params ? Number(this.props.params['id']) : 0,
-                () => {
-                    this.profileBanner.update();
-                },
-            );
+            this.changePage(this.props.profilePageName, this.props.params);
         }
     }
 }

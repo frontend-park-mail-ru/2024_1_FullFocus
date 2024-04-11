@@ -62,19 +62,22 @@ export class ProfileMainInfo extends Component<
             },
         );
 
-        this.dialog = new EditProfileDialog(this.htmlElement, {
-            className: 'profile-main-info__edit-dialog',
-            profileChangedCallback: () => {
-                this.update();
-                if (this.props.profileChangedCallback) {
-                    this.props.profileChangedCallback();
-                }
-            },
-        });
-
         getUserData()
             .then((response) => {
                 const data = response.data;
+
+                this.dialog = new EditProfileDialog(this.htmlElement, {
+                    className: 'profile-main-info__edit-dialog',
+                    profileChangedCallback: () => {
+                        this.update();
+                        if (this.props.profileChangedCallback) {
+                            this.props.profileChangedCallback();
+                        }
+                    },
+                    fullName: data.fullName,
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                });
 
                 this.fullName.innerText = data.fullName;
                 this.phoneNumber.innerText = data.phoneNumber;

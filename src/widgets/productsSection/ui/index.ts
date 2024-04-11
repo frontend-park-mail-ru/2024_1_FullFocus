@@ -15,6 +15,7 @@ export class ProductsSection extends Component<
 > {
     protected products: { [id: number]: ProductsSectionItem<ProductCard> };
     protected productsSection: HTMLDivElement;
+    protected categoryName: HTMLSpanElement;
     protected productsCategories: CategoriesList;
     protected listener: (e: Event) => void;
 
@@ -25,6 +26,51 @@ export class ProductsSection extends Component<
     constructor(parent: Element, props: ProductsSectionProps) {
         super(parent, productsSectionTmpl, props);
         this.products = [];
+    }
+
+    changeCategory(categoryId: number) {
+        this.productsSection.innerHTML = '';
+        useGetProductCardsCategory(categoryId)
+            .then((products) => {
+                this.renderCards(products);
+                this.productsCategories.changeActiveItem(categoryId);
+                this.categoryName.innerText =
+                    'Категория: ' +
+                    this.productsCategories.categoryNameById(categoryId);
+            })
+            .catch(() => {
+                this.products = [];
+                this.productsSection.innerText = 'что-то пошло не так';
+            });
+    }
+
+    clearCategory() {
+        this.productsSection.innerHTML = '';
+        useGetProductCards(1, 10)
+            .then((products) => {
+                this.renderCards(products);
+                this.categoryName.innerText = 'Все товары';
+                this.productsCategories.clearActive();
+            })
+            .catch(() => {
+                this.products = [];
+                this.productsSection.innerText = 'что-то пошло не так';
+            });
+    }
+
+    protected renderCards(
+        products: ((parent: Element) => ProductsSectionItem<ProductCard>)[],
+    ) {
+        if (products.length === 0) {
+            this.productsSection.innerText = 'товары отсутсвуют';
+        }
+
+        if (products.length !== 0) {
+            products.forEach((product) => {
+                const p = product(this.productsSection);
+                this.products[p.id] = p;
+            });
+        }
     }
 
     protected componentDidMount() {
@@ -59,28 +105,12 @@ export class ProductsSection extends Component<
     protected render() {
         this.renderTemplate();
 
+        this.categoryName = this.htmlElement.getElementsByClassName(
+            'products-section__header',
+        )[0] as HTMLSpanElement;
         this.productsSection = this.htmlElement.getElementsByClassName(
             'products-section__products',
         )[0] as HTMLDivElement;
-
-        let categoriesLoadedCallback = () => {};
-        let productsPromise;
-        if (this.props.categoryId) {
-            productsPromise = useGetProductCardsCategory(this.props.categoryId);
-            categoriesLoadedCallback = () => {
-                this.productsCategories.changeActiveItem(this.props.categoryId);
-                (
-                    this.htmlElement.getElementsByClassName(
-                        'products-section__category-name',
-                    )[0] as HTMLSpanElement
-                ).innerText = this.productsCategories.categoryNameById(
-                    this.props.categoryId,
-                );
-            };
-        }
-        if (!this.props.categoryId) {
-            productsPromise = useGetProductCards(1, 10);
-        }
 
         this.productsCategories = new CategoriesList(
             this.htmlElement.getElementsByClassName(
@@ -88,27 +118,8 @@ export class ProductsSection extends Component<
             )[0],
             {
                 className: 'categories',
-                categoriesLoadedCallback: categoriesLoadedCallback,
-                activeItemId: this.props.categoryId,
             },
         );
-
-        productsPromise
-            .then((products) => {
-                if (products.length === 0) {
-                    this.productsSection.innerText = 'товары отсутсвуют';
-                }
-
-                if (products.length !== 0) {
-                    products.forEach((product) => {
-                        const p = product(this.productsSection);
-                        this.products[p.id] = p;
-                    });
-                }
-            })
-            .catch(() => {
-                this.products = [];
-            });
 
         this.componentDidMount();
     }

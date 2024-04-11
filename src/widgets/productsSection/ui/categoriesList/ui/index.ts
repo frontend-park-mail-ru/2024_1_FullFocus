@@ -51,6 +51,12 @@ export class CategoriesList extends Component<
             });
     }
 
+    clearActive() {
+        if (this.activePageId in this.navbarItems) {
+            this.navbarItems[this.activePageId].deactivate();
+        }
+    }
+
     changeActiveItem(activePageId: number) {
         if (activePageId in this.navbarItems) {
             if (this.activePageId != undefined) {

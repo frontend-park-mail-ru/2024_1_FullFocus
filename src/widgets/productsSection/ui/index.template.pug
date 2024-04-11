@@ -2,10 +2,5 @@ section.container
     div(class=`${className} products-section`)
         div(class="products-section__categories")
         div(class="products-section__section")
-            if !categoryId
-                span(class="products-section__header header header_h3") Все товары
-            else
-                div(class="products-section__header header header_h3")
-                    span Категория: 
-                    span(class="products-section__category-name") 
+            span(class="products-section__header header header_h3") Все товары
             div.products-section__products

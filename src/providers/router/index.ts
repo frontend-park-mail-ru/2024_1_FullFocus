@@ -11,7 +11,7 @@ export class Router {
     private renderPage: (isLogged: boolean) => void;
     private pages: { [name: string]: Page };
     private urls: { [name: string]: string };
-    private page404: () => Component<Element>;
+    private page404: (parent: Element) => Component<Element>;
 
     constructor(renderPage: (isLogged: boolean) => void, pages: RouterConfig) {
         this.renderPage = renderPage;
@@ -24,8 +24,11 @@ export class Router {
     }
 
     private pushState(url: string) {
-        window.history.pushState({}, '', url);
-        this.handlePopstate();
+        if (url !== window.location.href) {
+            console.log(url, window.location.href);
+            window.history.pushState({}, '', url);
+            this.handlePopstate();
+        }
     }
 
     handlePopstate() {
@@ -34,20 +37,20 @@ export class Router {
             .then((isLogged) => {
                 if (path in this.urls) {
                     const pageName = this.urls[path];
-                    const userLoginStatus = this.pages[pageName].logged;
-                    if (
-                        (userLoginStatus === 'logged' && isLogged) ||
-                        (userLoginStatus === 'unlogged' && !isLogged) ||
-                        userLoginStatus === 'both'
-                    ) {
+                    const needsLogin = this.pages[pageName].logged === 'logged';
+                    if ((needsLogin && isLogged) || !needsLogin) {
                         this.activePage = pageName;
+                    } else {
+                        this.activePage = PAGE_404;
                     }
                 } else {
                     this.activePage = PAGE_404;
                 }
                 this.renderPage(isLogged);
             })
-            .catch(() => {});
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     handleLinkClick(e: Event) {
@@ -65,8 +68,9 @@ export class Router {
     }
 
     getNavigationToPage(pageName: string) {
+        const pages = this.pages;
         const navigateToPage = () => {
-            if (pageName in this.pages) {
+            if (pageName in pages) {
                 this.pushState(this.pages[pageName].url);
             }
         };
@@ -75,16 +79,45 @@ export class Router {
     }
 
     get currentActivePage() {
-        let component = null;
+        let basePage = this.activePage;
+        let getComponent: (parent: Element) => Component<Element> = null;
+        let renderChild = null;
+        let update = null;
 
         if (this.activePage === PAGE_404) {
-            component = this.page404();
+            getComponent = this.page404;
         }
 
         if (this.activePage !== PAGE_404) {
+            // Get query params
+            const params: { [name: string]: string } = {};
+            const urlParams = new URLSearchParams(window.location.search);
+            const withParams = urlParams.size != 0;
+            for (const [key, value] of urlParams.entries()) {
+                params[key] = value;
+            }
+
+            // if current page is a subpage
+            if (this.pages[this.activePage].base) {
+                basePage = this.pages[this.activePage].base;
+                renderChild = (page: Component<Element>) => {
+                    this.pages[this.activePage].renderChild(page, params);
+                };
+            }
+
+            if (withParams) {
+                update = (page: Component<Element>) => {
+                    this.pages[basePage].updateParams(page, params);
+                };
+            }
+
+            if (!withParams) {
+                update = this.pages[basePage].updateDefault;
+            }
+
             const navigation: Array<() => void> = [];
-            if (this.pages[this.activePage].navigation != null) {
-                this.pages[this.activePage].navigation.forEach(
+            if (this.pages[basePage].navigation != null) {
+                this.pages[basePage].navigation.forEach(
                     (pageToNavigate: string) => {
                         navigation.push(
                             this.getNavigationToPage(pageToNavigate),
@@ -93,22 +126,20 @@ export class Router {
                 );
             }
 
-            const params: { [name: string]: string } = {};
-            const urlParams = new URLSearchParams(window.location.search);
-
-            for (const [key, value] of urlParams.entries()) {
-                params[key] = value;
-            }
-
-            component = this.pages[this.activePage].component(
-                params,
-                ...navigation,
-            );
+            getComponent = (parent: Element) => {
+                return this.pages[basePage].component(
+                    parent,
+                    params,
+                    ...navigation,
+                );
+            };
         }
 
         return {
-            name: this.activePage,
-            component: component,
+            name: basePage,
+            getComponent: getComponent,
+            renderChild: renderChild,
+            update: update,
         };
     }
 }
