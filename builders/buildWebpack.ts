@@ -15,6 +15,7 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
 
         entry: {
             index: paths.entry,
+            sw: paths.sw,
         },
 
         devServer: isDev ? buildDevServer(options.port) : undefined,

@@ -1,6 +1,6 @@
 export interface IProfile {
-    login: string;
-    name: string;
-    surname: string;
-    pictureSrc: string;
+    phoneNumber: string;
+    email: string;
+    fullName: string;
+    pictureSrc?: string;
 }

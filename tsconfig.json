@@ -2,6 +2,7 @@
     "include": ["src/**/*", "./*", "../*"],
     "compilerOptions": {
         "outDir": "./dist/",
+        "lib": ["es2019", "es6", "dom", "webworker"],
         "noImplicitAny": true,
         "module": "ESNext",
         "target": "es5",

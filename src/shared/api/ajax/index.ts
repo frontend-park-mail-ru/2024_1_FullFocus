@@ -100,3 +100,12 @@ export async function ajaxMultipartForm<T>(
             return error;
         });
 }
+
+export async function fetchBlob(url: string) {
+    return fetch(BACKEND_URL + url, {
+        method: 'GET',
+        credentials: 'include',
+    }).then((response) => {
+        return response.blob();
+    });
+}
