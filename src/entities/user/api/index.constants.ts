@@ -6,4 +6,5 @@ export const USER_API_URLS = {
     userData: '/api/v1/profile/get',
     updateProfile: '/api/v1/profile/update',
     updatePicture: '/api/v1/avatar/upload',
+    getPicture: '/api/v1/avatar/get',
 };

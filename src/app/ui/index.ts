@@ -1,9 +1,9 @@
 import appTmplFunc from './index.template.pug';
 import './index.style.scss';
 import { Component } from '@/shared/@types/index.component';
-import { Page, Router } from '@/providers';
+import { Page, Router } from './../providers';
 import { Navbar } from '@/widgets/navbar';
-import { getConfig } from '@/providers';
+import { getConfig } from './../providers';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
@@ -46,6 +46,27 @@ export class App extends Component<HTMLDivElement> {
                 this.router.handleLinkClick(e);
             }
         });
+
+        // TODO sw
+
+        /*
+         * if ('serviceWorker' in navigator) {
+         *     this.registerSW();
+         * }
+         */
+    }
+
+    protected registerSW() {
+        navigator.serviceWorker
+            .register('/public/sw.js', {
+                scope: '/',
+            })
+            .then((reg) => {
+                console.log('SW registered', reg);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     protected render() {

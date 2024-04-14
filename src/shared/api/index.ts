@@ -1,1 +1,1 @@
-export { ajax, ajaxMultipartForm, ajaxGet, ajaxPost } from './ajax';
+export { ajax, ajaxMultipartForm, ajaxGet, ajaxPost, fetchBlob } from './ajax';

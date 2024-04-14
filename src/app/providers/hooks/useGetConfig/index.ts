@@ -1,7 +1,7 @@
 import { NavbarLinkProps } from '@/widgets/navbar';
 import { UserLogged } from '@/widgets/navbar/ui/index.types';
 import { createConfig } from '../useCreateConfig';
-import { RouterConfig } from '@/providers/router/index.types';
+import { RouterConfig } from './../../router/index.types';
 
 export function getConfig() {
     const config = createConfig();

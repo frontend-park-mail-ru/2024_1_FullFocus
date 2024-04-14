@@ -34,11 +34,6 @@ export class Profile extends Component<HTMLDivElement, ProfilePageProps> {
     protected render() {
         this.renderTemplate();
 
-        this.profileBanner = new ProfileBanner(
-            this.htmlElement.getElementsByClassName('profile-banner')[0],
-            { className: 'banner' },
-        );
-
         this.profileInfo = new ProfileInfo(
             this.htmlElement.getElementsByClassName('profile-main')[0],
             {

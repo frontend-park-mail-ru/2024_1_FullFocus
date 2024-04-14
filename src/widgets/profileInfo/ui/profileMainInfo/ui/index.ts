@@ -1,10 +1,11 @@
 import './index.style.scss';
+import './default-profile-pic.png';
 import profileMainInfoTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProfileMainInfoProps } from './index.types';
-import { getUserData } from '@/entities/user';
 import { EditProfileDialog } from './editProfileDialog';
 import { ChangePicture } from './changePicture';
+import { useGetProfileInfo } from '@/features/profile/api';
 
 export class ProfileMainInfo extends Component<
     HTMLDivElement,
@@ -62,10 +63,9 @@ export class ProfileMainInfo extends Component<
             },
         );
 
-        getUserData()
+        useGetProfileInfo()
             .then((response) => {
-                const data = response.data;
-
+                console.log(response);
                 this.dialog = new EditProfileDialog(this.htmlElement, {
                     className: 'profile-main-info__edit-dialog',
                     profileChangedCallback: () => {
@@ -74,20 +74,22 @@ export class ProfileMainInfo extends Component<
                             this.props.profileChangedCallback();
                         }
                     },
-                    fullName: data.fullName,
-                    email: data.email,
-                    phoneNumber: data.phoneNumber,
+                    fullName: response.fullName,
+                    email: response.email,
+                    phoneNumber: response.phoneNumber,
                 });
 
-                this.fullName.innerText = data.fullName;
-                this.phoneNumber.innerText = data.phoneNumber;
-                this.email.innerText = data.email;
+                this.fullName.innerText = response.fullName;
+                this.phoneNumber.innerText = response.phoneNumber;
+                this.email.innerText = response.email;
                 this.changePicture.pictureSrc =
-                    data.imgSrc === ''
+                    response.pictureSrc === ''
                         ? '/public/default-profile-pic.png'
-                        : data.imgSrc;
+                        : response.pictureSrc;
             })
-            .catch(() => {});
+            .catch((error) => {
+                console.log(error);
+            });
 
         this.componentDidMount();
     }

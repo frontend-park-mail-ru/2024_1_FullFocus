@@ -1,25 +1,28 @@
-import { getUserData } from '@/entities/user/api';
+import { getUserData, getProfilePicture } from '@/entities/user/api';
 import { IProfile } from './index.types';
 
-/*
- * TODO make it real
- * export async function useGetProfileInfo() {
- *     const userData = await getUserData();
- *     if (userData.status === 200) {
- *         const profileData: IProfile = {
- *             login: userData.data.login,
- *             name: userData.data.name,
- *             surname: userData.data.surname,
- *             pictureSrc: userData.data.pictureSrc,
- *         };
- */
+export async function useGetProfileInfo() {
+    const [userData, profilePicture] = await Promise.all([
+        getUserData(),
+        getProfilePicture(),
+    ]);
 
-/*
- *         return profileData;
- * }
- */
+    console.log(userData);
+    console.log(profilePicture);
 
-/*
- *     return { login: '', name: '', surname: '', pictureSrc: '' };
- * }
- */
+    const imgSrc = URL.createObjectURL(profilePicture);
+    console.log(imgSrc);
+
+    if (userData.status === 200) {
+        const profileData: IProfile = {
+            fullName: userData.data.fullName,
+            email: userData.data.email,
+            phoneNumber: userData.data.phoneNumber,
+            pictureSrc: imgSrc,
+        };
+
+        return profileData;
+    }
+
+    return { fullName: '', email: '', phoneNumber: '', pictureSrc: '' };
+}
