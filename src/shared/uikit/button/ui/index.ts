@@ -32,10 +32,12 @@ export class Button extends Component<HTMLButtonElement, ButtonProps> {
 
     setDisabled() {
         this.htmlElement.disabled = true;
+        this.htmlElement.classList.add('btn_disabled');
     }
 
     setEnabled() {
         this.htmlElement.disabled = false;
+        this.htmlElement.classList.remove('btn_disabled');
     }
 
     protected render() {

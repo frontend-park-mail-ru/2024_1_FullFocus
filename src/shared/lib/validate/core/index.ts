@@ -22,6 +22,20 @@ export function validatePassword(password: string): string | null {
     return null;
 }
 
+export function validateEmail(password: string): string | null {
+    if (!/^[a-zA-Z0-9_]{1,16}@(mail|gmail|yandex)\.(com|ru)$/.test(password)) {
+        return 'почта введена в неверном формате';
+    }
+    return null;
+}
+
+export function validatePhoneNumber(password: string): string | null {
+    if (!/^[0-9]{11}$/.test(password)) {
+        return 'номер телефона должен состоять из ровно 11 цифр';
+    }
+    return null;
+}
+
 export function validateDefault(sequence: string): string | null {
     if (sequence.length < 1) {
         return 'поле не должно быть пустым';

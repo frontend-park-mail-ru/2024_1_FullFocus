@@ -21,6 +21,13 @@ export class CartInfo extends Component<HTMLDivElement, CartInfoProps> {
         this.total = total;
         this.costElement.innerText = this.cost.toString();
         this.totalElement.innerText = this.total.toString();
+
+        if (this.total <= 0) {
+            this.setDisabled();
+        }
+        if (this.total > 0) {
+            this.setEnabled();
+        }
     }
 
     substractProduct(productCost: number) {
@@ -31,6 +38,10 @@ export class CartInfo extends Component<HTMLDivElement, CartInfoProps> {
 
     addProduct(productCost: number) {
         this.updateCartInfo(this.cost + productCost, this.total + 1);
+    }
+
+    get totalProducts() {
+        return this.total;
     }
 
     protected componentWillUnmount() {
@@ -83,6 +94,14 @@ export class CartInfo extends Component<HTMLDivElement, CartInfoProps> {
         );
 
         this.componentDidMount();
+    }
+
+    setDisabled() {
+        this.confirmButton.setDisabled();
+    }
+
+    setEnabled() {
+        this.confirmButton.setEnabled();
     }
 
     destroy() {

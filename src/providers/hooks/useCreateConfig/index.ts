@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style */
 /* eslint-disable max-lines-per-function */
 import { Main } from '@/pages/main';
 import { Login } from '@/pages/login';
@@ -10,29 +11,59 @@ import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
 
 interface ConfigItem {
+    // User login status
     logged: UserLogged;
+    // URL to the page
     url: string;
+    // Props for navbarlink
     navbarLink?: {
         className: string;
         text: string;
     };
+    // Children
+    children?: {
+        default?: string;
+        pages: {
+            [name: string]: {
+                url: string;
+                renderChild: (
+                    pageComponent: Component<Element>,
+                    params?: { [name: string]: string },
+                ) => void;
+            };
+        };
+    };
+    // Router params
     router: {
+        // Update functions
+        update?: {
+            // Update with query params
+            updateParams: (
+                page: Component<Element>,
+                params: { [name: string]: string },
+            ) => void;
+            // Update to default state
+            updateDefault: (page: Component<Element>) => void;
+        };
+        // To which pages navigation is needed
         navigation?: Array<string>;
+        // Function to create a component
         component: (
+            parent: Element,
             params: { [name: string]: string },
             ...redirect: Array<() => void>
         ) => Component<Element>;
     };
 }
 
-export function createConfig(parent: Element) {
+export function createConfig() {
     const config: {
-        page404: () => Component<Element>;
+        page404: (parent: Element) => Component<Element>;
         pages: {
             [name: string]: ConfigItem;
         };
     } = {
-        page404: () => {
+        page404: (parent: Element) => {
             return new Page404(parent);
         },
         pages: {
@@ -44,8 +75,20 @@ export function createConfig(parent: Element) {
                     text: 'Главная',
                 },
                 router: {
+                    update: {
+                        updateParams: (
+                            page: Main,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+                        updateDefault: (page: Main) => {
+                            page.updateDefault();
+                        },
+                    },
                     navigation: ['cart'],
                     component: (
+                        parent: Element,
                         params: { [name: string]: string },
                         navigateToCart: () => void,
                     ) => {
@@ -63,6 +106,7 @@ export function createConfig(parent: Element) {
                 router: {
                     navigation: ['main'],
                     component: (
+                        parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
                     ) => {
@@ -80,50 +124,11 @@ export function createConfig(parent: Element) {
                 router: {
                     navigation: ['main'],
                     component: (
+                        parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
                     ) => {
                         return new SignUp(parent, navigateToMain);
-                    },
-                },
-            },
-            profile: {
-                url: '/profile',
-                logged: 'logged',
-                router: {
-                    component: () => {
-                        return new Profile(parent);
-                    },
-                },
-            },
-            profileInfo: {
-                url: '/profile/info',
-                logged: 'logged',
-                navbarLink: {
-                    className: 'navbar-link-profile',
-                    text: 'Профиль',
-                },
-                router: {
-                    component: () => {
-                        return new Profile(parent, 'info');
-                    },
-                },
-            },
-            profileOrders: {
-                logged: 'logged',
-                url: '/profile/orders',
-                router: {
-                    component: () => {
-                        return new Profile(parent, 'orders');
-                    },
-                },
-            },
-            profileOrder: {
-                url: '/profile/order',
-                logged: 'logged',
-                router: {
-                    component: (params: { [name: string]: string }) => {
-                        return new Profile(parent, 'oneOrder', params);
                     },
                 },
             },
@@ -135,8 +140,9 @@ export function createConfig(parent: Element) {
                     text: 'Корзина',
                 },
                 router: {
-                    navigation: ['main', 'profileOrders'],
+                    navigation: ['main', 'profile-orders'],
                     component: (
+                        parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
                         navigateToOrderPage: () => void,
@@ -149,6 +155,46 @@ export function createConfig(parent: Element) {
                     },
                 },
             },
+            profile: {
+                url: '/profile',
+                logged: 'logged',
+                router: {
+                    component: (parent: Element) => {
+                        return new Profile(parent);
+                    },
+                },
+                children: {
+                    default: 'info',
+                    pages: {
+                        info: {
+                            url: '/info',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('info');
+                            },
+                        },
+                        orders: {
+                            url: '/orders',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('orders');
+                            },
+                        },
+                        order: {
+                            url: '/order',
+                            renderChild: (
+                                profilePage: Profile,
+                                params: { [name: string]: string },
+                            ) => {
+                                profilePage.changePage('oneOrder', params);
+                            },
+                        },
+                    },
+                },
+                navbarLink: {
+                    className: 'navbar-link-profile',
+                    text: 'Профиль',
+                },
+            },
+
             logout: {
                 url: '/logout',
                 logged: 'logged',
@@ -159,6 +205,7 @@ export function createConfig(parent: Element) {
                 router: {
                     navigation: ['main'],
                     component: (
+                        parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
                     ) => {

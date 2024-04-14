@@ -11,6 +11,7 @@ export interface InputProps {
     type: InputType;
     name: string;
     status: InputStatus;
+    initialValue?: string;
 }
 
 export class Input extends Component<HTMLInputElement, InputProps> {
@@ -53,5 +54,12 @@ export class Input extends Component<HTMLInputElement, InputProps> {
 
     get inputValue(): string {
         return this.htmlInput.value;
+    }
+
+    protected render() {
+        this.props.initialValue = this.props.initialValue
+            ? this.props.initialValue
+            : '';
+        this.renderTemplate();
     }
 }

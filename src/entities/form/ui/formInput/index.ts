@@ -11,6 +11,8 @@ export interface FormInputProps {
     name: string;
     status: InputStatus;
     errorBlockClassName: string;
+    validate?: boolean;
+    initialValue?: string;
 }
 
 export class FormInput extends EmptyContainer {
@@ -22,6 +24,13 @@ export class FormInput extends EmptyContainer {
         super(parent, props);
     }
 
+    get validate() {
+        if (this.props.validate != undefined) {
+            return this.props.validate;
+        }
+        return true;
+    }
+
     protected render() {
         this.renderTemplate();
 
@@ -31,6 +40,7 @@ export class FormInput extends EmptyContainer {
             type: this.props.type,
             name: this.props.name,
             status: this.props.status,
+            initialValue: this.props.initialValue,
         });
 
         if (this.props.type === 'password') {

@@ -46,6 +46,8 @@ export class Form extends Component<HTMLFormElement, FormProps> {
             inputClassName: params.inputClassName,
             name: params.name,
             status: 'notValidated',
+            validate: params.validate,
+            initialValue: params.initialValue,
             errorBlockClassName:
                 'input-block__error ' + params.className + '-error',
         };

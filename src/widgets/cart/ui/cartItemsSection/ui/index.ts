@@ -14,6 +14,7 @@ export class CartItemsSection extends Component<
 > {
     protected cartItems: { [id: number]: CartItem<ProductCard> };
     protected clearBtn: Button;
+    protected totalUniqueItems: number;
     protected clearCartListener: (e: Event) => void;
     protected counterActionListener: (e: Event) => void;
 
@@ -24,6 +25,7 @@ export class CartItemsSection extends Component<
     constructor(parent: Element, props: CartItemsSectionProps) {
         super(parent, cartItemsSectionTempl, props);
         this.cartItems = [];
+        this.totalUniqueItems = 0;
     }
 
     protected componentDidMount() {
@@ -98,6 +100,14 @@ export class CartItemsSection extends Component<
         this.componentDidMount();
     }
 
+    protected emptyCartMessage() {
+        (
+            this.htmlElement.getElementsByClassName(
+                'cart-items-section__cart-items',
+            )[0] as HTMLDivElement
+        ).innerText = 'корзина пуста';
+    }
+
     get cartInfo() {
         const t: { productId: number; count: number }[] = [];
         Object.entries(this.cartItems).forEach(([id, item]) => {
@@ -112,6 +122,10 @@ export class CartItemsSection extends Component<
 
     removeItemById(id: number) {
         this.cartItems[id].destroy();
+        this.totalUniqueItems--;
+        if (this.totalUniqueItems === 0) {
+            this.emptyCartMessage();
+        }
     }
 
     clearCart() {
@@ -119,11 +133,7 @@ export class CartItemsSection extends Component<
             item.destroy();
         });
         this.cartItems = {};
-        (
-            this.htmlElement.getElementsByClassName(
-                'cart-items-section__cart-items',
-            )[0] as HTMLDivElement
-        ).innerText = 'корзина пуста';
+        this.emptyCartMessage();
     }
 
     renderCartItems(
@@ -133,11 +143,7 @@ export class CartItemsSection extends Component<
         })[],
     ) {
         if (cartItems.length === 0) {
-            (
-                this.htmlElement.getElementsByClassName(
-                    'cart-items-section__cart-items',
-                )[0] as HTMLDivElement
-            ).innerText = 'корзина пуста';
+            this.emptyCartMessage();
         }
 
         if (cartItems.length !== 0) {
@@ -147,6 +153,7 @@ export class CartItemsSection extends Component<
             cartItems.forEach((createItem) => {
                 const { card, id } = createItem(parent);
                 this.cartItems[id] = card;
+                this.totalUniqueItems++;
             });
         }
     }

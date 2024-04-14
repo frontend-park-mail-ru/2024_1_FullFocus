@@ -5,6 +5,7 @@ import { ProductsSection } from '@/widgets/productsSection';
 import { MainPageProps } from './index.types';
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
+    protected productsSection: ProductsSection;
     /**
      * Constructor for Main page object
      * @param {any} parent - parent object
@@ -12,13 +13,24 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
     constructor(
         parent: Element,
         navigateToCart: () => void,
-        params?: { [name: string]: string },
+        params: { [name: string]: string },
     ) {
         super(parent, mainPageTmpl, {
             className: 'main-page',
             navigateToCart: navigateToCart,
-            params,
+            params: params,
         });
+    }
+
+    updateWithParams(params: { [name: string]: string }) {
+        const categoryId = Number(params['category']);
+        if (categoryId) {
+            this.productsSection.changeCategory(categoryId);
+        }
+    }
+
+    updateDefault() {
+        this.productsSection.clearCategory();
     }
 
     /**
@@ -27,10 +39,17 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected render() {
         this.renderTemplate();
 
-        new ProductsSection(this.htmlElement, {
+        this.productsSection = new ProductsSection(this.htmlElement, {
             className: 'products-section-popular',
-            categoryId: Number(this.props.params['category']),
             navigateToCart: this.props.navigateToCart,
         });
+
+        if (this.props.params) {
+            this.updateWithParams(this.props.params);
+        }
+
+        if (!this.props.params) {
+            this.updateDefault();
+        }
     }
 }

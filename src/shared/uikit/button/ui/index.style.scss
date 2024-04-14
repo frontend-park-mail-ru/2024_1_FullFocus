@@ -80,3 +80,8 @@ $btn-default-bg-color: #fff;
     color: white;
     font-weight: 700;
 }
+
+.btn_disabled {
+    background-color: #79b4b0;
+    pointer-events: none;
+}

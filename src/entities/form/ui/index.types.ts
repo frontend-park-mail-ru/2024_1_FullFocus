@@ -20,4 +20,6 @@ export interface IFormField {
     type: InputType;
     className: string;
     inputClassName: string;
+    validate?: boolean;
+    initialValue?: string;
 }

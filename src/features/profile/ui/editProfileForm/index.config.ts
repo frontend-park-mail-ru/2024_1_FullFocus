@@ -1,7 +1,7 @@
 import { FormField } from '@/entities/form';
 
 export const EDIT_PROFILE_FORM_FIELDS: { [name: string]: FormField } = {
-    fullname: {
+    fullName: {
         name: 'fullName',
         text: 'Ф.И.О',
         type: 'text',
