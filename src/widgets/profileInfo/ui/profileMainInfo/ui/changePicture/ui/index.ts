@@ -45,9 +45,7 @@ export class ChangePicture extends Component<
                         }
                     }
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
+                .catch(() => {});
         };
         this.form.addEventListener('submit', this.submitListener);
     }

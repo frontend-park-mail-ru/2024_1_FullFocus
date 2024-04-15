@@ -46,9 +46,7 @@ export class CategoriesList extends Component<
                     }
                 }
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(() => {});
     }
 
     clearActive() {
