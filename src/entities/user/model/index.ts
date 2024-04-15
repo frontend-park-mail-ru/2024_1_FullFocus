@@ -1,1 +1,1 @@
-export { IUser } from './index.types';
+export type { IUser } from './index.types';

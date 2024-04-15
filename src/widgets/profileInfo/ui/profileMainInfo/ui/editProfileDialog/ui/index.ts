@@ -22,6 +22,17 @@ export class EditProfileDialog extends Component<
     }
 
     protected componentDidMount() {
+        this.htmlElement.addEventListener('click', (e) => {
+            const dialogDimensions = this.htmlElement.getBoundingClientRect();
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                this.htmlElement.close();
+            }
+        });
         this.closeListener = (e: Event) => {
             e.preventDefault();
             this.htmlElement.close();

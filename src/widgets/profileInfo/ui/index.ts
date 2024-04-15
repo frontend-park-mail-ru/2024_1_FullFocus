@@ -53,11 +53,12 @@ export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
 
         Object.entries(PROFILE_PAGES).forEach(
             ([name, { href, text, getComponent }]) => {
-                if (href) {
+                if (text) {
                     this.navbar.addLink(name, {
                         className: 'profile-page-link-' + name,
                         href: href,
                         text: text,
+                        style: 'with-bg',
                     });
                 }
 

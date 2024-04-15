@@ -1,7 +1,7 @@
-import { NavbarLinkProps } from '@/widgets/navbar';
 import { UserLogged } from '@/widgets/navbar/ui/index.types';
 import { createConfig } from '../useCreateConfig';
 import { RouterConfig } from './../../router/index.types';
+import { LinkProps } from '@/shared/uikit/link';
 
 export function getConfig() {
     const config = createConfig();
@@ -9,7 +9,7 @@ export function getConfig() {
     const routerConfig: RouterConfig = { page404: config.page404, pages: {} };
 
     const navbarConfig: {
-        [name: string]: { props: NavbarLinkProps; logged: UserLogged };
+        [name: string]: { props: LinkProps; logged: UserLogged };
     } = {};
 
     Object.entries(config.pages).forEach(([name, item]) => {
@@ -52,6 +52,7 @@ export function getConfig() {
                     className: item.navbarLink.className,
                     text: item.navbarLink.text,
                     href: defaultUrl,
+                    iconName: item.navbarLink.iconName,
                 },
                 logged: item.logged,
             };

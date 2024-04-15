@@ -65,7 +65,6 @@ export class ProfileMainInfo extends Component<
 
         useGetProfileInfo()
             .then((response) => {
-                console.log(response);
                 this.dialog = new EditProfileDialog(this.htmlElement, {
                     className: 'profile-main-info__edit-dialog',
                     profileChangedCallback: () => {
@@ -87,9 +86,7 @@ export class ProfileMainInfo extends Component<
                         ? '/public/default-profile-pic.png'
                         : response.pictureSrc;
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(() => {});
 
         this.componentDidMount();
     }

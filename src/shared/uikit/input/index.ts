@@ -1,1 +1,2 @@
-export { Input, InputType, InputProps, InputStatus } from './ui';
+export type { InputType, InputProps, InputStatus } from './ui';
+export { Input } from './ui';

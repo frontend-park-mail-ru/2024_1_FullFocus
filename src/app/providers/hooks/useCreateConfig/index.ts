@@ -19,6 +19,7 @@ interface ConfigItem {
     navbarLink?: {
         className: string;
         text: string;
+        iconName?: string;
     };
     // Children
     children?: {
@@ -138,6 +139,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-cart',
                     text: 'Корзина',
+                    iconName: '/public/cart-icon.svg',
                 },
                 router: {
                     navigation: ['main', 'profile-orders'],
@@ -192,6 +194,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-profile',
                     text: 'Профиль',
+                    iconName: '/public/user-icon.svg',
                 },
             },
 
@@ -201,6 +204,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-logout',
                     text: 'Выйти',
+                    iconName: '/public/logout.svg',
                 },
                 router: {
                     navigation: ['main'],

@@ -1,25 +1,27 @@
 import './index.style.scss';
 import navbarTmplFunc from './index.template.pug';
+import './cart-icon.svg';
+import './user-icon.svg';
+import './logout.svg';
 import { Component } from '@/shared/@types/index.component';
 import { NavbarProps } from './index.types';
-import { NavbarLink } from './navbarLink';
-import { NavbarLinkProps } from './navbarLink';
+import { Link, LinkProps } from '@/shared/uikit/link';
 import { UserLogged } from './index.types';
 
-export { UserLogged } from './index.types';
+export type { UserLogged } from './index.types';
 
 export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     protected activeItemName: string;
     protected publicLinkProps: Array<{
         pageName: string;
-        props: NavbarLinkProps;
+        props: LinkProps;
     }>;
     protected privateLinkProps: Array<{
         pageName: string;
         needsLogin: boolean;
-        props: NavbarLinkProps;
+        props: LinkProps;
     }>;
-    protected navbarItems: { [name: string]: NavbarLink };
+    protected navbarItems: { [name: string]: Link };
     protected isUserLogged: boolean;
     protected publicLayoutChanged: boolean;
     protected privateLayoutChanged: boolean;
@@ -37,7 +39,7 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         this.privateLayoutChanged = false;
     }
 
-    addLink(pageName: string, userLogged: UserLogged, props: NavbarLinkProps) {
+    addLink(pageName: string, userLogged: UserLogged, props: LinkProps) {
         if (userLogged === 'both') {
             this.publicLinkProps.push({
                 pageName: pageName,
@@ -91,7 +93,7 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     protected renderPublic() {
         this.publicLinksElement.innerHTML = '';
         this.publicLinkProps.forEach(({ pageName, props }) => {
-            this.navbarItems[pageName] = new NavbarLink(
+            this.navbarItems[pageName] = new Link(
                 this.publicLinksElement,
                 props,
             );
@@ -102,7 +104,7 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         this.privateLinksElement.innerHTML = '';
         this.privateLinkProps.forEach(({ pageName, needsLogin, props }) => {
             if (needsLogin === isLogged) {
-                this.navbarItems[pageName] = new NavbarLink(
+                this.navbarItems[pageName] = new Link(
                     this.privateLinksElement,
                     props,
                 );

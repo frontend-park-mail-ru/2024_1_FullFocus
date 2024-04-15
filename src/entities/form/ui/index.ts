@@ -5,7 +5,7 @@ import { Component } from '@/shared/@types/index.component';
 import { FormInput, FormInputProps } from './formInput';
 import { FormProps, InputItems, IFormField } from './index.types';
 
-export { IFormField } from './index.types';
+export type { IFormField } from './index.types';
 
 export class Form extends Component<HTMLFormElement, FormProps> {
     inputItems: InputItems;

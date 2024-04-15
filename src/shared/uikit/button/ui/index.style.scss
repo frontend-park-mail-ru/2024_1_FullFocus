@@ -34,10 +34,6 @@ $btn-default-bg-color: #fff;
     background-color: $color-primary-light;
 }
 
-.btn_bright:focus {
-    background-color: $color-primary-light;
-}
-
 .btn_bright .btn__text {
     color: white;
     font-weight: 700;
@@ -54,10 +50,6 @@ $btn-default-bg-color: #fff;
     background-color: #dbdbdb;
 }
 
-.btn_with-outline:focus {
-    background-color: #dbdbdb;
-}
-
 .btn_with-outline .btn__text {
     font-size: 12px;
 }
@@ -69,10 +61,6 @@ $btn-default-bg-color: #fff;
 }
 
 .btn_green:hover {
-    background-color: $color-green-light;
-}
-
-.btn_green:focus {
     background-color: $color-green-light;
 }
 

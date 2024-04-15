@@ -2,7 +2,7 @@ import './index.style.scss';
 import navbarTmplFunc from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProfileNavbarProps } from './index.types';
-import { Link } from './categoryItem';
+import { Link } from '@/shared/uikit/link';
 import { getCategories } from '@/entities/productsSection';
 
 export class CategoriesList extends Component<
@@ -35,6 +35,7 @@ export class CategoriesList extends Component<
                                 className: `category-link-${category.id}`,
                                 href: `/?category=${category.id}`,
                                 text: category.name,
+                                style: 'with-bg',
                             },
                         );
                     });

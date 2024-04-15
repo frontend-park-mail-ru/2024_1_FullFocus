@@ -1,2 +1,2 @@
-export { Navbar, UserLogged } from './ui';
-export { NavbarLinkProps } from './ui/navbarLink';
+export { Navbar } from './ui';
+export type { UserLogged } from './ui';

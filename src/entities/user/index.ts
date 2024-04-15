@@ -1,4 +1,4 @@
-export { IUser as UserModel } from './model';
+export type { IUser as UserModel } from './model';
 export {
     checkAuthRequest,
     signupRequest,

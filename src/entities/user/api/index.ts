@@ -33,7 +33,6 @@ export async function updateProfile(body: IUpdateProfileBody) {
         fullName: body.fullName,
         email: body.email,
         phoneNumber: body.phoneNumber,
-        imgSrc: '',
     });
 }
 

@@ -1,2 +1,3 @@
-export { Router, Page } from './router';
+export { Router } from './router';
+export type { Page } from './router';
 export { getConfig } from './hooks';

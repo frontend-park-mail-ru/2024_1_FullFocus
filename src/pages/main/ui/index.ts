@@ -43,13 +43,5 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
             className: 'products-section-popular',
             navigateToCart: this.props.navigateToCart,
         });
-
-        if (this.props.params) {
-            this.updateWithParams(this.props.params);
-        }
-
-        if (!this.props.params) {
-            this.updateDefault();
-        }
     }
 }

@@ -2,39 +2,32 @@ import './index.style.scss';
 import navbarTmplFunc from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProfileNavbarProps } from './index.types';
-import { ProfileNavbarLink, ProfileNavbarLinkProps } from './profileNavbarLink';
+import { Link, LinkProps } from '@/shared/uikit/link';
 
 export class ProfileNavbar extends Component<
     HTMLDivElement,
     ProfileNavbarProps
 > {
-    protected linkProps: Array<{
-        pageName: string;
-        props: ProfileNavbarLinkProps;
-    }>;
+    protected linkProps: {
+        [pageName: string]: LinkProps;
+    };
     protected activePage: string;
-    protected navbarItems: { [name: string]: ProfileNavbarLink };
+    protected navbarItems: { [name: string]: Link };
 
     constructor(parent: Element, props: ProfileNavbarProps) {
         super(parent, navbarTmplFunc, props);
-        this.linkProps = [];
+        this.linkProps = {};
         this.navbarItems = {};
         this.activePage = undefined;
     }
 
-    addLink(pageName: string, props: ProfileNavbarLinkProps) {
-        this.linkProps.push({
-            pageName: pageName,
-            props: props,
-        });
+    addLink(pageName: string, props: LinkProps) {
+        this.linkProps[pageName] = props;
     }
 
     updateNavbar() {
         Object.entries(this.linkProps).forEach(([name, props]) => {
-            this.navbarItems[name] = new ProfileNavbarLink(
-                this.htmlElement,
-                props.props,
-            );
+            this.navbarItems[name] = new Link(this.htmlElement, props);
         });
     }
 
