@@ -1,0 +1,7 @@
+- var inputClass = 'input-block__input text_weight-light ' + className
+case status 
+    when 'invalid'
+        - inputClass = inputClass + ' input-block__input_invalid'
+    when 'valid'
+        - inputClass = inputClass + ' input-block__input_valid'
+input(type=`${type}` name=`${name}` placeholder=`${placeholder}` class=inputClass value=`${initialValue}`)

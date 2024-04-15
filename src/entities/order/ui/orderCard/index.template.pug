@@ -1,0 +1,10 @@
+div(class=`${className} order-card`)
+    div(class="order-card__info-left")
+        div(class="text") Заказ номер
+        div(class="order-card__order-id") 
+            a(href=`${orderHref}`) #{id}
+    div(class="order-card__info-right")
+        div(class="order-card__order-sum")
+            span(class="text text_size-small") оплачено 
+            span(class="text text_weight_semibold") #{sum}₽
+        div(class="order-card__order-status") #{status}

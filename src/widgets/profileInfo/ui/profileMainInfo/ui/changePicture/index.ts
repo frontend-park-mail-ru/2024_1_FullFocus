@@ -1,0 +1,1 @@
+export { ChangePicture } from './ui';

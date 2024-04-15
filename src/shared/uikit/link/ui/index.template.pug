@@ -1,0 +1,9 @@
+if iconName
+    a(href=`${href}` class=`link-with-icon ${className}`)
+        img(src=`${iconName}` class="link-with-icon__icon")
+        span(class="link-with-icon__text text text_weight-semibold") #{text}
+else
+    if style == "with-bg"
+        a(href=`${href}` class=`link-with-bg ${className}`) #{text}
+    else
+        a(href=`${href}` class=`link ${className}`) #{text}

@@ -3,27 +3,22 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
-	htmlFile, err := os.Open("public/index.html")
-	defer htmlFile.Close()
-	if err != nil {
-		panic(err)
-	}
-	buf := make([]byte, 1024)
-	_, err = htmlFile.Read(buf)
-	if err != nil {
-		panic(err)
-	}
-	w.Write(buf)
-}
-
 func main() {
+	http.HandleFunc("/public/sw.js", func(w http.ResponseWriter, r *http.Request) {
+		p := "./public/sw.js"
+		w.Header().Add("Service-Worker-Allowed", "/")
+		http.ServeFile(w, r, p)
+	})
+
 	fs := http.FileServer(http.Dir("./public"))
-	http.Handle("/", fs)
+	http.Handle("/public/", http.StripPrefix("/public/", fs))
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		p := "./public/index.html"
+		http.ServeFile(w, r, p)
+	})
 
 	log.Printf("server is running...")
 	if err := http.ListenAndServe("0.0.0.0:80", nil); err != nil {

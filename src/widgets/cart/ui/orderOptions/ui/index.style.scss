@@ -1,0 +1,13 @@
+.order-options-section__header {
+    width: 100%;
+    text-align: left;
+}
+
+.order-options-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto 10px auto;
+    width: 100%;
+    box-sizing: border-box;
+}

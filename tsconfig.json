@@ -1,0 +1,27 @@
+{
+    "include": ["src/**/*", "./*", "../*"],
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "lib": ["es2019", "es6", "dom", "webworker"],
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "target": "es5",
+        "downlevelIteration": true,
+        "allowJs": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "noEmit": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "typeRoots": ["src/shared/@types", "node_modules/@types"]
+    },
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    }
+}
