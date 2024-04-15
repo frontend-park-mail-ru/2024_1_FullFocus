@@ -7,12 +7,10 @@ export async function useGetProfileInfo() {
         getProfilePicture(),
     ]);
 
-    // TODO remove console log
-    console.log(userData);
-    console.log(profilePicture);
-
-    const imgSrc = URL.createObjectURL(profilePicture);
-    console.log(imgSrc);
+    let imgSrc = '';
+    if (profilePicture.type in ['image/png', 'image/jpeg', 'image/jpg']) {
+        imgSrc = URL.createObjectURL(profilePicture);
+    }
 
     if (userData.status === 200) {
         const profileData: IProfile = {

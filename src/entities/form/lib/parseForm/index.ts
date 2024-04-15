@@ -8,7 +8,7 @@ import {
     validatePhoneNumber,
 } from '@/shared/lib/validate';
 
-export { FormData } from './index.types';
+export type { FormData } from './index.types';
 
 export function parseForm(form: Form): FormData {
     const formData: FormData = {

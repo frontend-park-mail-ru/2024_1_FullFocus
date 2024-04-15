@@ -1,3 +1,4 @@
 export { ProductCard } from './ui';
-export { IProduct as Product } from './model';
-export { IProductResponse as ProductResponse, productsRequest } from './api';
+export type { IProduct as Product } from './model';
+export { productsRequest } from './api';
+export type { IProductResponse as ProductResponse } from './api';

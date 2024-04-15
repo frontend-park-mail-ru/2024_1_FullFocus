@@ -2,7 +2,7 @@ import { Component } from '@/shared/@types/index.component';
 import { Page, RouterConfig } from './index.types';
 import { useCheckUserLogin } from '@/features/auth';
 
-export { Page } from './index.types';
+export type { Page } from './index.types';
 
 const PAGE_404 = 'PAGE_404';
 
