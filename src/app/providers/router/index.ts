@@ -25,7 +25,6 @@ export class Router {
 
     private pushState(url: string) {
         if (url !== window.location.href) {
-            console.log(url, window.location.href);
             window.history.pushState({}, '', url);
             this.handlePopstate();
         }
@@ -48,9 +47,7 @@ export class Router {
                 }
                 this.renderPage(isLogged);
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(() => {});
     }
 
     handleLinkClick(e: Event) {

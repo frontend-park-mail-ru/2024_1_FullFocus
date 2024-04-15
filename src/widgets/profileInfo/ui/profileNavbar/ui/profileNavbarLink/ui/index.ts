@@ -3,7 +3,7 @@ import navbarLinkTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProfileNavbarLinkProps } from './index.types';
 
-export { ProfileNavbarLinkProps } from './index.types';
+export type { ProfileNavbarLinkProps } from './index.types';
 
 export class ProfileNavbarLink extends Component<
     HTMLLinkElement,

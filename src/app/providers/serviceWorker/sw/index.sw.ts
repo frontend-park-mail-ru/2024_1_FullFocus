@@ -4,33 +4,26 @@
 export type {};
 declare const self: ServiceWorkerGlobalScope;
 
-const CACHE_NAME = 'cache_epic';
+import noNetworkPage from './index.noNetworkPage.pug';
 
-const INIT_CACHE_PATHS = [
-    '/',
-    '/public/index.js',
-    '/public/index.html',
-    '/public/default-profile-pic.png',
-    '/public/profile-back.png',
-    '/public/favicon.ico',
-    '/public/19ba637387f1d6142f55.ttf',
-    '/public/7e687123cd4528224ce5.ttf',
-];
+const CACHE_NAME = 'v1';
 
-// TODO sw
 // Install
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// self.addEventListener('install', (event) => {
-//     event.waitUntil(
-//         addResourcesToCache([
-//             '/',
-//             '/index.html',
-//             '/styles.css',
-//             '/script.js',
-//             '/jungle.png',
-//         ]),
-//     );
-// });
+self.addEventListener('install', (event) => {
+    event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('message', (event) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (event.data.type === 'CACHE_DATA') {
+        event.waitUntil(
+            caches.open(CACHE_NAME).then((cache) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
+                return cache.addAll(event.data.payload);
+            }),
+        );
+    }
+});
 
 // Activate
 self.addEventListener('activate', (event) => {
@@ -39,7 +32,6 @@ self.addEventListener('activate', (event) => {
 
 // Fetch
 self.addEventListener('fetch', (event) => {
-    console.log('fetch');
     event.respondWith(
         cahceFirst({
             request: event.request,
@@ -52,19 +44,21 @@ self.addEventListener('fetch', (event) => {
 
 // Put data in cache
 const putInCache = async (request: Request, response: Response) => {
-    const cache = await caches.open(CACHE_NAME);
-    await cache.put(request, response);
+    if (request.method === 'GET') {
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(request, response);
+    }
 };
 
 // Try to find data in cache, then
 const cahceFirst = async ({
     request,
-    preloadResponsePromise,
     fallbackUrl,
+    preloadResponsePromise,
 }: {
     request: Request;
-    preloadResponsePromise: Promise<Response>;
     fallbackUrl: string;
+    preloadResponsePromise?: Promise<Response>;
 }) => {
     // Try to get response from cache
     const responseFromCache = await caches.match(request);
@@ -92,9 +86,9 @@ const cahceFirst = async ({
             return fallbackResponse;
         }
 
-        return new Response('Network error happened', {
+        return new Response(noNetworkPage(), {
             status: 408,
-            headers: { 'Content-Type': 'text/plain' },
+            headers: { 'Content-Type': 'text/html; charset=utf-8' },
         });
     }
 };

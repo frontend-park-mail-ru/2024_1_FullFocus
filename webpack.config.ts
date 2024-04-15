@@ -13,7 +13,11 @@ interface EnvVariables {
 export default (env: EnvVariables) => {
     const paths: BuildPaths = {
         entry: path.resolve(__dirname, 'src', 'index.ts'),
-        sw: path.resolve(__dirname, 'src/app/providers/serviceWorker', 'sw.ts'),
+        sw: path.resolve(
+            __dirname,
+            'src/app/providers/serviceWorker/sw',
+            'index.sw.ts',
+        ),
         output: path.resolve(__dirname, 'public'),
         html: path.resolve(__dirname, 'src', 'index.html'),
         src: path.resolve(__dirname, 'src'),

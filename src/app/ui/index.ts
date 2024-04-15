@@ -4,6 +4,7 @@ import { Component } from '@/shared/@types/index.component';
 import { Page, Router } from './../providers';
 import { Navbar } from '@/widgets/navbar';
 import { getConfig } from './../providers';
+import { registerSW } from '../providers/serviceWorker';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
@@ -47,26 +48,7 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
-        // TODO sw
-
-        /*
-         * if ('serviceWorker' in navigator) {
-         *     this.registerSW();
-         * }
-         */
-    }
-
-    protected registerSW() {
-        navigator.serviceWorker
-            .register('/public/sw.js', {
-                scope: '/',
-            })
-            .then((reg) => {
-                console.log('SW registered', reg);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        registerSW();
     }
 
     protected render() {

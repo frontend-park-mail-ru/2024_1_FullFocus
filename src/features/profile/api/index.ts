@@ -7,6 +7,7 @@ export async function useGetProfileInfo() {
         getProfilePicture(),
     ]);
 
+    // TODO remove console log
     console.log(userData);
     console.log(profilePicture);
 

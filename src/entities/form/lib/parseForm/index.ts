@@ -21,8 +21,6 @@ export function parseForm(form: Form): FormData {
             error: null,
         };
 
-        console.log(input.validate);
-
         if (input.validate) {
             switch (name) {
                 case 'login':
