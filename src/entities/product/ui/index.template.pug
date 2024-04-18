@@ -8,7 +8,7 @@ div(class=`${className} product-card product-card_` + modifier)
     img(class="product-card__img product-card__img_" + modifier src=`${src}` alt="img")
     div(class="product-card__info product-card__info_" + modifier)
         div(class="product-card__info-cost") #{price} ₽
-        if name.length > 50
-            div(class="product-card__info-description") #{name.substr(0, 50)}...
+        if name.length > 40
+            div(class="product-card__info-description") #{name.substr(0, 40)}...
         else
             div(class="product-card__info-description") #{name}

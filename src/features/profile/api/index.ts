@@ -8,8 +8,8 @@ export async function useGetProfileInfo() {
     ]);
 
     let imgSrc = '';
-    if (profilePicture.type in ['image/png', 'image/jpeg', 'image/jpg']) {
-        imgSrc = URL.createObjectURL(profilePicture);
+    if (profilePicture.status === 200) {
+        imgSrc = URL.createObjectURL(profilePicture.data);
     }
 
     if (userData.status === 200) {

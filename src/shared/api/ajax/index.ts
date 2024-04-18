@@ -1,5 +1,9 @@
 import { QueryParam, DataResponce } from './index.types';
-import { BACKEND_URL, METHODS } from './config/index.constants';
+import {
+    ALLOWED_PICTURE_TYPES,
+    BACKEND_URL,
+    METHODS,
+} from './config/index.constants';
 
 /**
  * Performs ajax request
@@ -101,11 +105,23 @@ export async function ajaxMultipartForm<T>(
         });
 }
 
-export async function fetchBlob(url: string) {
+export async function fetchPicture(url: string) {
     return fetch(BACKEND_URL + url, {
         method: 'GET',
         credentials: 'include',
-    }).then((response) => {
-        return response.blob();
-    });
+    })
+        .then(async (response) => {
+            if (
+                ALLOWED_PICTURE_TYPES.includes(
+                    response.headers.get('content-type'),
+                )
+            ) {
+                const data = await response.blob();
+                return { status: 200, data: data };
+            }
+            return response.json();
+        })
+        .then((data: DataResponce<Blob>) => {
+            return data;
+        });
 }
