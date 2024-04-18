@@ -1,5 +1,10 @@
 import { USER_API_URLS } from './index.constants';
-import { ajaxGet, ajaxMultipartForm, ajaxPost, fetchBlob } from '@/shared/api';
+import {
+    ajaxGet,
+    ajaxMultipartForm,
+    ajaxPost,
+    fetchPicture,
+} from '@/shared/api';
 import { IUpdateProfileBody, IUserResponse } from './index.types';
 
 export async function checkAuthRequest() {
@@ -37,7 +42,7 @@ export async function updateProfile(body: IUpdateProfileBody) {
 }
 
 export async function getProfilePicture() {
-    return fetchBlob(USER_API_URLS.getPicture);
+    return fetchPicture(USER_API_URLS.getPicture);
 }
 
 export async function uploadProfilePicture(formData: FormData) {
