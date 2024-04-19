@@ -54,12 +54,11 @@ export function parseForm(form: Form): FormData {
         if (formData.inputs[name].error != null) {
             formData.isValid = false;
             input.addError(formData.inputs[name].error);
-            input.input.setInvalid();
         }
 
         if (formData.inputs[name].error == null) {
             input.clearErrors();
-            input.input.setValid();
+            input.setValid();
         }
     });
 

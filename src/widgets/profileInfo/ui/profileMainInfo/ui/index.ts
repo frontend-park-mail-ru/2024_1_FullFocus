@@ -6,13 +6,14 @@ import { ProfileMainInfoProps } from './index.types';
 import { EditProfileDialog } from './editProfileDialog';
 import { ChangePicture } from './changePicture';
 import { useGetProfileInfo } from '@/features/profile/api';
+import { Button, getEditBtn } from '@/shared/uikit/button';
 
 export class ProfileMainInfo extends Component<
     HTMLDivElement,
     ProfileMainInfoProps
 > {
     protected fullName: HTMLDivElement;
-    protected editIcon: HTMLElement;
+    protected editBtn: Button;
     protected phoneNumber: HTMLDivElement;
     protected email: HTMLDivElement;
     protected listener: (e: Event) => void;
@@ -27,19 +28,26 @@ export class ProfileMainInfo extends Component<
         this.listener = () => {
             this.dialog.htmlElement.showModal();
         };
-        this.editIcon.addEventListener('click', this.listener);
+        this.editBtn.htmlElement.addEventListener('click', this.listener);
     }
 
     protected render() {
         this.renderTemplate();
 
+        this.editBtn = getEditBtn(
+            this.htmlElement.getElementsByClassName(
+                'profile-main-info__header',
+            )[0],
+            {
+                className: 'profile-main-info__edit-icon',
+                btnStyle: 'white',
+                type: 'button',
+            },
+        );
+
         this.fullName = this.htmlElement.getElementsByClassName(
             'profile-main-info__full-name',
         )[0] as HTMLDivElement;
-
-        this.editIcon = this.htmlElement.getElementsByClassName(
-            'profile-main-info__edit-icon',
-        )[0] as HTMLElement;
 
         this.phoneNumber = this.htmlElement.getElementsByClassName(
             'profile-main-info__phone-number',
