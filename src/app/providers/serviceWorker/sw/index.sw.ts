@@ -44,7 +44,11 @@ self.addEventListener('fetch', (event) => {
 
 // Put data in cache
 const putInCache = async (request: Request, response: Response) => {
-    if (request.method === 'GET') {
+    console.log(request.url);
+    if (
+        request.method === 'GET' &&
+        !request.url.endsWith('/api/auth/public/v1/check')
+    ) {
         const cache = await caches.open(CACHE_NAME);
         await cache.put(request, response);
     }
@@ -54,7 +58,6 @@ const putInCache = async (request: Request, response: Response) => {
 const cahceFirst = async ({
     request,
     fallbackUrl,
-    preloadResponsePromise,
 }: {
     request: Request;
     fallbackUrl: string;
@@ -64,14 +67,6 @@ const cahceFirst = async ({
     const responseFromCache = await caches.match(request);
     if (responseFromCache) {
         return responseFromCache;
-    }
-
-    // Try to get preload response
-    const preloadResponse = await preloadResponsePromise;
-    if (preloadResponse) {
-        void putInCache(request, preloadResponse.clone());
-
-        return preloadResponse;
     }
 
     // Use network

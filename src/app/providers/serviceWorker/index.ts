@@ -7,7 +7,12 @@ export function registerSW() {
                 })
                 .then((registration) => {
                     if (registration.installing) {
-                        const a = performance.getEntriesByType('resource');
+                        let a = performance.getEntriesByType('resource');
+                        a = a.filter((r) => {
+                            return !r.name.endsWith(
+                                '/api/auth/public/v1/check',
+                            );
+                        });
                         const data = {
                             type: 'CACHE_DATA',
                             payload: [location.href, ...a.map((r) => r.name)],
