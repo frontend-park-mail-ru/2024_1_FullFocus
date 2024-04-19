@@ -53,6 +53,8 @@ export function getConfig() {
                     text: item.navbarLink.text,
                     href: defaultUrl,
                     iconName: item.navbarLink.iconName,
+                    style: item.navbarLink.style,
+                    imgName: item.navbarLink.imgName,
                 },
                 logged: item.logged,
             };

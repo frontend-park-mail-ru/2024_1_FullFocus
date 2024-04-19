@@ -92,8 +92,8 @@ export class CartItemsSection extends Component<
             {
                 className: 'cart-items-section__clear-btn',
                 type: 'button',
-                btnStyle: 'withOutline',
-                btnText: 'X',
+                btnStyle: 'white',
+                btnText: 'очистить',
             },
         );
 

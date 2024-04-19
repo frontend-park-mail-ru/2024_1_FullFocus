@@ -9,6 +9,7 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
+import { LinkStyle } from '@/shared/uikit/link';
 
 interface ConfigItem {
     // User login status
@@ -18,8 +19,10 @@ interface ConfigItem {
     // Props for navbarlink
     navbarLink?: {
         className: string;
-        text: string;
+        text?: string;
+        style?: LinkStyle;
         iconName?: string;
+        imgName?: string;
     };
     // Children
     children?: {
@@ -74,6 +77,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-main',
                     text: 'Главная',
+                    imgName: '/public/logo.png',
                 },
                 router: {
                     update: {
@@ -103,6 +107,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-login',
                     text: 'Войти',
+                    style: 'primary',
                 },
                 router: {
                     navigation: ['main'],
@@ -121,6 +126,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-signup',
                     text: 'Регистрация',
+                    style: 'btn',
                 },
                 router: {
                     navigation: ['main'],
