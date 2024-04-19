@@ -1,2 +1,2 @@
 export { Button } from './ui';
-export { getExitBtn, getEyeBtn, getEditBtn } from './lib';
+export { getExitBtn, getEyeBtn, getEditBtn, getTickBtn } from './lib';
