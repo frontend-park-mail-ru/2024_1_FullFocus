@@ -3,7 +3,7 @@ import dialogTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { EditProfileDialogProps } from './index.types';
 import { EditProfileForm } from '@/features/profile';
-import { Button } from '@/shared/uikit/button';
+import { Button, getExitBtn } from '@/shared/uikit/button';
 import { parseForm } from '@/entities/form';
 import { updateProfile } from '@/entities/user/api';
 
@@ -87,13 +87,13 @@ export class EditProfileDialog extends Component<
             'edit-dialog__error',
         )[0] as HTMLDivElement;
 
-        this.closeBtn = new Button(
+        this.closeBtn = getExitBtn(
             this.htmlElement.getElementsByClassName(
                 'edit-dialog__btn-close',
             )[0],
             {
                 className: 'edit-dialog__btn-close',
-                btnStyle: 'withOutline',
+                btnStyle: 'white',
                 btnText: 'X',
                 type: 'button',
             },

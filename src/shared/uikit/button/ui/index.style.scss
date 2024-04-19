@@ -28,30 +28,29 @@ $btn-default-bg-color: #fff;
 .btn_bright {
     background-color: $color-primary-normal;
     transition: background-color 0.2s;
+    .btn__text {
+        color: white;
+        font-weight: 700;
+    }
 }
 
 .btn_bright:hover {
     background-color: $color-primary-light;
 }
 
-.btn_bright .btn__text {
-    color: white;
-    font-weight: 700;
-}
-
 // Button with outline
 .btn_with-outline {
     border: 2px solid rgb(157, 157, 157);
+    border-radius: 8px;
     width: 50px;
     transition: background-color 0.2s;
+    .btn__text {
+        font-size: 12px;
+    }
 }
 
 .btn_with-outline:hover {
     background-color: #dbdbdb;
-}
-
-.btn_with-outline .btn__text {
-    font-size: 12px;
 }
 
 // Green button
@@ -70,6 +69,37 @@ $btn-default-bg-color: #fff;
 }
 
 .btn_disabled {
-    background-color: #79b4b0;
+    filter: grayscale(0.5);
     pointer-events: none;
+}
+
+// Green button
+.btn_white {
+    background-color: #fff;
+    transition: color 0.2s;
+    .btn__text {
+        color: #c0c3c5;
+        font-weight: 700;
+    }
+
+    .icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .icon__path {
+        transition: stroke 0.2s;
+        stroke: #c0c3c5;
+    }
+}
+
+.btn_white:hover {
+    .btn__text {
+        color: $color-primary-normal;
+        font-weight: 700;
+    }
+
+    .icon__path {
+        stroke: $color-primary-normal;
+    }
 }

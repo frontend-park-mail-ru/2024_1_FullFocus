@@ -1,7 +1,9 @@
 import './index.style.scss';
+import formInputTmpl from './index.template.pug';
 import { Input, InputType, InputStatus } from '@/shared/uikit/input';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
-import { Button } from '@/shared/uikit/button';
+import { getEyeBtn } from '@/shared/uikit/button/lib';
+import { Component } from '@/shared/@types/index.component';
 
 export interface FormInputProps {
     className: string;
@@ -15,13 +17,14 @@ export interface FormInputProps {
     initialValue?: string;
 }
 
-export class FormInput extends EmptyContainer {
+export class FormInput extends Component<HTMLDivElement, FormInputProps> {
     props: FormInputProps;
     input: Input;
     protected errorBlock: EmptyContainer;
+    protected inputBlock: HTMLDivElement;
 
     constructor(parent: Element, props: FormInputProps) {
-        super(parent, props);
+        super(parent, formInputTmpl, props);
     }
 
     get validate() {
@@ -34,7 +37,11 @@ export class FormInput extends EmptyContainer {
     protected render() {
         this.renderTemplate();
 
-        this.input = new Input(this.htmlElement, {
+        this.inputBlock = this.htmlElement.getElementsByClassName(
+            'input-block',
+        )[0] as HTMLDivElement;
+
+        this.input = new Input(this.inputBlock, {
             className: this.props.inputClassName,
             placeholder: this.props.placeholder,
             type: this.props.type,
@@ -44,30 +51,31 @@ export class FormInput extends EmptyContainer {
         });
 
         if (this.props.type === 'password') {
-            const btnItem = new Button(this.htmlElement, {
+            const btnItem = getEyeBtn(this.inputBlock, {
                 type: 'button',
                 className: 'hide-show-password-btn',
-                btnText: 'show',
-                btnStyle: 'withOutline',
+                btnStyle: 'white',
             });
 
             const btn = btnItem.htmlElement;
 
-            btn.addEventListener('click', (e) => {
-                const target = e.target as HTMLButtonElement;
+            btn.addEventListener('click', () => {
+                // const target = e.target as HTMLButtonElement;
                 if (this.props.type === 'password') {
                     this.props.type = 'text';
-                    target.textContent = 'hide';
+                    btnItem.toggle();
                 } else {
                     this.props.type = 'password';
-                    target.textContent = 'show';
+                    btnItem.toggle();
                 }
                 this.input.htmlElement.type = this.props.type;
             });
         }
 
         this.errorBlock = new EmptyContainer(this.htmlElement, {
-            className: this.props.errorBlockClassName,
+            className:
+                this.props.errorBlockClassName +
+                ' text_size-small text_weight-semibold',
         });
 
         this.errorBlock.htmlElement.hidden = true;
@@ -75,13 +83,22 @@ export class FormInput extends EmptyContainer {
 
     addError(error: string) {
         this.htmlErrorBlock.hidden = false;
-        this.input.setInvalid();
+        this.inputBlock.classList.remove('input-block_valid');
+        this.inputBlock.classList.add('input-block_invalid');
         this.htmlErrorBlock.textContent = error;
+    }
+
+    setValid() {
+        this.htmlErrorBlock.hidden = true;
+        this.inputBlock.classList.add('input-block_valid');
+        this.inputBlock.classList.remove('input-block_invalid');
+        this.htmlErrorBlock.textContent = '';
     }
 
     clearErrors() {
         this.htmlErrorBlock.hidden = true;
-        this.input.setNotValidated();
+        this.inputBlock.classList.remove('input-block_valid');
+        this.inputBlock.classList.remove('input-block_invalid');
         this.htmlErrorBlock.textContent = '';
     }
 
