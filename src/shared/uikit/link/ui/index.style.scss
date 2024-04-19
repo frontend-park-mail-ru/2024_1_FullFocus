@@ -1,17 +1,54 @@
 .link {
     transition: 0.2s;
-    color: black;
     text-decoration: none;
 }
 
 .link:hover {
+    cursor: pointer;
+}
+
+// Link primary
+.link-primary {
+    @extend .link;
+    color: #5dcec6;
+}
+
+.link-primary.link_active:hover {
+    color: #5dcec6;
+}
+
+.link-primary:hover {
     color: #3a817c;
 }
 
+// Link btn
+.link-btn {
+    @extend .link;
+    background-color: #5dcec6;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 16px;
+}
+
+.link-btn.link_active {
+    background-color: #5dcec6;
+    color: #fff;
+}
+
+.link-btn.link_active:hover {
+    background-color: #5dcec6;
+    color: #fff;
+}
+
+.link-btn:hover {
+    background-color: #3a817c;
+}
+
+// Link with bg
 .link-with-bg {
+    @extend .link;
     transition: background-color 0.2s;
     color: black;
-    text-decoration: none;
     padding: 10px 16px;
     border-radius: 8px;
 }
@@ -29,7 +66,6 @@
 }
 
 .link-with-bg:hover {
-    cursor: pointer;
     color: black;
     background-color: #f2f6f9;
 }
@@ -37,11 +73,13 @@
 // Link with icon
 .link-with-icon {
     @extend .link;
+    color: black;
     display: flex;
     flex-direction: column;
 }
 
 .link-with-icon:hover {
+    color: #3a817c;
     .link-with-icon__icon {
         filter: brightness(0.5) opacity(0.5);
     }
@@ -58,7 +96,6 @@
 
 // Active modifier
 .link_active {
-    font-weight: bold;
     color: #5dcec6;
     .link-with-icon__icon {
         filter: brightness(1);

@@ -1,9 +1,18 @@
-if iconName
-    a(href=`${href}` class=`link-with-icon ${className}`)
-        img(src=`${iconName}` class="link-with-icon__icon")
-        span(class="link-with-icon__text text text_weight-semibold") #{text}
+if imgName
+    a(href=`${href}` class=`link-img ${className}`)
+        img(src=`${imgName}` alt=`${text}` class="link-img__img")
 else
-    if style == "with-bg"
-        a(href=`${href}` class=`link-with-bg ${className}`) #{text}
+    if iconName
+        a(href=`${href}` class=`link-with-icon ${className}`)
+            img(src=`${iconName}` class="link-with-icon__icon")
+            span(class="link-with-icon__text text text_weight-semibold") #{text}
     else
-        a(href=`${href}` class=`link ${className}`) #{text}
+        case style
+            when "with-bg"
+                a(href=`${href}` class=`link-with-bg text text_weight-semibold ${className}`) #{text}
+            when "primary"
+                a(href=`${href}` class=`link-primary text text_weight-semibold ${className}`) #{text}
+            when "btn"
+                a(href=`${href}` class=`link-btn text text_weight-semibold ${className}`) #{text}
+            default
+                a(href=`${href}` class=`link text text_weight-semibold ${className}`) #{text}

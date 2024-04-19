@@ -2,7 +2,7 @@ import './index.style.scss';
 import formInputTmpl from './index.template.pug';
 import { Input, InputType, InputStatus } from '@/shared/uikit/input';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
-import { getEyeBtn } from '@/shared/uikit/button/lib';
+import { getEyeBtn } from '@/shared/uikit/button';
 import { Component } from '@/shared/@types/index.component';
 
 export interface FormInputProps {

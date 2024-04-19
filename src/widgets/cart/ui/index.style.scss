@@ -7,9 +7,6 @@
 .cart__main {
     box-sizing: border-box;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 .cart__cart-items {
@@ -21,9 +18,19 @@
     width: 100%;
     box-sizing: border-box;
 }
+
 // Cart info
 .cart__info {
     flex: 1;
+}
+
+// Cart empty
+.cart__empty-info {
+    text-align: center;
+    min-width: 512px;
+    width: 100%;
+    font-size: 30px;
+    color: #b3bcc5;
 }
 
 // Media queries
