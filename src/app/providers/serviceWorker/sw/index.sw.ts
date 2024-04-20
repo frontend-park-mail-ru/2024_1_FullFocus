@@ -33,7 +33,7 @@ self.addEventListener('activate', (event) => {
 // Fetch
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        cahceFirst({
+        networkFirst({
             request: event.request,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             preloadResponsePromise: event.preloadResponse,
@@ -44,18 +44,14 @@ self.addEventListener('fetch', (event) => {
 
 // Put data in cache
 const putInCache = async (request: Request, response: Response) => {
-    console.log(request.url);
-    if (
-        request.method === 'GET' &&
-        !request.url.endsWith('/api/auth/public/v1/check')
-    ) {
+    if (request.method === 'GET') {
         const cache = await caches.open(CACHE_NAME);
         await cache.put(request, response);
     }
 };
 
 // Try to find data in cache, then
-const cahceFirst = async ({
+const networkFirst = async ({
     request,
     fallbackUrl,
 }: {
@@ -63,12 +59,6 @@ const cahceFirst = async ({
     fallbackUrl: string;
     preloadResponsePromise?: Promise<Response>;
 }) => {
-    // Try to get response from cache
-    const responseFromCache = await caches.match(request);
-    if (responseFromCache) {
-        return responseFromCache;
-    }
-
     // Use network
     try {
         const responseFromNetwork = await fetch(request);
@@ -76,6 +66,12 @@ const cahceFirst = async ({
 
         return responseFromNetwork;
     } catch (error) {
+        // Try to get response from cache
+        const responseFromCache = await caches.match(request);
+        if (responseFromCache) {
+            return responseFromCache;
+        }
+
         const fallbackResponse = await caches.match(fallbackUrl);
         if (fallbackResponse) {
             return fallbackResponse;

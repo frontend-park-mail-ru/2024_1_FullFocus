@@ -7,12 +7,12 @@ import (
 
 func main() {
 	http.HandleFunc("/public/sw.js", func(w http.ResponseWriter, r *http.Request) {
-		p := "./public/sw.js"
+		p := "./public/public/sw.js"
 		w.Header().Add("Service-Worker-Allowed", "/")
 		http.ServeFile(w, r, p)
 	})
 
-	fs := http.FileServer(http.Dir("./public"))
+	fs := http.FileServer(http.Dir("./public/public"))
 	http.Handle("/public/", http.StripPrefix("/public/", fs))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
