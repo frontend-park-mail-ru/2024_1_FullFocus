@@ -19,6 +19,7 @@ export function buildPlugins(
     const plugins: Configuration['plugins'] = [
         new HtmlWebpackPlugin({
             template: paths.html,
+            filename: '../index.html',
             favicon: path.resolve(paths.favicon, 'favicon.ico'),
         }),
         new DefinePlugin({
