@@ -1,3 +1,30 @@
+@media (min-width: 1024px) {
+    .app {
+        display: block;
+    }
+    .no-mobile {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .app {
+        display: none;
+    }
+    .no-mobile {
+        display: block;
+    }
+}
+
+.no-mobile {
+    text-align: center;
+    min-width: 256px;
+    width: 100%;
+    font-size: 30px;
+    color: #b3bcc5;
+    margin-top: 14px;
+}
+
 .navbar-container {
     width: 100%;
     background-color: #ffffff;

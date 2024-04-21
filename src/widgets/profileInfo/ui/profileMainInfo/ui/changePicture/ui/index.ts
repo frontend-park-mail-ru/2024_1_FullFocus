@@ -2,7 +2,7 @@ import './index.style.scss';
 import changePictureTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ChangePictureProps } from './index.types';
-import { Button } from '@/shared/uikit/button';
+import { Button, getTickBtn } from '@/shared/uikit/button';
 import { uploadProfilePicture } from '@/entities/user/api';
 
 export class ChangePicture extends Component<
@@ -12,6 +12,7 @@ export class ChangePicture extends Component<
     protected picture: HTMLImageElement;
     protected input: HTMLInputElement;
     protected form: HTMLFormElement;
+    protected errorsBlock: HTMLDivElement;
     protected uploadBtn: Button;
     protected imageLoadListener: (e: Event) => void;
     protected submitListener: (e: Event) => void;
@@ -38,11 +39,18 @@ export class ChangePicture extends Component<
         this.submitListener = (e: Event) => {
             e.preventDefault();
             uploadProfilePicture(new FormData(this.form))
-                .then(({ status }) => {
+                .then(({ status, msgRus }) => {
                     if (status === 200) {
+                        this.errorsBlock.classList.add('display_none');
+                        this.errorsBlock.innerText = '';
                         if (this.props.changePictureCallback) {
                             this.props.changePictureCallback();
                         }
+                    }
+
+                    if (status !== 200) {
+                        this.errorsBlock.classList.remove('display_none');
+                        this.errorsBlock.innerText = msgRus;
                     }
                 })
                 .catch(() => {});
@@ -64,10 +72,13 @@ export class ChangePicture extends Component<
             'change-picture__form',
         )[0] as HTMLFormElement;
 
-        this.uploadBtn = new Button(this.form, {
+        this.errorsBlock = this.htmlElement.getElementsByClassName(
+            'change-picture__error-block',
+        )[0] as HTMLDivElement;
+
+        this.uploadBtn = getTickBtn(this.form, {
             className: 'change-picture__upload-btn',
-            btnStyle: 'bright',
-            btnText: 'Загрузить',
+            btnStyle: 'white',
             type: 'submit',
         });
         this.uploadBtn.hide();

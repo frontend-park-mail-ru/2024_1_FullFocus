@@ -33,7 +33,7 @@ self.addEventListener('activate', (event) => {
 // Fetch
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        cahceFirst({
+        networkFirst({
             request: event.request,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             preloadResponsePromise: event.preloadResponse,
@@ -51,29 +51,14 @@ const putInCache = async (request: Request, response: Response) => {
 };
 
 // Try to find data in cache, then
-const cahceFirst = async ({
+const networkFirst = async ({
     request,
     fallbackUrl,
-    preloadResponsePromise,
 }: {
     request: Request;
     fallbackUrl: string;
     preloadResponsePromise?: Promise<Response>;
 }) => {
-    // Try to get response from cache
-    const responseFromCache = await caches.match(request);
-    if (responseFromCache) {
-        return responseFromCache;
-    }
-
-    // Try to get preload response
-    const preloadResponse = await preloadResponsePromise;
-    if (preloadResponse) {
-        void putInCache(request, preloadResponse.clone());
-
-        return preloadResponse;
-    }
-
     // Use network
     try {
         const responseFromNetwork = await fetch(request);
@@ -81,6 +66,12 @@ const cahceFirst = async ({
 
         return responseFromNetwork;
     } catch (error) {
+        // Try to get response from cache
+        const responseFromCache = await caches.match(request);
+        if (responseFromCache) {
+            return responseFromCache;
+        }
+
         const fallbackResponse = await caches.match(fallbackUrl);
         if (fallbackResponse) {
             return fallbackResponse;

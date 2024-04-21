@@ -32,20 +32,20 @@ export class Input extends Component<HTMLInputElement, InputProps> {
 
     setInvalid(): void {
         this.props.status = 'invalid';
-        this.htmlElement.classList.remove('input-block__input_valid');
-        this.htmlElement.classList.add('input-block__input_invalid');
+        this.htmlElement.classList.remove('input-block_valid');
+        this.htmlElement.classList.add('input-block_invalid');
     }
 
     setValid(): void {
         this.props.status = 'valid';
-        this.htmlElement.classList.add('input-block__input_valid');
-        this.htmlElement.classList.remove('input-block__input_invalid');
+        this.htmlElement.classList.add('input-block_valid');
+        this.htmlElement.classList.remove('input-block_invalid');
     }
 
     setNotValidated(): void {
         this.props.status = 'notValidated';
-        this.htmlElement.classList.remove('input-block__input_valid');
-        this.htmlElement.classList.remove('input-block__input_invalid');
+        this.htmlElement.classList.remove('input-block_valid');
+        this.htmlElement.classList.remove('input-block_invalid');
     }
 
     get htmlInput(): HTMLInputElement {

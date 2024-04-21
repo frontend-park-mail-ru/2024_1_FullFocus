@@ -2,6 +2,11 @@
     display: flex;
     flex-direction: column;
 }
+.profile-main-info__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .profile-main-info__subheader {
     margin-top: 6px;
@@ -16,19 +21,5 @@
         display: flex;
         flex-direction: column;
         gap: 20px;
-    }
-}
-
-.profile-main-info__edit-icon {
-    cursor: pointer;
-    path {
-        transition: stroke 0.1s;
-    }
-}
-
-.profile-main-info__edit-icon:hover {
-    cursor: pointer;
-    path {
-        stroke: #5dcec6;
     }
 }

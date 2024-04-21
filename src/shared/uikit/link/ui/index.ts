@@ -3,7 +3,7 @@ import linkTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { LinkProps } from './index.types';
 
-export type { LinkProps } from './index.types';
+export type { LinkProps, LinkStyle } from './index.types';
 
 export class Link extends Component<HTMLLinkElement, LinkProps> {
     /**

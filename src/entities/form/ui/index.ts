@@ -42,7 +42,7 @@ export class Form extends Component<HTMLFormElement, FormProps> {
         const props: FormInputProps = {
             placeholder: params.text,
             type: params.type,
-            className: 'input-block ' + params.className,
+            className: params.className,
             inputClassName: params.inputClassName,
             name: params.name,
             status: 'notValidated',

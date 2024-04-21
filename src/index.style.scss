@@ -83,9 +83,14 @@ body {
     font-weight: 500;
 }
 
+/* Display */
+.display_none {
+    display: none;
+}
+
 /* Text style */
 .text {
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
     color: black;
     font-size: 16px;
     font-weight: 400;

@@ -48,3 +48,21 @@
 .change-picture__user-picture-input {
     display: none;
 }
+
+.change-picture__upload-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    box-shadow: 0px 0px 6px 1px rgb(100, 100, 100);
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.change-picture__error-block {
+    color: rgb(150, 0, 0);
+}
+
+.change-picture__form {
+    position: relative;
+}
