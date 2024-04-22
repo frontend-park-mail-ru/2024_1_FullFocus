@@ -28,12 +28,18 @@ export async function useGetProductCards(page: number, limit: number) {
     return productsRequest(page, limit)
         .then(({ status, data }) => {
             const products: Array<
-                (parent: Element) => ProductsSectionItem<ProductCard>
+                (parent: Element) => {
+                    card: ProductsSectionItem<ProductCard>;
+                    id: number;
+                }
             > = [];
             if (status === 200) {
                 data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
-                        return renderItem(product, parent);
+                        return {
+                            card: renderItem(product, parent),
+                            id: product.id,
+                        };
                     });
                 });
             }
@@ -41,7 +47,10 @@ export async function useGetProductCards(page: number, limit: number) {
         })
         .catch(() => {
             const products: Array<
-                (parent: Element) => ProductsSectionItem<ProductCard>
+                (parent: Element) => {
+                    card: ProductsSectionItem<ProductCard>;
+                    id: number;
+                }
             > = [];
             return products;
         });
@@ -52,11 +61,17 @@ export async function useGetProductCardsCategory(categoryId: number) {
         .then(({ status, data }) => {
             if (status === 200) {
                 const products: Array<
-                    (parent: Element) => ProductsSectionItem<ProductCard>
+                    (parent: Element) => {
+                        card: ProductsSectionItem<ProductCard>;
+                        id: number;
+                    }
                 > = [];
                 data.forEach((product) => {
                     products.push((parent: Element) => {
-                        return renderItem(product, parent);
+                        return {
+                            card: renderItem(product, parent),
+                            id: product.id,
+                        };
                     });
                 });
                 return products;
