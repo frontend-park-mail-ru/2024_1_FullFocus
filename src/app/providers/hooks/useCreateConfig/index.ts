@@ -10,6 +10,7 @@ import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
 import { LinkStyle } from '@/shared/uikit/link';
+import { CategoryPage } from '@/pages/category';
 
 interface ConfigItem {
     // User login status
@@ -80,17 +81,6 @@ export function createConfig() {
                     imgName: '/public/logo.png',
                 },
                 router: {
-                    update: {
-                        updateParams: (
-                            page: Main,
-                            params: { [name: string]: string },
-                        ) => {
-                            page.updateWithParams(params);
-                        },
-                        updateDefault: (page: Main) => {
-                            page.updateDefault();
-                        },
-                    },
                     navigation: ['cart'],
                     component: (
                         parent: Element,
@@ -98,6 +88,18 @@ export function createConfig() {
                         navigateToCart: () => void,
                     ) => {
                         return new Main(parent, navigateToCart, params);
+                    },
+                },
+            },
+            category: {
+                url: '/category/{categoryId}',
+                logged: 'both',
+                router: {
+                    component: (
+                        parent: Element,
+                        params: { categoryId: string; [name: string]: string },
+                    ) => {
+                        return new CategoryPage(parent, params);
                     },
                 },
             },

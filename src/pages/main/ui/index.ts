@@ -22,17 +22,6 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
         });
     }
 
-    updateWithParams(params: { [name: string]: string }) {
-        const categoryId = Number(params['category']);
-        if (categoryId) {
-            this.productsSection.changeCategory(categoryId);
-        }
-    }
-
-    updateDefault() {
-        this.productsSection.clearCategory();
-    }
-
     /**
      * Renders main page
      */
