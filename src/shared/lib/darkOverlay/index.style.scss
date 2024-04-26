@@ -1,0 +1,23 @@
+.dark-overlay {
+    transition: 0.2s;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0.2;
+
+    animation: creation 0.2s ease-out 1;
+}
+
+@keyframes creation {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.2;
+    }
+}

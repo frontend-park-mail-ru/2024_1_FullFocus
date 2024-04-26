@@ -1,0 +1,31 @@
+.search-results {
+    gap: 0;
+}
+
+.search-result {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-result__icon {
+    stroke: #c0c3c5;
+}
+
+.search-result__to-input-btn {
+    border-radius: 0;
+    height: 100%;
+}
+.search-result__result {
+    flex: 1;
+    padding: 8px 0 8px 8px;
+    transition: 0.2s;
+    display: flex;
+    gap: 8px;
+}
+
+.search-result__result:hover {
+    background-color: #efefef;
+    cursor: pointer;
+}
