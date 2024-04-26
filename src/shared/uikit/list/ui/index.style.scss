@@ -1,0 +1,9 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.list_wrap {
+    flex-flow: row wrap;
+}

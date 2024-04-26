@@ -2,13 +2,14 @@ import { ProductCard, productsRequest } from '@/entities/product';
 import {
     IProductResponse,
     productsRequestCategory,
+    productsRequestSearch,
 } from '@/entities/product/api';
 import { ProductsSectionItem } from '@/entities/productsSection';
 
 function renderItem(product: IProductResponse, parent: Element) {
     const psi = new ProductsSectionItem<ProductCard>(parent, {
         className: 'product-section-item-' + product.id,
-        isInCart: false,
+        isInCart: product.inCart ?? false,
     });
     psi.insertProductCard((parent: Element) => {
         const productCard = new ProductCard(parent, {
@@ -67,6 +68,37 @@ export async function useGetProductCardsCategory(categoryId: number) {
                     }
                 > = [];
                 data.forEach((product) => {
+                    products.push((parent: Element) => {
+                        return {
+                            card: renderItem(product, parent),
+                            id: product.id,
+                        };
+                    });
+                });
+                return products;
+            }
+            return [];
+        })
+        .catch(() => {
+            return [];
+        });
+}
+
+export async function useGetProductCardsSearch(
+    query: string,
+    page: number,
+    limit: number,
+) {
+    return productsRequestSearch(query, page, limit)
+        .then(({ status, data }) => {
+            if (status === 200) {
+                const products: Array<
+                    (parent: Element) => {
+                        card: ProductsSectionItem<ProductCard>;
+                        id: number;
+                    }
+                > = [];
+                data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
                         return {
                             card: renderItem(product, parent),

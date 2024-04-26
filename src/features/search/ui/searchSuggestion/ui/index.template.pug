@@ -1,0 +1,6 @@
+div(class=`${className} search-result`)
+    span(class="search-result__result")
+        if type == 'item'
+            span(class="search-result__icon")
+                include magnifier.pug
+        span(class="search-result__result-name") #{text}
