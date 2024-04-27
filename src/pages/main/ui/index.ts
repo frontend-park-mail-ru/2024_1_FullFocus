@@ -37,6 +37,8 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
         this.productsSection.clearCategory();
     }
 
+    protected componentDidMount() {}
+
     /**
      * Renders main page
      */
@@ -52,8 +54,8 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
             this.htmlElement,
             'csat-main',
             '/csat',
-            400,
-            200,
+            600,
+            300,
         );
         this.iframe = data.component;
         this.removeIframe = data.remove;

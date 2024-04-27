@@ -38,11 +38,13 @@ export class App extends Component<HTMLDivElement> {
         }
 
         if (rawPage) {
-            this.headerElement.hidden = true;
+            this.headerElement.classList.add('display_none');
+            this.headerElement.classList.remove('navbar-container');
         }
 
         if (!rawPage) {
-            this.headerElement.hidden = false;
+            this.headerElement.classList.remove('display_none');
+            this.headerElement.classList.add('navbar-container');
             this.navbar.updateNavbar(name, isLogged);
         }
     }
@@ -55,7 +57,7 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
-        // registerSW();
+        //registerSW();
     }
 
     protected render() {
