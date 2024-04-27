@@ -1,0 +1,7 @@
+div(class=`${ClassName} diagramCard`)
+    div(class="diagramCard__text") Результат опроса:
+    div(id="graph" class="graph horizontal")
+        each val in ratings
+            div(class="itemStarsWithItem")
+                div(class="itemStars") #{val} ★
+                div(class="item" style=`width:${((val)/amount)*100}%`) #{((val)/amount)*100}%
