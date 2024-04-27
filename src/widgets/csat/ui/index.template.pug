@@ -1,0 +1,13 @@
+div(class=`${className}`)
+        div(class="cast-widget")
+            div(class="csat-widget__info") Готовы ли вы рекомендовать bizonshop друзьям?
+            div(class="csat-widget__mark") Оцените по шкале от 1 до 10.
+            div(class="csat-widget__line")
+                each val in [1, 2, 3, 4, 5,6,7,8,9,10]
+                    span(class="csat-widget__container")
+                        span(class="csat-widget__value")= val
+            div(class="csat-widget__absolute")
+                div(class="csat-widget__absoluteNO") Точно нет
+                div(class="csat-widget__absoluteYES") Точно да
+            div(class="cast-widget__bottom")
+                a(class="link-btn text text_weight-semibold navbar-link-signup") Спросить позже
