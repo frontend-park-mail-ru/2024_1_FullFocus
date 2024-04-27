@@ -4,6 +4,7 @@ import { Component } from '@/shared/@types/index.component';
 import { ProductsSection } from '@/widgets/productsSection';
 import { MainPageProps } from './index.types';
 import { createIframe } from '@/shared/lib/createIframe';
+import { getAllCsat } from '@/entities/user/api';
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
@@ -37,7 +38,11 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
         this.productsSection.clearCategory();
     }
 
-    protected componentDidMount() {}
+    protected componentDidMount() {
+        window.addEventListener('message', (e: MessageEvent) => {
+            if (e.data === 'close-iframe') this.removeIframe();
+        });
+    }
 
     /**
      * Renders main page
@@ -50,16 +55,20 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
             navigateToCart: this.props.navigateToCart,
         });
 
-        const data = createIframe(
-            this.htmlElement,
-            'csat-main',
-            '/csat',
-            600,
-            300,
-        );
-        this.iframe = data.component;
-        this.removeIframe = data.remove;
+        getAllCsat()
+            .then((response) => {
+                const data = createIframe(
+                    this.htmlElement,
+                    'csat-main',
+                    `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
+                    600,
+                    292,
+                );
+                this.iframe = data.component;
+                this.removeIframe = data.remove;
+            })
+            .catch(() => {});
 
-        this.iframe.addEventListener('click', this.removeIframe);
+        this.componentDidMount();
     }
 }

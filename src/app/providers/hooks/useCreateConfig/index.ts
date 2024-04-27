@@ -109,8 +109,11 @@ export function createConfig() {
                 logged: 'logged',
                 router: {
                     rawPage: true,
-                    component: (parent: Element) => {
-                        return new CsatPage(parent);
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CsatPage(parent, params);
                     },
                 },
             },

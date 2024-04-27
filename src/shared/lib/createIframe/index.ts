@@ -21,6 +21,7 @@ export function createIframe(
     const component = parent.getElementsByClassName(
         className,
     )[0] as HTMLIFrameElement;
+
     return {
         remove: () => {
             component.remove();

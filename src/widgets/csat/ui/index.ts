@@ -1,30 +1,81 @@
 import { Component } from '@/shared/@types/index.component';
-import { CsatProps } from '@/pages/csat/ui/index.types';
 import csatModalTpml from '@/widgets/csat/ui/index.template.pug';
 import './index.style.scss';
 import { Button } from '@/shared/uikit/button';
+import { CsatModalProps } from './index.types';
+import { sendCsatData } from '@/entities/user/api';
 
-export class CsatModal extends Component<HTMLElement, CsatProps> {
+export class CsatModal extends Component<HTMLElement, CsatModalProps> {
+    protected answers: HTMLDivElement;
     protected closeBtn: Button;
     protected rateBtns: Button[];
 
-    constructor(parent: Element) {
-        super(parent, csatModalTpml, { className: 'csatModal' });
+    constructor(parent: Element, props: CsatModalProps) {
+        super(parent, csatModalTpml, props);
+    }
+
+    protected componentDidMount() {
+        this.answers.addEventListener('click', (e: Event) => {
+            const targetInit = e.target as HTMLElement;
+            if (
+                targetInit.classList.contains('btn') ||
+                targetInit.classList.contains('btn__text')
+            ) {
+                const target = targetInit.closest('.btn');
+                const val = Number((target as HTMLButtonElement).dataset.val);
+                if (val !== undefined) {
+                    this.rateBtns.forEach((btn) => {
+                        btn.setDisabled();
+                    });
+                    sendCsatData(this.props.questionId, val)
+                        .then(() => {
+                            window.parent.postMessage('close-iframe');
+                        })
+                        .catch(() => {
+                            this.rateBtns.forEach((btn) => {
+                                btn.setEnabled();
+                            });
+                        });
+                }
+            }
+        });
+
+        this.closeBtn.htmlElement.addEventListener('click', () => {
+            window.parent.postMessage('close-iframe');
+        });
     }
 
     protected render() {
         this.renderTemplate();
-        this.closeBtn = new Button(this.htmlElement, {className: 'cast-widget__bottom', btnText: 'Спросить позже', type: 'button', btnStyle: 'bright' });
+
+        this.closeBtn = new Button(this.htmlElement, {
+            className: 'cast-widget__bottom',
+            btnText: 'Спросить позже',
+            type: 'button',
+            btnStyle: 'bright',
+        });
+
         this.rateBtns = new Array<Button>(1);
-        for (let i=0; i<10; i++){
-            this.rateBtns[i] = new Button(this.htmlElement.getElementsByClassName('csat-widget__line')[0],
+        for (let i = 0; i < 10; i++) {
+            this.rateBtns[i] = new Button(
+                this.htmlElement.getElementsByClassName('csat-widget__line')[0],
                 {
-                    className: 'csat-widget__container' + (i+1).toString(),
-                    btnText: (i+1).toString(),
-                    type: 'button', btnStyle: 'withOutline'
-                });
-            this.rateBtns[i].htmlElement.setAttribute('data-val', (i+1).toString());
+                    className: 'csat-widget__container' + (i + 1).toString(),
+                    btnText: (i + 1).toString(),
+                    type: 'button',
+                    btnStyle: 'withOutline',
+                },
+            );
+            this.rateBtns[i].htmlElement.setAttribute(
+                'data-val',
+                (i + 1).toString(),
+            );
         }
 
+        this.answers = this.htmlElement.getElementsByClassName(
+            'csat-widget__line',
+        )[0] as HTMLDivElement;
+
+        this.componentDidMount();
     }
 }
