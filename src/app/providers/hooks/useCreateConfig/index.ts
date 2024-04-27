@@ -9,6 +9,7 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
+import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
 
@@ -100,6 +101,18 @@ export function createConfig() {
                         params: { categoryId: string; [name: string]: string },
                     ) => {
                         return new CategoryPage(parent, params);
+                    },
+                },
+            },
+            search: {
+                url: '/search',
+                logged: 'both',
+                router: {
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new SearchPage(parent, params);
                     },
                 },
             },
