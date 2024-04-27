@@ -10,6 +10,8 @@ import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
 import { LinkStyle } from '@/shared/uikit/link';
+import { CsatPage } from '@/pages/csat/ui';
+import { CsatDataPage } from '@/pages/csatData';
 
 interface ConfigItem {
     // User login status
@@ -98,6 +100,24 @@ export function createConfig() {
                         navigateToCart: () => void,
                     ) => {
                         return new Main(parent, navigateToCart, params);
+                    },
+                },
+            },
+            csat: {
+                url: '/csat',
+                logged: 'logged',
+                router: {
+                    component: (parent: Element) => {
+                        return new CsatPage(parent);
+                    },
+                },
+            },
+            csatData: {
+                url: '/csatdata',
+                logged: 'logged',
+                router: {
+                    component: (parent: Element) => {
+                        return new CsatDataPage(parent);
                     },
                 },
             },
