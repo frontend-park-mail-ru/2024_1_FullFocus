@@ -102,13 +102,13 @@ export class Router {
                 };
             }
 
-            if (withParams) {
+            if (withParams && this.pages[basePage].updateParams) {
                 update = (page: Component<Element>) => {
                     this.pages[basePage].updateParams(page, params);
                 };
             }
 
-            if (!withParams) {
+            if (!withParams && this.pages[basePage].updateDefault) {
                 update = this.pages[basePage].updateDefault;
             }
 
@@ -137,6 +137,7 @@ export class Router {
             getComponent: getComponent,
             renderChild: renderChild,
             update: update,
+            rawPage: this.pages[basePage].rawPage,
         };
     }
 }

@@ -1,20 +1,20 @@
-@media (min-width: 1024px) {
-    .app {
-        display: block;
-    }
-    .no-mobile {
-        display: none;
-    }
-}
+// @media (min-width: 1024px) {
+//     .app {
+//         display: block;
+//     }
+//     .no-mobile {
+//         display: none;
+//     }
+// }
 
-@media (max-width: 1024px) {
-    .app {
-        display: none;
-    }
-    .no-mobile {
-        display: block;
-    }
-}
+// @media (max-width: 1024px) {
+//     .app {
+//         display: none;
+//     }
+//     .no-mobile {
+//         display: block;
+//     }
+// }
 
 .no-mobile {
     text-align: center;

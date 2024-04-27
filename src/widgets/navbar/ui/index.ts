@@ -112,4 +112,12 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
             }
         });
     }
+
+    hide() {
+        this.htmlElement.hidden = true;
+    }
+
+    show() {
+        this.htmlElement.hidden = false;
+    }
 }
