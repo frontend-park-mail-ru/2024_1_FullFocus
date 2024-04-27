@@ -1,0 +1,1 @@
+export { CommentPage } from './ui';
