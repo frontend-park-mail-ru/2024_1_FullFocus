@@ -1,7 +1,8 @@
 div(class=`${className} cast-widget`)
-            div(class="csat-widget__info") #{title}
-            div(class="csat-widget__mark") Оцените по шкале от 1 до 10.
-            div(class="csat-widget__line")
-            div(class="csat-widget__absolute")
-                div(class="csat-widget__absoluteNO") Точно нет
-                div(class="csat-widget__absoluteYES") Точно да
+    div(class="csat-widget__main")
+        div(class="csat-widget__info")
+            span(class="csat-widget__title") #{title}
+            span(class="csat-widget__exit") 
+        div(class="csat-widget__mark") Оцените по шкале от 1 до 10.
+        div(class="csat-widget__line")
+    div(class="csat-widget__thank display_none") Спасибо за ваш отзыв!

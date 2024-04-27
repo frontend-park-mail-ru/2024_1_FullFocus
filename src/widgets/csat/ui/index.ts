@@ -1,7 +1,7 @@
 import { Component } from '@/shared/@types/index.component';
 import csatModalTpml from '@/widgets/csat/ui/index.template.pug';
 import './index.style.scss';
-import { Button } from '@/shared/uikit/button';
+import { Button, getExitBtn } from '@/shared/uikit/button';
 import { CsatModalProps } from './index.types';
 import { sendCsatData } from '@/entities/user/api';
 
@@ -29,7 +29,18 @@ export class CsatModal extends Component<HTMLElement, CsatModalProps> {
                     });
                     sendCsatData(this.props.questionId, val)
                         .then(() => {
-                            window.parent.postMessage('close-iframe');
+                            this.htmlElement
+                                .getElementsByClassName('csat-widget__main')[0]
+                                .remove();
+                            this.htmlElement
+                                .getElementsByClassName('csat-widget__thank')[0]
+                                .classList.remove('display_none');
+                            this.htmlElement
+                                .getElementsByClassName('csat-widget__thank')[0]
+                                .classList.add('csat-widget__thank--animate');
+                            setTimeout(() => {
+                                window.parent.postMessage('close-iframe');
+                            }, 4000);
                         })
                         .catch(() => {
                             this.rateBtns.forEach((btn) => {
@@ -48,12 +59,15 @@ export class CsatModal extends Component<HTMLElement, CsatModalProps> {
     protected render() {
         this.renderTemplate();
 
-        this.closeBtn = new Button(this.htmlElement, {
-            className: 'cast-widget__bottom',
-            btnText: 'Спросить позже',
-            type: 'button',
-            btnStyle: 'bright',
-        });
+        this.closeBtn = getExitBtn(
+            this.htmlElement.getElementsByClassName('csat-widget__exit')[0],
+            {
+                className: 'cast-widget__bottom',
+                btnText: 'Спросить позже',
+                type: 'button',
+                btnStyle: 'white',
+            },
+        );
 
         this.rateBtns = new Array<Button>(1);
         for (let i = 0; i < 10; i++) {

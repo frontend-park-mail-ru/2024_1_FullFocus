@@ -121,8 +121,11 @@ export function createConfig() {
                 url: '/csatdata',
                 logged: 'logged',
                 router: {
-                    component: (parent: Element) => {
-                        return new CsatDataPage(parent);
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CsatDataPage(parent, params);
                     },
                 },
             },

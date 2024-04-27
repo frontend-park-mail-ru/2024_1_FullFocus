@@ -1,60 +1,83 @@
 .csat-widget__info {
-  font-weight: 500;
-  font-size: 20px;
-  height: 40px;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
 }
 
-.csat-widget__mark{
-  font-weight: 300;
+.csat-widget__mark {
+    font-weight: 300;
 }
 
-.cast-widget__bottom{
-  //padding: 20px;
+.cast-widget {
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    max-width: 450px;
+    height: 202px;
+    box-sizing: border-box;
+    padding: 25px;
 }
 
-.cast-widget{
-  display: flex;
-  background-color: white;
-  flex-direction: column;
-  max-width: 600px;
-  max-height: 500px;
-  padding: 25px;
+.csat-widget__absolute {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
 }
 
-
-.csat-widget__absolute{
-  display: flex;
-  flex-direction: row;
-  height: 50px;
+.csat-widget__absoluteYES {
+    margin-left: auto;
 }
 
-.csat-widget__absoluteYES{
-  margin-left: auto;
+.csat-widget__line-star {
+    padding-left: 15px;
 }
 
-
-.csat-widget__line-star{
-  padding-left: 15px;
+.csat-widget__line {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 15px 0;
+    flex: 1;
 }
 
-.csat-widget__line{
-  display: flex;
-  justify-content: space-evenly;
-  padding: 15px;
+.csat-widget__absoluteNO {
+    margin-right: auto;
 }
 
-
-.csat-widget__absoluteNO{
-  margin-right: auto;
+.csat-widget__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px;
+    background-color: #cfcece;
+    border-radius: 100%;
+    height: 25px;
+    width: 25px;
 }
 
-.csat-widget__container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 8px;
-  background-color: #cfcece;
-  border-radius: 100%;
-  height: 25px;
-  width: 25px;
+.btn_with-outline {
+    width: 36px;
+}
+
+.csat-widget__thank {
+    height: 100%;
+    text-align: center;
+    padding-top: 60px;
+    opacity: 0;
+}
+.csat-widget__thank--animate {
+    animation-name: creation-thank;
+    animation-duration: 2s;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+}
+
+@keyframes creation-thank {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

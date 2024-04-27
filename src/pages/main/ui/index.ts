@@ -61,8 +61,8 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
                     this.htmlElement,
                     'csat-main',
                     `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
-                    600,
-                    292,
+                    450,
+                    202,
                 );
                 this.iframe = data.component;
                 this.removeIframe = data.remove;
