@@ -20,7 +20,7 @@ export class App extends Component<HTMLDivElement> {
     }
 
     changePage(isLogged: boolean) {
-        const { name, getComponent, renderChild, update } =
+        const { name, getComponent, renderChild, update, rawPage } =
             this.router.currentActivePage;
 
         if (name != this.activePageName) {
@@ -37,7 +37,14 @@ export class App extends Component<HTMLDivElement> {
             update(this.page);
         }
 
-        this.navbar.updateNavbar(name, isLogged);
+        if (rawPage) {
+            this.headerElement.hidden = true;
+        }
+
+        if (!rawPage) {
+            this.headerElement.hidden = false;
+            this.navbar.updateNavbar(name, isLogged);
+        }
     }
 
     private componentDidMount() {
@@ -48,7 +55,7 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
-        registerSW();
+        // registerSW();
     }
 
     protected render() {

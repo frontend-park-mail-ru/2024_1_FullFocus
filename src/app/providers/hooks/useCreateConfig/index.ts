@@ -51,6 +51,7 @@ interface ConfigItem {
             // Update to default state
             updateDefault: (page: Component<Element>) => void;
         };
+        rawPage?: boolean;
         // To which pages navigation is needed
         navigation?: Array<string>;
         // Function to create a component
@@ -107,6 +108,7 @@ export function createConfig() {
                 url: '/csat',
                 logged: 'logged',
                 router: {
+                    rawPage: true,
                     component: (parent: Element) => {
                         return new CsatPage(parent);
                     },
