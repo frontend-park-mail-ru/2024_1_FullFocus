@@ -6,4 +6,36 @@
     outline: none;
     overflow: hidden;
     box-shadow: #aeaeae 0px 0px 5px;
+    animation-name: creation-iframe;
+    animation-duration: 100ms;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+}
+
+.iframe--remove {
+    animation-name: remove-iframe;
+    animation-duration: 100ms;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    opacity: 0;
+}
+
+@keyframes creation-iframe {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes remove-iframe {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }

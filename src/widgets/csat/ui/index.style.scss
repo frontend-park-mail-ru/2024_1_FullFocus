@@ -68,9 +68,10 @@
 }
 .csat-widget__thank--animate {
     animation-name: creation-thank;
-    animation-duration: 2s;
-    animation-direction: alternate;
-    animation-iteration-count: 2;
+    animation-duration: 1s;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    opacity: 1;
 }
 
 @keyframes creation-thank {

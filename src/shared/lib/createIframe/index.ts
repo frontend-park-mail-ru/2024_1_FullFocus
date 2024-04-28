@@ -24,7 +24,10 @@ export function createIframe(
 
     return {
         remove: () => {
-            component.remove();
+            component.classList.add('iframe--remove');
+            setTimeout(() => {
+                component.remove();
+            }, 1000);
         },
         component: component,
     };
