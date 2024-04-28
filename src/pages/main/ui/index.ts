@@ -57,15 +57,17 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
 
         getAllCsat()
             .then((response) => {
-                const data = createIframe(
-                    this.htmlElement,
-                    'csat-main',
-                    `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
-                    450,
-                    202,
-                );
-                this.iframe = data.component;
-                this.removeIframe = data.remove;
+                setTimeout(() => {
+                    const data = createIframe(
+                        this.htmlElement,
+                        'csat-main',
+                        `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
+                        450,
+                        202,
+                    );
+                    this.iframe = data.component;
+                    this.removeIframe = data.remove;
+                }, 1500);
             })
             .catch(() => {});
 

@@ -40,7 +40,7 @@ export class CsatModal extends Component<HTMLElement, CsatModalProps> {
                                 .classList.add('csat-widget__thank--animate');
                             setTimeout(() => {
                                 window.parent.postMessage('close-iframe');
-                            }, 4000);
+                            }, 1000);
                         })
                         .catch(() => {
                             this.rateBtns.forEach((btn) => {
