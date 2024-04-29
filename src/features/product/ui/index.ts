@@ -30,16 +30,16 @@ export async function useGetProductCards(page: number, limit: number) {
         .then(({ status, data }) => {
             const products: Array<
                 (parent: Element) => {
-                    card: ProductsSectionItem<ProductCard>;
-                    id: number;
+                    item: ProductsSectionItem<ProductCard>;
+                    id: string;
                 }
             > = [];
             if (status === 200) {
                 data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
                         return {
-                            card: renderItem(product, parent),
-                            id: product.id,
+                            item: renderItem(product, parent),
+                            id: product.id.toString(),
                         };
                     });
                 });
@@ -49,8 +49,8 @@ export async function useGetProductCards(page: number, limit: number) {
         .catch(() => {
             const products: Array<
                 (parent: Element) => {
-                    card: ProductsSectionItem<ProductCard>;
-                    id: number;
+                    item: ProductsSectionItem<ProductCard>;
+                    id: string;
                 }
             > = [];
             return products;
@@ -63,24 +63,24 @@ export async function useGetProductCardsCategory(categoryId: number) {
             if (status === 200) {
                 const products: Array<
                     (parent: Element) => {
-                        card: ProductsSectionItem<ProductCard>;
-                        id: number;
+                        item: ProductsSectionItem<ProductCard>;
+                        id: string;
                     }
                 > = [];
-                data.forEach((product) => {
+                data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
                         return {
-                            card: renderItem(product, parent),
-                            id: product.id,
+                            item: renderItem(product, parent),
+                            id: product.id.toString(),
                         };
                     });
                 });
-                return products;
+                return { products: products, category: data.categoryName };
             }
-            return [];
+            return { products: [], category: '' };
         })
         .catch(() => {
-            return [];
+            return { products: [], category: '' };
         });
 }
 
@@ -94,15 +94,15 @@ export async function useGetProductCardsSearch(
             if (status === 200) {
                 const products: Array<
                     (parent: Element) => {
-                        card: ProductsSectionItem<ProductCard>;
-                        id: number;
+                        item: ProductsSectionItem<ProductCard>;
+                        id: string;
                     }
                 > = [];
                 data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
                         return {
-                            card: renderItem(product, parent),
-                            id: product.id,
+                            item: renderItem(product, parent),
+                            id: product.id.toString(),
                         };
                     });
                 });

@@ -29,5 +29,9 @@ export class SearchSuggestion extends Component<
             });
             this.toInputBtn.htmlElement.dataset.text = this.props.text;
         }
+
+        if (this.props.categoryId !== undefined) {
+            this.htmlElement.dataset['categoryId'] = this.props.categoryId;
+        }
     }
 }

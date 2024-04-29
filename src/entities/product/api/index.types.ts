@@ -11,7 +11,7 @@ export interface IProductResponse {
 // TODO make it to the actual request
 export interface ProductByCategoriesResponse {
     categoryName: string;
-    products: IProductResponse[];
+    productCards: IProductResponse[];
 }
 
 export interface ProductsBySearchResponse {

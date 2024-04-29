@@ -96,11 +96,25 @@ export function createConfig() {
                 url: '/category/{categoryId}',
                 logged: 'both',
                 router: {
+                    navigation: ['main'],
+                    update: {
+                        updateParams: (
+                            page: CategoryPage,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+
+                        updateDefault: (page: CategoryPage) => {
+                            page.updateNoParams();
+                        },
+                    },
                     component: (
                         parent: Element,
                         params: { categoryId: string; [name: string]: string },
+                        navigateToMain: () => void,
                     ) => {
-                        return new CategoryPage(parent, params);
+                        return new CategoryPage(parent, navigateToMain, params);
                     },
                 },
             },
@@ -108,11 +122,25 @@ export function createConfig() {
                 url: '/search',
                 logged: 'both',
                 router: {
+                    update: {
+                        updateParams: (
+                            page: SearchPage,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+
+                        updateDefault: (page: SearchPage) => {
+                            page.updateNoParams();
+                        },
+                    },
+                    navigation: ['main'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
+                        navigateToMain: () => void,
                     ) => {
-                        return new SearchPage(parent, params);
+                        return new SearchPage(parent, navigateToMain, params);
                     },
                 },
             },

@@ -25,6 +25,10 @@ export class List<ListItem extends Component<Element>> extends Component<
                 this.items[id] = item;
             });
         }
+
+        if (items.length === 0 && this.props.emptyText) {
+            this.htmlElement.innerText = this.props.emptyText;
+        }
     }
 
     clear() {
@@ -32,5 +36,6 @@ export class List<ListItem extends Component<Element>> extends Component<
             item.destroy();
         });
         this.items = {};
+        this.htmlElement.innerText = '';
     }
 }

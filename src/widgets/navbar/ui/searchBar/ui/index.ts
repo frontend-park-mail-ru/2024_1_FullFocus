@@ -33,6 +33,8 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected componentDidMount() {
         // TODO remove listener
+
+        // Searchbar focused
         this.inputField.htmlElement.addEventListener('focus', (e: Event) => {
             e.preventDefault();
             if (!this.focus) {
@@ -42,14 +44,14 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             }
         });
 
+        // User clicks out of searchbar area so it needs to be closed
         document.addEventListener('click', (e: MouseEvent) => {
             if (isClickOut(this.htmlElement, e) && this.focus) {
-                this.focus = false;
-                this.htmlElement.classList.remove('searchbar-container_focus');
-                this.overlay.remove();
+                this.hideSuggestions();
             }
         });
 
+        // User inputs
         this.inputField.htmlElement.addEventListener('input', () => {
             const inputData = this.inputField.inputValue;
 
@@ -62,6 +64,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             }
         });
 
+        // Clear button
         this.clearBtn.htmlElement.addEventListener('click', (e: Event) => {
             e.preventDefault();
             this.clearResults();
@@ -69,16 +72,93 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
         this.searchResults.htmlElement.addEventListener('click', (e: Event) => {
             e.preventDefault();
-            const target = (e.target as HTMLElement).closest(
-                '.search-result__to-input-btn',
-            );
+            const targetInit = e.target as Element;
 
-            if (target && this.focus) {
-                const inputData = (target as HTMLElement).dataset.text;
-                this.inputField.inputValue = inputData;
-                this.renderSuggestions(inputData);
+            if (
+                targetInit.classList.contains('search-result__to-input-btn') ||
+                targetInit.classList.contains('icon') ||
+                targetInit.classList.contains('icon__path')
+            ) {
+                // Auto complete
+                const target = targetInit.closest('.search-result');
+
+                if (target && this.focus) {
+                    const inputData = (target as HTMLElement).innerText;
+                    this.inputField.inputValue = inputData;
+                    this.renderSuggestions(inputData);
+                }
+            } else {
+                // Perform search
+                const target = targetInit.closest('.search-result');
+
+                if (
+                    target &&
+                    (target as HTMLDivElement).dataset['categoryId']
+                ) {
+                    this.performCategorySearch(
+                        (target as HTMLDivElement).dataset['categoryId'],
+                    );
+                }
+
+                if (
+                    target &&
+                    !(target as HTMLDivElement).dataset['categoryId']
+                ) {
+                    this.performItemSearch(
+                        (target as HTMLDivElement).innerText,
+                    );
+                }
             }
         });
+
+        // Search item
+        this.searchBtn.htmlElement.addEventListener('click', () => {
+            if (this.inputField.inputValue !== '') {
+                this.performItemSearch(this.inputField.inputValue);
+            }
+        });
+    }
+
+    protected clearResults() {
+        this.inputField.inputValue = '';
+        this.searchResults.clear();
+        this.clearBtn.hide();
+    }
+
+    protected hideSuggestions() {
+        this.focus = false;
+        this.htmlElement.classList.remove('searchbar-container_focus');
+        this.overlay.remove();
+    }
+
+    protected performItemSearch(query: string) {
+        this.clearResults();
+        this.hideSuggestions();
+        this.props.navigateSearchPage({
+            query: query,
+        });
+    }
+
+    protected performCategorySearch(categoryId: string) {
+        this.clearResults();
+        this.hideSuggestions();
+        this.props.navigateCategoryPage({
+            categoryId: categoryId,
+        });
+    }
+
+    protected renderSuggestions(input: string) {
+        this.clearBtn.show();
+        this.currentPromise = useGetSearchSuggestions(input);
+        this.currentPromise
+            .then((items) => {
+                if (items.length > 0) {
+                    this.searchResults.renderItems(items);
+                }
+            })
+            .catch(() => {
+                // TODO add ui for this (maybe)
+            });
     }
 
     protected render() {
@@ -120,26 +200,5 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
         );
 
         this.componentDidMount();
-    }
-
-    protected clearResults() {
-        this.inputField.inputValue = '';
-        this.searchResults.clear();
-        this.clearBtn.hide();
-    }
-
-    protected renderSuggestions(input: string) {
-        this.clearBtn.show();
-        this.currentPromise = useGetSearchSuggestions(input);
-        this.currentPromise
-            .then((items) => {
-                if (items.length > 0) {
-                    this.searchResults.renderItems(items);
-                }
-            })
-            .catch(() => {
-                // TODO add ui for this
-                console.log('что-то пошло не так');
-            });
     }
 }

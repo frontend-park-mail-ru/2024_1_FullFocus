@@ -1,6 +1,7 @@
 import { ajaxGet } from '@/shared/api';
 import {
     IProductResponse,
+    ProductByCategoriesResponse,
     ProductsBySearchResponse,
     Suggestions,
 } from './index.types';
@@ -22,7 +23,7 @@ export async function productsRequest(page: number, limit: number) {
 
 // TODO page limit from function args
 export async function productsRequestCategory(categoryId: number) {
-    return ajaxGet<IProductResponse[]>(
+    return ajaxGet<ProductByCategoriesResponse>(
         PRODUCTS_API_URL.getProductsCategory + categoryId.toString(),
         [
             { key: 'page', value: '1' },
