@@ -1,9 +1,18 @@
 export interface IComment {
-    avatar?: string;
-    name: string;
-    advantages?: string;
-    disadvantages?: string;
-    comment: string;
-    date: string;
-    mark?: number;
+    "profileName": string,
+    "profileAvatar": string,
+    "createdAt": string,
+    "rating": number,
+    "comment": string,
+    "advantages": string,
+    "disadvantages": string
+}
+
+
+export interface IaddComment {
+    "productID": number,
+    "rating": number,
+    "comment": string,
+    "advantages": string,
+    "disadvantages": string
 }

@@ -5,25 +5,25 @@ import { ProductCard } from '@/entities/product';
 function renderItem(comment: IComment, parent: Element) {
     const Card = new CommentCard(parent, {
         className: "comment-section",
-        avatar: comment.avatar,
-        name: comment.name,
+        avatar: comment.profileAvatar,
+        name: comment.profileName,
         advantages: comment.advantages,
         disadvantages: comment.disadvantages,
         comment: comment.comment,
-        date: comment.date,
-        mark: comment.mark,
+        date: comment.createdAt,
+        mark: comment.rating,
     });
     return Card;
 }
 
-export async function useGetCommentCards(lastReviewID: number, limit: number) {
-    return commentRequest(lastReviewID, limit)
+export async function useGetCommentCards(lastReviewID: number, limit: number, ProductID: string) {
+    return commentRequest(lastReviewID, limit, ProductID)
         .then(({ status, data}) => {
             const comments: Array<
                 (parent: Element) => CommentCard
             > = [];
             if (status === 200) {
-                data.commentCards.forEach((comment) => {
+                data.reviews.forEach((comment) => {
                     comments.push((parent: Element) => {
                         return renderItem(comment, parent);
                     });

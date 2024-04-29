@@ -1,1 +1,1 @@
-export { Comment } from './ui';
+export { CommentWidget } from './ui';
