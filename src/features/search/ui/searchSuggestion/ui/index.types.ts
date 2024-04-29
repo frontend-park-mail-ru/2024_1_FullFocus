@@ -4,4 +4,5 @@ export interface SearchResultProps {
     className: string;
     text: string;
     type: SearchResultType;
+    categoryId?: string;
 }

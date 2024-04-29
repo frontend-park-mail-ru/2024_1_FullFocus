@@ -108,6 +108,8 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
 
         this.searchBar = new SearchBar(this.searchBarElement, {
             className: 'navbar__searchbar',
+            navigateCategoryPage: this.props.navigateCategoryPage,
+            navigateSearchPage: this.props.navigateSearchPage,
         });
     }
 

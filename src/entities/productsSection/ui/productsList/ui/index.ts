@@ -4,6 +4,7 @@ import { Component } from '@/shared/@types/index.component';
 import { ProductsListProps } from './index.types';
 import { ProductsSectionItem } from './productsSectionItem';
 import { addToCart } from '@/entities/cart/api';
+import { List } from '@/shared/uikit/list';
 
 export { ProductsSectionItem } from './productsSectionItem';
 
@@ -11,6 +12,7 @@ export class ProductsList<
     ProductCardType extends Component<Element>,
 > extends Component<HTMLDivElement, ProductsListProps> {
     protected products: { [id: number]: ProductsSectionItem<ProductCardType> };
+    protected list: List<ProductsSectionItem<ProductCardType>>;
     protected listener: (e: Event) => void;
 
     constructor(parent: Element, props: ProductsListProps) {
@@ -47,27 +49,23 @@ export class ProductsList<
 
     protected render() {
         this.renderTemplate();
+
+        this.list = new List(this.htmlElement, {
+            className: 'products-list__products',
+            wrap: true,
+            emptyText: 'товары отсутсвуют',
+        });
+
         this.componentDidMount();
     }
 
     loadProducts(
         products: ((parent: Element) => {
-            card: ProductsSectionItem<ProductCardType>;
-            id: number;
+            item: ProductsSectionItem<ProductCardType>;
+            id: string;
         })[],
     ): void {
-        this.clear();
-
-        if (products.length === 0) {
-            this.htmlElement.innerText = 'товары отсутсвуют';
-        }
-
-        if (products.length !== 0) {
-            products.forEach((product) => {
-                const { id, card } = product(this.htmlElement);
-                this.products[id] = card;
-            });
-        }
+        this.list.renderItems(products);
     }
 
     productCardById(id: number) {
@@ -75,10 +73,7 @@ export class ProductsList<
     }
 
     clear() {
-        Object.values(this.products).forEach((product) => {
-            product.destroy();
-        });
-        this.products = {};
+        this.list.clear();
     }
 
     destroy(): void {

@@ -10,6 +10,7 @@ export class Router {
     private activePage: string;
     private params: { [name: string]: string };
     private withParams: boolean;
+    private pageChanged: boolean;
     private renderPage: (isLogged: boolean) => void;
     private pages: { [name: string]: Page };
     private urls: { [name: string]: string };
@@ -60,11 +61,16 @@ export class Router {
                 const { url, slug } = this.parseSlug(rawUrl);
 
                 if (url in this.urls || rawUrl in this.urls) {
+                    // Get url
                     let pageName = this.urls[url];
                     if (!pageName || !this.pages[pageName].slugParamName) {
                         pageName = this.urls[rawUrl];
                     }
 
+                    // Was page changed
+                    this.pageChanged = pageName !== this.activePage;
+
+                    // Does the page needs login
                     const needsLogin = this.pages[pageName].logged === 'logged';
                     if ((needsLogin && isLogged) || !needsLogin) {
                         this.activePage = pageName;
@@ -78,7 +84,10 @@ export class Router {
                         }
 
                         // Slug params
-                        if (this.pages[pageName].slugParamName) {
+                        if (
+                            this.pages[pageName].slugParamName &&
+                            slug !== undefined
+                        ) {
                             this.params[this.pages[pageName].slugParamName] =
                                 slug;
                             this.withParams = true;
@@ -110,9 +119,26 @@ export class Router {
 
     getNavigationToPage(pageName: string) {
         const pages = this.pages;
-        const navigateToPage = () => {
+        const navigateToPage = (params?: { [name: string]: string }) => {
             if (pageName in pages) {
-                this.pushState(this.pages[pageName].url);
+                let url = this.pages[pageName].url;
+
+                if (params) {
+                    const paramsArr: string[] = [];
+                    Object.entries(params).forEach(([key, value]) => {
+                        if (pages[pageName].slugParamName === key) {
+                            url = url + value;
+                        } else {
+                            paramsArr.push(`${key}=${value}`);
+                        }
+                    });
+
+                    if (paramsArr.length > 0) {
+                        url += '?' + paramsArr.join('&');
+                    }
+                }
+
+                this.pushState(url);
             }
         };
 
@@ -138,13 +164,21 @@ export class Router {
                 };
             }
 
-            if (this.withParams && this.pages[basePage].updateParams) {
+            if (
+                this.withParams &&
+                this.pages[basePage].updateParams &&
+                !this.pageChanged
+            ) {
                 update = (page: Component<Element>) => {
                     this.pages[basePage].updateParams(page, this.params);
                 };
             }
 
-            if (!this.withParams && this.pages[basePage].updateDefault) {
+            if (
+                !this.withParams &&
+                this.pages[basePage].updateDefault &&
+                !this.pageChanged
+            ) {
                 update = this.pages[basePage].updateDefault;
             }
 
