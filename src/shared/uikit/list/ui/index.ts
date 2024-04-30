@@ -38,4 +38,8 @@ export class List<ListItem extends Component<Element>> extends Component<
         this.items = {};
         this.htmlElement.innerText = '';
     }
+
+    itemById(id: string): ListItem {
+        return this.items[id];
+    }
 }

@@ -8,11 +8,29 @@
     src: url('./shared/fonts/Montserrat-VariableFont_wght.ttf');
 }
 
-$bg-color: #efefef;
+$color-green-normal: #157f1f;
+$color-green-light: #1fc130;
+$color-green-lighter: #3ee04e;
+
+$border-radius-default: 32px;
+
+:root {
+    --color-primary-normal: #5dcec6;
+    --color-primary-dark: #3a817c;
+    --color-primary-light: #68e7dd;
+    --color-secondary: #808080;
+    --color-background: #efefef;
+}
+
+html,
+body,
+.root {
+    height: 100%;
+}
 
 .section {
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 30px 40px 25px 40px;
 }
 
@@ -42,7 +60,7 @@ $bg-color: #efefef;
 
 body {
     margin: 0;
-    background-color: $bg-color;
+    background-color: var(--color-background);
 }
 
 .border_radius-sm {
@@ -98,6 +116,7 @@ body {
     color: black;
     font-size: 16px;
     font-weight: 400;
+    text-decoration: none;
 }
 
 .text_size-normal {

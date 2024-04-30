@@ -4,7 +4,22 @@
     border-radius: 7px;
 }
 
+.product-card:hover {
+    .product-card__img {
+        filter: brightness(1.1);
+    }
+
+    .product-card__info {
+        color: var(--color-primary-normal);
+    }
+}
+
+.product-card__info {
+    transition: 0.1s;
+}
+
 .product-card__img {
+    transition: 0.1s;
     border-radius: 5px;
 }
 

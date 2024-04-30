@@ -42,13 +42,13 @@ export class App extends Component<HTMLDivElement> {
 
     private componentDidMount() {
         this.htmlElement.addEventListener('click', (e: Event) => {
-            const target = e.target as HTMLElement;
-            if (target.tagName.toLowerCase() === 'a') {
+            const classList = (e.target as HTMLElement).classList;
+            if (classList.contains('link-item')) {
                 this.router.handleLinkClick(e);
             }
         });
 
-        registerSW();
+        // registerSW();
     }
 
     protected render() {

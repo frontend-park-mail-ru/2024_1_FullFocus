@@ -12,6 +12,7 @@ import { Page404 } from '@/pages/404';
 import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
+import { ProductPage } from '@/pages/product';
 
 interface ConfigItem {
     // User login status
@@ -141,6 +142,20 @@ export function createConfig() {
                         navigateToMain: () => void,
                     ) => {
                         return new SearchPage(parent, navigateToMain, params);
+                    },
+                },
+            },
+            oneProduct: {
+                url: '/product/{productId}',
+                logged: 'both',
+                router: {
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new ProductPage(parent, params, navigateToMain);
                     },
                 },
             },

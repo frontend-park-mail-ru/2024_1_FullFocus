@@ -57,16 +57,17 @@ export class Router {
         this.params = {};
         useCheckUserLogin()
             .then((isLogged) => {
+                // Get url
                 const rawUrl = window.location.pathname;
                 const { url, slug } = this.parseSlug(rawUrl);
 
-                if (url in this.urls || rawUrl in this.urls) {
-                    // Get url
-                    let pageName = this.urls[url];
-                    if (!pageName || !this.pages[pageName].slugParamName) {
-                        pageName = this.urls[rawUrl];
-                    }
+                // Get page name
+                let pageName = this.urls[url];
+                if (!pageName || !this.pages[pageName].slugParamName) {
+                    pageName = this.urls[rawUrl];
+                }
 
+                if (pageName) {
                     // Was page changed
                     this.pageChanged = pageName !== this.activePage;
 
@@ -95,7 +96,9 @@ export class Router {
                     } else {
                         this.activePage = PAGE_404;
                     }
-                } else {
+                }
+
+                if (!pageName) {
                     this.activePage = PAGE_404;
                 }
                 this.renderPage(isLogged);
@@ -105,7 +108,7 @@ export class Router {
 
     handleLinkClick(e: Event) {
         e.preventDefault();
-        const target = e.target as HTMLLinkElement;
+        const target = (e.target as HTMLElement).closest('a');
         this.pushState(target.href);
     }
 
