@@ -1,9 +1,6 @@
 export interface addCommentDialogProps {
-    params: { [name: string]: string };
+    productID: string;
     className: string;
-    rating: string;
-    advantages: string;
-    disadvantages: string;
-    comment: string;
-    addCommentCallback?: () => void;
+    productSrc: string;
+    productDescription: string;
 }

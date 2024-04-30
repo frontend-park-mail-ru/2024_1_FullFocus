@@ -4,4 +4,7 @@ export {
     validateDefault,
     validateEmail,
     validatePhoneNumber,
+    validateAdvantages,
+    validateDisadvantages,
+    validateComment,
 } from './core';

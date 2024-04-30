@@ -5,7 +5,8 @@ export interface IComment {
     "rating": number,
     "comment": string,
     "advantages": string,
-    "disadvantages": string
+    "disadvantages": string,
+    "id": number
 }
 
 

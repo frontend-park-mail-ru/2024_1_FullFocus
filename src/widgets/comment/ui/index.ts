@@ -1,7 +1,7 @@
 import { Component } from '@/shared/@types/index.component';
 import { CommentWidgetProps } from '@/widgets/comment/ui/index.types';
 import commentWidgetTmpl from '@/widgets/comment/ui/index.template.pug';
-import './index.template.scss';
+import './index.style.scss';
 import { CommentCard } from '@/entities/comment/ui';
 import { Button } from '@/shared/uikit/button';
 import { useGetCommentCards } from '@/features/comment/ui';
@@ -13,17 +13,27 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
     protected btn: Button;
     protected commentsColumn: CommentCard[];
     protected dialog: AddCommentDialog;
+    protected listener: (e: Event) => void;
+
+
     constructor(parent: Element, props: CommentWidgetProps) {
         super(parent, commentWidgetTmpl, props);
+    }
+
+    protected componentDidMount() {
+        this.listener = () => {
+            this.dialog.htmlElement.showModal();
+        };
+        this.btn.htmlElement.addEventListener('click', this.listener);
     }
 
 
     renderSection() {
         this.commentsColumn = []
         useGetCommentCards(
-            Number(this.props.params["limit"]),
-            Number(this.props.params["lastReviewID"]),
-            this.props.ProductID
+            0, // Number(this.props.params["limit"])
+            5, // Number(this.props.params["lastReviewID"])
+            this.props.productID
         )
             .then((comments: ((parent: Element) => CommentCard)[]) => {
                 if (comments.length === 0) {
@@ -63,5 +73,14 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
                 btnStyle: 'bright'
             });
         this.renderSection();
+        this.dialog = new AddCommentDialog(
+            this.htmlElement, {
+                className: 'comment-widget__add-dialog',
+                productID: this.props.productID,
+                productDescription: this.props.productDescription,
+                productSrc: this.props.productSrc,
+            }
+        )
+        this.componentDidMount();
     }
 }

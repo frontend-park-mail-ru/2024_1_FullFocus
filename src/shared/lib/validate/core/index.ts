@@ -42,3 +42,28 @@ export function validateDefault(sequence: string): string | null {
     }
     return null;
 }
+
+
+export function validateAdvantages(sequence: string): string | null {
+    if (sequence.length >= 500) {
+        return 'поле не должно иметь более пятисот символов';
+    }
+    return null;
+}
+
+export function validateDisadvantages(sequence: string): string | null {
+    if (sequence.length >= 500) {
+        return 'поле не должно иметь более пятисот символов';
+    }
+    return null;
+}
+
+export function validateComment(sequence: string): string | null {
+    if (sequence.length >= 500) {
+        return 'поле не должно иметь более тысячи символов';
+    }
+    if (sequence.length < 1) {
+        return 'поле не должно быть пустым';
+    }
+    return null;
+}

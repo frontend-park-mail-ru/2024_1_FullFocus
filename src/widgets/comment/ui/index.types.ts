@@ -1,6 +1,8 @@
 export interface CommentWidgetProps {
     addCommentCallback?: () => void;
     className: string;
-    ProductID: string;
+    productID: string;
     params?: { [name: string]: string };
+    productSrc: string;
+    productDescription: string;
 }

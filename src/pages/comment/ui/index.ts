@@ -23,11 +23,9 @@ export class CommentPage extends Component<HTMLDivElement, CommentPageProps> {
             this.htmlElement,
             {
                 className: 'comment-section',
-                ProductID: "15",
-                params: {
-                    ["limit"]: "10",
-                    ["lastReviewID"]: "10",
-                },
+                productID: "15",
+                productDescription: "Ночник детский силиконовый для сна капибара",
+                productSrc: "/public/default-profile-pic.png"
             },
         )
     }
