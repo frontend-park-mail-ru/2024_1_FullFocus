@@ -26,8 +26,10 @@ export class ProfileNavbar extends Component<
     }
 
     updateNavbar() {
+        const navbar =
+            this.htmlElement.getElementsByClassName('profile-navbar')[0];
         Object.entries(this.linkProps).forEach(([name, props]) => {
-            this.navbarItems[name] = new Link(this.htmlElement, props);
+            this.navbarItems[name] = new Link(navbar, props);
         });
     }
 

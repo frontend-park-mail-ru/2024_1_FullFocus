@@ -22,3 +22,13 @@
     display: block;
     margin-bottom: 35px;
 }
+
+@media (width <= 1024px) {
+    .products-section {
+        flex-direction: column;
+
+        .products-section__categories {
+            width: 100%;
+        }
+    }
+}

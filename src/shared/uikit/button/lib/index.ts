@@ -3,6 +3,7 @@ import { ButtonProps } from '../ui/index.types';
 import crossTmlp from './svgTemplates/index.crosssvg.pug';
 import editTmpl from './svgTemplates/index.editsvg.pug';
 import tickTmpl from './svgTemplates/index.ticksvg.pug';
+import menuSvg from './svgTemplates/index.menusvg.pug';
 import eyeOpenTmlp from './svgTemplates/eye/index.eyeopen.pug';
 import arrowRightTmpl from './svgTemplates/index.arrowright.pug';
 import eyeCloseTmlp from './svgTemplates/eye/index.eyeclose.pug';
@@ -21,6 +22,12 @@ export function getEditBtn(parent: Element, props: ButtonProps) {
 
 export function getTickBtn(parent: Element, props: ButtonProps) {
     props.btnIconFunc = tickTmpl;
+    props.btnText = '';
+    return new Button(parent, props);
+}
+
+export function getMenuBtn(parent: Element, props: ButtonProps) {
+    props.btnIconFunc = menuSvg;
     props.btnText = '';
     return new Button(parent, props);
 }

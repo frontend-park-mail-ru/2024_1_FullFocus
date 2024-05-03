@@ -31,7 +31,7 @@ $btn-default-bg-color: #fff;
 
 // Bright button
 .btn_bright {
-    background-color: $color-primary-normal;
+    background-color: var(--color-primary-normal);
     transition: background-color 0.2s;
     .btn__text {
         color: white;
@@ -45,7 +45,7 @@ $btn-default-bg-color: #fff;
 }
 
 .btn_bright:hover {
-    background-color: $color-primary-light;
+    background-color: var(--color-primary-light);
 }
 
 // Button with outline
@@ -104,11 +104,11 @@ $btn-default-bg-color: #fff;
 
 .btn_white:hover {
     .btn__text {
-        color: $color-primary-normal;
+        color: var(--color-primary-normal);
         font-weight: 700;
     }
 
     .icon__path {
-        stroke: $color-primary-normal;
+        stroke: var(--color-primary-normal);
     }
 }

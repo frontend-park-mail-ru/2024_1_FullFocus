@@ -1,5 +1,6 @@
 import appTmplFunc from './index.template.pug';
 import './index.style.scss';
+import './mobile icons';
 import { Component } from '@/shared/@types/index.component';
 import { Page, Router } from './../providers';
 import { Navbar } from '@/widgets/navbar';
@@ -14,6 +15,7 @@ export class App extends Component<HTMLDivElement> {
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
     navbar: Navbar;
+    mobileNavbar: Navbar;
 
     constructor(parent: Element) {
         super(parent, appTmplFunc, { className: 'app-layout' });
@@ -37,6 +39,9 @@ export class App extends Component<HTMLDivElement> {
             update(this.page);
         }
 
+        this.navbar.updateNavbar(name, isLogged);
+        this.mobileNavbar.updateNavbar(name, isLogged);
+      
         if (rawPage) {
             this.headerElement.classList.add('display_none');
             this.headerElement.classList.remove('navbar-container');
@@ -51,13 +56,13 @@ export class App extends Component<HTMLDivElement> {
 
     private componentDidMount() {
         this.htmlElement.addEventListener('click', (e: Event) => {
-            const target = e.target as HTMLElement;
-            if (target.tagName.toLowerCase() === 'a') {
+            const classList = (e.target as HTMLElement).classList;
+            if (classList.contains('link-item')) {
                 this.router.handleLinkClick(e);
             }
         });
 
-        registerSW();
+        // registerSW();
     }
 
     protected render() {
@@ -71,7 +76,7 @@ export class App extends Component<HTMLDivElement> {
             'navbar-container',
         )[0] as HTMLDivElement;
 
-        const { routerConfig, navbarConfig } = getConfig();
+        const { routerConfig, navbarConfig, mobileNavbarConfig } = getConfig();
         this.router = new Router(
             (isLogged: boolean) => this.changePage(isLogged),
             routerConfig,
@@ -83,9 +88,26 @@ export class App extends Component<HTMLDivElement> {
             navigateSearchPage: this.router.getNavigationToPage('search'),
         });
 
+        this.mobileNavbar = new Navbar(
+            this.htmlElement.getElementsByClassName(
+                'mobile-navbar-container',
+            )[0],
+            {
+                className: 'mobile-navbar__navigation',
+                withSearch: false,
+                type: 'mobile',
+            },
+        );
+
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);
         });
+
+        Object.entries(mobileNavbarConfig).forEach(
+            ([name, { props, logged }]) => {
+                this.mobileNavbar.addLink(name, logged, props);
+            },
+        );
 
         this.router.start();
 

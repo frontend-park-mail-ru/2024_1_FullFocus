@@ -19,6 +19,10 @@ export async function productsRequest(page: number, limit: number) {
     );
 }
 
+export async function productByIdRequest(id: string) {
+    return ajaxGet<IProductResponse>(PRODUCTS_API_URL.getProductById + id, []);
+}
+
 // TODO move to productssection?
 
 // TODO page limit from function args

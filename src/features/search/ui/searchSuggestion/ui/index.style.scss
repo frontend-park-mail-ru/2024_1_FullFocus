@@ -5,8 +5,7 @@
 .search-result {
     background-color: #fff;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
 }
 
 .search-result__icon {
@@ -15,7 +14,6 @@
 
 .search-result__to-input-btn {
     border-radius: 0;
-    height: 100%;
 }
 .search-result__result {
     flex: 1;

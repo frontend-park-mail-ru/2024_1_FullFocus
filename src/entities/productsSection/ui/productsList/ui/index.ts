@@ -11,13 +11,11 @@ export { ProductsSectionItem } from './productsSectionItem';
 export class ProductsList<
     ProductCardType extends Component<Element>,
 > extends Component<HTMLDivElement, ProductsListProps> {
-    protected products: { [id: number]: ProductsSectionItem<ProductCardType> };
     protected list: List<ProductsSectionItem<ProductCardType>>;
     protected listener: (e: Event) => void;
 
     constructor(parent: Element, props: ProductsListProps) {
         super(parent, productsSectionTmpl, props);
-        this.products = {};
     }
 
     protected componentDidMount() {
@@ -69,7 +67,7 @@ export class ProductsList<
     }
 
     productCardById(id: number) {
-        return this.products[id];
+        return this.list.itemById(id.toString());
     }
 
     clear() {

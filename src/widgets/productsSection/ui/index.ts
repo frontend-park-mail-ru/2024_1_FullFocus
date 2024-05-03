@@ -57,7 +57,6 @@ export class ProductsSection extends Component<
             .then((products) => {
                 this.productsList.loadProducts(products);
                 this.categoryName.innerText = 'Все товары';
-                // this.productsCategories.clearActive();
             })
             .catch(() => {
                 this.productsList.clear();

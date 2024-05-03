@@ -13,6 +13,7 @@ import { CommentPage} from '@/pages/comment';
 import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
+import { ProductPage } from '@/pages/product';
 import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
 
@@ -28,6 +29,7 @@ interface ConfigItem {
         style?: LinkStyle;
         iconName?: string;
         imgName?: string;
+        mobileIconName?: string;
     };
     // Children
     children?: {
@@ -84,6 +86,7 @@ export function createConfig() {
                     className: 'navbar-link-main',
                     text: 'Главная',
                     imgName: '/public/logo.png',
+                    mobileIconName: '/public/home-icon.svg',
                 },
                 router: {
                     navigation: ['cart'],
@@ -148,6 +151,17 @@ export function createConfig() {
                     },
                 },
             },
+            oneProduct: {
+                url: '/product/{productId}',
+                logged: 'both',
+                router: {
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new ProductPage(parent, params, navigateToMain);
             csat: {
                 url: '/csat',
                 logged: 'logged',
@@ -218,6 +232,7 @@ export function createConfig() {
                     className: 'navbar-link-cart',
                     text: 'Корзина',
                     iconName: '/public/cart-icon.svg',
+                    mobileIconName: '/public/mobile-cart-icon.svg',
                 },
                 router: {
                     navigation: ['main', 'profile-orders'],
@@ -273,6 +288,7 @@ export function createConfig() {
                     className: 'navbar-link-profile',
                     text: 'Профиль',
                     iconName: '/public/user-icon.svg',
+                    mobileIconName: '/public/profile-icon.svg',
                 },
             },
 
@@ -283,6 +299,7 @@ export function createConfig() {
                     className: 'navbar-link-logout',
                     text: 'Выйти',
                     iconName: '/public/logout.svg',
+                    mobileIconName: '/public/logout-icon.svg',
                 },
                 router: {
                     navigation: ['main'],
