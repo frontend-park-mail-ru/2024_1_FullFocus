@@ -9,7 +9,7 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
-import { CommentPage} from '@/pages/comment';
+import { CommentPage } from '@/pages/comment';
 import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
@@ -162,6 +162,9 @@ export function createConfig() {
                         navigateToMain: () => void,
                     ) => {
                         return new ProductPage(parent, params, navigateToMain);
+                    },
+                },
+            },
             csat: {
                 url: '/csat',
                 logged: 'logged',
