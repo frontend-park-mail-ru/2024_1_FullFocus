@@ -4,4 +4,6 @@ export {
     validateDefault,
     validateEmail,
     validatePhoneNumber,
+    validateMaxInputLength,
+    validateMark
 } from './core';

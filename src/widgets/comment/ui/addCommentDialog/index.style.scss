@@ -1,0 +1,35 @@
+.add-dialog {
+  background-color: white;
+  border-radius: 35px;
+  flex-direction: row;
+  width: 525px;
+  border: none;
+}
+
+
+.add-dialog__header{
+  display: inline-block;
+  width: 440px;
+}
+
+.add-dialog__subheader{
+  flex-direction: row;
+  display: flex;
+  padding: 20px;
+}
+
+.add-dialog__upper{
+  margin-inline: 20px;
+}
+
+.add-dialog__form-place{
+  margin-inline: 20px;
+}
+
+.add-dialog__description{
+  margin-top: 50px;
+}
+
+.add-comment-form{
+  padding-top: 10px;
+}
