@@ -1,10 +1,10 @@
 import './index.style.scss';
 import dialogTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
-import { AddCommentForm } from '@/features/comment';
+import { UseAddCommentData } from '@/features/comment';
 import { Button, getExitBtn } from '@/shared/uikit/button';
 import { parseForm } from '@/entities/form';
-import { addComment } from '@/entities/comment/api';
+import { addComment } from '@/features/comment/api';
 import { addCommentDialogProps } from '@/widgets/comment/ui/addCommentDialog/index.types';
 
 export class AddCommentDialog extends Component<
@@ -12,7 +12,7 @@ export class AddCommentDialog extends Component<
     addCommentDialogProps
 > {
     protected errorElement: HTMLDivElement;
-    protected formObj: AddCommentForm;
+    protected formObj: UseAddCommentData;
     protected closeBtn: Button;
     protected closeListener: (e: Event) => void;
     protected submitListener: (e: SubmitEvent) => void;
@@ -47,7 +47,7 @@ export class AddCommentDialog extends Component<
                 this.formObj.setReadonly();
                 addComment({
                     productID: Number(this.props.productID),
-                    rating: Number(formData.inputs['rating']),
+                    rating: Number(formData.inputs['rating'].value),
                     comment: formData.inputs['comment'].value,
                     advantages: formData.inputs['advantages'].value,
                     disadvantages: formData.inputs['disadvantages'].value
@@ -72,7 +72,7 @@ export class AddCommentDialog extends Component<
     protected render() {
         this.renderTemplate();
 
-        this.formObj = new AddCommentForm(
+        this.formObj = new UseAddCommentData (
             this.htmlElement.getElementsByClassName(
                 'add-dialog__form-place',
             )[0],

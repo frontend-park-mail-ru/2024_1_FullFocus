@@ -1,15 +1,15 @@
 import { Form } from '@/entities/form';
 import { ADD_COMMENT_FORM_FIELDS } from '../config';
 
-export interface AddCommentFormProps {
+export interface useAddCommentFormProps {
     [name: string]: string;
     productID: string;
     productDescription: string;
     productSrc: string;
 }
 
-export class useAddCommentData extends Form {
-    constructor(parent: Element, props: AddCommentFormProps) {
+export class UseAddCommentData extends Form {
+    constructor(parent: Element, props: useAddCommentFormProps) {
         super(parent, 'add-comment-form', 'Отправить отзыв');
         Object.entries(ADD_COMMENT_FORM_FIELDS).forEach(([name, data]) => {
             this.addInputBlock({

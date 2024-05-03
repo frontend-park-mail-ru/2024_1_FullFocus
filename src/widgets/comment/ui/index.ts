@@ -15,7 +15,6 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
     protected dialog: AddCommentDialog;
     protected listener: (e: Event) => void;
 
-
     constructor(parent: Element, props: CommentWidgetProps) {
         super(parent, commentWidgetTmpl, props);
     }
@@ -37,7 +36,6 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
         )
             .then((comments: ((parent: Element) => CommentCard)[]) => {
                 if (comments.length === 0) {
-
                     const emptyCommentDiv = new EmptyContainer(
                         this.htmlElement.getElementsByClassName(
                             "comment-widget__comments"

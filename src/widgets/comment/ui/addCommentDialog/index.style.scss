@@ -6,6 +6,12 @@
   border: none;
 }
 
+
+.add-dialog__header{
+  display: inline-block;
+  width: 440px;
+}
+
 .add-dialog__subheader{
   flex-direction: row;
   display: flex;

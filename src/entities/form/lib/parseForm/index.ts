@@ -6,9 +6,8 @@ import {
     validateLogin,
     validatePassword,
     validatePhoneNumber,
-    validateAdvantages,
-    validateDisadvantages,
-    validateComment,
+    validateMaxInputLength,
+    validateMark
 } from '@/shared/lib/validate';
 
 export type { FormData } from './index.types';
@@ -47,17 +46,22 @@ export function parseForm(form: Form): FormData {
                     );
                     break;
                 case 'advantages':
-                    formData.inputs[name].error = validateAdvantages(
+                    formData.inputs[name].error = validateMaxInputLength(
                         formData.inputs[name].value,
                     );
                     break;
                 case 'disadvantages':
-                    formData.inputs[name].error = validateDisadvantages(
+                    formData.inputs[name].error = validateMaxInputLength(
                         formData.inputs[name].value,
                     );
                     break;
                 case 'comment':
-                    formData.inputs[name].error = validateComment(
+                    formData.inputs[name].error = validateMaxInputLength(
+                        formData.inputs[name].value,
+                    );
+                    break;
+                case 'rating':
+                    formData.inputs[name].error = validateMark(
                         formData.inputs[name].value,
                     );
                     break;
