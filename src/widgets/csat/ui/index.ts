@@ -77,7 +77,7 @@ export class CsatModal extends Component<HTMLElement, CsatModalProps> {
                     className: 'csat-widget__container' + (i + 1).toString(),
                     btnText: (i + 1).toString(),
                     type: 'button',
-                    btnStyle: 'withOutline',
+                    btnStyle: 'whiteWithBg',
                 },
             );
             this.rateBtns[i].htmlElement.setAttribute(

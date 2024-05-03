@@ -1,2 +1,2 @@
-export { UseAddCommentData } from '@/features/comment/addCommentData/ui'
-export { IComment } from './api/index.types'
+export { UseAddCommentData } from '@/features/comment/addCommentData/ui';
+export type { IComment } from './api/index.types';

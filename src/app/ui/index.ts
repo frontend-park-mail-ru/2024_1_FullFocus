@@ -57,7 +57,7 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
-        // registerSW();
+        registerSW();
     }
 
     protected render() {
