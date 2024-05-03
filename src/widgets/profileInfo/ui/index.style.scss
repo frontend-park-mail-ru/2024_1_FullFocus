@@ -14,3 +14,9 @@
 .profile-info__page {
     flex: 1;
 }
+
+@media (width <= 1024px) {
+    .profile-info {
+        flex-direction: column-reverse;
+    }
+}

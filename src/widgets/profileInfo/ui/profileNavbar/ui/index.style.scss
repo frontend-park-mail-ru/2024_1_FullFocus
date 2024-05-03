@@ -4,3 +4,30 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.dropdown-profile-navbar {
+    width: 100%;
+}
+
+@media (width > 1024px) {
+    .dropdown.dropdown-profile-navbar {
+        display: none;
+    }
+}
+@media (width <= 1024px) {
+    .profile-navbar {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+        gap: 0;
+
+        .link-item {
+            padding: 16px;
+        }
+
+        .link-item.link_active {
+            background-color: white;
+            font-weight: 600;
+        }
+    }
+}

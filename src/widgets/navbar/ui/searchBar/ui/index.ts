@@ -19,6 +19,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     protected inputField: Input;
     protected searchResults: List<SearchSuggestion>;
     protected overlay: HTMLDivElement;
+    protected form: HTMLFormElement;
     protected focus: boolean;
     protected currentPromise: Promise<
         ((parent: Element) => {
@@ -73,7 +74,6 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
         this.searchResults.htmlElement.addEventListener('click', (e: Event) => {
             e.preventDefault();
             const targetInit = e.target as Element;
-
             if (
                 targetInit.classList.contains('search-result__to-input-btn') ||
                 targetInit.classList.contains('icon') ||
@@ -81,7 +81,6 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             ) {
                 // Auto complete
                 const target = targetInit.closest('.search-result');
-
                 if (target && this.focus) {
                     const inputData = (target as HTMLElement).innerText;
                     this.inputField.inputValue = inputData;
@@ -90,7 +89,6 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             } else {
                 // Perform search
                 const target = targetInit.closest('.search-result');
-
                 if (
                     target &&
                     (target as HTMLDivElement).dataset['categoryId']
@@ -99,7 +97,6 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
                         (target as HTMLDivElement).dataset['categoryId'],
                     );
                 }
-
                 if (
                     target &&
                     !(target as HTMLDivElement).dataset['categoryId']
@@ -112,7 +109,8 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
         });
 
         // Search item
-        this.searchBtn.htmlElement.addEventListener('click', () => {
+        this.htmlElement.addEventListener('submit', (e: SubmitEvent) => {
+            e.preventDefault();
             if (this.inputField.inputValue !== '') {
                 this.performItemSearch(this.inputField.inputValue);
             }
@@ -187,7 +185,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
         this.searchBtn = new Button(searchBar, {
             className: 'searchbar__btn',
-            type: 'button',
+            type: 'submit',
             btnStyle: 'bright',
             btnIconFunc: magnifierIconTmpl,
         });

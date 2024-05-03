@@ -64,10 +64,6 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     }
 
     updateNavbar(activePageName: string, isLogged: boolean) {
-        if (this.activeItemName) {
-            this.navbarItems[this.activeItemName].deactivate();
-        }
-
         if (this.publicLayoutChanged) {
             this.publicLinksElement.innerHTML = '';
             this.renderPublic();
@@ -81,11 +77,19 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
             this.isUserLogged = isLogged;
         }
 
-        this.navbarItems[activePageName].activate();
-        this.activeItemName = activePageName;
+        if (activePageName in this.navbarItems) {
+            if (this.activeItemName) {
+                this.navbarItems[this.activeItemName].deactivate();
+            }
+            this.navbarItems[activePageName].activate();
+            this.activeItemName = activePageName;
+        }
     }
 
     protected render() {
+        this.props.withSearch = this.props.withSearch ?? true;
+        this.props.type = this.props.type ?? 'desktop';
+
         this.renderTemplate();
 
         this.publicLinksElement =
@@ -102,6 +106,10 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     }
 
     protected renderSearchBar() {
+        if (!this.props.withSearch) {
+            return;
+        }
+
         if (this.searchBar) {
             this.searchBar.destroy();
         }

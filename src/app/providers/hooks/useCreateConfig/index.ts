@@ -26,6 +26,7 @@ interface ConfigItem {
         style?: LinkStyle;
         iconName?: string;
         imgName?: string;
+        mobileIconName?: string;
     };
     // Children
     children?: {
@@ -81,6 +82,7 @@ export function createConfig() {
                     className: 'navbar-link-main',
                     text: 'Главная',
                     imgName: '/public/logo.png',
+                    mobileIconName: '/public/home-icon.svg',
                 },
                 router: {
                     navigation: ['cart'],
@@ -204,6 +206,7 @@ export function createConfig() {
                     className: 'navbar-link-cart',
                     text: 'Корзина',
                     iconName: '/public/cart-icon.svg',
+                    mobileIconName: '/public/mobile-cart-icon.svg',
                 },
                 router: {
                     navigation: ['main', 'profile-orders'],
@@ -259,6 +262,7 @@ export function createConfig() {
                     className: 'navbar-link-profile',
                     text: 'Профиль',
                     iconName: '/public/user-icon.svg',
+                    mobileIconName: '/public/profile-icon.svg',
                 },
             },
 
@@ -269,6 +273,7 @@ export function createConfig() {
                     className: 'navbar-link-logout',
                     text: 'Выйти',
                     iconName: '/public/logout.svg',
+                    mobileIconName: '/public/logout-icon.svg',
                 },
                 router: {
                     navigation: ['main'],

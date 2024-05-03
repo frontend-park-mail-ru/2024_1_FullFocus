@@ -12,6 +12,10 @@ export function getConfig() {
         [name: string]: { props: LinkProps; logged: UserLogged };
     } = {};
 
+    const mobileNavbarConfig: {
+        [name: string]: { props: LinkProps; logged: UserLogged };
+    } = {};
+
     Object.entries(config.pages).forEach(([name, item]) => {
         const match = item.url.match(/([/\w]+)({(\w+)})?/);
         const url = match.length >= 2 ? match[1] : undefined;
@@ -64,9 +68,21 @@ export function getConfig() {
                     },
                     logged: item.logged,
                 };
+
+                if (item.navbarLink.mobileIconName) {
+                    mobileNavbarConfig[name] = {
+                        props: {
+                            className: 'mobile-' + item.navbarLink.className,
+                            text: item.navbarLink.text,
+                            href: defaultUrl,
+                            imgName: item.navbarLink.mobileIconName,
+                        },
+                        logged: item.logged,
+                    };
+                }
             }
         }
     });
 
-    return { routerConfig, navbarConfig };
+    return { routerConfig, navbarConfig, mobileNavbarConfig };
 }
