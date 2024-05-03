@@ -72,19 +72,21 @@ export class App extends Component<HTMLDivElement> {
         )[0] as HTMLDivElement;
 
         const { routerConfig, navbarConfig } = getConfig();
+        this.router = new Router(
+            (isLogged: boolean) => this.changePage(isLogged),
+            routerConfig,
+        );
 
         this.navbar = new Navbar(this.headerElement, {
             className: 'navbar__navigation',
+            navigateCategoryPage: this.router.getNavigationToPage('category'),
+            navigateSearchPage: this.router.getNavigationToPage('search'),
         });
 
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);
         });
 
-        this.router = new Router(
-            (isLogged: boolean) => this.changePage(isLogged),
-            routerConfig,
-        );
         this.router.start();
 
         this.componentDidMount();

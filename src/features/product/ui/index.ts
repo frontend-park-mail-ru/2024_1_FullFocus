@@ -2,13 +2,14 @@ import { ProductCard, productsRequest } from '@/entities/product';
 import {
     IProductResponse,
     productsRequestCategory,
+    productsRequestSearch,
 } from '@/entities/product/api';
 import { ProductsSectionItem } from '@/entities/productsSection';
 
 function renderItem(product: IProductResponse, parent: Element) {
     const psi = new ProductsSectionItem<ProductCard>(parent, {
         className: 'product-section-item-' + product.id,
-        isInCart: false,
+        isInCart: product.inCart ?? false,
     });
     psi.insertProductCard((parent: Element) => {
         const productCard = new ProductCard(parent, {
@@ -28,12 +29,18 @@ export async function useGetProductCards(page: number, limit: number) {
     return productsRequest(page, limit)
         .then(({ status, data }) => {
             const products: Array<
-                (parent: Element) => ProductsSectionItem<ProductCard>
+                (parent: Element) => {
+                    item: ProductsSectionItem<ProductCard>;
+                    id: string;
+                }
             > = [];
             if (status === 200) {
                 data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
-                        return renderItem(product, parent);
+                        return {
+                            item: renderItem(product, parent),
+                            id: product.id.toString(),
+                        };
                     });
                 });
             }
@@ -41,7 +48,10 @@ export async function useGetProductCards(page: number, limit: number) {
         })
         .catch(() => {
             const products: Array<
-                (parent: Element) => ProductsSectionItem<ProductCard>
+                (parent: Element) => {
+                    item: ProductsSectionItem<ProductCard>;
+                    id: string;
+                }
             > = [];
             return products;
         });
@@ -52,11 +62,48 @@ export async function useGetProductCardsCategory(categoryId: number) {
         .then(({ status, data }) => {
             if (status === 200) {
                 const products: Array<
-                    (parent: Element) => ProductsSectionItem<ProductCard>
+                    (parent: Element) => {
+                        item: ProductsSectionItem<ProductCard>;
+                        id: string;
+                    }
                 > = [];
-                data.forEach((product) => {
+                data.productCards.forEach((product) => {
                     products.push((parent: Element) => {
-                        return renderItem(product, parent);
+                        return {
+                            item: renderItem(product, parent),
+                            id: product.id.toString(),
+                        };
+                    });
+                });
+                return { products: products, category: data.categoryName };
+            }
+            return { products: [], category: '' };
+        })
+        .catch(() => {
+            return { products: [], category: '' };
+        });
+}
+
+export async function useGetProductCardsSearch(
+    query: string,
+    page: number,
+    limit: number,
+) {
+    return productsRequestSearch(query, page, limit)
+        .then(({ status, data }) => {
+            if (status === 200) {
+                const products: Array<
+                    (parent: Element) => {
+                        item: ProductsSectionItem<ProductCard>;
+                        id: string;
+                    }
+                > = [];
+                data.productCards.forEach((product) => {
+                    products.push((parent: Element) => {
+                        return {
+                            item: renderItem(product, parent),
+                            id: product.id.toString(),
+                        };
                     });
                 });
                 return products;

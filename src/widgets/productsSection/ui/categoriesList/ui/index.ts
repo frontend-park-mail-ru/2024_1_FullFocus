@@ -33,7 +33,7 @@ export class CategoriesList extends Component<
                             this.htmlElement,
                             {
                                 className: `category-link-${category.id}`,
-                                href: `/?category=${category.id}`,
+                                href: `/category/${category.id}`,
                                 text: category.name,
                                 style: 'with-bg',
                             },

@@ -1,0 +1,1 @@
+export { CategorySearchResults } from './ui';

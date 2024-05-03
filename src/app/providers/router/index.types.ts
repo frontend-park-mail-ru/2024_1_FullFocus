@@ -11,6 +11,7 @@ export interface Page {
     url: string;
     logged: UserLogged;
     navigation?: string[];
+    slugParamName?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component?: (...args: any) => Component<Element>;
     updateParams?: (

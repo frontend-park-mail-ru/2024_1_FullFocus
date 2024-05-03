@@ -13,53 +13,58 @@ export function getConfig() {
     } = {};
 
     Object.entries(config.pages).forEach(([name, item]) => {
-        routerConfig.pages[name] = {
-            url: item.url,
-            navigation: item.router.navigation ?? null,
-            component: item.router.component,
-            updateParams: item.router.update
-                ? item.router.update.updateParams
-                : undefined,
-            updateDefault: item.router.update
-                ? item.router.update.updateDefault
-                : undefined,
-            logged: item.logged,
-            rawPage: item.router.rawPage ?? false,
-        };
+        const match = item.url.match(/([/\w]+)({(\w+)})?/);
+        const url = match.length >= 2 ? match[1] : undefined;
+        const slugName = match.length >= 4 ? match[3] : undefined;
 
-        if (item.children) {
-            Object.entries(item.children.pages).forEach(
-                ([childName, child]) => {
-                    routerConfig.pages[name + '-' + childName] = {
-                        rawPage: item.router.rawPage ?? false,
-                        url: item.url + child.url,
-                        logged: item.logged,
-                        base: name,
-                        renderChild: child.renderChild,
-                    };
-                },
-            );
-        }
-
-        if (item.navbarLink) {
-            let defaultUrl = item.url;
-            if (item.children) {
-                if (item.children.default) {
-                    defaultUrl +=
-                        item.children.pages[item.children.default].url;
-                }
-            }
-            navbarConfig[name] = {
-                props: {
-                    className: item.navbarLink.className,
-                    text: item.navbarLink.text,
-                    href: defaultUrl,
-                    iconName: item.navbarLink.iconName,
-                    style: item.navbarLink.style,
-                    imgName: item.navbarLink.imgName,
-                },
+        if (url !== undefined) {
+            routerConfig.pages[name] = {
+                url: url,
+                slugParamName: slugName,
+                navigation: item.router.navigation ?? null,
+                component: item.router.component,
+                updateParams: item.router.update
+                    ? item.router.update.updateParams
+                    : undefined,
+                updateDefault: item.router.update
+                    ? item.router.update.updateDefault
+                    : undefined,
                 logged: item.logged,
             };
+
+            if (item.children) {
+                Object.entries(item.children.pages).forEach(
+                    ([childName, child]) => {
+                        routerConfig.pages[name + '-' + childName] = {
+                            url: item.url + child.url,
+                            logged: item.logged,
+                            base: name,
+                            renderChild: child.renderChild,
+                        };
+                    },
+                );
+            }
+
+            if (item.navbarLink) {
+                let defaultUrl = item.url;
+                if (item.children) {
+                    if (item.children.default) {
+                        defaultUrl +=
+                            item.children.pages[item.children.default].url;
+                    }
+                }
+                navbarConfig[name] = {
+                    props: {
+                        className: item.navbarLink.className,
+                        text: item.navbarLink.text,
+                        href: defaultUrl,
+                        iconName: item.navbarLink.iconName,
+                        style: item.navbarLink.style,
+                        imgName: item.navbarLink.imgName,
+                    },
+                    logged: item.logged,
+                };
+            }
         }
     });
 

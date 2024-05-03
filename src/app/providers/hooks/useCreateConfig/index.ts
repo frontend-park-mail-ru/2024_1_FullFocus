@@ -9,7 +9,9 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
+import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
+import { CategoryPage } from '@/pages/category';
 import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
 
@@ -83,17 +85,6 @@ export function createConfig() {
                     imgName: '/public/logo.png',
                 },
                 router: {
-                    update: {
-                        updateParams: (
-                            page: Main,
-                            params: { [name: string]: string },
-                        ) => {
-                            page.updateWithParams(params);
-                        },
-                        updateDefault: (page: Main) => {
-                            page.updateDefault();
-                        },
-                    },
                     navigation: ['cart'],
                     component: (
                         parent: Element,
@@ -101,6 +92,58 @@ export function createConfig() {
                         navigateToCart: () => void,
                     ) => {
                         return new Main(parent, navigateToCart, params);
+                    },
+                },
+            },
+            category: {
+                url: '/category/{categoryId}',
+                logged: 'both',
+                router: {
+                    navigation: ['main'],
+                    update: {
+                        updateParams: (
+                            page: CategoryPage,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+
+                        updateDefault: (page: CategoryPage) => {
+                            page.updateNoParams();
+                        },
+                    },
+                    component: (
+                        parent: Element,
+                        params: { categoryId: string; [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new CategoryPage(parent, navigateToMain, params);
+                    },
+                },
+            },
+            search: {
+                url: '/search',
+                logged: 'both',
+                router: {
+                    update: {
+                        updateParams: (
+                            page: SearchPage,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+
+                        updateDefault: (page: SearchPage) => {
+                            page.updateNoParams();
+                        },
+                    },
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new SearchPage(parent, navigateToMain, params);
                     },
                 },
             },

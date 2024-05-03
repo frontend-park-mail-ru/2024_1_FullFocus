@@ -18,62 +18,7 @@
     margin: 0 auto 10px auto;
 }
 
-.products-section__products {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    gap: 20px;
-}
-
 .products-section__header {
     display: block;
     margin-bottom: 35px;
-}
-
-.products-section__products:empty {
-    margin: auto;
-    box-sizing: border-box;
-    padding: 20px;
-    width: 100%;
-    height: 700px; /* change height to see repeat-y behavior */
-
-    background-image: linear-gradient(
-            100deg,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0.5) 50%,
-            rgba(255, 255, 255, 0) 80%
-        ),
-        linear-gradient(lightgray 20px, transparent 0),
-        linear-gradient(lightgray 20px, transparent 0),
-        linear-gradient(lightgray 20px, transparent 0),
-        linear-gradient(lightgray 20px, transparent 0);
-
-    background-repeat: repeat-y;
-
-    background-size:
-        50px 200px,
-        100% 200px,
-        100% 200px,
-        100% 200px,
-        100% 200px;
-
-    background-position:
-        0 0,
-        0 0,
-        0 40px,
-        0 80px,
-        0 120px;
-
-    animation: shine-section 1s infinite;
-}
-
-@keyframes shine-section {
-    to {
-        background-position:
-            100% 0,
-            0 0,
-            0 40px,
-            0 80px,
-            0 120px;
-    }
 }
