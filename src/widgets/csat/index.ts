@@ -1,0 +1,1 @@
+import { CsatModal } from '@/widgets/csat/ui';

@@ -3,7 +3,7 @@ export interface ButtonProps {
     type: string;
     btnText?: string;
     btnIconFunc?: (props?: object) => string;
-    btnStyle: 'withOutline' | 'bright' | 'green' | 'white';
+    btnStyle: 'whiteWithBg' | 'bright' | 'green' | 'white';
     toggle?: {
         btnText?: string;
         btnIconFunc?: (props?: object) => string;

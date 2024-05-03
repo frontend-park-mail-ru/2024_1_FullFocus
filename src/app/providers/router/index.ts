@@ -8,6 +8,9 @@ const PAGE_404 = 'PAGE_404';
 
 export class Router {
     private activePage: string;
+    private params: { [name: string]: string };
+    private withParams: boolean;
+    private pageChanged: boolean;
     private renderPage: (isLogged: boolean) => void;
     private pages: { [name: string]: Page };
     private urls: { [name: string]: string };
@@ -30,15 +33,65 @@ export class Router {
         }
     }
 
+    private parseSlug(url: string) {
+        const match = url.match(/([/\w]*\/)(\w+)?/);
+        if (match) {
+            const parsedUrl = match.length >= 2 ? match[1] : undefined;
+            const slug = match.length >= 3 ? match[2] : undefined;
+
+            return { url: parsedUrl, slug: slug };
+        }
+
+        return { url: undefined, slug: undefined };
+    }
+
+    private parseQuery(fullPath: string) {
+        const urlParams = new URLSearchParams(fullPath);
+        return {
+            params: urlParams.entries(),
+            withParams: urlParams.size !== 0,
+        };
+    }
+
     handlePopstate() {
-        const path = window.location.pathname;
+        this.params = {};
         useCheckUserLogin()
             .then((isLogged) => {
-                if (path in this.urls) {
-                    const pageName = this.urls[path];
+                const rawUrl = window.location.pathname;
+                const { url, slug } = this.parseSlug(rawUrl);
+
+                if (url in this.urls || rawUrl in this.urls) {
+                    // Get url
+                    let pageName = this.urls[url];
+                    if (!pageName || !this.pages[pageName].slugParamName) {
+                        pageName = this.urls[rawUrl];
+                    }
+
+                    // Was page changed
+                    this.pageChanged = pageName !== this.activePage;
+
+                    // Does the page needs login
                     const needsLogin = this.pages[pageName].logged === 'logged';
                     if ((needsLogin && isLogged) || !needsLogin) {
                         this.activePage = pageName;
+                        // Parsing query params
+                        const queryParsing = this.parseQuery(
+                            window.location.search,
+                        );
+                        this.withParams = queryParsing.withParams;
+                        for (const [key, value] of queryParsing.params) {
+                            this.params[key] = value;
+                        }
+
+                        // Slug params
+                        if (
+                            this.pages[pageName].slugParamName &&
+                            slug !== undefined
+                        ) {
+                            this.params[this.pages[pageName].slugParamName] =
+                                slug;
+                            this.withParams = true;
+                        }
                     } else {
                         this.activePage = PAGE_404;
                     }
@@ -66,9 +119,26 @@ export class Router {
 
     getNavigationToPage(pageName: string) {
         const pages = this.pages;
-        const navigateToPage = () => {
+        const navigateToPage = (params?: { [name: string]: string }) => {
             if (pageName in pages) {
-                this.pushState(this.pages[pageName].url);
+                let url = this.pages[pageName].url;
+
+                if (params) {
+                    const paramsArr: string[] = [];
+                    Object.entries(params).forEach(([key, value]) => {
+                        if (pages[pageName].slugParamName === key) {
+                            url = url + value;
+                        } else {
+                            paramsArr.push(`${key}=${value}`);
+                        }
+                    });
+
+                    if (paramsArr.length > 0) {
+                        url += '?' + paramsArr.join('&');
+                    }
+                }
+
+                this.pushState(url);
             }
         };
 
@@ -86,29 +156,29 @@ export class Router {
         }
 
         if (this.activePage !== PAGE_404) {
-            // Get query params
-            const params: { [name: string]: string } = {};
-            const urlParams = new URLSearchParams(window.location.search);
-            const withParams = urlParams.size != 0;
-            for (const [key, value] of urlParams.entries()) {
-                params[key] = value;
-            }
-
             // if current page is a subpage
             if (this.pages[this.activePage].base) {
                 basePage = this.pages[this.activePage].base;
                 renderChild = (page: Component<Element>) => {
-                    this.pages[this.activePage].renderChild(page, params);
+                    this.pages[this.activePage].renderChild(page, this.params);
                 };
             }
 
-            if (withParams) {
+            if (
+                this.withParams &&
+                this.pages[basePage].updateParams &&
+                !this.pageChanged
+            ) {
                 update = (page: Component<Element>) => {
-                    this.pages[basePage].updateParams(page, params);
+                    this.pages[basePage].updateParams(page, this.params);
                 };
             }
 
-            if (!withParams) {
+            if (
+                !this.withParams &&
+                this.pages[basePage].updateDefault &&
+                !this.pageChanged
+            ) {
                 update = this.pages[basePage].updateDefault;
             }
 
@@ -126,7 +196,7 @@ export class Router {
             getComponent = (parent: Element) => {
                 return this.pages[basePage].component(
                     parent,
-                    params,
+                    this.params,
                     ...navigation,
                 );
             };
@@ -137,6 +207,7 @@ export class Router {
             getComponent: getComponent,
             renderChild: renderChild,
             update: update,
+            rawPage: this.pages[basePage].rawPage,
         };
     }
 }

@@ -8,11 +8,13 @@ import { Component } from '@/shared/@types/index.component';
 import { NavbarProps } from './index.types';
 import { Link, LinkProps } from '@/shared/uikit/link';
 import { UserLogged } from './index.types';
+import { SearchBar } from './searchBar';
 
 export type { UserLogged } from './index.types';
 
 export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     protected activeItemName: string;
+    protected overlay: HTMLDivElement;
     protected publicLinkProps: Array<{
         pageName: string;
         props: LinkProps;
@@ -23,10 +25,12 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         props: LinkProps;
     }>;
     protected navbarItems: { [name: string]: Link };
+    protected searchBar: SearchBar;
     protected isUserLogged: boolean;
     protected publicLayoutChanged: boolean;
     protected privateLayoutChanged: boolean;
     protected publicLinksElement: Element;
+    protected searchBarElement: Element;
     protected privateLinksElement: Element;
 
     constructor(parent: Element, props: NavbarProps) {
@@ -87,8 +91,26 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         this.publicLinksElement =
             this.htmlElement.getElementsByClassName('navbar__public')[0];
 
+        this.searchBarElement = this.htmlElement.getElementsByClassName(
+            'navbar__searchbar-container',
+        )[0];
+
         this.privateLinksElement =
             this.htmlElement.getElementsByClassName('navbar__private')[0];
+
+        this.renderSearchBar();
+    }
+
+    protected renderSearchBar() {
+        if (this.searchBar) {
+            this.searchBar.destroy();
+        }
+
+        this.searchBar = new SearchBar(this.searchBarElement, {
+            className: 'navbar__searchbar',
+            navigateCategoryPage: this.props.navigateCategoryPage,
+            navigateSearchPage: this.props.navigateSearchPage,
+        });
     }
 
     protected renderPublic() {
@@ -111,5 +133,13 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
                 );
             }
         });
+    }
+
+    hide() {
+        this.htmlElement.hidden = true;
+    }
+
+    show() {
+        this.htmlElement.hidden = false;
     }
 }

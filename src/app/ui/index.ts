@@ -20,7 +20,7 @@ export class App extends Component<HTMLDivElement> {
     }
 
     changePage(isLogged: boolean) {
-        const { name, getComponent, renderChild, update } =
+        const { name, getComponent, renderChild, update, rawPage } =
             this.router.currentActivePage;
 
         if (name != this.activePageName) {
@@ -37,7 +37,16 @@ export class App extends Component<HTMLDivElement> {
             update(this.page);
         }
 
-        this.navbar.updateNavbar(name, isLogged);
+        if (rawPage) {
+            this.headerElement.classList.add('display_none');
+            this.headerElement.classList.remove('navbar-container');
+        }
+
+        if (!rawPage) {
+            this.headerElement.classList.remove('display_none');
+            this.headerElement.classList.add('navbar-container');
+            this.navbar.updateNavbar(name, isLogged);
+        }
     }
 
     private componentDidMount() {
@@ -48,7 +57,7 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
-        //registerSW();
+        // registerSW();
     }
 
     protected render() {
@@ -63,19 +72,21 @@ export class App extends Component<HTMLDivElement> {
         )[0] as HTMLDivElement;
 
         const { routerConfig, navbarConfig } = getConfig();
+        this.router = new Router(
+            (isLogged: boolean) => this.changePage(isLogged),
+            routerConfig,
+        );
 
         this.navbar = new Navbar(this.headerElement, {
             className: 'navbar__navigation',
+            navigateCategoryPage: this.router.getNavigationToPage('category'),
+            navigateSearchPage: this.router.getNavigationToPage('search'),
         });
 
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);
         });
 
-        this.router = new Router(
-            (isLogged: boolean) => this.changePage(isLogged),
-            routerConfig,
-        );
         this.router.start();
 
         this.componentDidMount();
