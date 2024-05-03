@@ -210,6 +210,7 @@ export class Router {
             getComponent: getComponent,
             renderChild: renderChild,
             update: update,
+            rawPage: this.pages[basePage].rawPage,
         };
     }
 }

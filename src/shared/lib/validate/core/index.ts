@@ -42,3 +42,21 @@ export function validateDefault(sequence: string): string | null {
     }
     return null;
 }
+
+export function validateMaxInputLength(sequence: string): string | null {
+    if (sequence.length >= 500) {
+        return 'поле не должно иметь более пятисот символов';
+    }
+    return null;
+}
+
+export function validateMark(sequence: string): string | null {
+    if (parseInt(sequence) < 1 || parseInt(sequence) > 5 || isNaN(parseInt(sequence))) {
+        return 'поле должно быть цифрой от 1 до 5';
+    }
+
+    if (sequence.length < 1) {
+        return 'поле не должно быть пустым';
+    }
+    return null;
+}

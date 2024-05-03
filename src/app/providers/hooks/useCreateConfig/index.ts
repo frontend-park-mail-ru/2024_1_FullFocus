@@ -9,10 +9,13 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
+import { CommentPage} from '@/pages/comment';
 import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
 import { ProductPage } from '@/pages/product';
+import { CsatPage } from '@/pages/csat/ui';
+import { CsatDataPage } from '@/pages/csatData';
 
 interface ConfigItem {
     // User login status
@@ -53,6 +56,7 @@ interface ConfigItem {
             // Update to default state
             updateDefault: (page: Component<Element>) => void;
         };
+        rawPage?: boolean;
         // To which pages navigation is needed
         navigation?: Array<string>;
         // Function to create a component
@@ -158,6 +162,28 @@ export function createConfig() {
                         navigateToMain: () => void,
                     ) => {
                         return new ProductPage(parent, params, navigateToMain);
+            csat: {
+                url: '/csat',
+                logged: 'logged',
+                router: {
+                    rawPage: true,
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CsatPage(parent, params);
+                    },
+                },
+            },
+            csatData: {
+                url: '/csatdata',
+                logged: 'logged',
+                router: {
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CsatDataPage(parent, params);
                     },
                 },
             },
@@ -283,6 +309,20 @@ export function createConfig() {
                         navigateToMain: () => void,
                     ) => {
                         return new LogOut(parent, navigateToMain);
+                    },
+                },
+            },
+
+            comment: {
+                url: '/comment',
+                logged: 'both',
+                router: {
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CommentPage(parent, params);
                     },
                 },
             },

@@ -1,0 +1,7 @@
+div(class=`${ClassName} diagramCard`)
+    div(class="diagramCard__text") #{title}
+    div(id="graph" class="graph horizontal")
+        each val, stars in data
+            div(class="itemStarsWithItem")
+                div(class="itemStars") #{stars + 1} ★
+                div(class="item" style=`width:${val.widthPercentage}%`) #{val.percentage}%

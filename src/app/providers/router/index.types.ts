@@ -20,6 +20,7 @@ export interface Page {
     ) => void;
     updateDefault?: (page: Component<Element>) => void;
     base?: string;
+    rawPage: boolean;
     renderChild?: (
         component: Component<Element>,
         params: { [name: string]: string },

@@ -34,12 +34,14 @@ export function getConfig() {
                     ? item.router.update.updateDefault
                     : undefined,
                 logged: item.logged,
+                rawPage: item.router.rawPage ?? false,
             };
 
             if (item.children) {
                 Object.entries(item.children.pages).forEach(
                     ([childName, child]) => {
                         routerConfig.pages[name + '-' + childName] = {
+                            rawPage: item.router.rawPage ?? false,
                             url: item.url + child.url,
                             logged: item.logged,
                             base: name,
