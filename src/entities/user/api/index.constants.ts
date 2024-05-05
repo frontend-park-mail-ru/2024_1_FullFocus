@@ -6,7 +6,7 @@ export const USER_API_URLS = {
     userData: '/api/v1/profile/get',
     updateProfile: '/api/v1/profile/update',
     updatePicture: '/api/v1/avatar/upload',
-    getPicture: '/api/v1/avatar/get',
+    getPicture: '/api/v1/avatar/public/',
     sendCsat: '/api/v1/csat/vote',
     allCsat: '/api/v1/csat/all',
     csatStat: '/api/v1/csat/',
