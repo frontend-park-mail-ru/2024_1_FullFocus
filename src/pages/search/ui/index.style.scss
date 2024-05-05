@@ -1,3 +1,10 @@
 .search-page {
-    padding-top: 24px;
+    background-color: white;
+}
+
+@media (max-width: 1024px) {
+    .search-page {
+        background: none;
+        padding-top: 0;
+    }
 }

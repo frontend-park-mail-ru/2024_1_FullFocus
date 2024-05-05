@@ -13,7 +13,6 @@ export class ProductsSection extends Component<
 > {
     protected productsList: ProductsList<ProductCard>;
     protected productsSection: HTMLDivElement;
-    protected categoryName: HTMLSpanElement;
     protected productsCategories: CategoriesList;
     protected listener: (e: Event) => void;
 
@@ -30,10 +29,6 @@ export class ProductsSection extends Component<
      */
     protected render() {
         this.renderTemplate();
-
-        this.categoryName = this.htmlElement.getElementsByClassName(
-            'products-section__header',
-        )[0] as HTMLSpanElement;
 
         this.productsSection = this.htmlElement.getElementsByClassName(
             'products-section__section',
@@ -56,7 +51,6 @@ export class ProductsSection extends Component<
         useGetProductCards(1, 10)
             .then((products) => {
                 this.productsList.loadProducts(products);
-                this.categoryName.innerText = 'Все товары';
             })
             .catch(() => {
                 this.productsList.clear();

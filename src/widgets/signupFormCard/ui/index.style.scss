@@ -1,5 +1,5 @@
 .signup-form-card {
-    margin: 70px auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     width: 350px;
@@ -18,4 +18,17 @@
 
 .signup-form-card__main {
     margin-top: 30px;
+}
+
+@media (max-width: 640px) {
+    .signup-form-card {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media (max-width: 475px) {
+    .signup-form-card {
+        padding: 10px;
+    }
 }

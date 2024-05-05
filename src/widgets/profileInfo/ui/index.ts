@@ -48,6 +48,7 @@ export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
             this.htmlElement.getElementsByClassName('profile-info__navbar')[0],
             {
                 className: 'profile-info__profile-navbar',
+                navigateToMain: this.props.navigateToMain,
             },
         );
 

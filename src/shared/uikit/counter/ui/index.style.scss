@@ -4,22 +4,25 @@
     justify-content: space-between;
     gap: 10px;
     align-items: center;
+    height: 40px;
 }
 
 .counter__data {
     flex: 1;
     border: 2px solid #b3bcc5;
+    background-color: white;
     border-radius: 8px;
-    height: 40px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .counter__btn {
     transition: background-color 0.2s;
     width: 40px;
-    height: 40px;
+    height: 100%;
     background-color: #adf2ec;
     border-radius: 8px;
     display: flex;
@@ -31,4 +34,15 @@
 .counter__btn:hover {
     cursor: pointer;
     background-color: #bcfcf6;
+}
+
+@media (max-width: 475px) {
+    .counter {
+        height: 30px;
+        width: 130px;
+    }
+
+    .counter__btn {
+        width: 30px;
+    }
 }

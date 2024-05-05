@@ -1,21 +1,22 @@
 .profile-navbar {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.logout-btn {
+    width: 100%;
+}
+
+.profile-navbar__links {
     width: 300px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.dropdown-profile-navbar {
-    width: 100%;
-}
-
-@media (width > 1024px) {
-    .dropdown.dropdown-profile-navbar {
-        display: none;
-    }
-}
 @media (width <= 1024px) {
-    .profile-navbar {
+    .profile-navbar__links {
         width: 100%;
         box-sizing: border-box;
         padding: 0;

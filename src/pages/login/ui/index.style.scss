@@ -1,3 +1,9 @@
 .login-form-card__errors {
     color: rgb(150, 0, 0);
 }
+
+@media (max-width: 640px) {
+    .login-page {
+        background-color: white;
+    }
+}

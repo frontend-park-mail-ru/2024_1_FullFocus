@@ -2,10 +2,14 @@ if imgName
     a(href=`${href}` class=`link-item link-img ${className}`)
         img(src=`${imgName}` alt=`${text}` class="link-item link-img__img")
 else
-    if iconName
-        a(href=`${href}` class=`link-item link-with-icon ${className}`)
-            img(src=`${iconName}` class="link-item link-with-icon__icon")
-            span(class="link-item link-with-icon__text text text_weight-semibold") #{text}
+    if iconTmpl
+        if iconOnly
+            a(href=`${href}` class=`link-item link-with-icon link-with-icon_icon-only ${className}`)
+                div(class="link-item link-with-icon__icon")
+        else
+            a(href=`${href}` class=`link-item link-with-icon ${className}`)
+                div(class="link-item link-with-icon__icon")
+                span(class="link-item link-with-icon__text text text_weight-semibold") #{text}
     else
         case style
             when "with-bg"

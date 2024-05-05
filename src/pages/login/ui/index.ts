@@ -16,10 +16,15 @@ export class Login extends Component<HTMLDivElement, LoginPageProps> {
      * Constructor for Login page object
      * @param {Element} parent - parent object
      */
-    constructor(parent: Element, navigateToMain: () => void) {
+    constructor(
+        parent: Element,
+        navigateToMain: () => void,
+        navigateToSignUp: () => void,
+    ) {
         super(parent, pageTmpl, {
             className: 'login-page',
             navigateToMain: navigateToMain,
+            navigateToSignUp: navigateToSignUp,
         });
 
         this.navigateToMain = navigateToMain;
@@ -68,6 +73,7 @@ export class Login extends Component<HTMLDivElement, LoginPageProps> {
 
         this.formObj = new LoginFormCard(this.htmlElement, {
             className: 'login-form-card-main',
+            navigateSignup: this.props.navigateToSignUp,
         });
 
         this.componentDidMount();

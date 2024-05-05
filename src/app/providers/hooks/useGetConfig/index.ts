@@ -64,20 +64,21 @@ export function getConfig() {
                         className: item.navbarLink.className,
                         text: item.navbarLink.text,
                         href: defaultUrl,
-                        iconName: item.navbarLink.iconName,
+                        iconTmpl: item.navbarLink.iconTmpl,
                         style: item.navbarLink.style,
                         imgName: item.navbarLink.imgName,
                     },
                     logged: item.logged,
                 };
 
-                if (item.navbarLink.mobileIconName) {
+                if (item.navbarLink.mobileIconTmpl) {
                     mobileNavbarConfig[name] = {
                         props: {
                             className: 'mobile-' + item.navbarLink.className,
                             text: item.navbarLink.text,
                             href: defaultUrl,
-                            imgName: item.navbarLink.mobileIconName,
+                            iconTmpl: item.navbarLink.mobileIconTmpl,
+                            // iconOnly: true,
                         },
                         logged: item.logged,
                     };

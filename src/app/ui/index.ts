@@ -1,6 +1,5 @@
 import appTmplFunc from './index.template.pug';
 import './index.style.scss';
-import './mobile icons';
 import { Component } from '@/shared/@types/index.component';
 import { Page, Router } from './../providers';
 import { Navbar } from '@/widgets/navbar';
@@ -39,18 +38,28 @@ export class App extends Component<HTMLDivElement> {
             update(this.page);
         }
 
-        this.navbar.updateNavbar(name, isLogged);
-        this.mobileNavbar.updateNavbar(name, isLogged);
-      
         if (rawPage) {
             this.headerElement.classList.add('display_none');
             this.headerElement.classList.remove('navbar-container');
+            this.mobileNavbar.htmlElement.parentElement.classList.add(
+                'display_none',
+            );
+            this.mobileNavbar.htmlElement.parentElement.classList.remove(
+                'navbar-container',
+            );
         }
 
         if (!rawPage) {
             this.headerElement.classList.remove('display_none');
             this.headerElement.classList.add('navbar-container');
+            this.mobileNavbar.htmlElement.parentElement.classList.remove(
+                'display_none',
+            );
+            this.mobileNavbar.htmlElement.parentElement.classList.add(
+                'navbar-container',
+            );
             this.navbar.updateNavbar(name, isLogged);
+            this.mobileNavbar.updateNavbar(name, isLogged);
         }
     }
 

@@ -1,3 +1,10 @@
 .category-page {
-    padding-top: 24px;
+    background-color: white;
+}
+
+@media (max-width: 1024px) {
+    .category-page {
+        padding-top: 0;
+        background: none;
+    }
 }

@@ -5,6 +5,7 @@ import { ProductsSection } from '@/widgets/productsSection';
 import { MainPageProps } from './index.types';
 import { createIframe } from '@/shared/lib/createIframe';
 import { getAllCsat } from '@/entities/user/api';
+import { useCheckUserLogin } from '@/features/auth';
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
@@ -43,20 +44,25 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
             className: 'products-section-popular',
             navigateToCart: this.props.navigateToCart,
         });
+        useCheckUserLogin()
+            .then((isLogged) => {
+                if (!isLogged) return;
 
-        getAllCsat()
-            .then((response) => {
-                setTimeout(() => {
-                    const data = createIframe(
-                        this.htmlElement,
-                        'csat-main',
-                        `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
-                        450,
-                        202,
-                    );
-                    this.iframe = data.component;
-                    this.removeIframe = data.remove;
-                }, 1500);
+                getAllCsat()
+                    .then((response) => {
+                        setTimeout(() => {
+                            const data = createIframe(
+                                this.htmlElement,
+                                'csat-main',
+                                `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
+                                450,
+                                202,
+                            );
+                            this.iframe = data.component;
+                            this.removeIframe = data.remove;
+                        }, 1500);
+                    })
+                    .catch(() => {});
             })
             .catch(() => {});
 

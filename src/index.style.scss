@@ -18,9 +18,25 @@ $border-radius-default: 32px;
     --color-primary-normal: #5dcec6;
     --color-primary-dark: #3a817c;
     --color-primary-light: #68e7dd;
+    --color-error-normal: #ff0400;
+    --color-error-light: #ff3633;
     --color-secondary: #808080;
     --color-background: #efefef;
+
+    --btn-height-sm: 50px;
+    --btn-height-xs: 30px;
 }
+
+$breakpoint-2xl: 1546px;
+$breakpoint-xl: 1280px;
+$breakpoint-lg: 1024px;
+$breakpoint-md: 768px;
+$breakpoint-sm: 640px;
+$breakpoint-xs: 475px;
+
+$section-padding-2xl: 30px 40px 30px 40px;
+$section-padding-lg: 20px 20px 30px 20px;
+$section-padding-xs: 10px 10px 16px 10px;
 
 html,
 body,
@@ -28,10 +44,29 @@ body,
     height: 100%;
 }
 
+.full-height {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.page {
+    padding-top: 24px;
+    box-sizing: border-box;
+}
+
+.full-bleed {
+    box-shadow: 0 0 0 100vmax white;
+    clip-path: inset(0 -100vmax);
+}
+
 .section {
     background-color: #fff;
     border-radius: 16px;
-    padding: 30px 40px 30px 40px;
+    padding: $section-padding-2xl;
+}
+
+.section-padding {
+    padding: $section-padding-2xl;
 }
 
 .container {
@@ -42,30 +77,6 @@ body,
     box-sizing: border-box;
 }
 
-@media (max-width: 1536px) {
-    .container {
-        max-width: 1280px;
-    }
-}
-
-@media (max-width: 1280px) {
-    .container {
-        max-width: 1024px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .container {
-        width: 100%;
-    }
-}
-
-@media (max-width: 1024px) {
-    .section {
-        padding: 20px 20px 30px 20px;
-    }
-}
-
 body {
     margin: 0;
     background-color: var(--color-background);
@@ -73,6 +84,10 @@ body {
 
 .border_radius-sm {
     border-radius: 8px;
+}
+
+.border_bottom-radius-sm {
+    border-radius: 0 0 8px 8px;
 }
 
 .box-shadow {
@@ -88,32 +103,32 @@ body {
 }
 
 .header_h1 {
-    font-size: 40px;
+    font-size: 3rem;
     font-weight: 800;
 }
 
 .header_h2 {
-    font-size: 32px;
+    font-size: 2.5rem;
     font-weight: 700;
 }
 
 .header_h3 {
-    font-size: 28px;
+    font-size: 2rem;
     font-weight: 700;
 }
 
 .header_h4 {
-    font-size: 24px;
+    font-size: 1.7rem;
     font-weight: 700;
 }
 
 .header_h5 {
-    font-size: 20px;
+    font-size: 1.4rem;
     font-weight: 600;
 }
 
 .header_h6 {
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -126,17 +141,17 @@ body {
 .text {
     font-family: 'Open Sans', sans-serif;
     color: black;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     text-decoration: none;
 }
 
 .text_size-normal {
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .text_size-small {
-    font-size: 12px;
+    font-size: 0.8rem;
 }
 
 .text_weight-light {
@@ -153,4 +168,66 @@ body {
 
 .text_weight-bold {
     font-weight: 700;
+}
+
+@media (max-width: $breakpoint-2xl) {
+    .container {
+        max-width: $breakpoint-xl;
+    }
+}
+
+@media (max-width: $breakpoint-xl) {
+    .container {
+        max-width: $breakpoint-lg;
+    }
+}
+
+@media (max-width: $breakpoint-lg) {
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .mobile-padding {
+        padding: 0 4px;
+    }
+
+    .page {
+        padding-top: 16px;
+        padding-bottom: 80px;
+    }
+
+    .section {
+        padding: $section-padding-lg;
+    }
+
+    .section-padding {
+        padding: $section-padding-lg;
+    }
+}
+
+@media (max-width: $breakpoint-xs) {
+    .section {
+        padding: $section-padding-xs;
+    }
+
+    .section-padding {
+        padding: $section-padding-xs;
+    }
+
+    .header_h1 {
+        font-size: 2.5rem;
+    }
+
+    .header_h2 {
+        font-size: 2.2rem;
+    }
+
+    .header_h3 {
+        font-size: 1.8rem;
+    }
+
+    .header_h4 {
+        font-size: 1.6rem;
+    }
 }
