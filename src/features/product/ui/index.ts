@@ -57,8 +57,8 @@ export async function useGetProductCards(page: number, limit: number) {
         });
 }
 
-export async function useGetProductCardsCategory(categoryId: number) {
-    return productsRequestCategory(categoryId)
+export async function useGetProductCardsCategory(categoryId: number, sortID: number) {
+    return productsRequestCategory(categoryId, sortID)
         .then(({ status, data }) => {
             if (status === 200) {
                 const products: Array<
@@ -88,8 +88,9 @@ export async function useGetProductCardsSearch(
     query: string,
     page: number,
     limit: number,
+    sortId: number,
 ) {
-    return productsRequestSearch(query, page, limit)
+    return productsRequestSearch(query, page, limit, sortId)
         .then(({ status, data }) => {
             if (status === 200) {
                 const products: Array<

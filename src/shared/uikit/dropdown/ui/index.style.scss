@@ -1,6 +1,7 @@
 .dropdown {
     display: inline-block;
     position: relative;
+    width: 300px;
 }
 
 .dropdown__toggler {
@@ -29,6 +30,7 @@
 }
 
 .dropdown-item {
+    border-radius: 8px;
     display: block;
     word-wrap: break-word;
     box-sizing: border-box;

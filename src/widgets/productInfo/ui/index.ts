@@ -5,8 +5,10 @@ import { ProductInfoProps } from './index.types';
 import { productByIdRequest } from '@/entities/product/api';
 import { Button } from '@/shared/uikit/button';
 import { Rating } from '@/shared/uikit/starRating';
+import { CommentWidget } from '@/widgets/comment';
 
 export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
+    protected commentWidget: CommentWidget;
     protected buyBtn: Button;
     protected rating: Rating;
 
@@ -85,6 +87,15 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 this.updatePrice(data.price);
                 this.updateDelivery('послезавтра');
 
+                this.commentWidget = new CommentWidget(
+                    this.htmlElement,
+                    {
+                        className: 'comment-section',
+                        productID: this.props.productId,
+                        productDescription: data.name,
+                        productSrc: data.imgSrc
+                    },
+                )
                 // Buy btn
                 this.buyBtn = new Button(
                     this.htmlElement.getElementsByClassName(
@@ -99,7 +110,6 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 );
             })
             .catch(() => {
-                // TODO add ui
                 this.htmlElement.innerHTML = '';
                 this.htmlElement.innerText = 'Товар не удалось найти';
             });

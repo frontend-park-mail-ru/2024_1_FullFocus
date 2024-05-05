@@ -17,9 +17,9 @@ export class SearchResults extends Component<
         super(parent, searchResultsTmpl, props);
     }
 
-    searchByQuery(query: string) {
+    searchByQuery(query: string, sortId: number) {
         this.header.innerText = `Результаты поиска по запросу "${query}"`;
-        useGetProductCardsSearch(query, 1, 10)
+        useGetProductCardsSearch(query, 1, 10, sortId)
             .then((cards) => {
                 this.productsList.loadProducts(cards);
             })
@@ -45,6 +45,6 @@ export class SearchResults extends Component<
             'search-results__header',
         )[0] as HTMLDivElement;
 
-        this.searchByQuery(this.props.query);
+        this.searchByQuery(this.props.query, this.props.sortId);
     }
 }
