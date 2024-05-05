@@ -108,7 +108,7 @@ export function createConfig() {
                 url: '/category/{categoryId}',
                 logged: 'both',
                 router: {
-                    navigation: ['main'],
+                    navigation: ['main', 'category'],
                     update: {
                         updateParams: (
                             page: CategoryPage,
@@ -125,8 +125,9 @@ export function createConfig() {
                         parent: Element,
                         params: { categoryId: string; [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToCategory: () => void,
                     ) => {
-                        return new CategoryPage(parent, navigateToMain, params);
+                        return new CategoryPage(parent, navigateToMain, navigateToCategory, params);
                     },
                 },
             },
@@ -146,13 +147,14 @@ export function createConfig() {
                             page.updateNoParams();
                         },
                     },
-                    navigation: ['main'],
+                    navigation: ['main', 'search'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToSearch: () => void,
                     ) => {
-                        return new SearchPage(parent, navigateToMain, params);
+                        return new SearchPage(parent, navigateToMain, navigateToSearch, params);
                     },
                 },
             },
