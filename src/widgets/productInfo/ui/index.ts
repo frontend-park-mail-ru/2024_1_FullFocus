@@ -4,9 +4,11 @@ import { Component } from '@/shared/@types/index.component';
 import { ProductInfoProps } from './index.types';
 import { productByIdRequest } from '@/entities/product/api';
 import { Button } from '@/shared/uikit/button';
+import { Rating } from '@/shared/uikit/starRating';
 
 export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     protected buyBtn: Button;
+    protected rating: Rating;
 
     constructor(parent: Element, props: ProductInfoProps) {
         super(parent, productInfoTmpl, props);
@@ -37,6 +39,17 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     }
 
     protected updateRating(rating: number) {
+        if (this.rating) {
+            this.rating.destroy();
+        }
+
+        this.rating = new Rating(
+            this.htmlElement.getElementsByClassName(
+                'product-info__product-rating-stars',
+            )[0],
+            { className: 'rating-stars', rating: rating },
+        );
+
         (
             this.htmlElement.getElementsByClassName(
                 'product-info__product-rating-numbers',
@@ -61,10 +74,10 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     }
 
     protected render() {
+        this.renderTemplate();
+
         productByIdRequest(this.props.productId)
             .then(({ data }) => {
-                this.renderTemplate();
-
                 this.updatePicture(data.imgSrc);
                 this.updateName(data.name);
                 this.updateSeller(data.seller);
@@ -87,7 +100,8 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
             })
             .catch(() => {
                 // TODO add ui
-                console.log('Что-то пошло не так');
+                this.htmlElement.innerHTML = '';
+                this.htmlElement.innerText = 'Товар не удалось найти';
             });
     }
 }

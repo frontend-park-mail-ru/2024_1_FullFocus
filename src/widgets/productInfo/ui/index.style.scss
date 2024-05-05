@@ -84,3 +84,11 @@
         padding: 24px 0;
     }
 }
+
+@media (max-width: 475px) {
+    .product-info__picture {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+}

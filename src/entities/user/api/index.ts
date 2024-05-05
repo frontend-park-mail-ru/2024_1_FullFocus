@@ -41,8 +41,8 @@ export async function updateProfile(body: IUpdateProfileBody) {
     });
 }
 
-export async function getProfilePicture() {
-    return fetchPicture(USER_API_URLS.getPicture);
+export async function getProfilePicture(id: string) {
+    return fetchPicture(USER_API_URLS.getPicture + id);
 }
 
 export async function uploadProfilePicture(formData: FormData) {
