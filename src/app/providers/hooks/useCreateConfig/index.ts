@@ -1,9 +1,7 @@
-/* eslint-disable multiline-comment-style */
 /* eslint-disable max-lines-per-function */
 import { Main } from '@/pages/main';
 import { Login } from '@/pages/login';
 import { SignUp } from '@/pages/signup';
-import { LogOut } from '@/pages/logout';
 import { Component } from '@/shared/@types/index.component';
 import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
@@ -16,6 +14,13 @@ import { CategoryPage } from '@/pages/category';
 import { ProductPage } from '@/pages/product';
 import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
+import { cartIconTmpl, userIconTmpl } from './linkIcons';
+import {
+    mobileCartTmpl,
+    mobileHomeIconTmpl,
+    mobileLoginIconTmpl,
+    mobileProfileTmpl,
+} from './mobileIcons';
 
 interface ConfigItem {
     // User login status
@@ -27,9 +32,9 @@ interface ConfigItem {
         className: string;
         text?: string;
         style?: LinkStyle;
-        iconName?: string;
+        iconTmpl?: () => string;
         imgName?: string;
-        mobileIconName?: string;
+        mobileIconTmpl?: () => string;
     };
     // Children
     children?: {
@@ -86,7 +91,7 @@ export function createConfig() {
                     className: 'navbar-link-main',
                     text: 'Главная',
                     imgName: '/public/logo.png',
-                    mobileIconName: '/public/home-icon.svg',
+                    mobileIconTmpl: mobileHomeIconTmpl,
                 },
                 router: {
                     navigation: ['cart'],
@@ -197,15 +202,21 @@ export function createConfig() {
                     className: 'navbar-link-login',
                     text: 'Войти',
                     style: 'primary',
+                    mobileIconTmpl: mobileLoginIconTmpl,
                 },
                 router: {
-                    navigation: ['main'],
+                    navigation: ['main', 'signup'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToSignUp: () => void,
                     ) => {
-                        return new Login(parent, navigateToMain);
+                        return new Login(
+                            parent,
+                            navigateToMain,
+                            navigateToSignUp,
+                        );
                     },
                 },
             },
@@ -234,8 +245,8 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-cart',
                     text: 'Корзина',
-                    iconName: '/public/cart-icon.svg',
-                    mobileIconName: '/public/mobile-cart-icon.svg',
+                    iconTmpl: cartIconTmpl,
+                    mobileIconTmpl: cartIconTmpl,
                 },
                 router: {
                     navigation: ['main', 'profile-orders'],
@@ -257,8 +268,13 @@ export function createConfig() {
                 url: '/profile',
                 logged: 'logged',
                 router: {
-                    component: (parent: Element) => {
-                        return new Profile(parent);
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new Profile(parent, navigateToMain);
                     },
                 },
                 children: {
@@ -290,31 +306,30 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-profile',
                     text: 'Профиль',
-                    iconName: '/public/user-icon.svg',
-                    mobileIconName: '/public/profile-icon.svg',
+                    iconTmpl: userIconTmpl,
+                    mobileIconTmpl: userIconTmpl,
                 },
             },
 
-            logout: {
-                url: '/logout',
-                logged: 'logged',
-                navbarLink: {
-                    className: 'navbar-link-logout',
-                    text: 'Выйти',
-                    iconName: '/public/logout.svg',
-                    mobileIconName: '/public/logout-icon.svg',
-                },
-                router: {
-                    navigation: ['main'],
-                    component: (
-                        parent: Element,
-                        params: { [name: string]: string },
-                        navigateToMain: () => void,
-                    ) => {
-                        return new LogOut(parent, navigateToMain);
-                    },
-                },
-            },
+            // logout: {
+            //     url: '/logout',
+            //     logged: 'logged',
+            //     navbarLink: {
+            //         className: 'navbar-link-logout',
+            //         text: 'Выйти',
+            //         iconTmpl: logoutIconTmpl,
+            //     },
+            //     router: {
+            //         navigation: ['main'],
+            //         component: (
+            //             parent: Element,
+            //             params: { [name: string]: string },
+            //             navigateToMain: () => void,
+            //         ) => {
+            //             return new LogOut(parent, navigateToMain);
+            //         },
+            //     },
+            // },
 
             comment: {
                 url: '/comment',

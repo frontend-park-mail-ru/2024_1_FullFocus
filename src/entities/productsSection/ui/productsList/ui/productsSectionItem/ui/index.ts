@@ -32,7 +32,7 @@ export class ProductsSectionItem<
 
     setNotInCart() {
         this.props.isInCart = false;
-        this.addToCartBtn.btnText = 'Добавить в корзину';
+        this.addToCartBtn.btnText = 'В корзину';
     }
 
     insertProductCard(
@@ -53,16 +53,19 @@ export class ProductsSectionItem<
             'products-section-item__product-card',
         )[0] as HTMLDivElement;
 
-        let btnText = 'Добавить в корзину';
-        if (this.props.isInCart) {
-            btnText = 'Перейти в корзину';
-        }
-
         this.addToCartBtn = new Button(this.htmlElement, {
             className: 'products-section-item__to-cart-btn',
             btnStyle: 'bright',
-            btnText: btnText,
+            btnText: '',
             type: 'button',
+            size: 'xs',
         });
+
+        if (this.props.isInCart) {
+            this.setInCart();
+        }
+        if (!this.props.isInCart) {
+            this.setNotInCart();
+        }
     }
 }

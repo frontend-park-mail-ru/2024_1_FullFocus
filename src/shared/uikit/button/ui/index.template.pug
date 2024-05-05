@@ -8,6 +8,15 @@ case btnStyle
         - buttonClass = buttonClass + ' btn_green'
     when 'white'
         - buttonClass = buttonClass + ' btn_white'
+    when 'red'
+        - buttonClass = buttonClass + ' btn_red'
+case size
+    when 'sm'
+        - buttonClass = buttonClass + ' btn_sm'
+    when 'xs'
+        - buttonClass = buttonClass + ' btn_xs'
+    default
+        - buttonClass = buttonClass + ' btn_sm'
 button(type=`${type}` class=buttonClass) 
     span(class="btn__icon")
     span(class=`btn__text`) #{btnText}

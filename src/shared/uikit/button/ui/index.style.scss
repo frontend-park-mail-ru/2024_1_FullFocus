@@ -3,7 +3,6 @@ $btn-default-bg-color: #fff;
 
 .btn {
     border-radius: 8px;
-    height: 50px;
     background-color: $btn-default-bg-color;
     border: 0;
     outline: none;
@@ -12,6 +11,11 @@ $btn-default-bg-color: #fff;
         width: 32px;
         height: 32px;
     }
+}
+
+.btn_sm,
+.btn_xs {
+    height: var(--btn-height-sm);
 }
 
 .btn:hover {
@@ -27,6 +31,16 @@ $btn-default-bg-color: #fff;
     font-family: 'Open Sans';
     font-size: 16px;
     font-weight: 400;
+}
+
+@media (max-width: 475px) {
+    .btn_xs {
+        height: var(--btn-height-xs);
+    }
+
+    .btn__text {
+        font-size: 14px;
+    }
 }
 
 // Bright button
@@ -46,6 +60,16 @@ $btn-default-bg-color: #fff;
 
 .btn_bright:hover {
     background-color: var(--color-primary-light);
+}
+
+// Red button
+.btn_red {
+    @extend .btn_bright;
+    background-color: var(--color-error-normal);
+}
+
+.btn_red:hover {
+    background-color: var(--color-error-light);
 }
 
 // Button with outline

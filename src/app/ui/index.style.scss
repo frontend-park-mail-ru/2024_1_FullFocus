@@ -6,7 +6,6 @@
 
 .content {
     flex: 1;
-    padding-bottom: 80px;
 }
 
 .navbar-container {
@@ -20,8 +19,9 @@
 
 .mobile-navbar-container {
     width: 100%;
+    height: fit-content;
     background-color: #ffffff;
-    padding: 8px 0;
+    padding: 10px 0;
     box-sizing: border-box;
     position: fixed;
     bottom: 0;
@@ -29,7 +29,14 @@
 }
 
 @media (max-width: 1024px) {
+    .content {
+        padding-bottom: 61px;
+    }
     .mobile-navbar-container {
         display: block;
+    }
+
+    .csat-main {
+        display: none;
     }
 }

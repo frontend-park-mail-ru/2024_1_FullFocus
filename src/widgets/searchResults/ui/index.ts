@@ -32,9 +32,14 @@ export class SearchResults extends Component<
     protected render() {
         this.renderTemplate();
 
-        this.productsList = new ProductsList(this.htmlElement, {
-            className: 'search-results__products',
-        });
+        this.productsList = new ProductsList(
+            this.htmlElement.getElementsByClassName(
+                'search-results__results',
+            )[0],
+            {
+                className: 'search-results__products',
+            },
+        );
 
         this.header = this.htmlElement.getElementsByClassName(
             'search-results__header',

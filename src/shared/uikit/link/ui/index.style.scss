@@ -10,33 +10,33 @@
 // Link primary
 .link-primary {
     @extend .link;
-    color: #5dcec6;
+    color: var(--color-primary-normal);
 }
 
 .link-primary.link_active:hover {
-    color: #5dcec6;
+    color: var(--color-primary-normal);
 }
 
 .link-primary:hover {
-    color: #3a817c;
+    color: var(--color-primary-light);
 }
 
 // Link btn
 .link-btn {
     @extend .link;
-    background-color: #5dcec6;
+    background-color: var(--color-primary-normal);
     color: #fff;
     border-radius: 8px;
     padding: 10px 16px;
 }
 
 .link-btn.link_active {
-    background-color: #5dcec6;
+    background-color: var(--color-primary-normal);
     color: #fff;
 }
 
 .link-btn.link_active:hover {
-    background-color: #5dcec6;
+    background-color: var(--color-primary-normal);
     color: #fff;
 }
 
@@ -76,36 +76,57 @@
     color: black;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    height: 46px;
+    justify-content: end;
+}
+
+.link-with-icon_icon-only {
+    height: 24px;
+}
+
+.link-with-icon__icon {
+    display: flex;
+}
+
+.link-icon__path {
+    stroke: black;
+    transition: stroke 0.2s;
 }
 
 .link-with-icon:hover {
     color: #3a817c;
-    .link-with-icon__icon {
-        filter: brightness(0.5) opacity(0.5);
+    .link-icon__path {
+        stroke: #3a817c;
     }
-}
-
-.link-with-icon__icon {
-    max-height: 24px;
-    filter: brightness(0);
 }
 
 .link-with-icon__text {
     color: inherit;
 }
 
+@media (max-width: 475px) {
+    .link-with-icon__text {
+        font-size: 12px;
+    }
+
+    .link-with-icon {
+        height: 41px;
+    }
+}
+
 // Active modifier
 .link_active {
-    color: #5dcec6;
-    .link-with-icon__icon {
-        filter: brightness(1);
+    color: var(--color-primary-normal);
+    .link-icon__path {
+        stroke: var(--color-primary-normal);
     }
 }
 
 .link_active:hover {
     cursor: default;
-    color: #5dcec6;
-    .link-with-icon__icon {
-        filter: brightness(1);
+    color: var(--color-primary-normal);
+    .link-icon__path {
+        stroke: var(--color-primary-normal);
     }
 }

@@ -1,5 +1,5 @@
 .login-form-card {
-    margin: 70px auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     width: 350px;
@@ -18,4 +18,22 @@
 
 .login-form-card__main {
     margin-top: 30px;
+}
+
+.login-form-card__signup-link {
+    margin-top: 42px;
+    align-self: center;
+}
+
+@media (max-width: 640px) {
+    .login-form-card {
+        width: auto;
+        margin: 0;
+    }
+}
+
+@media (max-width: 475px) {
+    .login-form-card {
+        padding: 10px;
+    }
 }

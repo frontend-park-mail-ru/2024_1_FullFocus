@@ -1,3 +1,9 @@
 .search-results__header {
-    margin-bottom: 12px;
+    background-color: white;
+}
+
+@media (max-width: 1024px) {
+    .search-results__header {
+        padding: 12px 10px 16px 10px;
+    }
 }

@@ -38,9 +38,14 @@ export class CategorySearchResults extends Component<
     protected render() {
         this.renderTemplate();
 
-        this.productsList = new ProductsList(this.htmlElement, {
-            className: 'category-search-results__products',
-        });
+        this.productsList = new ProductsList(
+            this.htmlElement.getElementsByClassName(
+                'category-search-results__results',
+            )[0],
+            {
+                className: 'category-search-results__products',
+            },
+        );
 
         this.header = this.htmlElement.getElementsByClassName(
             'category-search-results__header',

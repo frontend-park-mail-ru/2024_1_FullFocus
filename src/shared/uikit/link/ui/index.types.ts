@@ -4,7 +4,8 @@ export interface LinkProps {
     className: string;
     href: string;
     text: string;
-    iconName?: string;
+    iconTmpl?: () => string;
+    iconOnly?: boolean;
     imgName?: string;
     style?: LinkStyle;
 }

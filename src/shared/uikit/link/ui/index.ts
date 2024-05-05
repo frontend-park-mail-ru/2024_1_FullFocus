@@ -27,4 +27,16 @@ export class Link extends Component<HTMLLinkElement, LinkProps> {
     deactivate() {
         this.htmlElement.classList.remove('link_active');
     }
+
+    protected render(): void {
+        this.props.iconOnly = this.props.iconOnly ?? false;
+
+        this.renderTemplate();
+
+        if (this.props.iconTmpl) {
+            this.htmlElement
+                .getElementsByClassName('link-with-icon__icon')[0]
+                .insertAdjacentHTML('beforeend', this.props.iconTmpl());
+        }
+    }
 }

@@ -1,8 +1,5 @@
 import './index.style.scss';
 import navbarTmplFunc from './index.template.pug';
-import './cart-icon.svg';
-import './user-icon.svg';
-import './logout.svg';
 import './logo.png';
 import { Component } from '@/shared/@types/index.component';
 import { NavbarProps } from './index.types';
