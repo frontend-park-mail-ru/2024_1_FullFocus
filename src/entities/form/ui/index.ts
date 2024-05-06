@@ -95,7 +95,7 @@ export class Form extends Component<HTMLFormElement, FormProps> {
 
     setInvalid() {
         Object.values(this.inputItems).forEach((input) => {
-            input.input.setInvalid();
+            input.setInValid();
         });
     }
 

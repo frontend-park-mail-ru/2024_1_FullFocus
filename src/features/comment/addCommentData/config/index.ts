@@ -1,13 +1,13 @@
 import { FormField } from '@/entities/form';
 
 export const ADD_COMMENT_FORM_FIELDS: { [name: string]: FormField } = {
-    rating: {
-        name: 'rating',
-        text: 'оценка от 1 до 5',
-        type: 'text',
-        className: 'input-block-rating',
-        inputClassName: 'input-block-rating__input',
-    },
+    // rating: {
+    //     name: 'rating',
+    //     text: 'оценка от 1 до 5',
+    //     type: 'text',
+    //     className: 'input-block-rating',
+    //     inputClassName: 'input-block-rating__input',
+    // },
     advantages: {
         name: 'advantages',
         text: 'Достоинства (необязательно)',
