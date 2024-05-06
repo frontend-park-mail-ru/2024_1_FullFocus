@@ -6,7 +6,7 @@ mixin star(starSize, starFill, starRating)
 
 
 div(class=`${className} rating-input`)
-    - var tempRating = 1
-    while tempRating <= maxRating
-        +star(size, emptyColorHex, tempRating)
+    - var tempRating = 0
+    while tempRating < maxRating
+        +star(size, emptyColorHex, maxRating - tempRating)
         - tempRating++
