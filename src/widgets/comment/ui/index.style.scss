@@ -2,8 +2,6 @@
   font-weight: 700;
   height: 70px;
   font-size: 28px;
-  margin-left: 160px;
-  margin-top: 20px;
   padding-top: 5px;
 }
 
@@ -27,6 +25,23 @@
   font-weight: bold;
 }
 
-.comment-widget__comments{
-  margin-left: 160px;
+
+
+@media (width <= 1024px){
+  .comment-widget__comments{
+
+  }
+}
+
+@media (width <= 768px){
+  .comment-card{
+
+  }
+}
+
+
+@media (width <= 475px){
+  .comment-card{
+
+  }
 }

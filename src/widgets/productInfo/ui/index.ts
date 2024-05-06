@@ -90,7 +90,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 this.commentWidget = new CommentWidget(
                     this.htmlElement,
                     {
-                        className: 'comment-section',
+                        className: 'product-info__comment-section',
                         productID: this.props.productId,
                         productDescription: data.name,
                         productSrc: data.imgSrc

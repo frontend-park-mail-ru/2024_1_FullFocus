@@ -7,6 +7,7 @@ import { Button } from '@/shared/uikit/button';
 import { useGetCommentCards } from '@/features/comment/ui';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { AddCommentDialog } from './addCommentDialog';
+import { useCheckUserLogin } from '@/features/auth';
 
 
 export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps> {
@@ -24,6 +25,24 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
             this.dialog.htmlElement.showModal();
         };
         this.btn.htmlElement.addEventListener('click', this.listener);
+    }
+
+    renderDialog() {
+        useCheckUserLogin()
+            .then( (isLogged) => {
+                this.dialog = new AddCommentDialog(
+                    this.htmlElement, {
+                        className: 'comment-widget__add-dialog',
+                        productID: this.props.productID,
+                        productDescription: this.props.productDescription,
+                        productSrc: this.props.productSrc,
+                        isAuth: isLogged,
+                    }
+                )
+            } )
+            .catch((error) => {
+                console.log(error);
+            } )
     }
 
 
@@ -71,14 +90,7 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
                 btnStyle: 'bright'
             });
         this.renderSection();
-        this.dialog = new AddCommentDialog(
-            this.htmlElement, {
-                className: 'comment-widget__add-dialog',
-                productID: this.props.productID,
-                productDescription: this.props.productDescription,
-                productSrc: this.props.productSrc,
-            }
-        )
+        this.renderDialog();
         this.componentDidMount();
     }
 }
