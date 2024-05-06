@@ -39,6 +39,7 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
                         isAuth: isLogged,
                     }
                 )
+                this.componentDidMount();
             } )
             .catch((error) => {
                 console.log(error);
@@ -79,18 +80,30 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
             });
     }
 
+    renderBtn(){
+        useCheckUserLogin()
+            .then( (isLogged) => {
+                if (isLogged){
+                    this.btn = new Button(
+                        this.htmlElement.getElementsByClassName('comment-widget__info')[0],
+                        {
+                            className: 'page-widget__bottom',
+                            btnText: 'Оставить отзыв',
+                            type: 'button',
+                            btnStyle: 'bright'
+                        });
+                }
+
+            } )
+            .catch((error) => {
+                console.log(error);
+            } )
+    }
+
     protected render() {
         this.renderTemplate();
-        this.btn = new Button(
-            this.htmlElement.getElementsByClassName('comment-widget__info')[0],
-            {
-                className: 'page-widget__bottom',
-                btnText: 'Оставить отзыв',
-                type: 'button',
-                btnStyle: 'bright'
-            });
+        this.renderBtn();
         this.renderSection();
         this.renderDialog();
-        this.componentDidMount();
     }
 }
