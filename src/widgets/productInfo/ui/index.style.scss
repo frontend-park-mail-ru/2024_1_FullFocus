@@ -1,3 +1,9 @@
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .product-info__picture {
     width: 300px;
     height: 300px;

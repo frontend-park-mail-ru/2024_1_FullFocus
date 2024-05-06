@@ -21,18 +21,3 @@
     margin-top: 10px;
     font-weight: bold;
 }
-
-@media (width <= 1024px) {
-    .comment-widget__comments {
-    }
-}
-
-@media (width <= 768px) {
-    .comment-card {
-    }
-}
-
-@media (width <= 475px) {
-    .comment-card {
-    }
-}
