@@ -6,12 +6,12 @@ import { TextItem } from '@/shared/uikit/textItem';
 function renderItem(sort: ISort, dropDown: DropDown<TextItem>, index: number) {
     dropDown.addItem((parent: Element) => {
         const item = new TextItem(parent, {
-            className: `dropdown-category-item-${sort.id}`,
-            name: sort.name,
-            id: sort.id,
+            className: `dropdown-category-item-${sort.sortID}`,
+            name: sort.sortName,
+            id: sort.sortID,
         });
 
-        item.htmlElement.dataset['sortID'] = sort.id.toString();
+        item.htmlElement.dataset['sortID'] = sort.sortID.toString();
 
         return {
             item: item,
@@ -25,7 +25,7 @@ export async function useGetSortCards(dropDown: DropDown<TextItem>) {
         .then(({ status, data }) => {
             const sorts: Array<() => void> = [];
             if (status === 200) {
-                data.sort.forEach((sortItem, index) => {
+                data.forEach((sortItem, index) => {
                     sorts.push(() => {
                         renderItem(sortItem, dropDown, index);
                     });

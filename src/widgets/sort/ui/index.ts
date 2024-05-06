@@ -22,20 +22,6 @@ export class SortWidget extends Component<HTMLDivElement, SortWidgetProps> {
         });
         useGetSortCards(this.dropDown)
             .then((sorts: (() => void)[]) => {
-                if (sorts.length === 0) {
-                    this.dropDown.addItem((parent: Element) => {
-                        const item = new TextItem(parent, {
-                            className: `dropdown-category-item-null`,
-                            name: 'null',
-                            id: 1,
-                        });
-                        return {
-                            item: item,
-                            id: '1',
-                        };
-                    });
-                }
-
                 sorts.forEach((s) => {
                     s();
                 });
