@@ -13,6 +13,7 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
     constructor(
         parent: Element,
         navigateToMain: () => void,
+        navigateToCart: () => void,
         navigateToSearch: () => void,
         params: { [name: string]: string },
     ) {
@@ -21,6 +22,7 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
             query: params.query,
             sortId: Number(params['sortID']),
             navigateToMain: navigateToMain,
+            navigateToCart: navigateToCart,
             navigateToSearch: navigateToSearch,
         });
     }
@@ -62,6 +64,7 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
             this.searchResults = new SearchResults(this.htmlElement, {
                 className: 'search-page__search-results',
                 query: this.props.query,
+                toCart: this.props.navigateToCart,
                 sortId: this.props.sortId,
             });
             this.componentDidMount();

@@ -27,12 +27,12 @@ export class ProductsSectionItem<
 
     setInCart() {
         this.props.isInCart = true;
-        this.addToCartBtn.btnText = 'Перейти в корзину';
+        this.addToCartBtn.btnText = 'В корзину';
     }
 
     setNotInCart() {
         this.props.isInCart = false;
-        this.addToCartBtn.btnText = 'В корзину';
+        this.addToCartBtn.btnText = 'Добавить';
     }
 
     insertProductCard(

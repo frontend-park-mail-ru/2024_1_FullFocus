@@ -27,8 +27,8 @@ export class ProductsList<
             ) {
                 const id = Number(target.dataset.id);
                 if (this.productCardById(id).inCart) {
-                    // this.props.navigateToCart();
-                    console.log('to cart!');
+                    this.props.navigateToCart();
+                    // console.log('to cart!');
                 }
 
                 if (!this.productCardById(id).inCart) {

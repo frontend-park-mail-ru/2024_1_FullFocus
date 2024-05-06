@@ -11,11 +11,13 @@ export class ProductPage extends Component<HTMLDivElement, ProductPageProps> {
         parent: Element,
         params: { [name: string]: string },
         navigateToMain: () => void,
+        navigateToCart: () => void,
     ) {
         super(parent, productPageTmpl, {
             className: 'product-page',
             productId: params.productId,
             navigateToMain: navigateToMain,
+            navigateToCart: navigateToCart,
         });
     }
 
@@ -25,6 +27,7 @@ export class ProductPage extends Component<HTMLDivElement, ProductPageProps> {
             this.productInfo = new ProductInfo(this.htmlElement, {
                 className: 'product-page__product-info container',
                 productId: this.props.productId,
+                toCart: this.props.navigateToCart,
             });
         }
 

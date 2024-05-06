@@ -3,5 +3,6 @@ export interface CategoryPageProps {
     categoryId: number;
     sortId?: number;
     navigateToMain: () => void;
+    navigateToCart: () => void;
     navigateToCategory: (attrs: {[name: string]: string}) => void;
 }

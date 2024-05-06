@@ -38,6 +38,7 @@ export class SearchResults extends Component<
             )[0],
             {
                 className: 'search-results__products',
+                navigateToCart: this.props.toCart,
             },
         );
 
