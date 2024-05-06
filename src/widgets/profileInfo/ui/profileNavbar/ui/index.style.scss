@@ -1,6 +1,34 @@
 .profile-navbar {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.logout-btn {
+    width: 100%;
+}
+
+.profile-navbar__links {
     width: 300px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+@media (width <= 1024px) {
+    .profile-navbar__links {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0;
+        gap: 0;
+
+        .link-item {
+            padding: 16px;
+        }
+
+        .link-item.link_active {
+            background-color: white;
+            font-weight: 600;
+        }
+    }
 }

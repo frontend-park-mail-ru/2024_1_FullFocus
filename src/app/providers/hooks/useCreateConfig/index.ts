@@ -1,15 +1,21 @@
-/* eslint-disable multiline-comment-style */
 /* eslint-disable max-lines-per-function */
 import { Main } from '@/pages/main';
 import { Login } from '@/pages/login';
 import { SignUp } from '@/pages/signup';
-import { LogOut } from '@/pages/logout';
 import { Component } from '@/shared/@types/index.component';
 import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
+import { CommentPage } from '@/pages/comment';
+import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
+import { CategoryPage } from '@/pages/category';
+import { ProductPage } from '@/pages/product';
+import { CsatPage } from '@/pages/csat/ui';
+import { CsatDataPage } from '@/pages/csatData';
+import { cartIconTmpl, userIconTmpl } from './linkIcons';
+import { mobileHomeIconTmpl, mobileLoginIconTmpl } from './mobileIcons';
 
 interface ConfigItem {
     // User login status
@@ -21,8 +27,9 @@ interface ConfigItem {
         className: string;
         text?: string;
         style?: LinkStyle;
-        iconName?: string;
+        iconTmpl?: () => string;
         imgName?: string;
+        mobileIconTmpl?: () => string;
     };
     // Children
     children?: {
@@ -49,6 +56,7 @@ interface ConfigItem {
             // Update to default state
             updateDefault: (page: Component<Element>) => void;
         };
+        rawPage?: boolean;
         // To which pages navigation is needed
         navigation?: Array<string>;
         // Function to create a component
@@ -78,19 +86,9 @@ export function createConfig() {
                     className: 'navbar-link-main',
                     text: 'Главная',
                     imgName: '/public/logo.png',
+                    mobileIconTmpl: mobileHomeIconTmpl,
                 },
                 router: {
-                    update: {
-                        updateParams: (
-                            page: Main,
-                            params: { [name: string]: string },
-                        ) => {
-                            page.updateWithParams(params);
-                        },
-                        updateDefault: (page: Main) => {
-                            page.updateDefault();
-                        },
-                    },
                     navigation: ['cart'],
                     component: (
                         parent: Element,
@@ -101,6 +99,119 @@ export function createConfig() {
                     },
                 },
             },
+            category: {
+                url: '/category/{categoryId}',
+                logged: 'both',
+                router: {
+                    navigation: ['main', 'cart', 'category'],
+                    update: {
+                        updateParams: (
+                            page: CategoryPage,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+
+                        updateDefault: (page: CategoryPage) => {
+                            page.updateNoParams();
+                        },
+                    },
+                    component: (
+                        parent: Element,
+                        params: { categoryId: string; [name: string]: string },
+                        navigateToMain: () => void,
+                        navigateToCart: () => void,
+                        navigateToCategory: () => void,
+                    ) => {
+                        return new CategoryPage(
+                            parent,
+                            navigateToMain,
+                            navigateToCart,
+                            navigateToCategory,
+                            params,
+                        );
+                    },
+                },
+            },
+            search: {
+                url: '/search',
+                logged: 'both',
+                router: {
+                    update: {
+                        updateParams: (
+                            page: SearchPage,
+                            params: { [name: string]: string },
+                        ) => {
+                            page.updateWithParams(params);
+                        },
+
+                        updateDefault: (page: SearchPage) => {
+                            page.updateNoParams();
+                        },
+                    },
+                    navigation: ['main', 'cart', 'search'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                        navigateToCart: () => void,
+                        navigateToSearch: () => void,
+                    ) => {
+                        return new SearchPage(
+                            parent,
+                            navigateToMain,
+                            navigateToCart,
+                            navigateToSearch,
+                            params,
+                        );
+                    },
+                },
+            },
+            oneProduct: {
+                url: '/product/{productId}',
+                logged: 'both',
+                router: {
+                    navigation: ['main', 'cart'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                        navigateToCart: () => void,
+                    ) => {
+                        return new ProductPage(
+                            parent,
+                            params,
+                            navigateToMain,
+                            navigateToCart,
+                        );
+                    },
+                },
+            },
+            csat: {
+                url: '/csat',
+                logged: 'logged',
+                router: {
+                    rawPage: true,
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CsatPage(parent, params);
+                    },
+                },
+            },
+            csatData: {
+                url: '/csatdata',
+                logged: 'logged',
+                router: {
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                    ) => {
+                        return new CsatDataPage(parent, params);
+                    },
+                },
+            },
             login: {
                 url: '/login',
                 logged: 'unlogged',
@@ -108,15 +219,21 @@ export function createConfig() {
                     className: 'navbar-link-login',
                     text: 'Войти',
                     style: 'primary',
+                    mobileIconTmpl: mobileLoginIconTmpl,
                 },
                 router: {
-                    navigation: ['main'],
+                    navigation: ['main', 'signup'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToSignUp: () => void,
                     ) => {
-                        return new Login(parent, navigateToMain);
+                        return new Login(
+                            parent,
+                            navigateToMain,
+                            navigateToSignUp,
+                        );
                     },
                 },
             },
@@ -145,7 +262,8 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-cart',
                     text: 'Корзина',
-                    iconName: '/public/cart-icon.svg',
+                    iconTmpl: cartIconTmpl,
+                    mobileIconTmpl: cartIconTmpl,
                 },
                 router: {
                     navigation: ['main', 'profile-orders'],
@@ -167,8 +285,13 @@ export function createConfig() {
                 url: '/profile',
                 logged: 'logged',
                 router: {
-                    component: (parent: Element) => {
-                        return new Profile(parent);
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new Profile(parent, navigateToMain);
                     },
                 },
                 children: {
@@ -200,26 +323,20 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-profile',
                     text: 'Профиль',
-                    iconName: '/public/user-icon.svg',
+                    iconTmpl: userIconTmpl,
+                    mobileIconTmpl: userIconTmpl,
                 },
             },
-
-            logout: {
-                url: '/logout',
-                logged: 'logged',
-                navbarLink: {
-                    className: 'navbar-link-logout',
-                    text: 'Выйти',
-                    iconName: '/public/logout.svg',
-                },
+            comment: {
+                url: '/comment',
+                logged: 'both',
                 router: {
                     navigation: ['main'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
-                        navigateToMain: () => void,
                     ) => {
-                        return new LogOut(parent, navigateToMain);
+                        return new CommentPage(parent, params);
                     },
                 },
             },

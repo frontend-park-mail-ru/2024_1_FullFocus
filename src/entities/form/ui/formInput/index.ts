@@ -83,8 +83,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
 
     addError(error: string) {
         this.htmlErrorBlock.hidden = false;
-        this.inputBlock.classList.remove('input-block_valid');
-        this.inputBlock.classList.add('input-block_invalid');
+        this.setInValid();
         this.htmlErrorBlock.textContent = error;
     }
 
@@ -93,6 +92,11 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
         this.inputBlock.classList.add('input-block_valid');
         this.inputBlock.classList.remove('input-block_invalid');
         this.htmlErrorBlock.textContent = '';
+    }
+
+    setInValid() {
+        this.inputBlock.classList.remove('input-block_valid');
+        this.inputBlock.classList.add('input-block_invalid');
     }
 
     clearErrors() {

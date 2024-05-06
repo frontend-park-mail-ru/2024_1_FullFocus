@@ -23,3 +23,18 @@
         gap: 20px;
     }
 }
+
+@media (max-width: 512px) {
+    .profile-main-info__main-info {
+        flex-direction: column-reverse;
+        gap: 2em;
+    }
+
+    .profile-main-info__change-picture-container {
+        align-self: center;
+    }
+
+    // .profile-main-info__edit-icon {
+    //     display: none;
+    // }
+}

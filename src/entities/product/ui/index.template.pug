@@ -4,7 +4,7 @@ case style
         - modifier = 'horizontal'
     when 'vertical'
         - modifier = 'vertical'
-div(class=`${className} product-card product-card_` + modifier)
+a(class=`${className} text product-card product-card_` + modifier href=`/product/${id}`)
     img(class="product-card__img product-card__img_" + modifier src=`${src}` alt="img")
     div(class="product-card__info product-card__info_" + modifier)
         div(class="product-card__info-cost") #{price} ₽

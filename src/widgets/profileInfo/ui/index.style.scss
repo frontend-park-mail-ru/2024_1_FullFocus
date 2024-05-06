@@ -1,16 +1,14 @@
-.profile-page {
-    padding-top: 24px;
-}
-
 .profile-info {
     display: flex;
     gap: 14px;
 }
 
-.profile-info__navbar {
-    height: fit-content;
-}
-
 .profile-info__page {
     flex: 1;
+}
+
+@media (width <= 1024px) {
+    .profile-info {
+        flex-direction: column-reverse;
+    }
 }

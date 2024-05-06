@@ -1,0 +1,23 @@
+.comment-widget__info {
+    padding-top: 5px;
+}
+
+.navbar-link-signup {
+    margin: 20px;
+}
+
+.page-widget__bottom {
+    margin-left: 10px;
+}
+
+.comment-widget__commentsEMPTY {
+    display: flex;
+    background-color: white;
+    border-radius: 35px;
+    flex-direction: row;
+    max-width: 900px;
+    max-height: 500px;
+    padding: 25px;
+    margin-top: 10px;
+    font-weight: bold;
+}

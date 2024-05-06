@@ -1,6 +1,10 @@
 .PHONY: build
-build: ## Собрать проект
+build: ## Собрать проект на тачке
 	npm run build:prod
+
+.PHONY: build-dev
+build-dev: ## Собрать проект локально
+	npm run build:dev
 
 .PHONY: run-local
 run-local: ## Запустить проект на локалочке
@@ -15,8 +19,12 @@ fix: ## Запустить fix
 	npm run fix
 
 .PHONY: run-prod
-run-prod: ## Запустить приложение на тачке (может не работать)
+run-prod: ## Запустить приложение на тачке
 	docker compose -f deploy/docker-compose.yaml up -d
+
+.PHONY: stop-prod
+stop-prod: ## Остановить приложение на тачке
+	docker stop 148b58a73786
 
 .PHONY: help
 help:

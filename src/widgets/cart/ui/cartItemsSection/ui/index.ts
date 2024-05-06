@@ -46,11 +46,14 @@ export class CartItemsSection extends Component<
         );
 
         this.counterActionListener = (e: Event) => {
-            const target = e.target as HTMLElement;
+            let target = e.target as HTMLElement;
             if (
                 target.classList.contains('counter__minus') ||
-                target.classList.contains('counter__plus')
+                target.classList.contains('counter__plus') ||
+                target.classList.contains('counter__icon') ||
+                target.classList.contains('counter__icon-path')
             ) {
+                target = target.closest('.counter__btn');
                 e.preventDefault();
                 const id = Number(target.parentElement.dataset.productid);
                 const action = target.dataset.action;

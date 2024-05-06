@@ -1,0 +1,24 @@
+div(class=`${className} comment-card`)
+    img(class="comment-card__img" src=`${avatar}` alt="img")
+    div(class="comment-card__info")
+        div(class="comment-card__info-nameMarkAndDate")
+            div(class="comment-card__info-name") #{name}
+            div(class="comment-card__info-right")
+                div(class="comment-card__info-date text_secondary") #{date}
+                div(class=`comment-card__info-mark`)
+        - var adv = advantages
+        if adv != ""
+            div(class="comment-card__info-advantages") Достоинства
+            div(class="comment-card__info-advantages-user") #{advantages}
+
+        - var disadv = disadvantages
+        if adv != ""
+            div(class="comment-card__info-disadvantages") Недостатки
+            div(class="comment-card__info-disadvantages-user") #{disadvantages}
+
+        - var com = comment
+        if com != ""
+            div(class="comment-card__info-text") Комментарий
+            div(class="comment-card__info-text-user") #{comment}
+
+

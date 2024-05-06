@@ -1,0 +1,19 @@
+.rating-input {
+    direction: rtl;
+    width: fit-content;
+}
+
+.input-star-input {
+    display: none;
+}
+.input-star-label:hover {
+    cursor: pointer;
+}
+
+.input-star-label:hover,
+.input-star-label:hover ~ .input-star-label,
+.input-star-input:checked ~ .input-star-label {
+    .input-star__icon-path {
+        fill: #fcd53f;
+    }
+}

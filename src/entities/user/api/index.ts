@@ -41,10 +41,29 @@ export async function updateProfile(body: IUpdateProfileBody) {
     });
 }
 
-export async function getProfilePicture() {
-    return fetchPicture(USER_API_URLS.getPicture);
+export async function getProfilePicture(id: string) {
+    return fetchPicture(USER_API_URLS.getPicture + id);
 }
 
 export async function uploadProfilePicture(formData: FormData) {
     return ajaxMultipartForm('POST', USER_API_URLS.updatePicture, formData);
+}
+
+export async function sendCsatData(quesiontId: number, rate: number) {
+    return ajaxPost<null>(USER_API_URLS.sendCsat, [], {
+        pollID: quesiontId,
+        rate: rate,
+    });
+}
+
+export async function getAllCsat() {
+    return ajaxGet<{ id: number; title: string }[]>(USER_API_URLS.allCsat, []);
+}
+
+export async function getCsatStat(questionId: number) {
+    return ajaxGet<{
+        title: string;
+        amount: number;
+        stats: number[];
+    }>(USER_API_URLS.csatStat + questionId.toString(), []);
 }

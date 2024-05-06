@@ -1,0 +1,17 @@
+- var sizeClass = 'dropdown_sm header header_h4'
+case size
+    when 'xs'
+        - sizeClass = 'dropdown_xs text'
+
+div(class=`${className} dropdown_xs dropdown ` + sizeClass) 
+    if (defaultText)
+        div(class="dropdown__toggler border_radius-sm") 
+            span(class="dropdown__main-text") #{defaultText}
+            svg( xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24")
+                path(class="dropdown__toggler-icon" fill="currentColor" d="m7 10l5 5l5-5z")
+    else
+        if (togglerPlace == 'right' || defaultText)
+            div(class="dropdown__toggler dropdown__toggler_icon-right")
+        else
+            div(class="dropdown__toggler dropdown__toggler_icon-left")
+    div(class="dropdown__items border_radius-sm box-shadow dropdown_hidden")

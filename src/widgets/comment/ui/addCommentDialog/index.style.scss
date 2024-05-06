@@ -1,0 +1,32 @@
+.add-dialog {
+    border: none;
+
+    .display_flex {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
+.add-dialog__header-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.add-dialog__subheader {
+    flex-direction: row;
+    display: flex;
+}
+
+.add-dialog__description {
+    padding-top: 10px;
+}
+
+.add-comment-form {
+    margin-top: 30px;
+}
+
+.add-dialog__img {
+    height: 140px;
+    aspect-ratio: 1;
+}

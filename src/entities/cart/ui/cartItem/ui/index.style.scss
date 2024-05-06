@@ -2,3 +2,13 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media (max-width: 640px) {
+    .cart-item {
+        flex-direction: column;
+    }
+
+    .cart-item__actions {
+        align-self: flex-end;
+    }
+}

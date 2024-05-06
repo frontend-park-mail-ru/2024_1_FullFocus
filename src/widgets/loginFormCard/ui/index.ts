@@ -3,6 +3,7 @@ import './index.style.scss';
 import loginFormTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { LoginForm } from '@/features/login';
+import { Link } from '@/shared/uikit/link';
 
 export class LoginFormCard extends Component<
     HTMLDivElement,
@@ -10,6 +11,7 @@ export class LoginFormCard extends Component<
 > {
     form: LoginForm;
     protected errorElement: HTMLDivElement;
+    protected signupLink: Link;
 
     /**
      * Constructor for Login form
@@ -27,6 +29,13 @@ export class LoginFormCard extends Component<
         this.errorElement.textContent = '';
     }
 
+    protected componentDidMount() {
+        this.signupLink.htmlElement.addEventListener('click', (e: Event) => {
+            e.preventDefault();
+            this.props.navigateSignup();
+        });
+    }
+
     /**
      * Renders Login form
      */
@@ -40,5 +49,19 @@ export class LoginFormCard extends Component<
         this.form = new LoginForm(
             this.htmlElement.getElementsByClassName('login-form-card__main')[0],
         );
+
+        this.signupLink = new Link(
+            this.htmlElement.getElementsByClassName(
+                'login-form-card__signup-link',
+            )[0],
+            {
+                className: 'signup-link',
+                style: 'primary',
+                text: 'Регистрация',
+                href: '',
+            },
+        );
+
+        this.componentDidMount();
     }
 }

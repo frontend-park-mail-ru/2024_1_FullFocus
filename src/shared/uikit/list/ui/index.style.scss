@@ -1,0 +1,16 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.list_wrap {
+    flex-flow: row wrap;
+}
+
+@media (max-width: 1024px) {
+    .list_wrap {
+        justify-content: center;
+    }
+}

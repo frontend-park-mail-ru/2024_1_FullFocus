@@ -3,9 +3,15 @@ import mainPageTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProductsSection } from '@/widgets/productsSection';
 import { MainPageProps } from './index.types';
+import { createIframe } from '@/shared/lib/createIframe';
+import { getAllCsat } from '@/entities/user/api';
+import { useCheckUserLogin } from '@/features/auth';
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
+    protected iframe: HTMLIFrameElement;
+    protected removeIframe: () => void;
+
     /**
      * Constructor for Main page object
      * @param {any} parent - parent object
@@ -22,15 +28,10 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
         });
     }
 
-    updateWithParams(params: { [name: string]: string }) {
-        const categoryId = Number(params['category']);
-        if (categoryId) {
-            this.productsSection.changeCategory(categoryId);
-        }
-    }
-
-    updateDefault() {
-        this.productsSection.clearCategory();
+    protected componentDidMount() {
+        window.addEventListener('message', (e: MessageEvent) => {
+            if (e.data === 'close-iframe') this.removeIframe();
+        });
     }
 
     /**
@@ -43,5 +44,28 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
             className: 'products-section-popular',
             navigateToCart: this.props.navigateToCart,
         });
+        useCheckUserLogin()
+            .then((isLogged) => {
+                if (!isLogged) return;
+
+                getAllCsat()
+                    .then((response) => {
+                        setTimeout(() => {
+                            const data = createIframe(
+                                this.htmlElement,
+                                'csat-main',
+                                `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
+                                450,
+                                202,
+                            );
+                            this.iframe = data.component;
+                            this.removeIframe = data.remove;
+                        }, 1500);
+                    })
+                    .catch(() => {});
+            })
+            .catch(() => {});
+
+        this.componentDidMount();
     }
 }

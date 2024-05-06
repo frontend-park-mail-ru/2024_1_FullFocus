@@ -1,0 +1,166 @@
+.comment-card {
+    display: flex;
+    background-color: white;
+    border-radius: 35px;
+    flex-direction: row;
+    width: 900px;
+    max-height: 500px;
+    padding: 25px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.comment-card__info-right {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.comment-card__info {
+    flex: 1;
+    display: flex;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    flex-direction: column;
+}
+
+.comment-card__info-name {
+    flex: 1;
+}
+
+.comment-card__info-nameMarkAndDate {
+    display: flex;
+    font-weight: 700;
+    height: 50px;
+    max-height: 70px;
+    flex-direction: row;
+}
+
+.comment-card__info-advantages-user {
+    max-height: 1000px;
+    margin-top: 10px;
+}
+
+.comment-card__info-advantages {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.comment-card__info-disadvantages-user {
+    max-height: 1000px;
+    margin-top: 10px;
+}
+
+.comment-card__info-disadvantages {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.comment-card__info-text-user {
+    max-height: 2000px;
+    overflow-wrap: break-word;
+    margin-top: 10px;
+}
+
+.comment-card__info-text {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.comment-card__img {
+    padding: 10px;
+    height: 70px;
+    width: 70px;
+    border-radius: 100%;
+}
+
+.comment-card__info-text-user {
+    max-height: 2000px;
+    overflow-wrap: break-word;
+}
+@media (max-width: 1024px) {
+    .comment-card {
+        display: flex;
+        background-color: white;
+        border-radius: 35px;
+        flex-direction: row;
+        width: 500px;
+        max-height: 10000px;
+        padding: 25px;
+        margin-top: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .comment-card {
+        display: flex;
+        background-color: white;
+        border-radius: 35px;
+        flex-direction: row;
+        width: 600px;
+        max-height: 10000px;
+        padding: 0;
+        margin-top: 8px;
+    }
+    .comment-card__img {
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+    }
+
+    .comment-card__info-nameMarkAndDate {
+        display: flex;
+        height: 100px;
+        font-weight: 700;
+        max-height: 70px;
+    }
+    .comment-card__info-text-user {
+        max-height: 2000px;
+        width: 250px;
+        overflow-wrap: break-word;
+    }
+    .comment-card__info-mark {
+        margin-left: 10px;
+    }
+
+    .comment-card__info-date {
+        margin-left: auto;
+    }
+
+    .comment-card__info-right {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 1024px) {
+    .comment-card__img {
+        height: 70px;
+        width: 70px;
+        border-radius: 100%;
+    }
+}
+
+@media (max-width: 475px) {
+    .comment-card__img {
+        height: 20px;
+        width: 20px;
+        border-radius: 100%;
+    }
+    .comment-card__info-text-user {
+        max-height: 2000px;
+        width: 200px;
+        overflow-wrap: break-word;
+    }
+}
+
+@media (max-width: 1024px) {
+    .comment-card__info-text-user {
+        max-height: 2000px;
+        overflow-wrap: break-word;
+    }
+
+    .comment-card {
+        width: 100%;
+    }
+}

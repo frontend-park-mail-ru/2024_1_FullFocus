@@ -56,6 +56,10 @@ export class Input extends Component<HTMLInputElement, InputProps> {
         return this.htmlInput.value;
     }
 
+    set inputValue(string) {
+        this.htmlInput.value = string;
+    }
+
     protected render() {
         this.props.initialValue = this.props.initialValue
             ? this.props.initialValue

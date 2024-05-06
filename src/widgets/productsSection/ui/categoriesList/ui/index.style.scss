@@ -5,3 +5,18 @@
     position: sticky;
     top: 10px;
 }
+
+.categories-list-dropdown {
+    width: 100%;
+}
+
+@media (width > 1024px) {
+    .dropdown.categories-list-dropdown {
+        display: none;
+    }
+}
+@media (width <= 1024px) {
+    .categories-list {
+        display: none;
+    }
+}

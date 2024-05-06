@@ -1,7 +1,7 @@
 export interface IUserResponse {
     id: number;
     fullName: string;
-    imgSrc: string;
+    avatarName: string;
     email: string;
     phoneNumber: string;
 }

@@ -11,6 +11,7 @@ export class Profile extends Component<HTMLDivElement, ProfilePageProps> {
 
     constructor(
         parent: Element,
+        navigateToMain: () => void,
         profilePage?: string,
         params?: { [name: string]: string },
     ) {
@@ -18,6 +19,7 @@ export class Profile extends Component<HTMLDivElement, ProfilePageProps> {
             className: 'profile-page',
             profilePageName: profilePage,
             params: params,
+            navigateToMain: navigateToMain,
         });
     }
 
@@ -38,6 +40,7 @@ export class Profile extends Component<HTMLDivElement, ProfilePageProps> {
             this.htmlElement.getElementsByClassName('profile-main')[0],
             {
                 className: 'container profile-main__info',
+                navigateToMain: this.props.navigateToMain,
             },
         );
 
