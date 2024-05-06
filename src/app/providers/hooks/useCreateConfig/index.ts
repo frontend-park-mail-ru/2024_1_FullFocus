@@ -103,7 +103,7 @@ export function createConfig() {
                 url: '/category/{categoryId}',
                 logged: 'both',
                 router: {
-                    navigation: ['main', 'cart'],
+                    navigation: ['main', 'cart', 'category'],
                     update: {
                         updateParams: (
                             page: CategoryPage,
@@ -121,11 +121,13 @@ export function createConfig() {
                         params: { categoryId: string; [name: string]: string },
                         navigateToMain: () => void,
                         navigateToCart: () => void,
+                        navigateToCategory: () => void,
                     ) => {
                         return new CategoryPage(
                             parent,
                             navigateToMain,
                             navigateToCart,
+                            navigateToCategory,
                             params,
                         );
                     },
@@ -147,17 +149,19 @@ export function createConfig() {
                             page.updateNoParams();
                         },
                     },
-                    navigation: ['main', 'cart'],
+                    navigation: ['main', 'cart', 'search'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
                         navigateToCart: () => void,
+                        navigateToSearch: () => void,
                     ) => {
                         return new SearchPage(
                             parent,
                             navigateToMain,
                             navigateToCart,
+                            navigateToSearch
                             params,
                         );
                     },

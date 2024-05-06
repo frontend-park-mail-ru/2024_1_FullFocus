@@ -4,7 +4,7 @@ import { ProductCard } from '@/entities/product';
 
 function renderItem(comment: IComment, parent: Element) {
     const Card = new CommentCard(parent, {
-        className: "comment-section_"+comment.id.toString(),
+        className: "comment-section_"+comment.reviewID.toString(),
         avatar: comment.profileAvatar,
         name: comment.profileName,
         advantages: comment.advantages,
@@ -12,7 +12,7 @@ function renderItem(comment: IComment, parent: Element) {
         comment: comment.comment,
         date: comment.createdAt,
         mark: comment.rating,
-        id: comment.id
+        id: comment.reviewID
     });
     return Card;
 }

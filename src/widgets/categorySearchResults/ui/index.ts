@@ -17,9 +17,9 @@ export class CategorySearchResults extends Component<
         super(parent, searchResultsTmpl, props);
     }
 
-    loadCategory(categoryId: number) {
+    loadCategory(categoryId: number, sortId: number) {
         this.header.innerText = `Поиск по категории`;
-        useGetProductCardsCategory(categoryId)
+        useGetProductCardsCategory(categoryId, sortId)
             .then(({ products, category }) => {
                 this.productsList.loadProducts(products);
                 this.header.innerText += ` ${category}`;
@@ -52,6 +52,6 @@ export class CategorySearchResults extends Component<
             'category-search-results__header',
         )[0] as HTMLDivElement;
 
-        this.loadCategory(this.props.categoryId);
+        this.loadCategory(this.props.categoryId, this.props.sortId);
     }
 }

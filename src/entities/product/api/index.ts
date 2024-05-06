@@ -26,29 +26,54 @@ export async function productByIdRequest(id: string) {
 // TODO move to productssection?
 
 // TODO page limit from function args
-export async function productsRequestCategory(categoryId: number) {
+export async function productsRequestCategory(categoryId: number, sortId: number) {
+    if (isNaN(sortId)) {
+        return ajaxGet<ProductByCategoriesResponse>(
+            PRODUCTS_API_URL.getProductsCategory + categoryId.toString(),
+            [
+                { key: 'page', value: '1' },
+                { key: 'limit', value: '10' },
+            ],
+        );
+    }
+
     return ajaxGet<ProductByCategoriesResponse>(
         PRODUCTS_API_URL.getProductsCategory + categoryId.toString(),
         [
             { key: 'page', value: '1' },
             { key: 'limit', value: '10' },
+            { key: 'sortID', value: sortId.toString() },
         ],
     );
+
 }
 
 export async function productsRequestSearch(
     query: string,
     page: number,
     limit: number,
+    sortId: number
 ) {
+    if (isNaN(sortId)){
+        return ajaxGet<ProductsBySearchResponse>(
+            PRODUCTS_API_URL.getProductsBySearch,
+            [
+                { key: 'query', value: query },
+                { key: 'page', value: page.toString() },
+                { key: 'limit', value: limit.toString() },
+            ],
+        );
+    }
     return ajaxGet<ProductsBySearchResponse>(
         PRODUCTS_API_URL.getProductsBySearch,
         [
             { key: 'query', value: query },
             { key: 'page', value: page.toString() },
             { key: 'limit', value: limit.toString() },
+            { key: 'sortID', value: sortId.toString()}
         ],
     );
+
 }
 
 export async function suggestionRequest(query: string) {
