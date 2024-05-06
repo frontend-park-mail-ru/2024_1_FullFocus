@@ -1,40 +1,32 @@
 .add-dialog {
-  background-color: white;
-  border-radius: 35px;
-  flex-direction: row;
-  width: 525px;
-  border: none;
+    border: none;
+
+    .display_flex {
+        flex-direction: column;
+        gap: 40px;
+    }
 }
 
-
-.add-dialog__header{
-  display: inline-block;
-  width: 440px;
+.add-dialog__header-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
-.add-dialog__subheader{
-  flex-direction: row;
-  display: flex;
-  padding: 20px;
+.add-dialog__subheader {
+    flex-direction: row;
+    display: flex;
 }
 
-.add-dialog__upper{
-  margin-inline: 20px;
+.add-dialog__description {
+    padding-top: 10px;
 }
 
-.add-dialog__form-place{
-  margin-inline: 20px;
+.add-comment-form {
+    margin-top: 30px;
 }
 
-.add-dialog__description{
-  margin-top: 50px;
-}
-
-.add-comment-form{
-  padding-top: 10px;
-}
-
-.add-dialog__img{
-  width: 200px;
-  height: 200px;
+.add-dialog__img {
+    height: 140px;
+    aspect-ratio: 1;
 }

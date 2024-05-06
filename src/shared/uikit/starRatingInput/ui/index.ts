@@ -20,7 +20,6 @@ export class RatingInput extends Component<HTMLDivElement, ratingInputProps> {
             const target = e.target as HTMLElement;
             if (target.tagName.toLowerCase() === 'input') {
                 this.chosenRating = Number((target as HTMLInputElement).value);
-                console.log(this.chosenRating);
             }
         });
     }

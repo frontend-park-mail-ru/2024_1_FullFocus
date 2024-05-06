@@ -44,28 +44,37 @@ export class AddCommentDialog extends Component<
 
         this.submitListener = (e: SubmitEvent) => {
             e.preventDefault();
-            const formData = parseForm(this.formObj);
-            if (formData.isValid) {
-                this.formObj.setReadonly();
-                addComment({
-                    productID: Number(this.props.productID),
-                    rating: Number(formData.inputs['rating'].value),
-                    comment: formData.inputs['comment'].value,
-                    advantages: formData.inputs['advantages'].value,
-                    disadvantages: formData.inputs['disadvantages'].value,
-                })
-                    .then((response) => {
-                        this.formObj.setNotReadonly();
-                        if (response.status === 201) {
-                            this.htmlElement.close();
-                        }
+            const rating = this.starsRating.currentRating;
+            if (rating === 0) {
+                this.formObj.setInvalid();
+                this.errorElement.innerText = 'Поставьте оценку!';
+            }
 
-                        if (response.status !== 200) {
-                            this.formObj.setInvalid();
-                            this.errorElement.innerText = response.msgRus;
-                        }
+            if (rating !== 0) {
+                const formData = parseForm(this.formObj);
+                if (formData.isValid) {
+                    this.formObj.setReadonly();
+                    addComment({
+                        productID: Number(this.props.productID),
+                        rating: rating,
+                        comment: formData.inputs['comment'].value,
+                        advantages: formData.inputs['advantages'].value,
+                        disadvantages: formData.inputs['disadvantages'].value,
                     })
-                    .catch(() => {});
+                        .then((response) => {
+                            this.formObj.setNotReadonly();
+                            if (response.status === 201) {
+                                this.htmlElement.close();
+                            }
+
+                            if (response.status !== 201) {
+                                this.formObj.setInvalid();
+                                this.errorElement.innerText =
+                                    response.msgRus ?? 'что-то пошло не так';
+                            }
+                        })
+                        .catch(() => {});
+                }
             }
         };
         this.htmlElement.addEventListener('submit', this.submitListener);
@@ -81,7 +90,7 @@ export class AddCommentDialog extends Component<
             {
                 className: 'add-dialog__stars-rating',
                 maxRating: 5,
-                size: 60,
+                size: 50,
                 fullColorHex: '#FCD53F',
                 emptyColorHex: '#E2E6E9',
             },
