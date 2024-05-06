@@ -161,7 +161,7 @@ export function createConfig() {
                             parent,
                             navigateToMain,
                             navigateToCart,
-                            navigateToSearch
+                            navigateToSearch,
                             params,
                         );
                     },

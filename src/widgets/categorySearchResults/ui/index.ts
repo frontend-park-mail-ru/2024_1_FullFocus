@@ -35,6 +35,12 @@ export class CategorySearchResults extends Component<
         this.header.innerText = '';
     }
 
+    get headerHtml() {
+        return this.htmlElement.getElementsByClassName(
+            'category-search-results__header-container',
+        )[0];
+    }
+
     protected render() {
         this.renderTemplate();
 

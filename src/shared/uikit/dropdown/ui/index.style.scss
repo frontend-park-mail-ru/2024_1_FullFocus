@@ -41,3 +41,11 @@
     background-color: #efefef;
     cursor: pointer;
 }
+
+@media (max-width: 475px) {
+    .dropdown_xs {
+        .dropdown__toggler {
+            padding: 8px 4px;
+        }
+    }
+}

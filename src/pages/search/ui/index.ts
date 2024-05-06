@@ -57,15 +57,17 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
     protected render() {
         if (this.props.query !== undefined) {
             this.renderTemplate();
-            this.sortWidget = new SortWidget(this.htmlElement, {
-                className: 'sort-widget',
-            });
             this.query = this.props.query;
+
             this.searchResults = new SearchResults(this.htmlElement, {
                 className: 'search-page__search-results',
                 query: this.props.query,
                 toCart: this.props.navigateToCart,
                 sortId: this.props.sortId,
+            });
+
+            this.sortWidget = new SortWidget(this.searchResults.headerHtml, {
+                className: 'sort-widget',
             });
             this.componentDidMount();
         }
