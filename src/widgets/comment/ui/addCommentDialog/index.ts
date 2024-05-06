@@ -54,7 +54,7 @@ export class AddCommentDialog extends Component<
                 })
                     .then((response) => {
                         this.formObj.setNotReadonly();
-                        if (response.status === 200) {
+                        if (response.status === 201) {
                             this.htmlElement.close();
                         }
 

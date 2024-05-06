@@ -2,7 +2,6 @@ import { Component } from '@/shared/@types/index.component';
 import { SortWidgetProps } from '@/widgets/sort/ui/index.types';
 import sortWidgetTmpl from '@/widgets/sort/ui/index.template.pug';
 import './index.style.scss';
-import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { useGetSortCards } from '@/features/sort';
 import { DropDown } from '@/shared/uikit/dropdown';
 import { TextItem } from '@/shared/uikit/textItem';
@@ -23,14 +22,17 @@ export class SortWidget extends Component<HTMLDivElement, SortWidgetProps> {
         useGetSortCards(this.dropDown)
             .then((sorts: (() => void)[]) => {
                 if (sorts.length === 0) {
-                    const emptyCommentDiv = new EmptyContainer(
-                        this.htmlElement,
-                        {
-                            className: 'sort-widget__commentsEMPTY',
-                        },
-                    );
-                    emptyCommentDiv.htmlElement.innerText =
-                        'Сортировок не найдено';
+                    this.dropDown.addItem((parent: Element) => {
+                        const item = new TextItem(parent, {
+                            className: `dropdown-category-item-null`,
+                            name: 'null',
+                            id: 1,
+                        });
+                        return {
+                            item: item,
+                            id: "1",
+                        };
+                    });
                 }
 
                 sorts.forEach((s) => {

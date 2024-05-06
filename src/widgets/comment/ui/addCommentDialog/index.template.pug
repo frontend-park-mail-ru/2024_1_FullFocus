@@ -6,5 +6,9 @@ dialog(class=`${className} add-dialog`)
         div(class="add-dialog__subheader")
             img(class="add-dialog__img" src=`${productSrc}` alt="img")
             div(class="add-dialog__description") #{productDescription}
-    div(class="add-dialog__form-place") Оцените покупку
-    div(class="add-dialog__error")
+    - var flag = isAuth
+    if flag
+        div(class="add-dialog__form-place") Оцените покупку
+        div(class="add-dialog__error")
+    else
+        div(class="add-dialog__error") Требуется регистрация

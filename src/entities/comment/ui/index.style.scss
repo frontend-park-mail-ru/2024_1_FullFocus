@@ -9,6 +9,44 @@
   margin-top: 10px;
 }
 
+@media (width <= 1024px){
+    .comment-card {
+      display: flex;
+      background-color: white;
+      border-radius: 35px;
+      flex-direction: row;
+      max-width: 500px;
+      max-height: 10000px;
+      padding: 25px;
+      margin-top: 8px;
+    }
+}
+
+@media (width <= 768px){
+  .comment-card{
+    display: flex;
+    background-color: white;
+    border-radius: 35px;
+    flex-direction: row;
+    max-width: 300px;
+    max-height: 10000px;
+    padding: 25px;
+    margin-top: 8px;
+  }
+}
+
+
+@media (width <= 475px){
+      .comment-card {
+        display: flex;
+        background-color: white;
+        border-radius: 35px;
+        flex-direction: row;
+        padding: 25px;
+        max-height: 10000px;
+        margin-top: 8px;
+      }
+}
 
 .comment-card__info {
   flex: 1;
@@ -28,48 +66,43 @@
   flex-direction: row;
 }
 
-.comment-card__info-mark{
-  margin-left: auto;
-  padding-right: 10px;
-}
-
-.comment-card__info-date{
-  padding-left: 300px;
-  margin-left: auto;
-  font-weight: 200;
-}
 
 .comment-card__info-advantages-user{
-  height: 50px;
   max-height: 1000px;
+  margin-top: 10px;
 }
 
 .comment-card__info-advantages{
   font-weight: 700;
+  margin-top: 10px;
+
 }
 
 .comment-card__info-disadvantages-user{
-  height: 50px;
   max-height: 1000px;
+  margin-top: 10px;
+
 }
 
 .comment-card__info-disadvantages{
   font-weight: 700;
+  margin-top: 10px;
+
 }
 
 .comment-card__info-text-user{
   max-height: 2000px;
   overflow-wrap: break-word;
+  margin-top: 10px;
+
 }
 
 .comment-card__info-text {
   font-weight: 700;
+  margin-top: 10px;
 
 }
 
-.comment-card__img {
-  border-radius: 5px;
-}
 
 .comment-card__img {
   padding: 10px;
@@ -78,4 +111,92 @@
   border-radius: 100%;
 }
 
+@media (width <= 1024px){
+  .comment-card__img {
+    height: 70px;
+    width: 70px;
+    border-radius: 100%;
+  }
+}
 
+@media (width <= 768px){
+  .comment-card__img {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+  }
+}
+
+
+
+@media (width <= 768px) {
+  .comment-card__info-nameMarkAndDate{
+    display: flex;
+    height: 100px;
+    font-weight: 700;
+    max-height: 70px;
+    flex-direction: column;
+  }
+}
+
+@media (width <= 475px){
+  .comment-card__img {
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+  }
+}
+
+@media (width > 768px){
+  .comment-card__info-mark{
+    margin-left: 10px;
+  }
+}
+
+@media (width > 768px){
+  .comment-card__info-date{
+    margin-left: auto;
+    font-weight: 200;
+  }
+}
+
+
+.comment-card__info-mark{
+}
+
+.comment-card__info-date{
+  font-weight: 200;
+}
+
+@media (width <= 1024px){
+  .comment-card__info-text-user{
+    max-height: 2000px;
+    width: 500px;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (width <= 768px){
+  .comment-card__info-text-user{
+    max-height: 2000px;
+    width: 250px;
+    overflow-wrap: break-word;
+  }
+}
+
+
+@media (width <= 475px){
+  .comment-card__info-text-user{
+    max-height: 2000px;
+    width: 200px;
+    overflow-wrap: break-word;
+  }
+}
+
+
+
+
+.comment-card__info-text-user{
+  max-height: 2000px;
+  overflow-wrap: break-word;
+}
