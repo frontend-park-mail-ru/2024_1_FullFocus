@@ -45,7 +45,10 @@ export class ProductsSection extends Component<
 
         this.productsList = new ProductsList<ProductCard>(
             this.productsSection,
-            { className: 'products-section__products-list' },
+            {
+                className: 'products-section__products-list',
+                navigateToCart: this.props.navigateToCart,
+            },
         );
 
         useGetProductCards(1, 10)

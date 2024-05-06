@@ -10,12 +10,14 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
     constructor(
         parent: Element,
         navigateToMain: () => void,
+        navigateToCart: () => void,
         params: { [name: string]: string },
     ) {
         super(parent, searchPageTmpl, {
             className: 'search-page',
             query: params.query,
             navigateToMain: navigateToMain,
+            navigateToCart: navigateToCart,
         });
     }
 
@@ -40,6 +42,7 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
             this.searchResults = new SearchResults(this.htmlElement, {
                 className: 'search-page__search-results',
                 query: this.props.query,
+                toCart: this.props.navigateToCart,
             });
         }
 

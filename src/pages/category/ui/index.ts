@@ -10,12 +10,14 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
     constructor(
         parent: Element,
         navigateToMain: () => void,
+        navigateToCart: () => void,
         params: { categoryId: string; [name: string]: string },
     ) {
         super(parent, categoryPageTmpl, {
             className: 'category-page',
             categoryId: Number(params.categoryId),
             navigateToMain: navigateToMain,
+            navigateToCart: navigateToCart,
         });
     }
 
@@ -46,6 +48,7 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
                 {
                     className: 'category-page__products',
                     categoryId: this.props.categoryId,
+                    toCart: this.props.navigateToCart,
                 },
             );
         }

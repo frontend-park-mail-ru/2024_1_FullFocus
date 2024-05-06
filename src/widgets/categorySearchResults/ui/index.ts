@@ -44,6 +44,7 @@ export class CategorySearchResults extends Component<
             )[0],
             {
                 className: 'category-search-results__products',
+                navigateToCart: this.props.toCart,
             },
         );
 

@@ -15,12 +15,7 @@ import { ProductPage } from '@/pages/product';
 import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
 import { cartIconTmpl, userIconTmpl } from './linkIcons';
-import {
-    mobileCartTmpl,
-    mobileHomeIconTmpl,
-    mobileLoginIconTmpl,
-    mobileProfileTmpl,
-} from './mobileIcons';
+import { mobileHomeIconTmpl, mobileLoginIconTmpl } from './mobileIcons';
 
 interface ConfigItem {
     // User login status
@@ -108,7 +103,7 @@ export function createConfig() {
                 url: '/category/{categoryId}',
                 logged: 'both',
                 router: {
-                    navigation: ['main'],
+                    navigation: ['main', 'cart'],
                     update: {
                         updateParams: (
                             page: CategoryPage,
@@ -125,8 +120,14 @@ export function createConfig() {
                         parent: Element,
                         params: { categoryId: string; [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToCart: () => void,
                     ) => {
-                        return new CategoryPage(parent, navigateToMain, params);
+                        return new CategoryPage(
+                            parent,
+                            navigateToMain,
+                            navigateToCart,
+                            params,
+                        );
                     },
                 },
             },
@@ -146,13 +147,19 @@ export function createConfig() {
                             page.updateNoParams();
                         },
                     },
-                    navigation: ['main'],
+                    navigation: ['main', 'cart'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToCart: () => void,
                     ) => {
-                        return new SearchPage(parent, navigateToMain, params);
+                        return new SearchPage(
+                            parent,
+                            navigateToMain,
+                            navigateToCart,
+                            params,
+                        );
                     },
                 },
             },
@@ -160,13 +167,19 @@ export function createConfig() {
                 url: '/product/{productId}',
                 logged: 'both',
                 router: {
-                    navigation: ['main'],
+                    navigation: ['main', 'cart'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
                         navigateToMain: () => void,
+                        navigateToCart: () => void,
                     ) => {
-                        return new ProductPage(parent, params, navigateToMain);
+                        return new ProductPage(
+                            parent,
+                            params,
+                            navigateToMain,
+                            navigateToCart,
+                        );
                     },
                 },
             },
@@ -310,27 +323,6 @@ export function createConfig() {
                     mobileIconTmpl: userIconTmpl,
                 },
             },
-
-            // logout: {
-            //     url: '/logout',
-            //     logged: 'logged',
-            //     navbarLink: {
-            //         className: 'navbar-link-logout',
-            //         text: 'Выйти',
-            //         iconTmpl: logoutIconTmpl,
-            //     },
-            //     router: {
-            //         navigation: ['main'],
-            //         component: (
-            //             parent: Element,
-            //             params: { [name: string]: string },
-            //             navigateToMain: () => void,
-            //         ) => {
-            //             return new LogOut(parent, navigateToMain);
-            //         },
-            //     },
-            // },
-
             comment: {
                 url: '/comment',
                 logged: 'both',

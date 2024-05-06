@@ -5,10 +5,12 @@ import { ProductInfoProps } from './index.types';
 import { productByIdRequest } from '@/entities/product/api';
 import { Button } from '@/shared/uikit/button';
 import { Rating } from '@/shared/uikit/starRating';
+import { addToCart } from '@/entities/cart/api';
 
 export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     protected buyBtn: Button;
     protected rating: Rating;
+    protected inCart: boolean;
 
     constructor(parent: Element, props: ProductInfoProps) {
         super(parent, productInfoTmpl, props);
@@ -74,6 +76,36 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         ).innerText = 'доставка ' + deliveryDate;
     }
 
+    setInCart() {
+        this.buyBtn.btnText = 'В корзину';
+        this.inCart = true;
+    }
+
+    setNotInCart() {
+        this.buyBtn.btnText = 'Добавить';
+        this.inCart = false;
+    }
+
+    protected componentDidMount() {
+        this.buyBtn.htmlElement.addEventListener('click', () => {
+            const inCart = this.inCart;
+
+            if (inCart) {
+                this.props.toCart();
+            }
+
+            if (!inCart) {
+                addToCart(Number(this.props.productId))
+                    .then(({ status }) => {
+                        if (status === 200) {
+                            this.setInCart();
+                        }
+                    })
+                    .catch(() => {});
+            }
+        });
+    }
+
     protected render() {
         this.renderTemplate();
 
@@ -94,10 +126,20 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                     {
                         className: 'product-info__to-cart-btn',
                         btnStyle: 'bright',
-                        btnText: 'Добавить в корзину',
+                        btnText: '',
                         type: 'button',
                     },
                 );
+
+                if (data.inCart) {
+                    this.setInCart();
+                }
+
+                if (!data.inCart) {
+                    this.setNotInCart();
+                }
+
+                this.componentDidMount();
             })
             .catch(() => {
                 // TODO add ui

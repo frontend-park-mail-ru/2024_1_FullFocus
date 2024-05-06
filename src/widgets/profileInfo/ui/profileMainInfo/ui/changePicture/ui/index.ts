@@ -50,7 +50,8 @@ export class ChangePicture extends Component<
 
                     if (status !== 200) {
                         this.errorsBlock.classList.remove('display_none');
-                        this.errorsBlock.innerText = msgRus;
+                        this.errorsBlock.innerText =
+                            msgRus ?? 'слишком большой файл';
                     }
                 })
                 .catch(() => {});
