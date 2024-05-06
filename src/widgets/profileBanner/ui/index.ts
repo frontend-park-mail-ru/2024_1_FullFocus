@@ -28,9 +28,9 @@ export class ProfileBanner extends Component<
                     {
                         className: 'main__user-card',
                         pictureSrc:
-                            data.imgSrc === ''
+                            data.avatarName === ''
                                 ? '/public/default-profile-pic.png'
-                                : data.imgSrc,
+                                : data.avatarName,
                         realName: data.fullName,
                     },
                 );
