@@ -6,13 +6,8 @@
 .dropdown__toggler {
     display: flex;
     justify-content: space-between;
-    // border: 2px solid #d2d6d9;
     padding: 16px 8px;
     background-color: white;
-}
-
-.dropdown_hidden {
-    display: none;
 }
 
 .dropdown__toggler_right {
@@ -21,6 +16,10 @@
 }
 
 .dropdown__items {
+    transition: 0.5s;
+    max-height: 1000px;
+    transition-timing-function: linear;
+    overflow: hidden;
     position: absolute;
     z-index: 2;
     margin-top: 4px;
@@ -28,12 +27,16 @@
     background-color: white;
 }
 
+.dropdown_hidden {
+    max-height: 0;
+}
+
 .dropdown-item {
     border-radius: 8px;
     display: block;
     word-wrap: break-word;
     box-sizing: border-box;
-    padding: 4px 8px;
+    padding: 12px 8px;
     font: inherit;
 }
 
