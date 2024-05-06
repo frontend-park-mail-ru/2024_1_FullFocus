@@ -30,8 +30,6 @@ export class CategoriesList extends Component<
             className: 'categories-list-dropdown',
             defaultText: 'Категории',
         });
-        this.categoriesDropDown.htmlElement.classList.add('header');
-        this.categoriesDropDown.htmlElement.classList.add('header_h4');
 
         getCategories()
             .then(({ status, data }) => {

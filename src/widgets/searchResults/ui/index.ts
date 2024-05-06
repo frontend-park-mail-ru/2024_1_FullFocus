@@ -29,6 +29,12 @@ export class SearchResults extends Component<
             });
     }
 
+    get headerHtml() {
+        return this.htmlElement.getElementsByClassName(
+            'search-results__header-container',
+        )[0];
+    }
+
     protected render() {
         this.renderTemplate();
 

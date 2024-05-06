@@ -25,8 +25,6 @@ export class DropDown<
         });
     }
 
-
-
     show() {
         this.status = 'opened';
         this.htmlItemsSection.classList.remove('dropdown_hidden');

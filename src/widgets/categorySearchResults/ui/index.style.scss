@@ -1,9 +1,9 @@
-.category-search-results__header {
+.category-search-results__header-container {
     background-color: white;
 }
 
 @media (max-width: 1024px) {
-    .category-search-results__header {
+    .category-search-results__header-container {
         padding: 12px 10px 16px 10px;
     }
 }

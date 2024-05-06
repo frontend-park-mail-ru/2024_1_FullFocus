@@ -17,7 +17,8 @@ export class SortWidget extends Component<HTMLDivElement, SortWidgetProps> {
         this.dropDown = new DropDown<TextItem>(this.htmlElement, {
             className: 'dropdown',
             defaultText: 'Настроить сортировку',
-            style: 'left',
+            togglerPlace: 'left',
+            size: 'xs',
         });
         useGetSortCards(this.dropDown)
             .then((sorts: (() => void)[]) => {
@@ -30,7 +31,7 @@ export class SortWidget extends Component<HTMLDivElement, SortWidgetProps> {
                         });
                         return {
                             item: item,
-                            id: "1",
+                            id: '1',
                         };
                     });
                 }

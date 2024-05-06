@@ -67,9 +67,6 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
 
             this.categoryId = this.props.categoryId;
 
-            this.sortWidget = new SortWidget(this.htmlElement, {
-                className: 'sort-widget',
-            });
             this.categorySearchResults = new CategorySearchResults(
                 this.htmlElement,
                 {
@@ -79,6 +76,14 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
                     sortId: this.props.sortId,
                 },
             );
+
+            this.sortWidget = new SortWidget(
+                this.categorySearchResults.headerHtml,
+                {
+                    className: 'sort-widget',
+                },
+            );
+
             this.componentDidMount();
         }
 
