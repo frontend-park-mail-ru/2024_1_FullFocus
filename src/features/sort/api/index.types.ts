@@ -1,4 +1,4 @@
 export interface ISort {
-    "name": string,
-    "id": number,
+    sortName: string;
+    sortID: number;
 }
