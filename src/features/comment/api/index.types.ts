@@ -1,12 +1,12 @@
 export interface IComment {
-    "profileName": string,
-    "profileAvatar": string,
-    "createdAt": string,
-    "rating": number,
-    "comment": string,
     "advantages": string,
+    "comment": string,
+    "createdAt": string,
     "disadvantages": string,
-    "reviewID": number
+    "profileAvatar": string,
+    "profileName": string,
+    "rating": number,
+    "reviewID": number,
 }
 
 

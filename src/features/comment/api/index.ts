@@ -4,7 +4,7 @@ import { COMMENTS_API_URL } from './index.constants';
 
 
 export async function commentRequest(lastReviewID: number, limit: number, ProductID: string) {
-    return ajaxGet<{ reviews: Array<IComment> }>(
+    return ajaxGet<Array<IComment>>(
         COMMENTS_API_URL.getComments+ProductID,
         [
             { key: 'lastReviewID', value: lastReviewID.toString() },

@@ -24,7 +24,7 @@ export async function useGetCommentCards(lastReviewID: number, limit: number, Pr
                 (parent: Element) => CommentCard
             > = [];
             if (status === 200) {
-                data.reviews.forEach((comment) => {
+                data.forEach((comment) => {
                     comments.push((parent: Element) => {
                         return renderItem(comment, parent);
                     });
