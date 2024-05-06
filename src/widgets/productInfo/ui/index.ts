@@ -49,14 +49,15 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
             this.htmlElement.getElementsByClassName(
                 'product-info__product-rating-stars',
             )[0],
-            { className: 'rating-stars', rating: rating },
+            {
+                className: 'rating-stars',
+                rating: rating,
+                maxRating: 5,
+                size: 40,
+                fullColorHex: '#FCD53F',
+                emptyColorHex: '#E2E6E9',
+            },
         );
-
-        (
-            this.htmlElement.getElementsByClassName(
-                'product-info__product-rating-numbers',
-            )[0] as HTMLDivElement
-        ).innerText = `${rating}/5`;
     }
 
     protected updatePrice(price: number) {

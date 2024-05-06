@@ -5,25 +5,26 @@ export async function useGetProfileInfo() {
     const userData = await getUserData();
 
     if (userData.status === 200) {
-        const profilePicture = await getProfilePicture(
-            userData.data.avatarName,
-        );
-
         let imgSrc = '';
-        if (profilePicture.status === 200) {
-            imgSrc = URL.createObjectURL(profilePicture.data);
+
+        if (userData.data.avatarName.length > 0) {
+            const profilePicture = await getProfilePicture(
+                userData.data.avatarName,
+            );
+
+            if (profilePicture.status === 200) {
+                imgSrc = URL.createObjectURL(profilePicture.data);
+            }
         }
 
-        if (userData.status === 200) {
-            const profileData: IProfile = {
-                fullName: userData.data.fullName,
-                email: userData.data.email,
-                phoneNumber: userData.data.phoneNumber,
-                pictureSrc: imgSrc,
-            };
+        const profileData: IProfile = {
+            fullName: userData.data.fullName,
+            email: userData.data.email,
+            phoneNumber: userData.data.phoneNumber,
+            pictureSrc: imgSrc,
+        };
 
-            return profileData;
-        }
+        return profileData;
     }
 
     return { fullName: '', email: '', phoneNumber: '', pictureSrc: '' };
