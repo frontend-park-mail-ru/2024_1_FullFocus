@@ -6,6 +6,7 @@ import { Button, getExitBtn } from '@/shared/uikit/button';
 import { parseForm } from '@/entities/form';
 import { addComment } from '@/features/comment/api';
 import { addCommentDialogProps } from '@/widgets/comment/ui/addCommentDialog/index.types';
+import { RatingInput } from '@/shared/uikit/starRatingInput';
 
 export class AddCommentDialog extends Component<
     HTMLDialogElement,
@@ -16,6 +17,7 @@ export class AddCommentDialog extends Component<
     protected closeBtn: Button;
     protected closeListener: (e: Event) => void;
     protected submitListener: (e: SubmitEvent) => void;
+    protected starsRating: RatingInput;
 
     constructor(parent: Element, props: addCommentDialogProps) {
         super(parent, dialogTmpl, props);
@@ -50,7 +52,7 @@ export class AddCommentDialog extends Component<
                     rating: Number(formData.inputs['rating'].value),
                     comment: formData.inputs['comment'].value,
                     advantages: formData.inputs['advantages'].value,
-                    disadvantages: formData.inputs['disadvantages'].value
+                    disadvantages: formData.inputs['disadvantages'].value,
                 })
                     .then((response) => {
                         this.formObj.setNotReadonly();
@@ -72,7 +74,20 @@ export class AddCommentDialog extends Component<
     protected render() {
         this.renderTemplate();
 
-        this.formObj = new UseAddCommentData (
+        this.starsRating = new RatingInput(
+            this.htmlElement.getElementsByClassName(
+                'add-dialog__form-place',
+            )[0],
+            {
+                className: 'add-dialog__stars-rating',
+                maxRating: 5,
+                size: 60,
+                fullColorHex: '#FCD53F',
+                emptyColorHex: '#E2E6E9',
+            },
+        );
+
+        this.formObj = new UseAddCommentData(
             this.htmlElement.getElementsByClassName(
                 'add-dialog__form-place',
             )[0],
@@ -88,9 +103,7 @@ export class AddCommentDialog extends Component<
         )[0] as HTMLDivElement;
 
         this.closeBtn = getExitBtn(
-            this.htmlElement.getElementsByClassName(
-                'add-dialog__btn-close',
-            )[0],
+            this.htmlElement.getElementsByClassName('add-dialog__btn-close')[0],
             {
                 className: 'add-dialog__btn-close',
                 btnStyle: 'white',

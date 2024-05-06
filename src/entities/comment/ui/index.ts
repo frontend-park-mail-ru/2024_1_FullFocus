@@ -11,16 +11,21 @@ export class CommentCard extends Component<HTMLDivElement, CommentCardProps> {
         super(parent, commentCardTmpl, props);
     }
 
-
     protected render() {
         this.renderTemplate();
 
         this.starRating = new Rating(
-            this.htmlElement.getElementsByClassName("comment-card__info-mark")[0],
+            this.htmlElement.getElementsByClassName(
+                'comment-card__info-mark',
+            )[0],
             {
                 className: 'star-rating',
                 rating: this.props.mark,
+                maxRating: 5,
+                size: 60,
+                fullColorHex: '#FCD53F',
+                emptyColorHex: '#E2E6E9',
             },
-        )
+        );
     }
 }
