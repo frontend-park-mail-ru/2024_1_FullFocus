@@ -142,6 +142,12 @@ body {
 }
 
 /* Text style */
+.text_secondary {
+    color: var(--color-secondary);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
 .text {
     font-family: 'Open Sans', sans-serif;
     color: black;

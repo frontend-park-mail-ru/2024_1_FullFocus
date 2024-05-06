@@ -4,25 +4,27 @@ import { ProductCard } from '@/entities/product';
 
 function renderItem(comment: IComment, parent: Element) {
     const Card = new CommentCard(parent, {
-        className: "comment-section_"+comment.reviewID.toString(),
+        className: 'comment-section_' + comment.reviewID.toString(),
         avatar: comment.profileAvatar,
         name: comment.profileName,
-        advantages: comment.advantages,
+        advantages: comment.advanatages,
         disadvantages: comment.disadvantages,
         comment: comment.comment,
-        date: comment.createdAt,
+        date: comment.createdAt.substring(0, 10),
         mark: comment.rating,
-        id: comment.reviewID
+        id: comment.reviewID,
     });
     return Card;
 }
 
-export async function useGetCommentCards(lastReviewID: number, limit: number, ProductID: string) {
+export async function useGetCommentCards(
+    lastReviewID: number,
+    limit: number,
+    ProductID: string,
+) {
     return commentRequest(lastReviewID, limit, ProductID)
-        .then(({ status, data}) => {
-            const comments: Array<
-                (parent: Element) => CommentCard
-            > = [];
+        .then(({ status, data }) => {
+            const comments: Array<(parent: Element) => CommentCard> = [];
             if (status === 200) {
                 data.forEach((comment) => {
                     comments.push((parent: Element) => {
@@ -33,9 +35,7 @@ export async function useGetCommentCards(lastReviewID: number, limit: number, Pr
             return comments;
         })
         .catch(() => {
-            const comments: Array<
-                (parent: Element) => ProductCard
-            > = [];
+            const comments: Array<(parent: Element) => ProductCard> = [];
             return comments;
         });
 }

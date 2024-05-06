@@ -22,7 +22,7 @@ export class CommentCard extends Component<HTMLDivElement, CommentCardProps> {
                 className: 'star-rating',
                 rating: this.props.mark,
                 maxRating: 5,
-                size: 60,
+                size: 16,
                 fullColorHex: '#FCD53F',
                 emptyColorHex: '#E2E6E9',
             },
