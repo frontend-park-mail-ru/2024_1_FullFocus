@@ -65,8 +65,11 @@ export class App extends Component<HTMLDivElement> {
 
     private componentDidMount() {
         this.htmlElement.addEventListener('click', (e: Event) => {
-            const classList = (e.target as HTMLElement).classList;
-            if (classList.contains('link-item')) {
+            const target = e.target as HTMLElement;
+            if (
+                target.tagName.toLowerCase() === 'a' ||
+                target.dataset['link'] !== undefined
+            ) {
                 this.router.handleLinkClick(e);
             }
         });

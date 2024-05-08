@@ -5,10 +5,10 @@ case style
     when 'vertical'
         - modifier = 'vertical'
 a(class=`${className} text product-card product-card_` + modifier href=`/product/${id}`)
-    img(class="product-card__img product-card__img_" + modifier src=`${src}` alt="img")
-    div(class="product-card__info product-card__info_" + modifier)
-        div(class="product-card__info-cost") #{price} ₽
+    img(class="product-card__img product-card__img_" + modifier src=`${src}`  data-link alt="img")
+    div(class="product-card__info product-card__info_" + modifier data-link )
+        div(class="product-card__info-cost" data-link ) #{price} ₽
         if name.length > 40
-            div(class="product-card__info-description") #{name.substr(0, 40)}...
+            div(class="product-card__info-description" data-link ) #{name.substr(0, 40)}...
         else
-            div(class="product-card__info-description") #{name}
+            div(class="product-card__info-description" data-link ) #{name}

@@ -6,10 +6,6 @@
 }
 
 .product-card:hover {
-    .product-card__img {
-        filter: brightness(1.1);
-    }
-
     .product-card__info {
         color: var(--color-primary-normal);
     }
