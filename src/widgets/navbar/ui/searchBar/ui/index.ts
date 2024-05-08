@@ -12,6 +12,7 @@ import {
 } from '@/features/search';
 import { isClickOut } from '@/shared/lib/clickOut';
 import { insertDarkOverlay } from '@/shared/lib/darkOverlay';
+import { throttle } from '@/shared/api/ajax/throttling';
 
 export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     protected searchBtn: Button;
@@ -20,6 +21,12 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     protected searchResults: List<SearchSuggestion>;
     protected overlay: HTMLDivElement;
     protected form: HTMLFormElement;
+    protected throttledSuggests: (input: string) => Promise<
+        ((parent: Element) => {
+            item: SearchSuggestion;
+            id: string;
+        })[]
+    >;
     protected focus: boolean;
     protected currentPromise: Promise<
         ((parent: Element) => {
@@ -34,6 +41,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected componentDidMount() {
         // TODO remove listener
+        this.throttledSuggests = throttle(useGetSearchSuggestions, 2000);
 
         // Searchbar focused
         this.inputField.htmlElement.addEventListener('focus', (e: Event) => {
@@ -147,8 +155,8 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected renderSuggestions(input: string) {
         this.clearBtn.show();
-        this.currentPromise = useGetSearchSuggestions(input);
-        this.currentPromise
+
+        this.throttledSuggests(input)
             .then((items) => {
                 if (items.length > 0) {
                     this.searchResults.renderItems(items);
