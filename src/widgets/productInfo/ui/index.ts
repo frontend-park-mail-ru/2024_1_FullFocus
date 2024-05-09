@@ -6,7 +6,7 @@ import { productByIdRequest } from '@/entities/product/api';
 import { Button } from '@/shared/uikit/button';
 import { Rating } from '@/shared/uikit/starRating';
 import { addToCart } from '@/entities/cart/api';
-import { CommentWidget } from '@/widgets/comment';
+import { CommentWidget } from './comment';
 
 export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     protected commentWidget: CommentWidget;
@@ -120,15 +120,19 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 this.updatePrice(data.price);
                 this.updateDelivery('послезавтра');
 
-                this.commentWidget = new CommentWidget(
-                    this.htmlElement,
-                    {
-                        className: 'product-info__comment-section',
-                        productID: this.props.productId,
-                        productDescription: data.name,
-                        productSrc: data.imgSrc
+                this.commentWidget = new CommentWidget(this.htmlElement, {
+                    className: 'product-info__comment-section',
+                    productID: this.props.productId,
+                    productDescription: data.name,
+                    productSrc: data.imgSrc,
+                    commentAddedCallback: () => {
+                        productByIdRequest(this.props.productId)
+                            .then(({ data }) => {
+                                this.updateRating(data.rating);
+                            })
+                            .catch(() => {});
                     },
-                )
+                });
                 // Buy btn
                 this.buyBtn = new Button(
                     this.htmlElement.getElementsByClassName(

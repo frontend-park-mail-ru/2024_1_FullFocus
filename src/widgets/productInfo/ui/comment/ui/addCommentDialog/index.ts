@@ -5,7 +5,7 @@ import { UseAddCommentData } from '@/features/comment';
 import { Button, getExitBtn } from '@/shared/uikit/button';
 import { parseForm } from '@/entities/form';
 import { addComment } from '@/features/comment/api';
-import { addCommentDialogProps } from '@/widgets/comment/ui/addCommentDialog/index.types';
+import { addCommentDialogProps } from './index.types';
 import { RatingInput } from '@/shared/uikit/starRatingInput';
 import { isClickOut } from '@/shared/lib/clickOut';
 

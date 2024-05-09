@@ -11,6 +11,10 @@ export class Rating extends Component<HTMLDivElement, ratingProps> {
         super(parent, ratingTmpl, props);
     }
 
+    get rating() {
+        return this.props.rating;
+    }
+
     protected render() {
         this.props.style = this.props.style ?? 'normal';
 
