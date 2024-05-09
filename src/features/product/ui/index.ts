@@ -15,10 +15,11 @@ function renderItem(product: IProductResponse, parent: Element) {
         const productCard = new ProductCard(parent, {
             className: 'product-' + product.id,
             id: product.id,
-            name: product['name'],
-            price: product['price'],
-            src: product['imgSrc'],
+            name: product.name,
+            price: product.price,
+            src: product.imgSrc,
             style: 'vertical',
+            rating: product.rating,
         });
         return { product: productCard, id: productCard.id };
     });
@@ -57,7 +58,10 @@ export async function useGetProductCards(page: number, limit: number) {
         });
 }
 
-export async function useGetProductCardsCategory(categoryId: number, sortID: number) {
+export async function useGetProductCardsCategory(
+    categoryId: number,
+    sortID: string,
+) {
     return productsRequestCategory(categoryId, sortID)
         .then(({ status, data }) => {
             if (status === 200) {
@@ -88,7 +92,7 @@ export async function useGetProductCardsSearch(
     query: string,
     page: number,
     limit: number,
-    sortId: number,
+    sortId: string,
 ) {
     return productsRequestSearch(query, page, limit, sortId)
         .then(({ status, data }) => {

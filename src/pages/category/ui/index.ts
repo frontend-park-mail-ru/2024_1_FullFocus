@@ -3,11 +3,13 @@ import categoryPageTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { CategoryPageProps } from './index.types';
 import { CategorySearchResults } from '@/widgets/categorySearchResults';
-import { SortWidget } from '@/widgets/sort/ui';
+import { DropDown } from '@/shared/uikit/dropdown';
+import { TextItem } from '@/shared/uikit/textItem';
+import { changeSortItem, useGetSortDropdown } from '@/features/sort';
 
 export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
     protected categorySearchResults: CategorySearchResults;
-    protected sortWidget: SortWidget;
+    protected sortDropdown: DropDown<TextItem>;
     protected categoryId: number;
 
     constructor(
@@ -20,7 +22,7 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
         super(parent, categoryPageTmpl, {
             className: 'category-page',
             categoryId: Number(params.categoryId),
-            sortId: Number(params['sortID']),
+            sortId: params['sortID'],
             navigateToMain: navigateToMain,
             navigateToCart: navigateToCart,
             navigateToCategory: navigateToCategory,
@@ -29,10 +31,11 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
 
     updateWithParams(params: { [name: string]: string }) {
         if (params.categoryId) {
-            this.loadCategory(
-                Number(params.categoryId),
-                Number(params['sortID']),
-            );
+            this.loadCategory(Number(params.categoryId), params['sortID']);
+        }
+
+        if (params.sortID) {
+            changeSortItem(this.sortDropdown, params.sortID);
         }
     }
 
@@ -40,7 +43,7 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
         this.props.navigateToMain();
     }
 
-    loadCategory(categoryId: number, sortId: number) {
+    loadCategory(categoryId: number, sortId: string) {
         this.categoryId = categoryId;
         this.categorySearchResults.loadCategory(categoryId, sortId);
     }
@@ -50,7 +53,7 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
     }
 
     protected componentDidMount() {
-        this.sortWidget.htmlElement.addEventListener('click', (e: Event) => {
+        this.sortDropdown.htmlElement.addEventListener('click', (e: Event) => {
             const target = e.target as HTMLElement;
             if (target.dataset['sortID']) {
                 this.props.navigateToCategory({
@@ -77,14 +80,16 @@ export class CategoryPage extends Component<HTMLDivElement, CategoryPageProps> {
                 },
             );
 
-            this.sortWidget = new SortWidget(
+            useGetSortDropdown(
                 this.categorySearchResults.headerHtml,
-                {
-                    className: 'sort-widget',
-                },
-            );
-
-            this.componentDidMount();
+                'category-page__sort-dropdown',
+                this.props.sortId,
+            )
+                .then((dropdown) => {
+                    this.sortDropdown = dropdown;
+                    this.componentDidMount();
+                })
+                .catch(() => {});
         }
 
         if (isNaN(this.props.categoryId)) {

@@ -9,8 +9,10 @@ import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { AddCommentDialog } from './addCommentDialog';
 import { useCheckUserLogin } from '@/features/auth';
 
-
-export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps> {
+export class CommentWidget extends Component<
+    HTMLDivElement,
+    CommentWidgetProps
+> {
     protected btn: Button;
     protected commentsColumn: CommentCard[];
     protected dialog: AddCommentDialog;
@@ -29,54 +31,57 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
 
     renderDialog() {
         useCheckUserLogin()
-            .then( (isLogged) => {
-                this.dialog = new AddCommentDialog(
-                    this.htmlElement, {
-                        className: 'comment-widget__add-dialog',
-                        productID: this.props.productID,
-                        productDescription: this.props.productDescription,
-                        productSrc: this.props.productSrc,
-                        isAuth: isLogged,
-                    }
-                )
-                this.componentDidMount();
-            } )
+            .then((isLogged) => {
+                this.dialog = new AddCommentDialog(this.htmlElement, {
+                    className: 'comment-widget__add-dialog',
+                    productID: this.props.productID,
+                    productDescription: this.props.productDescription,
+                    productSrc: this.props.productSrc,
+                    isAuth: isLogged,
+                    addProductCallback: () => {
+                        this.renderSection();
+                    },
+                });
+            })
             .catch((error) => {
                 console.log(error);
-            } )
+            });
     }
 
-
     renderSection() {
-        this.commentsColumn = []
+        this.commentsColumn.forEach((comment) => {
+            comment.destroy();
+        });
+        this.commentsColumn = [];
         useGetCommentCards(
             0, // Number(this.props.params["limit"])
             5, // Number(this.props.params["lastReviewID"])
-            this.props.productID
+            this.props.productID,
         )
             .then((comments: ((parent: Element) => CommentCard)[]) => {
                 if (comments.length === 0) {
                     const emptyCommentDiv = new EmptyContainer(
                         this.htmlElement.getElementsByClassName(
-                            "comment-widget__comments"
+                            'comment-widget__comments',
                         )[0],
                         {
                             className: 'comment-widget__commentsEMPTY',
-                        }
-                    )
-                    emptyCommentDiv.htmlElement.innerText = 'Будьте первым, кто оставит комментарий!';
+                        },
+                    );
+                    emptyCommentDiv.htmlElement.innerText =
+                        'Будьте первым, кто оставит комментарий!';
                 }
-                for (let i=0; i<comments.length; i++) {
+                for (let i = 0; i < comments.length; i++) {
                     const commentCard = comments[i](
                         this.htmlElement.getElementsByClassName(
-                            "comment-widget__comments"
-                        )[0]
+                            'comment-widget__comments',
+                        )[0],
                     );
                     this.commentsColumn[i] = commentCard;
                 }
             })
             .catch((error) => {
-                console.error("Ошибка при загрузке комментариев:", error);
+                console.error('Ошибка при загрузке комментариев:', error);
             });
     }
 
@@ -102,6 +107,16 @@ export class CommentWidget extends Component<HTMLDivElement, CommentWidgetProps>
 
     protected render() {
         this.renderTemplate();
+        this.btn = new Button(
+            this.htmlElement.getElementsByClassName('comment-widget__info')[0],
+            {
+                className: 'page-widget__bottom',
+                btnText: 'Оставить отзыв',
+                type: 'button',
+                btnStyle: 'bright',
+            },
+        );
+        this.commentsColumn = [];
         this.renderBtn();
         this.renderSection();
         this.renderDialog();

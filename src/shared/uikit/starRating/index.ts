@@ -1,1 +1,1 @@
-export { Rating } from './ui';
+export { Rating, ratingStarTmpl } from './ui';

@@ -7,7 +7,6 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
-import { CommentPage } from '@/pages/comment';
 import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
@@ -325,19 +324,6 @@ export function createConfig() {
                     text: 'Профиль',
                     iconTmpl: userIconTmpl,
                     mobileIconTmpl: userIconTmpl,
-                },
-            },
-            comment: {
-                url: '/comment',
-                logged: 'both',
-                router: {
-                    navigation: ['main'],
-                    component: (
-                        parent: Element,
-                        params: { [name: string]: string },
-                    ) => {
-                        return new CommentPage(parent, params);
-                    },
                 },
             },
         },

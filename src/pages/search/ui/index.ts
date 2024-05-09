@@ -3,11 +3,13 @@ import { SearchResults } from '@/widgets/searchResults';
 import searchPageTmpl from './index.template.pug';
 import { SearchPageProps } from './index.types';
 import { Component } from '@/shared/@types/index.component';
-import { SortWidget } from '@/widgets/sort/ui';
+import { useGetSortDropdown, changeSortItem } from '@/features/sort';
+import { DropDown } from '@/shared/uikit/dropdown';
+import { TextItem } from '@/shared/uikit/textItem';
 
 export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
     protected searchResults: SearchResults;
-    protected sortWidget: SortWidget;
+    protected sortDropdown: DropDown<TextItem>;
     protected query: string;
 
     constructor(
@@ -20,7 +22,7 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
         super(parent, searchPageTmpl, {
             className: 'search-page',
             query: params.query,
-            sortId: Number(params['sortID']),
+            sortId: params['sortID'],
             navigateToMain: navigateToMain,
             navigateToCart: navigateToCart,
             navigateToSearch: navigateToSearch,
@@ -29,7 +31,11 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
 
     updateWithParams(params: { [name: string]: string }) {
         if (params.query) {
-            this.searchQuery(params.query, Number(params['sortID']));
+            this.searchQuery(params.query, params['sortID']);
+        }
+
+        if (params.sortID) {
+            changeSortItem(this.sortDropdown, params.sortID);
         }
     }
 
@@ -37,13 +43,13 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
         this.props.navigateToMain();
     }
 
-    searchQuery(query: string, sortId: number) {
+    searchQuery(query: string, sortId: string) {
         this.query = query;
         this.searchResults.searchByQuery(query, sortId);
     }
 
     protected componentDidMount() {
-        this.sortWidget.htmlElement.addEventListener('click', (e: Event) => {
+        this.sortDropdown.htmlElement.addEventListener('click', (e: Event) => {
             const target = e.target as HTMLElement;
             if (target.dataset['sortID']) {
                 this.props.navigateToSearch({
@@ -66,10 +72,16 @@ export class SearchPage extends Component<HTMLDivElement, SearchPageProps> {
                 sortId: this.props.sortId,
             });
 
-            this.sortWidget = new SortWidget(this.searchResults.headerHtml, {
-                className: 'sort-widget',
-            });
-            this.componentDidMount();
+            useGetSortDropdown(
+                this.searchResults.headerHtml,
+                'search-page__sort-dropdown',
+                this.props.sortId,
+            )
+                .then((dropdown) => {
+                    this.sortDropdown = dropdown;
+                    this.componentDidMount();
+                })
+                .catch(() => {});
         }
 
         if (this.props.query === undefined) {

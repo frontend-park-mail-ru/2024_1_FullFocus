@@ -4,4 +4,5 @@ export interface addCommentDialogProps {
     className: string;
     productSrc: string;
     productDescription: string;
+    addProductCallback: () => void;
 }

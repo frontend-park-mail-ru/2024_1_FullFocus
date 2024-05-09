@@ -29,6 +29,8 @@ export class CategoriesList extends Component<
         this.categoriesDropDown = new DropDown(this.htmlElement, {
             className: 'categories-list-dropdown',
             defaultText: 'Категории',
+            size: 'fill',
+            border: false,
         });
 
         getCategories()
