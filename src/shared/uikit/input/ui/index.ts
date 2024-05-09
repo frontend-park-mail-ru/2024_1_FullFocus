@@ -12,7 +12,10 @@ export interface InputProps {
     name: string;
     status: InputStatus;
     initialValue?: string;
+    maxLen?: number;
 }
+
+const DEFAULT_MAX_LEN = 100;
 
 export class Input extends Component<HTMLInputElement, InputProps> {
     /**
@@ -60,10 +63,28 @@ export class Input extends Component<HTMLInputElement, InputProps> {
         this.htmlInput.value = string;
     }
 
+    protected componentDidMount() {
+        this.htmlElement.addEventListener('input', () => {
+            if (this.inputValue.length > this.props.maxLen) {
+                this.inputValue = this.inputValue.substring(
+                    0,
+                    this.props.maxLen,
+                );
+            }
+        });
+    }
+
     protected render() {
         this.props.initialValue = this.props.initialValue
             ? this.props.initialValue
             : '';
+
+        this.props.maxLen = this.props.maxLen
+            ? this.props.maxLen
+            : DEFAULT_MAX_LEN;
+
         this.renderTemplate();
+
+        this.componentDidMount();
     }
 }

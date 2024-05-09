@@ -4,6 +4,8 @@ import dropDownTmpl from './index.template.pug';
 import { DropDownProps } from './index.types';
 import { Component } from '@/shared/@types/index.component';
 
+export type { DropDownProps } from './index.types';
+
 export class DropDown<
     DropDownItem extends Component<Element>,
 > extends Component<HTMLElement, DropDownProps> {
@@ -27,12 +29,12 @@ export class DropDown<
 
     show() {
         this.status = 'opened';
-        this.htmlItemsSection.classList.remove('dropdown_hidden');
+        this.htmlElement.classList.remove('dropdown_hidden');
     }
 
     hide() {
         this.status = 'closed';
-        this.htmlItemsSection.classList.add('dropdown_hidden');
+        this.htmlElement.classList.add('dropdown_hidden');
     }
 
     toggle() {
@@ -72,10 +74,17 @@ export class DropDown<
             item.destroy();
         });
         this.items = {};
+        this.setDefaultText();
     }
 
     itemById(id: string): DropDownItem {
         return this.items[id];
+    }
+
+    setDefaultText() {
+        if (this.props.defaultText) {
+            this.mainText = this.props.defaultText;
+        }
     }
 
     set mainText(text: string) {
@@ -101,11 +110,10 @@ export class DropDown<
     }
 
     protected render() {
-        this.renderTemplate();
+        this.props.size = this.props.size ?? 'xs';
+        this.props.border = this.props.border ?? true;
 
-        if (this.props.width) {
-            this.htmlElement.style.width = this.props.width;
-        }
+        this.renderTemplate();
 
         this.htmlTogglerSection = this.htmlElement.getElementsByClassName(
             'dropdown__toggler',

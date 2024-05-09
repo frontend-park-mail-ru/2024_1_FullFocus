@@ -7,7 +7,8 @@ case style
 a(class=`${className} text product-card product-card_` + modifier href=`/product/${id}`)
     img(class="product-card__img product-card__img_" + modifier src=`${src}`  data-link alt="img")
     div(class="product-card__info product-card__info_" + modifier data-link )
-        div(class="product-card__info-cost" data-link ) #{price} ₽
+        div(class="product-card__info-top" data-link )
+            span(class="product-card__info-cost text_size-big" data-link ) #{price} ₽
         if name.length > 40
             div(class="product-card__info-description" data-link ) #{name.substr(0, 40)}...
         else

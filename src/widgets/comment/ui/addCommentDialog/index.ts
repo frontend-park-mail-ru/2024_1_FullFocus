@@ -7,6 +7,7 @@ import { parseForm } from '@/entities/form';
 import { addComment } from '@/features/comment/api';
 import { addCommentDialogProps } from '@/widgets/comment/ui/addCommentDialog/index.types';
 import { RatingInput } from '@/shared/uikit/starRatingInput';
+import { isClickOut } from '@/shared/lib/clickOut';
 
 export class AddCommentDialog extends Component<
     HTMLDialogElement,
@@ -25,13 +26,7 @@ export class AddCommentDialog extends Component<
 
     protected componentDidMount() {
         this.htmlElement.addEventListener('click', (e) => {
-            const dialogDimensions = this.htmlElement.getBoundingClientRect();
-            if (
-                e.clientX < dialogDimensions.left ||
-                e.clientX > dialogDimensions.right ||
-                e.clientY < dialogDimensions.top ||
-                e.clientY > dialogDimensions.bottom
-            ) {
+            if (isClickOut(this.htmlElement, e)) {
                 this.htmlElement.close();
             }
         });
@@ -65,6 +60,7 @@ export class AddCommentDialog extends Component<
                             this.formObj.setNotReadonly();
                             if (response.status === 201) {
                                 this.htmlElement.close();
+                                this.props.addProductCallback();
                             }
 
                             if (response.status !== 201) {

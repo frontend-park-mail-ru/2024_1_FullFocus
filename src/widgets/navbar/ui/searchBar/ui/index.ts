@@ -41,7 +41,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected componentDidMount() {
         // TODO remove listener
-        this.throttledSuggests = throttle(useGetSearchSuggestions, 2000);
+        this.throttledSuggests = throttle(useGetSearchSuggestions, 1000);
 
         // Searchbar focused
         this.inputField.htmlElement.addEventListener('focus', (e: Event) => {

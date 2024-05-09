@@ -26,7 +26,9 @@
     padding-top: 8px;
 }
 
-.product-card__info-cost {
+.product-card__info-top {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 4px;
 }
 
@@ -39,8 +41,8 @@ $normal-size-modifier: 36px;
 $small-size-modifier: 18px;
 
 .product-card_vertical {
-    width: clamp($small-size-modifier * 7, 42vw, $normal-size-modifier * 7);
-    height: clamp($small-size-modifier * 13, 70vw, $normal-size-modifier * 11);
+    width: clamp($small-size-modifier * 7, 40vw, $normal-size-modifier * 7);
+    height: clamp($small-size-modifier * 16, 63vw, $normal-size-modifier * 11);
     flex-direction: column;
 }
 

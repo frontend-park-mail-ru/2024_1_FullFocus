@@ -5,4 +5,5 @@ export interface ratingProps {
     size: number;
     fullColorHex: string;
     emptyColorHex: string;
+    style?: 'small' | 'normal';
 }

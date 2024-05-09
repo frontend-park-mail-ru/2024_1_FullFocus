@@ -22,6 +22,7 @@ $border-radius-default: 32px;
     --color-error-light: #ff3633;
     --color-secondary: #808080;
     --color-background: #efefef;
+    --color-background-dark: #e2e6e9;
 
     --btn-height-sm: 50px;
     --btn-height-xs: 30px;
@@ -144,7 +145,7 @@ body {
 /* Text style */
 .text_secondary {
     color: var(--color-secondary);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 700;
 }
 
@@ -160,6 +161,11 @@ body {
     font-size: 1rem;
 }
 
+.text_size-big {
+    font-size: 1.1rem;
+}
+
+// to xs
 .text_size-small {
     font-size: 0.8rem;
 }
@@ -223,10 +229,6 @@ body {
 
     .section-padding {
         padding: $section-padding-xs;
-    }
-
-    .text {
-        font-size: 0.9rem;
     }
 
     .header_h1 {

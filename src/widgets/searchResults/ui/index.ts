@@ -12,13 +12,18 @@ export class SearchResults extends Component<
 > {
     protected productsList: ProductsList<ProductCard>;
     protected header: HTMLDivElement;
+    protected curretnQuery: string;
 
     constructor(parent: Element, props: SearchResultsProps) {
         super(parent, searchResultsTmpl, props);
     }
 
-    searchByQuery(query: string, sortId: number) {
-        this.header.innerText = `Результаты поиска по запросу "${query}"`;
+    searchByQuery(query: string, sortId: string) {
+        if (this.curretnQuery !== query) {
+            this.header.innerText = `Результаты поиска по запросу "${query}"`;
+            this.curretnQuery = query;
+        }
+
         useGetProductCardsSearch(query, 1, 10, sortId)
             .then((cards) => {
                 this.productsList.loadProducts(cards);

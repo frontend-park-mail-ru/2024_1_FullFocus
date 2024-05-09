@@ -12,17 +12,24 @@ export class CategorySearchResults extends Component<
 > {
     protected productsList: ProductsList<ProductCard>;
     protected header: HTMLDivElement;
+    protected currentCategory: number;
 
     constructor(parent: Element, props: CategorySearchResultsProps) {
         super(parent, searchResultsTmpl, props);
     }
 
-    loadCategory(categoryId: number, sortId: number) {
-        this.header.innerText = `Поиск по категории`;
+    loadCategory(categoryId: number, sortId: string) {
+        if (this.currentCategory !== categoryId) {
+            this.header.innerText = `Поиск по категории`;
+        }
+
         useGetProductCardsCategory(categoryId, sortId)
             .then(({ products, category }) => {
                 this.productsList.loadProducts(products);
-                this.header.innerText += ` ${category}`;
+                if (this.currentCategory !== categoryId) {
+                    this.header.innerText += ` ${category}`;
+                    this.currentCategory = categoryId;
+                }
             })
             .catch(() => {
                 this.productsList.clear();
