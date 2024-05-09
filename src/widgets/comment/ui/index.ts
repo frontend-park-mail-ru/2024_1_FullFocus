@@ -85,6 +85,26 @@ export class CommentWidget extends Component<
             });
     }
 
+    renderBtn(){
+        useCheckUserLogin()
+            .then( (isLogged) => {
+                if (isLogged){
+                    this.btn = new Button(
+                        this.htmlElement.getElementsByClassName('comment-widget__info')[0],
+                        {
+                            className: 'page-widget__bottom',
+                            btnText: 'Оставить отзыв',
+                            type: 'button',
+                            btnStyle: 'bright'
+                        });
+                }
+
+            } )
+            .catch((error) => {
+                console.log(error);
+            } )
+    }
+
     protected render() {
         this.renderTemplate();
         this.btn = new Button(
@@ -97,8 +117,8 @@ export class CommentWidget extends Component<
             },
         );
         this.commentsColumn = [];
+        this.renderBtn();
         this.renderSection();
         this.renderDialog();
-        this.componentDidMount();
     }
 }
