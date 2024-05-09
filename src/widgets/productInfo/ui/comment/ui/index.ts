@@ -1,6 +1,6 @@
 import { Component } from '@/shared/@types/index.component';
-import { CommentWidgetProps } from '@/widgets/comment/ui/index.types';
-import commentWidgetTmpl from '@/widgets/comment/ui/index.template.pug';
+import { CommentWidgetProps } from './index.types';
+import commentWidgetTmpl from './index.template.pug';
 import './index.style.scss';
 import { CommentCard } from '@/entities/comment/ui';
 import { Button } from '@/shared/uikit/button';
@@ -35,6 +35,9 @@ export class CommentWidget extends Component<
                     isAuth: isLogged,
                     addProductCallback: () => {
                         this.renderSection();
+                        if (this.props.commentAddedCallback) {
+                            this.props.commentAddedCallback();
+                        }
                     },
                 });
             })
