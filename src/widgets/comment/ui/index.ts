@@ -22,12 +22,7 @@ export class CommentWidget extends Component<
         super(parent, commentWidgetTmpl, props);
     }
 
-    protected componentDidMount() {
-        this.listener = () => {
-            this.dialog.htmlElement.showModal();
-        };
-        this.btn.htmlElement.addEventListener('click', this.listener);
-    }
+    protected componentDidMount() {}
 
     renderDialog() {
         useCheckUserLogin()
@@ -85,37 +80,37 @@ export class CommentWidget extends Component<
             });
     }
 
-    renderBtn(){
+    renderBtn() {
         useCheckUserLogin()
-            .then( (isLogged) => {
-                if (isLogged){
+            .then((isLogged) => {
+                if (isLogged) {
                     this.btn = new Button(
-                        this.htmlElement.getElementsByClassName('comment-widget__info')[0],
+                        this.htmlElement.getElementsByClassName(
+                            'comment-widget__info',
+                        )[0],
                         {
                             className: 'page-widget__bottom',
                             btnText: 'Оставить отзыв',
                             type: 'button',
-                            btnStyle: 'bright'
-                        });
+                            btnStyle: 'bright',
+                        },
+                    );
+                    this.listener = () => {
+                        this.dialog.htmlElement.showModal();
+                    };
+                    this.btn.htmlElement.addEventListener(
+                        'click',
+                        this.listener,
+                    );
                 }
-
-            } )
+            })
             .catch((error) => {
                 console.log(error);
-            } )
+            });
     }
 
     protected render() {
         this.renderTemplate();
-        this.btn = new Button(
-            this.htmlElement.getElementsByClassName('comment-widget__info')[0],
-            {
-                className: 'page-widget__bottom',
-                btnText: 'Оставить отзыв',
-                type: 'button',
-                btnStyle: 'bright',
-            },
-        );
         this.commentsColumn = [];
         this.renderBtn();
         this.renderSection();
