@@ -11,3 +11,9 @@ export interface IUpdateProfileBody {
     email: string;
     phoneNumber: string;
 }
+
+export interface IMainUserInfoResponse {
+    fullName: string;
+    cartItemsAmount: number;
+    avatarName: string;
+}

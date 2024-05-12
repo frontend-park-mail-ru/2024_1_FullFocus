@@ -1,0 +1,11 @@
+- var badgeClass = "badge " + className
+if position == "top-right"
+    - badgeClass = badgeClass + " badge_top-right"
+case color
+    when "red"
+        - badgeClass = badgeClass + " badge_red"
+    when "green"
+        - badgeClass = badgeClass + " badge_green"
+    when "blue"
+        - badgeClass = badgeClass + " badge_blue"
+span(class=badgeClass style=`width: ${width}`) #{text}

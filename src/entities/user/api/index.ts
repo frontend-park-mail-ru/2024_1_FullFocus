@@ -5,7 +5,11 @@ import {
     ajaxPost,
     fetchPicture,
 } from '@/shared/api';
-import { IUpdateProfileBody, IUserResponse } from './index.types';
+import {
+    IMainUserInfoResponse,
+    IUpdateProfileBody,
+    IUserResponse,
+} from './index.types';
 
 export async function checkAuthRequest() {
     return ajaxGet(USER_API_URLS.checkAuth, null);
@@ -31,6 +35,10 @@ export async function logoutRequest() {
 
 export async function getUserData() {
     return ajaxGet<IUserResponse>(USER_API_URLS.userData, []);
+}
+
+export async function getMainUserData() {
+    return ajaxGet<IMainUserInfoResponse>(USER_API_URLS.mainUserInfo, []);
 }
 
 export async function updateProfile(body: IUpdateProfileBody) {

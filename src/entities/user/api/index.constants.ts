@@ -8,6 +8,7 @@ export const USER_API_URLS = {
     updatePicture: '/api/v1/avatar/upload',
     getPicture: '/api/v1/avatar/public/',
     sendCsat: '/api/v1/csat/vote',
+    mainUserInfo: '/api/v1/profile/meta',
     allCsat: '/api/v1/csat/all',
     csatStat: '/api/v1/csat/',
 };

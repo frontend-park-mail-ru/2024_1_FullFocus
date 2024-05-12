@@ -1,0 +1,28 @@
+.badge {
+    color: white;
+    font-family: var(--font-family-main-text);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xs);
+    background-color: var(--color-primary-dark);
+    border-radius: var(--border-radius-md);
+    padding: 2px 8px;
+    text-align: center;
+}
+
+.badge_red {
+    background-color: var(--color-error-normal);
+}
+
+.badge_green {
+    background-color: var(--color-green-normal);
+}
+
+.badge_blue {
+    background-color: var(--color-primary-dark);
+}
+
+.badge_top-right {
+    position: absolute;
+    bottom: 70%;
+    left: 70%;
+}

@@ -1,12 +1,12 @@
 export function throttle<Args, Return>(
-    func: (args: Args) => Return,
+    func: (args?: Args) => Return,
     delay: number,
 ) {
     let timeFlag: NodeJS.Timeout = null;
     let lastCall: Args = null;
     let prevLastCall: Args = null;
 
-    return (args: Args) => {
+    return (args?: Args) => {
         if (timeFlag === null) {
             timeFlag = setTimeout(() => {
                 timeFlag = null;

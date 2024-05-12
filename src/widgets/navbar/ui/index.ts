@@ -6,6 +6,7 @@ import { NavbarProps } from './index.types';
 import { Link, LinkProps } from '@/shared/uikit/link';
 import { UserLogged } from './index.types';
 import { SearchBar } from './searchBar';
+import { WithBadge, withTopRightBadge } from '@/shared/uikit/badge';
 
 export type { UserLogged } from './index.types';
 
@@ -14,14 +15,16 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
     protected overlay: HTMLDivElement;
     protected publicLinkProps: Array<{
         pageName: string;
+        badgeText?: string;
         props: LinkProps;
     }>;
     protected privateLinkProps: Array<{
         pageName: string;
         needsLogin: boolean;
+        badgeText?: string;
         props: LinkProps;
     }>;
-    protected navbarItems: { [name: string]: Link };
+    protected navbarItems: { [name: string]: WithBadge<Link> };
     protected searchBar: SearchBar;
     protected isUserLogged: boolean;
     protected publicLayoutChanged: boolean;
@@ -41,11 +44,17 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         this.privateLayoutChanged = false;
     }
 
-    addLink(pageName: string, userLogged: UserLogged, props: LinkProps) {
+    addLink(
+        pageName: string,
+        userLogged: UserLogged,
+        props: LinkProps,
+        badgeText?: string,
+    ) {
         if (userLogged === 'both') {
             this.publicLinkProps.push({
                 pageName: pageName,
                 props: props,
+                badgeText: badgeText,
             });
             this.publicLayoutChanged = true;
         }
@@ -54,6 +63,7 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
             this.privateLinkProps.push({
                 pageName: pageName,
                 props: props,
+                badgeText: badgeText,
                 needsLogin: userLogged === 'logged',
             });
             this.privateLayoutChanged = true;
@@ -76,9 +86,9 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
 
         if (activePageName in this.navbarItems) {
             if (this.activeItemName) {
-                this.navbarItems[this.activeItemName].deactivate();
+                this.navbarItems[this.activeItemName].inner.deactivate();
             }
-            this.navbarItems[activePageName].activate();
+            this.navbarItems[activePageName].inner.activate();
             this.activeItemName = activePageName;
         }
     }
@@ -120,24 +130,34 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
 
     protected renderPublic() {
         this.publicLinksElement.innerHTML = '';
-        this.publicLinkProps.forEach(({ pageName, props }) => {
-            this.navbarItems[pageName] = new Link(
+        this.publicLinkProps.forEach(({ pageName, props, badgeText }) => {
+            this.navbarItems[pageName] = withTopRightBadge(
+                (parent: Element) => {
+                    return new Link(parent, props);
+                },
                 this.publicLinksElement,
-                props,
+                'container-' + props.className,
+                badgeText,
             );
         });
     }
 
     protected renderPrivate(isLogged: boolean) {
         this.privateLinksElement.innerHTML = '';
-        this.privateLinkProps.forEach(({ pageName, needsLogin, props }) => {
-            if (needsLogin === isLogged) {
-                this.navbarItems[pageName] = new Link(
-                    this.privateLinksElement,
-                    props,
-                );
-            }
-        });
+        this.privateLinkProps.forEach(
+            ({ pageName, needsLogin, props, badgeText }) => {
+                if (needsLogin === isLogged) {
+                    this.navbarItems[pageName] = withTopRightBadge(
+                        (parent: Element) => {
+                            return new Link(parent, props);
+                        },
+                        this.privateLinksElement,
+                        'container-' + props.className,
+                        badgeText,
+                    );
+                }
+            },
+        );
     }
 
     hide() {
@@ -146,5 +166,23 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
 
     show() {
         this.htmlElement.hidden = false;
+    }
+
+    updateBadge(pageName: string, badgeText: string) {
+        if (pageName in this.navbarItems) {
+            this.navbarItems[pageName].updateBadge(badgeText);
+        }
+    }
+
+    hideBadge(pageName: string) {
+        if (pageName in this.navbarItems) {
+            this.navbarItems[pageName].hideBadge();
+        }
+    }
+
+    showBadge(pageName: string) {
+        if (pageName in this.navbarItems) {
+            this.navbarItems[pageName].showBadge();
+        }
     }
 }

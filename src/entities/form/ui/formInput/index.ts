@@ -75,7 +75,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
         this.errorBlock = new EmptyContainer(this.htmlElement, {
             className:
                 this.props.errorBlockClassName +
-                ' text_size-small text_weight-semibold',
+                ' text_size-xs text_weight-semibold',
         });
 
         this.errorBlock.htmlElement.hidden = true;
