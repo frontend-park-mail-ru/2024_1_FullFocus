@@ -8,10 +8,6 @@
     src: url('./shared/fonts/Montserrat-VariableFont_wght.ttf');
 }
 
-$color-green-normal: #157f1f;
-$color-green-light: #1fc130;
-$color-green-lighter: #3ee04e;
-
 $border-radius-default: 32px;
 
 :root {
@@ -20,12 +16,27 @@ $border-radius-default: 32px;
     --color-primary-light: #68e7dd;
     --color-error-normal: #ff0400;
     --color-error-light: #ff3633;
+    --color-green-normal: #157f1f;
+    --color-green-light: #1fc130;
+    --color-green-lighter: #3ee04e;
     --color-secondary: #808080;
     --color-background: #efefef;
     --color-background-dark: #e2e6e9;
 
+    --border-radius-md: 16px;
+
     --btn-height-sm: 50px;
     --btn-height-xs: 30px;
+
+    --font-family-main-text: 'Open Sans', sans-serif;
+
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --font-size-xs: 0.8rem;
 }
 
 $breakpoint-2xl: 1546px;
@@ -146,14 +157,14 @@ body {
 .text_secondary {
     color: var(--color-secondary);
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 .text {
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--font-family-main-text);
     color: black;
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     text-decoration: none;
 }
 
@@ -165,25 +176,28 @@ body {
     font-size: 1.1rem;
 }
 
-// to xs
 .text_size-small {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.text_size-xs {
+    font-size: var(--font-size-xs);
 }
 
 .text_weight-light {
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
 }
 
 .text_weight-regular {
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
 }
 
 .text_weight-semibold {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .text_weight-bold {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 @media (max-width: $breakpoint-2xl) {
