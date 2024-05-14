@@ -30,6 +30,7 @@ export class Link extends Component<HTMLLinkElement, LinkProps> {
 
     protected render(): void {
         this.props.iconOnly = this.props.iconOnly ?? false;
+        this.props.direction = this.props.direction ?? 'horizontal';
 
         this.renderTemplate();
 

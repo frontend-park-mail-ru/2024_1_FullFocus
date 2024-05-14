@@ -3,6 +3,7 @@ import { createConfig } from '../useCreateConfig';
 import { RouterConfig } from './../../router/index.types';
 import { LinkProps } from '@/shared/uikit/link';
 
+// eslint-disable-next-line max-lines-per-function
 export function getConfig() {
     const config = createConfig();
 
@@ -40,12 +41,17 @@ export function getConfig() {
             if (item.children) {
                 Object.entries(item.children.pages).forEach(
                     ([childName, child]) => {
+                        const match = child.url.match(/([/\w]+)({(\w+)})?/);
+                        const url = match.length >= 2 ? match[1] : undefined;
+                        const slugName =
+                            match.length >= 4 ? match[3] : undefined;
                         routerConfig.pages[name + '-' + childName] = {
                             rawPage: item.router.rawPage ?? false,
-                            url: item.url + child.url,
+                            url: item.url + url,
                             logged: item.logged,
                             base: name,
                             renderChild: child.renderChild,
+                            slugParamName: slugName,
                         };
                     },
                 );
@@ -65,6 +71,7 @@ export function getConfig() {
                         text: item.navbarLink.text,
                         href: defaultUrl,
                         iconTmpl: item.navbarLink.iconTmpl,
+                        direction: 'vertical',
                         style: item.navbarLink.style,
                         imgName: item.navbarLink.imgName,
                     },
@@ -77,8 +84,8 @@ export function getConfig() {
                             className: 'mobile-' + item.navbarLink.className,
                             text: item.navbarLink.text,
                             href: defaultUrl,
+                            direction: 'vertical',
                             iconTmpl: item.navbarLink.mobileIconTmpl,
-                            // iconOnly: true,
                         },
                         logged: item.logged,
                     };

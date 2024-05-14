@@ -2,46 +2,41 @@ import './index.style.scss';
 import orderCardTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { OrderCardProps } from './index.types';
-import { Badge, BadgeColor } from '@/shared/uikit/badge';
+import { Badge } from '@/shared/uikit/badge';
+import { Link } from '@/shared/uikit/link';
+import { formatBadge } from '../../lib';
+import { formatDate } from '@/shared/lib/date';
 
 export class OrderCard extends Component<HTMLDivElement, OrderCardProps> {
     protected statusBadge: Badge;
+    protected orderLink: Link;
 
     constructor(parent: Element, props: OrderCardProps) {
         super(parent, orderCardTmpl, props);
     }
 
     protected render() {
+        this.props.orderData = formatDate(this.props.orderData);
+
         this.renderTemplate();
 
-        const STATUS_WIDTH = '92px';
+        this.orderLink = new Link(
+            this.htmlElement.getElementsByClassName('order-card__info-left')[0],
+            {
+                className: 'order-card__order-id',
+                text: this.props.id.toString(),
+                href: this.props.orderHref,
+                style: 'primary',
+            },
+        );
+        this.orderLink.htmlElement.classList.add('text_size-small');
 
-        let color: BadgeColor = 'blue';
-        let text: string = '';
-        switch (this.props.status) {
-            case 'created':
-                color = 'blue';
-                text = 'Создан';
-                break;
-            case 'cancelled':
-                color = 'red';
-                text = 'Отменен';
-                break;
-            case 'ready':
-                color = 'green';
-                text = 'Доставлен';
-        }
-
-        this.statusBadge = new Badge(
+        this.statusBadge = formatBadge(
             this.htmlElement.getElementsByClassName(
                 'order-card__info-right',
             )[0],
-            {
-                className: 'order-card__order-status',
-                color: color,
-                text: text,
-                width: STATUS_WIDTH,
-            },
+            'order-card__order-status',
+            this.props.status,
         );
     }
 }

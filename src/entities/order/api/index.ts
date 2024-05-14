@@ -13,7 +13,7 @@ export async function orderRequest(id: number) {
 export async function createOrderRequest(
     items: { productId: number; count: number }[],
 ) {
-    return ajaxPost<{ orderID: number }>(ORDER_API_URLS.create, [], {
+    return ajaxPost(ORDER_API_URLS.create, [], {
         items: items,
         fromCart: true,
     });

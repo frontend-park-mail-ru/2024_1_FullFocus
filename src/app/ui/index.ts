@@ -106,9 +106,13 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
+        this.contentElement.addEventListener('updatenavbar', () => {
+            this.updateNavbarBadges();
+        });
+
         this.throttledUserInfo = throttle(getMainUserData, 2000);
 
-        // registerSW();
+        registerSW();
     }
 
     protected render() {

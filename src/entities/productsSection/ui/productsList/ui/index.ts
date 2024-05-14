@@ -28,7 +28,6 @@ export class ProductsList<
                 const id = Number(target.dataset.id);
                 if (this.productCardById(id).inCart) {
                     this.props.navigateToCart();
-                    // console.log('to cart!');
                 }
 
                 if (!this.productCardById(id).inCart) {
@@ -36,6 +35,11 @@ export class ProductsList<
                         .then(({ status }) => {
                             if (status === 200) {
                                 this.productCardById(id).setInCart();
+                                this.htmlElement.dispatchEvent(
+                                    new Event('updatenavbar', {
+                                        bubbles: true,
+                                    }),
+                                );
                             }
                         })
                         .catch(() => {});

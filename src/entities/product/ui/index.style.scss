@@ -56,7 +56,7 @@ $small-size-modifier: 18px;
 
 // Horizontal card
 .product-card_horizontal {
-    width: 560px;
+    width: 100%;
     height: 100px;
     flex-direction: row;
     gap: 20px;
@@ -68,12 +68,6 @@ $small-size-modifier: 18px;
 
 .product-card__info_horizontal {
     flex-direction: column-reverse;
-}
-
-@media (max-width: 1024px) {
-    .product-card_horizontal {
-        width: 100%;
-    }
 }
 
 @media (max-width: 475px) {

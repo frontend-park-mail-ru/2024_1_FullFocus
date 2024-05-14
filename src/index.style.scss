@@ -20,10 +20,11 @@ $border-radius-default: 32px;
     --color-green-light: #1fc130;
     --color-green-lighter: #3ee04e;
     --color-secondary: #808080;
-    --color-background: #efefef;
+    --color-background: #f2f6f9;
     --color-background-dark: #e2e6e9;
 
     --border-radius-md: 16px;
+    --border-radius-sm: 8px;
 
     --btn-height-sm: 50px;
     --btn-height-xs: 30px;
@@ -95,7 +96,7 @@ body {
 }
 
 .border_radius-sm {
-    border-radius: 8px;
+    border-radius: var(--border-radius-sm);
 }
 
 .border_bottom-radius-sm {

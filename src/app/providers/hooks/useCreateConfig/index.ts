@@ -309,7 +309,7 @@ export function createConfig() {
                             },
                         },
                         order: {
-                            url: '/order',
+                            url: '/order/{id}',
                             renderChild: (
                                 profilePage: Profile,
                                 params: { [name: string]: string },
