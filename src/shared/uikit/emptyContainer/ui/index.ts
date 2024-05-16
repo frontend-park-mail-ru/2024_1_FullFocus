@@ -13,4 +13,8 @@ export class EmptyContainer extends Component<HTMLDivElement, ContainerProps> {
     constructor(parent: Element, props: ContainerProps) {
         super(parent, emptyContainerTmpl, props);
     }
+
+    set innerText(text: string) {
+        this.htmlElement.innerText = text;
+    }
 }

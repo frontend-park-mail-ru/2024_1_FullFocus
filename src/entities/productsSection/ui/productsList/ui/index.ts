@@ -7,6 +7,7 @@ import { addToCart, deleteFromCart } from '@/entities/cart/api';
 import { List } from '@/shared/uikit/list';
 import { isCounterClicked } from '@/shared/uikit/counter';
 import { animateLongRequest } from '@/shared/api/ajax/throttling';
+import { toast } from '@/shared/uikit/toast';
 
 export { ProductsSectionItem, AddToCartBtn } from './productsSectionItem';
 
@@ -15,13 +16,20 @@ export class ProductsList<
 > extends Component<HTMLDivElement, ProductsListProps> {
     protected list: List<ProductsSectionItem<ProductCardType>>;
     protected listener: (e: Event) => void;
+    protected addErrorMsg: (header: string, text: string) => void;
 
     constructor(parent: Element, props: ProductsListProps) {
         super(parent, productsSectionTmpl, props);
+        this.addErrorMsg = toast().addError;
+    }
+
+    protected noAuthError() {
+        this.addErrorMsg('Ошибка', 'Сначала вам необходимо авторизоваться!');
     }
 
     // eslint-disable-next-line max-lines-per-function
     protected componentDidMount() {
+        // eslint-disable-next-line max-lines-per-function
         this.listener = (e: Event) => {
             const target = e.target as HTMLElement;
             if (
@@ -42,6 +50,9 @@ export class ProductsList<
                                     );
                                     this.updateNavbar();
                                 }
+                            }
+                            if (status !== 200) {
+                                this.noAuthError();
                             }
                         },
                         () => {

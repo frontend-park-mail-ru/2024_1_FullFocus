@@ -15,13 +15,15 @@ $border-radius-default: 32px;
     --color-primary-dark: #3a817c;
     --color-primary-light: #68e7dd;
     --color-error-normal: #ff0400;
-    --color-error-light: #ff3633;
+    --color-error-light: #ff5451;
+    --color-error-bg: #ffe5e4;
     --color-green-normal: #157f1f;
     --color-green-light: #1fc130;
     --color-green-lighter: #3ee04e;
     --color-secondary: #808080;
     --color-background: #f2f6f9;
     --color-background-dark: #e2e6e9;
+    --color-background-darker: #d2d6d9;
 
     --border-radius-md: 16px;
     --border-radius-sm: 8px;
@@ -41,6 +43,8 @@ $border-radius-default: 32px;
     --font-size-normal: 1rem;
     --font-size-sm: 0.9rem;
     --font-size-xs: 0.8rem;
+
+    --z-index-on-top: 100;
 }
 
 $breakpoint-2xl: 1546px;

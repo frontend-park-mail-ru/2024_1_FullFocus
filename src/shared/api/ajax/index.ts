@@ -3,7 +3,7 @@ import {
     ALLOWED_PICTURE_TYPES,
     BACKEND_URL,
     METHODS,
-} from './config/index.constants';
+} from '../config/index.constants';
 
 /**
  * Performs ajax request
