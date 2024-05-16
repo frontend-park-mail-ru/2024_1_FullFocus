@@ -26,7 +26,8 @@ $border-radius-default: 32px;
     --border-radius-md: 16px;
     --border-radius-sm: 8px;
 
-    --btn-height-sm: 50px;
+    --btn-height-bg: 50px;
+    --btn-height-sm: 40px;
     --btn-height-xs: 30px;
 
     --font-family-main-text: 'Open Sans', sans-serif;
@@ -37,6 +38,8 @@ $border-radius-default: 32px;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
 
+    --font-size-normal: 1rem;
+    --font-size-sm: 0.9rem;
     --font-size-xs: 0.8rem;
 }
 

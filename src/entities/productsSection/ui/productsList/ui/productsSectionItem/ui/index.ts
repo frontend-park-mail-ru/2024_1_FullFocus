@@ -2,14 +2,16 @@ import './index.style.scss';
 import productsSectionItemTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProductsSectionItemProps } from './index.types';
-import { Button } from '@/shared/uikit/button';
+import { AddToCartBtn } from './addToCartBtn';
+
+export { AddToCartBtn };
 
 export class ProductsSectionItem<
     ProductCardType extends Component<Element>,
 > extends Component<HTMLDivElement, ProductsSectionItemProps> {
-    protected addToCartBtn: Button;
     protected productCardDiv: HTMLDivElement;
     protected productCard: ProductCardType;
+    protected addToCartItem: AddToCartBtn;
     protected btnListener: (e: Event) => void;
     protected productId: number;
 
@@ -22,17 +24,35 @@ export class ProductsSectionItem<
     }
 
     get inCart() {
-        return this.props.isInCart;
+        return this.addToCartItem.inCart;
     }
 
-    setInCart() {
-        this.props.isInCart = true;
-        this.addToCartBtn.btnText = 'В корзину';
+    set counterValue(value: number) {
+        this.addToCartItem.counterValue = value;
+    }
+
+    setInCart(amount: number) {
+        this.addToCartItem.setInCart(amount);
     }
 
     setNotInCart() {
-        this.props.isInCart = false;
-        this.addToCartBtn.btnText = 'Добавить';
+        this.addToCartItem.setNotInCart();
+    }
+
+    setLoading() {
+        this.addToCartItem.setLoading();
+    }
+
+    removeLoading() {
+        this.addToCartItem.removeLoading();
+    }
+
+    setEnabled() {
+        this.addToCartItem.setEnabled();
+    }
+
+    setDisabled() {
+        this.addToCartItem.setDisabled();
     }
 
     insertProductCard(
@@ -42,8 +62,7 @@ export class ProductsSectionItem<
         const { product, id } = getCard(this.productCardDiv);
         this.productCard = product;
         this.productId = id;
-        this.addToCartBtn.htmlElement.setAttribute('data-id', id.toString());
-        this.addToCartBtn.textElement.setAttribute('data-id', id.toString());
+        this.htmlElement.setAttribute('data-id', id.toString());
     }
 
     protected render() {
@@ -53,19 +72,9 @@ export class ProductsSectionItem<
             'products-section-item__product-card',
         )[0] as HTMLDivElement;
 
-        this.addToCartBtn = new Button(this.htmlElement, {
-            className: 'products-section-item__to-cart-btn',
-            btnStyle: 'bright',
-            btnText: '',
-            type: 'button',
-            size: 'xs',
+        this.addToCartItem = new AddToCartBtn(this.htmlElement, {
+            className: 'products-section-item__actions',
+            amount: this.props.amount,
         });
-
-        if (this.props.isInCart) {
-            this.setInCart();
-        }
-        if (!this.props.isInCart) {
-            this.setNotInCart();
-        }
     }
 }

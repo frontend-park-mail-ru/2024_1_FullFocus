@@ -23,3 +23,7 @@ export interface IOrderInfoResponse {
     status: OrderStatus;
     createdAt: string;
 }
+
+export interface IOrderCreatedResponse {
+    orderID: number;
+}

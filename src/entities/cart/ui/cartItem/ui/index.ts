@@ -20,7 +20,7 @@ export class CartItem<
 
         this.counter = new Counter(
             this.htmlElement.getElementsByClassName('cart-item__actions')[0],
-            { className: 'cart-item__counter', initial: 0 },
+            { className: 'cart-item__counter', initial: 0, size: 'xs' },
         );
     }
 
