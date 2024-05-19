@@ -6,6 +6,8 @@ import { CounterProps } from './index.types';
 export class Counter extends Component<HTMLDivElement, CounterProps> {
     protected listener: (e: Event) => void;
     protected countDiv: HTMLDivElement;
+    protected minusBtn: HTMLButtonElement;
+    protected plusBtn: HTMLButtonElement;
     protected count: number;
 
     constructor(parent: Element, props: CounterProps) {
@@ -56,6 +58,14 @@ export class Counter extends Component<HTMLDivElement, CounterProps> {
         this.countDiv = this.htmlElement.getElementsByClassName(
             'counter__data',
         )[0] as HTMLDivElement;
+
+        this.minusBtn = this.htmlElement.getElementsByClassName(
+            'counter__minus',
+        )[0] as HTMLButtonElement;
+
+        this.plusBtn = this.htmlElement.getElementsByClassName(
+            'counter__plus',
+        )[0] as HTMLButtonElement;
     }
 
     set counterValue(value: number) {
@@ -65,5 +75,27 @@ export class Counter extends Component<HTMLDivElement, CounterProps> {
 
     get counterData() {
         return this.count;
+    }
+
+    setDisabled() {
+        this.minusBtn.disabled = true;
+        this.plusBtn.disabled = true;
+        this.htmlElement.classList.add('counter_disabled');
+    }
+
+    setEnabled() {
+        this.minusBtn.disabled = false;
+        this.plusBtn.disabled = false;
+        this.htmlElement.classList.remove('counter_disabled');
+    }
+
+    hide() {
+        this.htmlElement.classList.add('display_none');
+        this.htmlElement.classList.remove('counter');
+    }
+
+    show() {
+        this.htmlElement.classList.remove('display_none');
+        this.htmlElement.classList.add('counter');
     }
 }

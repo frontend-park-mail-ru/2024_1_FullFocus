@@ -9,7 +9,7 @@ import { ProductsSectionItem } from '@/entities/productsSection';
 function renderItem(product: IProductResponse, parent: Element) {
     const psi = new ProductsSectionItem<ProductCard>(parent, {
         className: 'product-section-item-' + product.id,
-        isInCart: product.inCart ?? false,
+        amount: product.amount ?? 0,
     });
     psi.insertProductCard((parent: Element) => {
         const productCard = new ProductCard(parent, {

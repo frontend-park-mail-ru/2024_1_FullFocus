@@ -11,12 +11,12 @@ export class CartPage extends Component<HTMLDivElement, CartPageProps> {
     constructor(
         parent: Element,
         navigateToMainPage: () => void,
-        navigateToOrdePage: () => void,
+        navigateToOrderPage: () => void,
     ) {
         super(parent, cartPageTmpl, {
             className: 'cart-page',
             navigateToMainPage: navigateToMainPage,
-            navigateToOrderPage: navigateToOrdePage,
+            navigateToOrderPage: navigateToOrderPage,
         });
     }
 

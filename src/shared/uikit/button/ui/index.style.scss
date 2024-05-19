@@ -7,10 +7,19 @@ $btn-default-bg-color: #fff;
     border: 0;
     outline: none;
 
-    .icon {
-        width: 32px;
-        height: 32px;
-    }
+    color: #000;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.btn__icon > svg {
+    width: 32px;
+    height: 32px;
+}
+
+.btn_bg {
+    height: var(--btn-height-bg);
 }
 
 .btn_sm,
@@ -26,19 +35,9 @@ $btn-default-bg-color: #fff;
     cursor: pointer;
 }
 
-.btn__text {
-    color: #000;
-    font-family: 'Open Sans';
-    font-size: 16px;
-    font-weight: 400;
-}
-
 @media (max-width: 475px) {
     .btn_xs {
         height: var(--btn-height-xs);
-    }
-
-    .btn__text {
         font-size: 14px;
     }
 }
@@ -47,15 +46,8 @@ $btn-default-bg-color: #fff;
 .btn_bright {
     background-color: var(--color-primary-normal);
     transition: background-color 0.2s;
-    .btn__text {
-        color: white;
-        font-weight: 700;
-    }
-
-    .icon__path {
-        transition: stroke 0.2s;
-        stroke: #fff;
-    }
+    color: white;
+    font-weight: 700;
 }
 
 .btn_bright:hover {
@@ -77,14 +69,8 @@ $btn-default-bg-color: #fff;
     border-radius: 8px;
     width: 50px;
     transition: background-color 0.2s;
-    .btn__text {
-        color: #c0c3c5;
-        font-weight: 700;
-    }
-    .icon__path {
-        transition: stroke 0.2s;
-        stroke: #c0c3c5;
-    }
+    color: #c0c3c5;
+    font-weight: 700;
 }
 
 .btn_white-with-bg:hover {
@@ -101,7 +87,7 @@ $btn-default-bg-color: #fff;
     background-color: $color-green-light;
 }
 
-.btn_green .btn__text {
+.btn_green {
     color: white;
     font-weight: 700;
 }
@@ -115,24 +101,11 @@ $btn-default-bg-color: #fff;
 .btn_white {
     background-color: #fff;
     transition: color 0.2s;
-    .btn__text {
-        color: #c0c3c5;
-        font-weight: 700;
-    }
-
-    .icon__path {
-        transition: stroke 0.2s;
-        stroke: #c0c3c5;
-    }
+    color: #c0c3c5;
+    font-weight: 700;
 }
 
 .btn_white:hover {
-    .btn__text {
-        color: var(--color-primary-normal);
-        font-weight: 700;
-    }
-
-    .icon__path {
-        stroke: var(--color-primary-normal);
-    }
+    color: var(--color-primary-normal);
+    font-weight: 700;
 }

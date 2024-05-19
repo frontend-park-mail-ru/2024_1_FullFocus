@@ -32,7 +32,7 @@ export async function productsRequestCategory(
 ) {
     const queryParams = [
         { key: 'page', value: '1' },
-        { key: 'limit', value: '10' },
+        { key: 'limit', value: '12' },
     ];
 
     if (sortId) {

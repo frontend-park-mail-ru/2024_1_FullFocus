@@ -1,1 +1,1 @@
-export { ProductsSectionItem } from './ui';
+export { ProductsSectionItem, AddToCartBtn } from './ui';

@@ -5,7 +5,7 @@ export interface IProductResponse {
     imgSrc: string;
     seller: string;
     rating: number;
-    inCart: boolean;
+    amount: number;
 }
 
 // TODO make it to the actual request
