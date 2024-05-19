@@ -35,6 +35,7 @@ export class CartItemsSection extends Component<
                     if (status === 200) {
                         this.clearCart();
                         this.props.clearCartCallback();
+                        this.updateNavbar();
                     }
                 })
                 .catch(() => {});
@@ -62,6 +63,7 @@ export class CartItemsSection extends Component<
                         .then(({ data }) => {
                             if (data.count === 0) {
                                 this.removeItemById(id);
+                                this.updateNavbar();
                             }
                             if (data.count !== 0) {
                                 this.getItemById(id).counterValue = data.count;
@@ -83,6 +85,14 @@ export class CartItemsSection extends Component<
         };
 
         this.htmlElement.addEventListener('click', this.counterActionListener);
+    }
+
+    private updateNavbar() {
+        this.htmlElement.dispatchEvent(
+            new Event('updatenavbar', {
+                bubbles: true,
+            }),
+        );
     }
 
     protected render() {
