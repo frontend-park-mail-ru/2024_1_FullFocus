@@ -6,10 +6,12 @@ import { MainPageProps } from './index.types';
 import { createIframe } from '@/shared/lib/createIframe';
 import { getAllCsat } from '@/entities/user/api';
 import { useCheckUserLogin } from '@/features/auth';
+import { CategoriesList } from '@/widgets/categoriesList';
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
     protected iframe: HTMLIFrameElement;
+    protected productsCategories: CategoriesList;
     protected removeIframe: () => void;
 
     /**
@@ -40,27 +42,40 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected render() {
         this.renderTemplate();
 
-        this.productsSection = new ProductsSection(this.htmlElement, {
-            className: 'products-section-popular',
-            navigateToCart: this.props.navigateToCart,
-        });
+        this.productsCategories = new CategoriesList(
+            this.htmlElement.getElementsByClassName('categories')[0],
+            {
+                className: 'categories__categories-list',
+            },
+        );
+
+        this.productsSection = new ProductsSection(
+            this.htmlElement.getElementsByClassName('products')[0],
+            {
+                className: 'products-section-popular',
+                navigateToCart: this.props.navigateToCart,
+            },
+        );
+
         useCheckUserLogin()
             .then((isLogged) => {
                 if (!isLogged) return;
 
                 getAllCsat()
                     .then((response) => {
-                        setTimeout(() => {
-                            const data = createIframe(
-                                this.htmlElement,
-                                'csat-main',
-                                `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
-                                450,
-                                202,
-                            );
-                            this.iframe = data.component;
-                            this.removeIframe = data.remove;
-                        }, 1500);
+                        if (response) {
+                            setTimeout(() => {
+                                const data = createIframe(
+                                    this.htmlElement,
+                                    'csat-main',
+                                    `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
+                                    450,
+                                    202,
+                                );
+                                this.iframe = data.component;
+                                this.removeIframe = data.remove;
+                            }, 1500);
+                        }
                     })
                     .catch(() => {});
             })
