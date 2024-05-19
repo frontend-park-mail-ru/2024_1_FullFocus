@@ -51,7 +51,7 @@ export class ProductsSection extends Component<
             },
         );
 
-        useGetProductCards(1, 10)
+        useGetProductCards(1, 12)
             .then((products) => {
                 this.productsList.loadProducts(products);
             })

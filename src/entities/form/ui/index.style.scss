@@ -33,7 +33,7 @@
     bottom: 0;
     margin: auto;
     border: 4px solid transparent;
-    border-top-color: #ffffff;
+    border-top-color: var(--color-background-dark);
     border-radius: 50%;
     animation: button-loading-spinner 1s ease infinite;
 }

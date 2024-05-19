@@ -265,7 +265,7 @@ export function createConfig() {
                     mobileIconTmpl: cartIconTmpl,
                 },
                 router: {
-                    navigation: ['main', 'profile-orders'],
+                    navigation: ['main', 'profile-order'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
@@ -309,7 +309,7 @@ export function createConfig() {
                             },
                         },
                         order: {
-                            url: '/order',
+                            url: '/order/{id}',
                             renderChild: (
                                 profilePage: Profile,
                                 params: { [name: string]: string },

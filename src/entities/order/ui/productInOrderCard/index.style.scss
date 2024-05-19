@@ -1,4 +1,12 @@
 .product-in-order {
     display: flex;
-    justify-content: space-between;
+}
+
+.product-in-order__product-place {
+    flex: 1;
+}
+
+.product-in-order__total {
+    padding-top: 10px;
+    color: var(--color-secondary);
 }

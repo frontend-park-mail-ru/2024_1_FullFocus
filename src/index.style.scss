@@ -20,12 +20,14 @@ $border-radius-default: 32px;
     --color-green-light: #1fc130;
     --color-green-lighter: #3ee04e;
     --color-secondary: #808080;
-    --color-background: #efefef;
+    --color-background: #f2f6f9;
     --color-background-dark: #e2e6e9;
 
     --border-radius-md: 16px;
+    --border-radius-sm: 8px;
 
-    --btn-height-sm: 50px;
+    --btn-height-bg: 50px;
+    --btn-height-sm: 40px;
     --btn-height-xs: 30px;
 
     --font-family-main-text: 'Open Sans', sans-serif;
@@ -36,6 +38,8 @@ $border-radius-default: 32px;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
 
+    --font-size-normal: 1rem;
+    --font-size-sm: 0.9rem;
     --font-size-xs: 0.8rem;
 }
 
@@ -95,7 +99,7 @@ body {
 }
 
 .border_radius-sm {
-    border-radius: 8px;
+    border-radius: var(--border-radius-sm);
 }
 
 .border_bottom-radius-sm {

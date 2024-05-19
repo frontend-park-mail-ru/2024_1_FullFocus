@@ -3,16 +3,19 @@ import productInfoTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProductInfoProps } from './index.types';
 import { productByIdRequest } from '@/entities/product/api';
-import { Button } from '@/shared/uikit/button';
 import { Rating } from '@/shared/uikit/starRating';
-import { addToCart } from '@/entities/cart/api';
+import { addToCart, deleteFromCart } from '@/entities/cart/api';
 import { CommentWidget } from './comment';
+import { AddToCartBtn } from '@/entities/productsSection/ui/productsList/ui';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     protected commentWidget: CommentWidget;
-    protected buyBtn: Button;
+    protected addToCartbtn: AddToCartBtn;
     protected rating: Rating;
-    protected inCart: boolean;
+    protected amount: number;
+    protected addToCart: (id: number) => void;
+    protected removeFromCart: (id: number) => void;
 
     constructor(parent: Element, props: ProductInfoProps) {
         super(parent, productInfoTmpl, props);
@@ -78,34 +81,128 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         ).innerText = 'доставка ' + deliveryDate;
     }
 
-    setInCart() {
-        this.buyBtn.btnText = 'В корзину';
-        this.inCart = true;
+    setInCart(amount: number) {
+        this.addToCartbtn.setInCart(amount);
     }
 
     setNotInCart() {
-        this.buyBtn.btnText = 'Добавить';
-        this.inCart = false;
+        this.addToCartbtn.setNotInCart();
+    }
+
+    get inCart() {
+        return this.addToCartbtn.inCart;
+    }
+
+    set counterValue(value: number) {
+        this.addToCartbtn.counterValue = value;
     }
 
     protected componentDidMount() {
-        this.buyBtn.htmlElement.addEventListener('click', () => {
-            const inCart = this.inCart;
-
-            if (inCart) {
-                this.props.toCart();
-            }
-
-            if (!inCart) {
-                addToCart(Number(this.props.productId))
-                    .then(({ status }) => {
+        this.addToCartbtn.btn.htmlElement.addEventListener('click', () => {
+            if (!this.inCart) {
+                this.addToCartbtn.setDisabled();
+                animateLongRequest(
+                    addToCart,
+                    ({ status, data }) => {
                         if (status === 200) {
-                            this.setInCart();
+                            this.setInCart(data.count);
+                            this.htmlElement.dispatchEvent(
+                                new Event('updatenavbar', {
+                                    bubbles: true,
+                                }),
+                            );
                         }
-                    })
-                    .catch(() => {});
+                    },
+                    () => {
+                        this.addToCartbtn.setLoading();
+                    },
+                    () => {
+                        this.addToCartbtn.removeLoading();
+                        this.addToCartbtn.setEnabled();
+                    },
+                    500,
+                    1500,
+                )(Number(this.props.productId));
             }
         });
+
+        this.addToCartbtn.counterItem.htmlElement.addEventListener(
+            'click',
+            (e: Event) => {
+                const counterBtn = (e.target as HTMLElement).closest(
+                    '.counter__btn',
+                );
+                const action = (counterBtn as HTMLElement).dataset.action;
+                const id = Number(this.props.productId);
+                if (action === 'minus') {
+                    this.disableInput();
+
+                    animateLongRequest(
+                        deleteFromCart,
+                        ({ status, data }) => {
+                            if (status === 200) {
+                                if (data.count === 0) {
+                                    this.setNotInCart();
+                                    this.updateNavbar();
+                                }
+
+                                if (data.count !== 0) {
+                                    this.counterValue = data.count;
+                                }
+                            }
+                        },
+                        () => {
+                            this.addToCartbtn.setLoading();
+                        },
+                        () => {
+                            this.addToCartbtn.removeLoading();
+                            this.addToCartbtn.setEnabled();
+                        },
+                        500,
+                        1500,
+                    )(id);
+                }
+
+                if (action === 'plus') {
+                    this.disableInput();
+                    animateLongRequest(
+                        addToCart,
+                        ({ status, data }) => {
+                            if (status === 200) {
+                                this.counterValue = data.count;
+                            }
+                        },
+                        () => {
+                            this.addToCartbtn.setLoading();
+                        },
+                        () => {
+                            this.addToCartbtn.removeLoading();
+                            this.addToCartbtn.setEnabled();
+                        },
+                        500,
+                        1500,
+                    )(id);
+                }
+            },
+        );
+    }
+
+    private updateNavbar() {
+        this.htmlElement.dispatchEvent(
+            new Event('updatenavbar', {
+                bubbles: true,
+            }),
+        );
+    }
+
+    protected disableInput() {
+        this.addToCartbtn.setDisabled();
+        this.addToCartbtn.setLoading();
+    }
+
+    protected enableInput() {
+        this.addToCartbtn.setEnabled();
+        this.addToCartbtn.removeLoading();
     }
 
     protected render() {
@@ -134,25 +231,15 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                     },
                 });
                 // Buy btn
-                this.buyBtn = new Button(
+                this.addToCartbtn = new AddToCartBtn(
                     this.htmlElement.getElementsByClassName(
                         'product-info__to-cart-button-container',
                     )[0],
                     {
                         className: 'product-info__to-cart-btn',
-                        btnStyle: 'bright',
-                        btnText: '',
-                        type: 'button',
+                        amount: data.amount,
                     },
                 );
-
-                if (data.inCart) {
-                    this.setInCart();
-                }
-
-                if (!data.inCart) {
-                    this.setNotInCart();
-                }
 
                 this.componentDidMount();
             })
