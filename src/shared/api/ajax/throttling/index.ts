@@ -1,7 +1,4 @@
-export function throttle<Args, Return>(
-    func: (args?: Args) => Return,
-    delay: number,
-) {
+export function throttle<Args>(func: (args?: Args) => void, delay: number) {
     let timeFlag: NodeJS.Timeout = null;
     let lastCall: Args = null;
     let prevLastCall: Args = null;
@@ -14,11 +11,11 @@ export function throttle<Args, Return>(
                 if (args !== lastCall && lastCall !== null) {
                     prevLastCall = lastCall;
                     lastCall = null;
-                    return func(prevLastCall);
+                    func(prevLastCall);
                 }
             }, delay);
 
-            return func(args);
+            func(args);
         }
 
         if (timeFlag !== null) {
