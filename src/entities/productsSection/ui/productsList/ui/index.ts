@@ -92,7 +92,7 @@ export class ProductsList<
                 if (action === 'plus') {
                     this.productCardById(id).setDisabled();
                     animateLongRequest(
-                        deleteFromCart,
+                        addToCart,
                         ({ status, data }) => {
                             if (status === 200) {
                                 this.productCardById(id).counterValue =
