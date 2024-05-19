@@ -21,12 +21,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     protected searchResults: List<SearchSuggestion>;
     protected overlay: HTMLDivElement;
     protected form: HTMLFormElement;
-    protected throttledSuggests: (input: string) => Promise<
-        ((parent: Element) => {
-            item: SearchSuggestion;
-            id: string;
-        })[]
-    >;
+    protected throttledRenderSuggestions: (input: string) => void;
     protected focus: boolean;
     protected currentPromise: Promise<
         ((parent: Element) => {
@@ -41,7 +36,10 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected componentDidMount() {
         // TODO remove listener
-        this.throttledSuggests = throttle(useGetSearchSuggestions, 1000);
+        this.throttledRenderSuggestions = throttle(
+            (input) => this.renderSuggestions(input),
+            1000,
+        );
 
         // Searchbar focused
         this.inputField.htmlElement.addEventListener('focus', (e: Event) => {
@@ -69,7 +67,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             }
 
             if (inputData !== '') {
-                this.renderSuggestions(inputData);
+                this.throttledRenderSuggestions(inputData);
             }
         });
 
@@ -155,9 +153,8 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected renderSuggestions(input: string) {
         this.clearBtn.show();
-
-        this.throttledSuggests(input)
-            .then((items) => {
+        useGetSearchSuggestions(input)
+            ?.then((items) => {
                 if (items.length > 0) {
                     this.searchResults.renderItems(items);
                 }

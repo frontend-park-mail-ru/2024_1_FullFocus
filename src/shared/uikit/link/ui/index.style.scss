@@ -43,7 +43,8 @@
 }
 
 .link-btn:hover {
-    background-color: #3a817c;
+    background-color: var(--color-primary-light);
+    color: white;
 }
 
 // Link with bg

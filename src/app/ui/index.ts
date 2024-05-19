@@ -13,7 +13,7 @@ export class App extends Component<HTMLDivElement> {
     protected page: Component<Element>;
     protected activePageName: string;
     protected contentElement: HTMLDivElement;
-    protected throttledUserInfo: typeof getMainUserData;
+    protected throttledUpdateBadges: () => void;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
     navbar: Navbar;
@@ -71,7 +71,7 @@ export class App extends Component<HTMLDivElement> {
     }
 
     protected updateNavbarBadges() {
-        this.throttledUserInfo()
+        getMainUserData()
             .then(({ status, data }) => {
                 if (status === 200) {
                     const totalCartItems = data.cartItemsAmount;
@@ -106,11 +106,14 @@ export class App extends Component<HTMLDivElement> {
             }
         });
 
-        this.contentElement.addEventListener('updatenavbar', () => {
-            this.updateNavbarBadges();
-        });
+        this.throttledUpdateBadges = throttle(
+            () => this.updateNavbarBadges(),
+            1000,
+        );
 
-        this.throttledUserInfo = throttle(getMainUserData, 2000);
+        this.contentElement.addEventListener('updatenavbar', () => {
+            this.throttledUpdateBadges();
+        });
 
         registerSW();
     }
