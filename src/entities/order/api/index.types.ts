@@ -1,4 +1,4 @@
-type OrderStatus = 'created' | 'cancelled' | 'ready';
+import { OrderStatus } from '../model';
 
 interface IOrderProduct {
     id: number;

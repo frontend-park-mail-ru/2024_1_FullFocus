@@ -1,9 +1,11 @@
 .link {
     transition: 0.2s;
+    color: black;
     text-decoration: none;
 }
 
 .link:hover {
+    color: var(--color-primary-dark);
     cursor: pointer;
 }
 
@@ -49,7 +51,7 @@
     @extend .link;
     transition: background-color 0.2s;
     color: black;
-    padding: 10px 16px;
+    padding: 14px 16px;
     border-radius: 8px;
 }
 
@@ -72,13 +74,20 @@
 
 // Link with icon
 .link-with-icon {
-    @extend .link;
-    color: black;
     display: flex;
+}
+
+.link-with-icon_vertical {
     flex-direction: column;
     align-items: center;
     height: 46px;
     justify-content: end;
+}
+
+.link-with-icon_horizontal {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
 .link-with-icon_icon-only {
@@ -89,28 +98,15 @@
     display: flex;
 }
 
-.link-icon__path {
-    stroke: black;
-    transition: stroke 0.2s;
-}
-
-.link-with-icon:hover {
-    color: #3a817c;
-    .link-icon__path {
-        stroke: #3a817c;
-    }
-}
-
 .link-with-icon__text {
     color: inherit;
 }
 
 @media (max-width: 475px) {
-    .link-with-icon__text {
-        font-size: 12px;
-    }
-
-    .link-with-icon {
+    .link-with-icon_vertical {
+        .link-with-icon__text {
+            font-size: 12px;
+        }
         height: 41px;
     }
 }
@@ -118,15 +114,9 @@
 // Active modifier
 .link_active {
     color: var(--color-primary-normal);
-    .link-icon__path {
-        stroke: var(--color-primary-normal);
-    }
 }
 
 .link_active:hover {
     cursor: default;
     color: var(--color-primary-normal);
-    .link-icon__path {
-        stroke: var(--color-primary-normal);
-    }
 }

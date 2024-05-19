@@ -101,6 +101,11 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                     .then(({ status }) => {
                         if (status === 200) {
                             this.setInCart();
+                            this.htmlElement.dispatchEvent(
+                                new Event('updatenavbar', {
+                                    bubbles: true,
+                                }),
+                            );
                         }
                     })
                     .catch(() => {});

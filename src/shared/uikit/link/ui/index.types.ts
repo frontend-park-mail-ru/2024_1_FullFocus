@@ -6,6 +6,7 @@ export interface LinkProps {
     text: string;
     iconTmpl?: () => string;
     iconOnly?: boolean;
+    direction?: 'vertical' | 'horizontal';
     imgName?: string;
     style?: LinkStyle;
 }

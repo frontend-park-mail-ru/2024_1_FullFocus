@@ -1,4 +1,5 @@
 import { allOrdersRequest, orderRequest } from '@/entities/order';
+import { OrderStatus } from '@/entities/order/model';
 import { ProductInOrderCard } from '@/entities/order/ui';
 import { OrderCard } from '@/entities/order/ui/orderCard';
 import { ProductCard } from '@/entities/product';
@@ -19,7 +20,8 @@ export async function useGetAllOrdersCards() {
                             sum: order.sum,
                             total: order.itemsCount,
                             status: order.status,
-                            orderHref: orderHref + '?id=' + order.id.toString(),
+                            orderHref: orderHref + '/' + order.id.toString(),
+                            orderData: order.createdAt,
                         });
                     });
                 });
@@ -36,7 +38,7 @@ export async function useGetOrder(id: number) {
     const parsedData = {
         sum: 0,
         itemsCount: 0,
-        status: 'canceled',
+        status: 'canceled' as OrderStatus,
         createdAt: '0',
         products: new Array<
             (parent: Element) => ProductInOrderCard<ProductCard>

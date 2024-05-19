@@ -7,4 +7,5 @@ export interface OrderCardProps {
     total: number;
     status: OrderStatus;
     orderHref: string;
+    orderData: string;
 }
