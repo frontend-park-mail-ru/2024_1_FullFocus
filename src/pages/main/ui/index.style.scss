@@ -1,1 +1,25 @@
+.main-page {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+}
 
+.categories {
+    min-width: 300px;
+}
+
+.categories__categories-list {
+    position: sticky;
+    top: 10px;
+}
+
+@media (width <= 1024px) {
+    .main-page {
+        flex-direction: column;
+    }
+
+    .categories {
+        width: 100%;
+        min-width: none;
+    }
+}

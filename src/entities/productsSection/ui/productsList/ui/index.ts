@@ -1,4 +1,3 @@
-import productsSectionTmpl from './index.template.pug';
 import './index.style.scss';
 import { Component } from '@/shared/@types/index.component';
 import { ProductsListProps } from './index.types';
@@ -12,12 +11,16 @@ export { ProductsSectionItem, AddToCartBtn } from './productsSectionItem';
 
 export class ProductsList<
     ProductCardType extends Component<Element>,
-> extends Component<HTMLDivElement, ProductsListProps> {
-    protected list: List<ProductsSectionItem<ProductCardType>>;
+> extends List<ProductsSectionItem<ProductCardType>> {
+    protected navigateToCart: () => void;
     protected listener: (e: Event) => void;
 
     constructor(parent: Element, props: ProductsListProps) {
-        super(parent, productsSectionTmpl, props);
+        super(parent, {
+            className: props.className,
+            wrap: true,
+            emptyText: 'товары отсутствуют',
+        });
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -127,12 +130,6 @@ export class ProductsList<
     protected render() {
         this.renderTemplate();
 
-        this.list = new List(this.htmlElement, {
-            className: 'products-list__products',
-            wrap: true,
-            emptyText: 'товары отсутсвуют',
-        });
-
         this.componentDidMount();
     }
 
@@ -142,15 +139,11 @@ export class ProductsList<
             id: string;
         })[],
     ): void {
-        this.list.renderItems(products);
+        this.renderItems(products);
     }
 
     productCardById(id: number) {
-        return this.list.itemById(id.toString());
-    }
-
-    clear() {
-        this.list.clear();
+        return this.itemById(id.toString());
     }
 
     destroy(): void {

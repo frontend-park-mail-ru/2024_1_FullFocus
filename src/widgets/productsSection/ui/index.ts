@@ -4,7 +4,6 @@ import productsSectionTmpl from './index.template.pug';
 import { ProductsSectionProps } from './index.types';
 import { Component } from '@/shared/@types/index.component';
 import { ProductCard } from '@/entities/product';
-import { CategoriesList } from './categoriesList';
 import { ProductsList } from '@/entities/productsSection/ui/productsList';
 
 export class ProductsSection extends Component<
@@ -13,7 +12,6 @@ export class ProductsSection extends Component<
 > {
     protected productsList: ProductsList<ProductCard>;
     protected productsSection: HTMLDivElement;
-    protected productsCategories: CategoriesList;
     protected listener: (e: Event) => void;
 
     /**
@@ -30,26 +28,10 @@ export class ProductsSection extends Component<
     protected render() {
         this.renderTemplate();
 
-        this.productsSection = this.htmlElement.getElementsByClassName(
-            'products-section__section',
-        )[0] as HTMLDivElement;
-
-        this.productsCategories = new CategoriesList(
-            this.htmlElement.getElementsByClassName(
-                'products-section__categories',
-            )[0],
-            {
-                className: 'categories',
-            },
-        );
-
-        this.productsList = new ProductsList<ProductCard>(
-            this.productsSection,
-            {
-                className: 'products-section__products-list',
-                navigateToCart: this.props.navigateToCart,
-            },
-        );
+        this.productsList = new ProductsList<ProductCard>(this.htmlElement, {
+            className: 'products-section__products-list',
+            navigateToCart: this.props.navigateToCart,
+        });
 
         useGetProductCards(1, 12)
             .then((products) => {

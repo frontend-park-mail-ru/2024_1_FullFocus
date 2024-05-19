@@ -65,11 +65,6 @@ body,
     box-sizing: border-box;
 }
 
-.page {
-    padding-top: 24px;
-    box-sizing: border-box;
-}
-
 .full-bleed {
     box-shadow: 0 0 0 100vmax white;
     clip-path: inset(0 -100vmax);
@@ -90,6 +85,11 @@ body,
     margin-left: auto;
     margin-right: auto;
     padding: 0 1em;
+    box-sizing: border-box;
+}
+
+.page {
+    padding-top: 24px;
     box-sizing: border-box;
 }
 
