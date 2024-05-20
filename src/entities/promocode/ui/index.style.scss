@@ -1,0 +1,10 @@
+.promo-card {
+    border-radius: var(--border-radius-sm);
+}
+
+.promo-card_small {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    background-color: white;
+}
