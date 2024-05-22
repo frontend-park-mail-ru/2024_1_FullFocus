@@ -7,9 +7,11 @@ import { createIframe } from '@/shared/lib/createIframe';
 import { getAllCsat } from '@/entities/user/api';
 import { useCheckUserLogin } from '@/features/auth';
 import { CategoriesList } from '@/widgets/categoriesList';
+import { ProductsSectionRecommendation } from '@/widgets/productsSectionRecommendation';
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
+    protected productsSectionRecommendation: ProductsSectionRecommendation
     protected iframe: HTMLIFrameElement;
     protected productsCategories: CategoriesList;
     protected removeIframe: () => void;
@@ -53,6 +55,14 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
             this.htmlElement.getElementsByClassName('products')[0],
             {
                 className: 'products-section-popular',
+                navigateToCart: this.props.navigateToCart,
+            },
+        );
+
+        this.productsSectionRecommendation = new ProductsSectionRecommendation(
+            this.htmlElement.getElementsByClassName('recommendations')[0],
+            {
+                className: 'products-section-recommendation',
                 navigateToCart: this.props.navigateToCart,
             },
         );

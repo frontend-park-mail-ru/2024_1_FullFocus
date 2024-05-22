@@ -8,5 +8,11 @@ a(class=`${className} text product-card product-card_` + modifier href=`/product
     img(class="product-card__img product-card__img_" + modifier src=`${src}`  data-link alt="img")
     div(class="product-card__info product-card__info_" + modifier data-link )
         div(class="product-card__info-top" data-link )
-            span(class="product-card__info-cost text_size-big" data-link ) #{price} ₽
+            if oldPrice != undefined
+                div(class="product-card__info-top-prices")
+                    span(class="product-card__info-new-cost text_size-big text_weight-bold" data-link ) #{price} ₽
+                    span(class="product-card__info-old-cost text_secondary text_size-small line-through" data-link ) #{oldPrice} ₽
+                    span(class="product-card__info-sale text_weight-bold" data-link ) -#{sale}%
+            else
+                span(class="product-card__info-cost text_size-big" data-link ) #{price} ₽
         div(class="product-card__info-description" data-link ) #{name}
