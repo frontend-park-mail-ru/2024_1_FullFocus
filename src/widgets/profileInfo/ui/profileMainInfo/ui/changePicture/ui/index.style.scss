@@ -30,8 +30,8 @@
     border-radius: 100%;
     color: white;
     transition:
-        opacity 0.3s,
-        background-color 0.2s;
+        opacity var(--transition-time-normal),
+        background-color var(--transition-time-normal);
 }
 
 .change-picture__picture-preview:hover {

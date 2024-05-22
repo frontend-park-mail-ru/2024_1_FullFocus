@@ -25,6 +25,7 @@ export class ProductsList<
 
     // eslint-disable-next-line max-lines-per-function
     protected componentDidMount() {
+        // eslint-disable-next-line max-lines-per-function
         this.listener = (e: Event) => {
             const target = e.target as HTMLElement;
             if (
@@ -47,6 +48,7 @@ export class ProductsList<
                                 }
                             }
                         },
+                        () => {},
                         () => {
                             this.productCardById(id).setLoading();
                         },
@@ -74,13 +76,13 @@ export class ProductsList<
                                     this.productCardById(id).setNotInCart();
                                     this.updateNavbar();
                                 }
-
                                 if (data.count !== 0) {
                                     this.productCardById(id).counterValue =
                                         data.count;
                                 }
                             }
                         },
+                        () => {},
                         () => {
                             this.productCardById(id).setLoading();
                         },
@@ -102,6 +104,7 @@ export class ProductsList<
                                     data.count;
                             }
                         },
+                        () => {},
                         () => {
                             this.productCardById(id).setLoading();
                         },

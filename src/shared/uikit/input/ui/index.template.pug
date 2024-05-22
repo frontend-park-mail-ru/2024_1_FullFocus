@@ -1,7 +1,14 @@
-- var inputClass = 'input-block__input text_weight-light ' + className
+- var inputClass = 'input text_weight-light ' + className
 case status 
     when 'invalid'
-        - inputClass = inputClass + ' input-block__input_invalid'
+        - inputClass = inputClass + ' input_invalid'
     when 'valid'
-        - inputClass = inputClass + ' input-block__input_valid'
-input(type=`${type}` name=`${name}` placeholder=`${placeholder}` class=inputClass value=`${initialValue}`)
+        - inputClass = inputClass + ' input_valid'
+case size 
+    when 'bg'
+        - inputClass = inputClass + ' input_bg'
+    when 'sm'
+        - inputClass = inputClass + ' input_sm'
+    when 'xs'
+        - inputClass = inputClass + ' input_xs'
+input(type=`${type}` name=`${name}` placeholder=`${placeholder}` autocomplete="off" class=inputClass value=`${initialValue}`)

@@ -1,0 +1,13 @@
+.discount {
+    display: flex;
+    justify-content: space-between;
+}
+
+.discount__discount-sum {
+    color: var(--color-error-normal);
+    font-weight: var(--font-weight-bold);
+}
+
+.discount__discount-sum_no-discount {
+    color: var(--color-secondary);
+}

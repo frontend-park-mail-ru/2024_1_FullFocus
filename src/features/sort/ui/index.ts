@@ -9,6 +9,7 @@ function renderItem(sort: ISort) {
             className: `dropdown-category-item-${sort.sortID}`,
             name: sort.sortName,
             id: sort.sortID,
+            textSize: 'header',
         });
 
         item.htmlElement.dataset['sortID'] = sort.sortID.toString();

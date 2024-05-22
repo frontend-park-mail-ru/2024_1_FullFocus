@@ -4,20 +4,12 @@
     gap: 5px;
     border: 2px solid rgb(157, 157, 157);
     border-radius: 8px;
-    transition: border-color 0.1s;
-}
+    transition: border-color var(--transition-time-normal);
 
-.input-block__input {
-    display: inline-block;
-    font-family: inherit;
-    font-size: inherit;
-    height: 50px;
-    flex-grow: 1;
-    padding-left: 15px;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    border-radius: inherit;
+    .input {
+        border: none;
+        flex: 1;
+    }
 }
 
 .hide-show-password-btn {

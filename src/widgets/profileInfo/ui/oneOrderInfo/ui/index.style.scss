@@ -33,3 +33,7 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.main-info__discount-line:empty {
+    display: none;
+}
