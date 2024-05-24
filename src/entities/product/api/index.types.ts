@@ -8,6 +8,19 @@ export interface IProductResponse {
     amount: number;
 }
 
+export interface IProductResponseRecommendation {
+    id: number,
+    name: string,
+    oldPrice: number,
+    imgSrc: string,
+    seller: string,
+    rating: number,
+    benefitType: string,
+    benefitValue: number,
+    newPrice: number,
+    amount: number,
+}
+
 // TODO make it to the actual request
 export interface ProductByCategoriesResponse {
     categoryName: string;

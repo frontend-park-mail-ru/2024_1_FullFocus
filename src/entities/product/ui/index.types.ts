@@ -8,4 +8,6 @@ export interface ProductProps {
     name: string;
     price: number;
     rating?: number;
+    oldPrice?: number;
+    sale?: number;
 }

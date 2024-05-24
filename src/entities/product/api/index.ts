@@ -1,9 +1,9 @@
 import { ajaxGet } from '@/shared/api';
 import {
-    IProductResponse,
+    IProductResponse, IProductResponseRecommendation,
     ProductByCategoriesResponse,
     ProductsBySearchResponse,
-    Suggestions,
+    Suggestions
 } from './index.types';
 import { PRODUCTS_API_URL } from './index.constants';
 
@@ -16,6 +16,12 @@ export async function productsRequest(page: number, limit: number) {
             { key: 'page', value: page.toString() },
             { key: 'limit', value: limit.toString() },
         ],
+    );
+}
+
+export async function productsRequestRecommendation() {
+    return ajaxGet<{ productCards: Array<IProductResponseRecommendation> }>(
+        PRODUCTS_API_URL.getRecommendations, [],
     );
 }
 
