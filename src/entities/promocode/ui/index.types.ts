@@ -4,5 +4,5 @@ export interface PromocodeCardProps {
     style: 'small' | 'full';
     code: string;
     description: string;
-    timeLeft: string;
+    timeLeft?: string;
 }

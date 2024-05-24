@@ -1,4 +1,4 @@
-type BenefitType = 'percentage';
+export type BenefitType = 'percentage';
 
 export type PromocodeById = {
     id: number;

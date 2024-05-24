@@ -1,63 +1,68 @@
-.input-block {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.input-block__input {
+.input {
     display: inline-block;
     font-family: inherit;
     font-size: inherit;
-    height: 50px;
-    border: 2px solid rgb(157, 157, 157);
+    border: 2px var(--color-background-darker) solid;
     border-radius: 8px;
-    flex-grow: 1;
+    width: 100%;
     padding-left: 15px;
     box-sizing: border-box;
-    transition: border-color 0.1s;
+    transition: border-color var(--transition-time-normal);
     outline: none;
 }
 
-.input-block__input:focus {
+.input_bg {
+    height: var(--btn-height-bg);
+}
+
+.input_sm {
+    height: var(--btn-height-sm);
+}
+
+.input_xs {
+    height: var(--btn-height-xs);
+}
+
+.input:focus {
     border-color: #5dcec6;
 }
 
-.input-block__input:focus:hover {
+.input:focus:hover {
     border-color: #5dcec6;
 }
 
-.input-block__input:hover {
+.input:hover {
     border-color: #3a817c;
 }
 
-.input-block__input_invalid {
+.input_invalid {
     border-color: rgb(200, 0, 0);
 }
 
-.input-block__input_invalid:hover {
+.input_invalid:hover {
     border-color: rgb(150, 0, 0);
 }
 
-.input-block__input_invalid:focus {
+.input_invalid:focus {
     border-color: rgb(255, 0, 0);
 }
 
-.input-block__input_invalid:focus:hover {
+.input_invalid:focus:hover {
     border-color: rgb(255, 0, 0);
 }
 
-.input-block__input_valid {
+.input_valid {
     border-color: rgb(0, 180, 0);
 }
 
-.input-block__input_valid:hover {
+.input_valid:hover {
     border-color: rgb(0, 150, 0);
 }
 
-.input-block__input_valid:focus {
+.input_valid:focus {
     border-color: rgb(0, 225, 0);
 }
 
-.input-block__input_valid:focus:hover {
+.input_valid:focus:hover {
     border-color: rgb(0, 225, 0);
 }

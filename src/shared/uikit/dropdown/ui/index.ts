@@ -1,10 +1,13 @@
-import { isClickOut } from '@/shared/lib/clickOut';
 import './index.style.scss';
 import dropDownTmpl from './index.template.pug';
+import './index.emptybg.svg';
+import { isClickOut } from '@/shared/lib/clickOut';
 import { DropDownProps } from './index.types';
 import { Component } from '@/shared/@types/index.component';
 
 export type { DropDownProps } from './index.types';
+
+const FIRST_OPEN_EVENT_NAME = 'firstopen';
 
 export class DropDown<
     DropDownItem extends Component<Element>,
@@ -13,12 +16,30 @@ export class DropDown<
     protected htmlTogglerSection: HTMLDivElement;
     protected htmlMainText: HTMLSpanElement;
     protected htmlItemsSection: HTMLDivElement;
+    protected wasOpened: boolean;
     protected status: 'opened' | 'closed';
 
     constructor(parent: Element, props: DropDownProps) {
         super(parent, dropDownTmpl, props);
         this.items = {};
         this.status = 'closed';
+        this.wasOpened = false;
+    }
+
+    startLoading() {
+        this.htmlElement.classList.add('dropdown--loading');
+    }
+
+    stopLoading() {
+        this.htmlElement.classList.remove('dropdown--loading');
+    }
+
+    addEmptyBg() {
+        this.htmlElement.classList.add('dropdown-with-empty-bg');
+    }
+
+    removeEmptyBg() {
+        this.htmlElement.classList.remove('dropdown-with-empty-bg');
     }
 
     mountToggler(element: HTMLElement) {
@@ -87,6 +108,10 @@ export class DropDown<
         }
     }
 
+    setUnopened() {
+        this.wasOpened = false;
+    }
+
     set mainText(text: string) {
         if (this.props.defaultText) {
             this.htmlMainText.innerText = text;
@@ -97,9 +122,23 @@ export class DropDown<
         return this.status === 'opened';
     }
 
+    get firstOpenEventName() {
+        return FIRST_OPEN_EVENT_NAME;
+    }
+
+    get dropDownItemsElement() {
+        return this.htmlItemsSection;
+    }
+
     protected componentDidMount() {
         this.htmlElement.addEventListener('click', () => {
             this.toggle();
+            if (this.props.dispatchOpenEvent && !this.wasOpened) {
+                this.htmlElement.dispatchEvent(
+                    new Event(FIRST_OPEN_EVENT_NAME),
+                );
+                this.wasOpened = true;
+            }
         });
 
         document.addEventListener('click', (e: MouseEvent) => {
@@ -112,6 +151,7 @@ export class DropDown<
     protected render() {
         this.props.size = this.props.size ?? 'xs';
         this.props.border = this.props.border ?? true;
+        this.props.dispatchOpenEvent = this.props.dispatchOpenEvent ?? false;
 
         this.renderTemplate();
 

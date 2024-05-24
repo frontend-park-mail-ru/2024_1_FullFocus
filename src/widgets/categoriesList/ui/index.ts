@@ -58,6 +58,7 @@ export class CategoriesList extends Component<
                                     className: `dropdown-category-link-${category.id}`,
                                     href: `/category/${category.id}`,
                                     text: category.name,
+                                    textSize: 'header',
                                 }),
                                 id: category.id.toString(),
                             };

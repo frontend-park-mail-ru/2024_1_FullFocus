@@ -38,6 +38,8 @@ export async function useGetOrder(id: number) {
     const parsedData = {
         sum: 0,
         itemsCount: 0,
+        discount: 0,
+        sumWithoutDiscount: 0,
         status: 'canceled' as OrderStatus,
         createdAt: '0',
         products: new Array<
@@ -54,6 +56,7 @@ export async function useGetOrder(id: number) {
 
             if (status === 200) {
                 data.products.forEach((product) => {
+                    parsedData.sumWithoutDiscount += product.price;
                     parsedData.products.push((parent: Element) => {
                         const p = new ProductInOrderCard<ProductCard>(parent, {
                             className: `product-${product.id}`,
@@ -72,6 +75,9 @@ export async function useGetOrder(id: number) {
                         return p;
                     });
                 });
+                parsedData.discount =
+                    parsedData.sumWithoutDiscount - parsedData.sum;
+
                 return parsedData;
             }
             return parsedData;

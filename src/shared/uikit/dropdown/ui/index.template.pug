@@ -1,9 +1,9 @@
-- var sizeClass = 'dropdown_sm header header_h4'
+- var sizeClass = 'dropdown_sm'
 case size
     when 'xs'
-        - sizeClass = 'dropdown_xs header header_h6'
+        - sizeClass = 'dropdown_xs'
     when 'fill'
-        - sizeClass = 'dropdown_fill header header_h4'
+        - sizeClass = 'dropdown_fill'
 
 - var borderClass = ''
 if border
@@ -12,7 +12,7 @@ if border
 div(class=`${className} dropdown dropdown_hidden ` + sizeClass) 
     if (defaultText)
         div(class="dropdown__toggler border_radius-sm " + borderClass) 
-            span(class="dropdown__main-text") #{defaultText}
+            span(class="dropdown__main-text header header_h6") #{defaultText}
             svg(class="dropdown__toggler-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="12" viewBox="0 0 20 12" fill="none")
                 path(d="M1.99984 2L10.3332 10.3333L18.6665 2" stroke="#808080" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round")
     else

@@ -1,5 +1,5 @@
 .link {
-    transition: 0.2s;
+    transition: var(--transition-time-normal);
     color: black;
     text-decoration: none;
 }
@@ -50,7 +50,7 @@
 // Link with bg
 .link-with-bg {
     @extend .link;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-time-normal);
     color: black;
     padding: 14px 16px;
     border-radius: 8px;

@@ -29,7 +29,7 @@ export class OrderCard extends Component<HTMLDivElement, OrderCardProps> {
                 style: 'primary',
             },
         );
-        this.orderLink.htmlElement.classList.add('text_size-small');
+        // this.orderLink.htmlElement.classList.add('text_size-small');
 
         this.statusBadge = formatBadge(
             this.htmlElement.getElementsByClassName(

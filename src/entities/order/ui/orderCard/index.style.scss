@@ -6,6 +6,7 @@
     border-radius: 8px;
     height: 90px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .order-card__info-left {
@@ -19,6 +20,12 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
+}
+
+.order-card__order-id::after {
+    content: '';
+    inset: 0;
+    position: absolute;
 }
 
 @media (max-width: 640px) {

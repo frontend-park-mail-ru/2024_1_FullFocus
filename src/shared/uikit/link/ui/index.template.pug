@@ -2,7 +2,12 @@ if imgName
     a(href=`${href}` class=`link-img ${className}`)
         img(src=`${imgName}` alt=`${text}` class="link-img__img" data-link)
 else
-    - var linkClass = `${className} text text_weight-semibold`
+    - var linkClass = `${className}`
+    case textSize
+        when "header"
+            - linkClass = linkClass + " header header_h6"
+        default
+            - linkClass = linkClass + " text text_weight-semibold"
     - var linkIconClass = "link-with-icon__icon"
     case style
         when "with-bg"

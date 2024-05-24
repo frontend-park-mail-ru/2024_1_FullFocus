@@ -20,11 +20,24 @@ $btn-default-bg-color: #fff;
 
 .btn_bg {
     height: var(--btn-height-bg);
+    .btn__icon > svg {
+        height: var(--btn-height-bg);
+    }
 }
 
 .btn_sm,
 .btn_xs {
     height: var(--btn-height-sm);
+    .btn__icon > svg {
+        height: var(--btn-height-sm);
+    }
+}
+
+.btn_xs-only {
+    height: var(--btn-height-xs);
+    .btn__icon > svg {
+        height: var(--btn-height-xs);
+    }
 }
 
 .btn:hover {
@@ -45,7 +58,7 @@ $btn-default-bg-color: #fff;
 // Bright button
 .btn_bright {
     background-color: var(--color-primary-normal);
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-time-normal);
     color: white;
     font-weight: 700;
 }
@@ -68,7 +81,7 @@ $btn-default-bg-color: #fff;
 .btn_white-with-bg {
     border-radius: 8px;
     width: 50px;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-time-normal);
     color: #c0c3c5;
     font-weight: 700;
 }
@@ -80,7 +93,7 @@ $btn-default-bg-color: #fff;
 // Green button
 .btn_green {
     background-color: $color-green-normal;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-time-normal);
 }
 
 .btn_green:hover {
@@ -100,7 +113,7 @@ $btn-default-bg-color: #fff;
 // White button
 .btn_white {
     background-color: #fff;
-    transition: color 0.2s;
+    transition: color var(--transition-time-normal);
     color: #c0c3c5;
     font-weight: 700;
 }
@@ -108,4 +121,32 @@ $btn-default-bg-color: #fff;
 .btn_white:hover {
     color: var(--color-primary-normal);
     font-weight: 700;
+}
+
+.btn--loading {
+    position: relative;
+}
+
+.btn--loading {
+    .btn__icon,
+    .btn__text {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
+.btn--loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 4px solid transparent;
+    border-top-color: var(--color-background-dark);
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
 }
