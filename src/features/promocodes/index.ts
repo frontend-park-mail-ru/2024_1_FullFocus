@@ -1,1 +1,1 @@
-export { useGetPromocodesDropdown } from './ui';
+export { useGetPromocodesDropdown, useGetPromocodeCardByCode, useGetAllPromocodes } from './ui';

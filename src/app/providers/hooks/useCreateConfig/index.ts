@@ -317,6 +317,12 @@ export function createConfig() {
                                 profilePage.changePage('oneOrder', params);
                             },
                         },
+                        promocodes: {
+                            url: '/promocodes',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('promocodes');
+                            },
+                        },
                     },
                 },
                 navbarLink: {
