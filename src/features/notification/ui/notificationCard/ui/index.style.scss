@@ -1,4 +1,20 @@
 .notification-card {
-    background-color: white;
     border-radius: var(--border-radius-sm);
+}
+
+.notification-card_info {
+    background-color: white;
+}
+
+.notification-card_full {
+    background-color: var(--color-background);
+}
+
+.notification-card__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notification-card__was-read-marker > circle {
+    fill: var(--color-error-normal);
 }

@@ -19,6 +19,9 @@ export class NotificationCard extends Component<
     }
 
     protected render() {
+        this.props.style = this.props.style ?? 'info';
+        this.props.wasRead = this.props.wasRead ?? true;
+
         this.renderTemplate();
 
         this.statusElement = this.htmlElement.getElementsByClassName(

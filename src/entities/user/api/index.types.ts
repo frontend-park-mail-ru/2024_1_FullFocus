@@ -17,3 +17,14 @@ export interface IMainUserInfoResponse {
     cartItemsAmount: number;
     avatarName: string;
 }
+
+export type NotificationResponse = {
+    id: number;
+    readStatus: boolean;
+    createdAt: string;
+    payload: {
+        orderID: number;
+        oldStatus: string;
+        newStatus: string;
+    };
+};

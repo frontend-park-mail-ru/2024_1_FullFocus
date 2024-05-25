@@ -11,4 +11,5 @@ export const USER_API_URLS = {
     mainUserInfo: '/api/v1/profile/meta',
     allCsat: '/api/v1/csat/all',
     csatStat: '/api/v1/csat/',
+    getNotificationsAll: '/api/v1/notifications',
 };

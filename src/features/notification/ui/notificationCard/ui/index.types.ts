@@ -4,4 +4,6 @@ export interface NotificationCardProps {
     className: string;
     id: string;
     status: OrderStatus;
+    style?: 'full' | 'info';
+    wasRead?: boolean;
 }

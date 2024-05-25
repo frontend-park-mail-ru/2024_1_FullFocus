@@ -9,6 +9,7 @@ import {
     IMainUserInfoResponse,
     IUpdateProfileBody,
     IUserResponse,
+    NotificationResponse,
 } from './index.types';
 
 export async function checkAuthRequest() {
@@ -62,6 +63,13 @@ export async function sendCsatData(quesiontId: number, rate: number) {
         pollID: quesiontId,
         rate: rate,
     });
+}
+
+export async function getAllNotifications() {
+    return ajaxGet<NotificationResponse[]>(
+        USER_API_URLS.getNotificationsAll,
+        [],
+    );
 }
 
 export async function getAllCsat() {
