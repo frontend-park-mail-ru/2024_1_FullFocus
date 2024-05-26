@@ -56,7 +56,8 @@ export async function useGetOrder(id: number) {
 
             if (status === 200) {
                 data.products.forEach((product) => {
-                    parsedData.sumWithoutDiscount += product.price;
+                    parsedData.sumWithoutDiscount +=
+                        product.price * product.count;
                     parsedData.products.push((parent: Element) => {
                         const p = new ProductInOrderCard<ProductCard>(parent, {
                             className: `product-${product.id}`,
