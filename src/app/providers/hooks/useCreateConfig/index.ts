@@ -323,6 +323,12 @@ export function createConfig() {
                                 profilePage.changePage('promocodes');
                             },
                         },
+                        notifcations: {
+                            url: '/notifications',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('notifications');
+                            },
+                        },
                     },
                 },
                 navbarLink: {

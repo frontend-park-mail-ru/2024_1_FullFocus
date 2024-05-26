@@ -19,6 +19,8 @@ case size
         - buttonClass = buttonClass + ' btn_xs'
     when 'xs-only'
         - buttonClass = buttonClass + ' btn_xs-only'
+    when 'no-padding'
+        - buttonClass = buttonClass
     default
         - buttonClass = buttonClass + ' btn_bg'
 button(type=`${type}` class=buttonClass) 

@@ -7,6 +7,7 @@ import { getConfig } from './../providers';
 import { registerSW } from '../providers/serviceWorker';
 import { getMainUserData } from '@/entities/user/api';
 import { throttle } from '@/shared/api/ajax/throttling';
+import { getNotificationCards } from '@/features/notification';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
@@ -14,6 +15,8 @@ export class App extends Component<HTMLDivElement> {
     protected activePageName: string;
     protected contentElement: HTMLDivElement;
     protected throttledUpdateBadges: () => void;
+    protected throttledUserInfo: typeof getMainUserData;
+    protected closeNotificationWS: () => void;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
     navbar: Navbar;
@@ -96,7 +99,7 @@ export class App extends Component<HTMLDivElement> {
     }
 
     protected componentDidMount() {
-        this.htmlElement.addEventListener('click', (e: Event) => {
+        document.addEventListener('click', (e: Event) => {
             const target = e.target as HTMLElement;
             if (
                 target.tagName.toLowerCase() === 'a' ||
@@ -151,6 +154,8 @@ export class App extends Component<HTMLDivElement> {
                 type: 'mobile',
             },
         );
+
+        this.closeNotificationWS = getNotificationCards().close;
 
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);

@@ -39,3 +39,23 @@ export function formatDate(rawDate: string) {
 
     return rawDate;
 }
+
+export function formatTime(rawTime: string) {
+    const match = rawTime.match(/(\d{2}):(\d{2})/);
+    if (match !== null && match.length === 3) {
+        const [, hours, minutes] = match;
+        return `${hours}:${minutes}`;
+    }
+
+    return rawTime;
+}
+
+export function formatFullDate(rawDate: string) {
+    let [date, time] = rawDate.split('T', 2);
+    if (date !== undefined || time !== undefined) {
+        date = formatDate(date);
+        time = formatTime(time);
+    }
+
+    return { date: date, time: time };
+}

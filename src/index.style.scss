@@ -15,7 +15,8 @@ $border-radius-default: 32px;
     --color-primary-dark: #3a817c;
     --color-primary-light: #68e7dd;
     --color-error-normal: #ff0400;
-    --color-error-light: #ff3633;
+    --color-error-light: #ff5451;
+    --color-error-bg: #ffe5e4;
     --color-green-normal: #157f1f;
     --color-green-light: #1fc130;
     --color-green-lighter: #3ee04e;
@@ -45,6 +46,8 @@ $border-radius-default: 32px;
 
     --transition-time-normal: 150ms;
     --transition-time-slower: 200ms;
+
+    --z-index-on-top: 100;
 }
 
 $breakpoint-2xl: 1546px;
@@ -169,6 +172,12 @@ body {
 .text_secondary {
     color: var(--color-secondary);
     font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+}
+
+.text_secondary-xs {
+    color: var(--color-secondary);
+    font-size: var(--font-size-xs);
     font-weight: var(--font-weight-bold);
 }
 

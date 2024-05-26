@@ -41,9 +41,7 @@ export class CommentWidget extends Component<
                     },
                 });
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(() => {});
     }
 
     renderSection() {
@@ -107,9 +105,7 @@ export class CommentWidget extends Component<
                     );
                 }
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(() => {});
     }
 
     protected render() {

@@ -1,0 +1,14 @@
+- var styleModifier = 'toast-card_basic'
+- var buttonStyleModifier = 'close-btn_basic'
+case style
+    when 'error'
+        - styleModifier = 'toast-card_error'
+        - buttonStyleModifier = 'close-btn_error'
+
+output(class=`${className} toast-card ${styleModifier}` data-id=`${id}`)
+    div(class="toast-card__header")
+        div(class="toast-card__header-text header header_h5") #{header}
+        button(class=`close-btn ${buttonStyleModifier}` data-closetoast)
+            svg(class="close-btn__svg" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" data-closetoast)
+                path(class="close-btn__path" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m11.25 4.75l-6.5 6.5m0-6.5l6.5 6.5" data-closetoast)
+    div(class="toast-card__message")

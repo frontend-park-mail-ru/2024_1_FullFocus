@@ -6,6 +6,7 @@ import { addToCart, deleteFromCart } from '@/entities/cart/api';
 import { List } from '@/shared/uikit/list';
 import { isCounterClicked } from '@/shared/uikit/counter';
 import { animateLongRequest } from '@/shared/api/ajax/throttling';
+import { toast } from '@/shared/uikit/toast';
 
 export { ProductsSectionItem, AddToCartBtn } from './productsSectionItem';
 
@@ -14,6 +15,7 @@ export class ProductsList<
 > extends List<ProductsSectionItem<ProductCardType>> {
     protected navigateToCart: () => void;
     protected listener: (e: Event) => void;
+    protected addErrorMsg: (header: string, text: string) => void;
 
     constructor(parent: Element, props: ProductsListProps) {
         super(parent, {
@@ -21,6 +23,11 @@ export class ProductsList<
             wrap: true,
             emptyText: 'товары отсутствуют',
         });
+        this.addErrorMsg = toast().addError;
+    }
+
+    protected noAuthError() {
+        this.addErrorMsg('Ошибка', 'Сначала вам необходимо авторизоваться!');
     }
 
     // eslint-disable-next-line max-lines-per-function
@@ -46,6 +53,9 @@ export class ProductsList<
                                     );
                                     this.updateNavbar();
                                 }
+                            }
+                            if (status !== 200) {
+                                this.noAuthError();
                             }
                         },
                         () => {},

@@ -1,0 +1,1 @@
+export { ProfileNotifications } from './ui';
