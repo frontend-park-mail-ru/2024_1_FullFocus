@@ -58,13 +58,16 @@ export class NotificationsList extends List<NotificationsSection> {
             if (this.props.notificationsByDate.size === 0) {
                 this.setEmptyText();
             }
-            console.log(this.items);
 
             this.totalUnread = this.props.unreadIdsByDate
                 ? this.props.unreadIdsByDate.size
                 : 0;
 
             this.componentDidMount();
+        }
+
+        if (!this.props.notificationsByDate) {
+            this.setEmptyText();
         }
     }
 }

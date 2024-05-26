@@ -23,9 +23,5 @@ export type NotificationResponse = {
     readStatus: boolean;
     createdAt: string;
     type: string;
-    payload: {
-        orderID: number;
-        oldStatus: string;
-        newStatus: string;
-    };
+    payload: string;
 };

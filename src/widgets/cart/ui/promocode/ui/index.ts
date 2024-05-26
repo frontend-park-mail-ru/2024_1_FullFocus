@@ -8,6 +8,7 @@ import { animateLongRequest } from '@/shared/api/ajax/throttling';
 import { useGetPromocodeCardByCode } from '@/features/promocodes/ui';
 import { NewCode } from './newCode';
 import { Confirmation } from './confirmation';
+import { toast } from '@/shared/uikit/toast';
 
 export class CartPromocodes extends Component<
     HTMLDivElement,
@@ -18,9 +19,11 @@ export class CartPromocodes extends Component<
     protected cancelSelectedBtn: Button;
     protected newCode: NewCode;
     protected state: 'NEW_CODE' | 'CONFIRMATION' | 'WITH_CODE' | 'INIT';
+    protected addError: (header: string, text: string) => void;
 
     constructor(parent: Element, props: CartPromocodesProps) {
         super(parent, cartPromocodesTmpl, props);
+        this.addError = toast().addError;
     }
 
     setNewCodeSelection() {
@@ -136,9 +139,18 @@ export class CartPromocodes extends Component<
                         data.activationInfo.value,
                     );
                 }
+
+                if (data === null) {
+                    this.newCode.input.setInvalid();
+                    this.addError('Ошибка', 'Такого промокода не существует');
+                }
             },
             () => {
-                // TODO error message
+                this.newCode.input.setInvalid();
+                this.addError(
+                    'Ошибка',
+                    'Что-то пошло не так, попробуйте сделать это позже',
+                );
             },
             () => {
                 this.newCode.submitBtn.startLoading();
@@ -256,15 +268,6 @@ export class CartPromocodes extends Component<
             (e: Event) => {
                 const target = (e.target as HTMLElement).closest('[data-code]');
                 if (target) {
-                    /*
-                     * this.askForNewCode(
-                     *     (target as HTMLDivElement).dataset['code'],
-                     * )
-                     *     .then((confirmed) => {
-                     *         this.userDecided(confirmed);
-                     *     })
-                     *     .catch(() => {});
-                     */
                     this.putNewCode((target as HTMLDivElement).dataset['code']);
                 }
             },
@@ -273,13 +276,6 @@ export class CartPromocodes extends Component<
         this.newCode.formElement.addEventListener('submit', (e: Event) => {
             e.preventDefault();
             if (this.newCode.input.inputValue.length === MAX_PROMOCODE_LEN) {
-                /*
-                 * this.askForNewCode(this.newCode.input.inputValue)
-                 *     .then((confirmed) => {
-                 *         this.userDecided(confirmed);
-                 *     })
-                 *     .catch(() => {});
-                 */
                 this.putNewCode(this.newCode.input.inputValue);
             }
         });
@@ -299,7 +295,6 @@ export class CartPromocodes extends Component<
                 className: 'promocodes-section__cancel-selted-btn',
                 btnStyle: 'white',
                 type: 'button',
-                // btnText: 'Отменить',
                 size: 'xs-only',
             },
         );

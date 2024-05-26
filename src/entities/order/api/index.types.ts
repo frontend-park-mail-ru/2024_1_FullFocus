@@ -26,4 +26,5 @@ export interface IOrderInfoResponse {
 
 export interface IOrderCreatedResponse {
     orderID: number;
+    newPromocodeID: number;
 }
