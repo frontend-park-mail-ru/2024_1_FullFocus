@@ -167,7 +167,7 @@ export async function useGetProductCardsRecommendation() {
                 }
             > = [];
             if (status === 200) {
-                data.productCards.forEach((product) => {
+                data.forEach((product) => {
                     products.push((parent: Element) => {
                         return {
                             item: renderItem(product, parent),

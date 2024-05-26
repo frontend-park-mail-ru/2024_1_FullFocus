@@ -22,7 +22,7 @@ export async function productsRequest(page: number, limit: number) {
 }
 
 export async function productsRequestRecommendation() {
-    return ajaxGet<{ productCards: Array<IProductResponseRecommendation> }>(
+    return ajaxGet<Array<IProductResponseRecommendation>>(
         PRODUCTS_API_URL.getRecommendations,
         [],
     );
