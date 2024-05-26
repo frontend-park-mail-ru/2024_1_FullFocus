@@ -1,1 +1,1 @@
-export const NOTIFICATION_URL = ':8000/';
+export const NOTIFICATION_URL = '';
