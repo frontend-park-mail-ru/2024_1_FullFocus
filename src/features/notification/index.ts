@@ -1,1 +1,5 @@
-export { getNotificationCards } from './ui';
+export {
+    getNotificationCards,
+    useGetNotificationsList,
+    NotificationCard,
+} from './ui';

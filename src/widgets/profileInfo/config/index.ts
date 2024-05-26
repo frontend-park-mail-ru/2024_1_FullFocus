@@ -1,3 +1,4 @@
+import { ProfileNotifications } from '../ui/notifications';
 import { ProfileOneOrderInfo } from '../ui/oneOrderInfo';
 import { ProfileOrdersInfo } from '../ui/ordersInfo/ui';
 import { ProfileMainInfo } from '../ui/profileMainInfo/ui';
@@ -29,6 +30,15 @@ export const PROFILE_PAGES: profileInfoConfig = {
             return new ProfileOneOrderInfo(parent, {
                 className: props.className,
                 orderId: props.orderId,
+            });
+        },
+    },
+    notifications: {
+        href: '/profile/notifications',
+        text: 'Уведомления',
+        getComponent: (parent: Element, props: IProps) => {
+            return new ProfileNotifications(parent, {
+                className: props.className,
             });
         },
     },

@@ -23,7 +23,6 @@ export class DiagramCard extends Component<HTMLDivElement, DiagramPropsParsed> {
     }
 
     protected render() {
-        console.log(this.props);
         this.renderTemplate();
     }
 }

@@ -1,6 +1,21 @@
-div(class=`notification-card ${className} text`) Статус заказа 
-    span(class='notification-card__link-container')
-    .
-         был изменен на 
-    span(class='notification-card__status')
+if style == 'info'
+     div(class=`notification-card ${className} text`) Статус заказа 
+          span(class='notification-card__link-container')
+          |  был изменен на 
+          span(class='notification-card__status text_weight-semibold')
+else 
+     - var unreadClass = ''
+     if !wasRead
+          - unreadClass = 'notification-card_unread'
 
+     div(class=`notification-card notification-card_full ${className} ${unreadClass}`)
+          div(class='notification-card__header')
+               span(class='text_weight-bold') Изменен статус заказа
+               if !wasRead
+                    include index.unread.pug
+          div(class='notification-card__main') 
+               div(class='notification-card__message text_size-small') Статус заказа 
+                    span(class='notification-card__link-container')
+                    |  был изменен на 
+                    span(class='notification-card__status text_weight-semibold')
+               div(class='text_secondary-xs') #{time}

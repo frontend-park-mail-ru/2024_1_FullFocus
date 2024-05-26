@@ -317,6 +317,12 @@ export function createConfig() {
                                 profilePage.changePage('oneOrder', params);
                             },
                         },
+                        notifcations: {
+                            url: '/notifications',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('notifications');
+                            },
+                        },
                     },
                 },
                 navbarLink: {
