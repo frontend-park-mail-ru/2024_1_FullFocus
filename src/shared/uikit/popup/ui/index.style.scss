@@ -1,0 +1,17 @@
+.popup_fixed {
+    position: fixed;
+}
+
+.popup_absolute {
+    position: absolute;
+}
+
+.popup_shown {
+    display: inline-block;
+    opacity: 1;
+}
+
+.popup_hidden {
+    display: none;
+    opacity: 0;
+}

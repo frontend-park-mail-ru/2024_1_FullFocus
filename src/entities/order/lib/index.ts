@@ -1,6 +1,19 @@
 import { Badge, BadgeColor } from '@/shared/uikit/badge';
 import { OrderStatus } from '../model';
 
+export function formatStatus(orderStatus: OrderStatus) {
+    switch (orderStatus) {
+        case 'created':
+            return 'Создан';
+        case 'cancelled':
+            return 'Отменен';
+        case 'ready':
+            return 'Доставлен';
+        default:
+            return '';
+    }
+}
+
 export function formatBadge(
     parent: Element,
     className: string,

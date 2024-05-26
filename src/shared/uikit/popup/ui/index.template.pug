@@ -1,0 +1,10 @@
+- var popupClass = className + ' popup'
+case position
+    when 'fixed'
+        - popupClass = popupClass + ' popup_fixed';
+    when 'absolute'
+        - popupClass = popupClass + ' popup_absolute';
+    default 
+        - popupClass = popupClass + ' popup_fixed';
+
+div(class=popupClass)
