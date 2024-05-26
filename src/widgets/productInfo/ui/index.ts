@@ -73,6 +73,29 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         ).innerText = `${price} ₽`;
     }
 
+    protected updatePriceAndSale(oldPrice: number, newPrice: number, benefitType: string, benefitValue: number) {
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-old-price',
+            )[0] as HTMLDivElement
+        ).innerText = `${oldPrice} ₽`;
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-new-price',
+            )[0] as HTMLDivElement
+        ).innerText = `${newPrice} ₽`;
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-sale',
+            )[0] as HTMLDivElement
+        ).innerText = `-${benefitValue} %`;
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-new-price',
+            )[0] as HTMLDivElement
+        ).style.backgroundColor = "#10c44c";
+    }
+
     protected updateDelivery(deliveryDate: string) {
         (
             this.htmlElement.getElementsByClassName(
@@ -214,7 +237,11 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 this.updateName(data.name);
                 this.updateSeller(data.seller);
                 this.updateRating(data.rating);
-                this.updatePrice(data.price);
+                if (data.newPrice==0){
+                    this.updatePrice(data.oldPrice);
+                } else {
+                    this.updatePriceAndSale(data.oldPrice, data.newPrice, data.benefitType, data.benefitValue);
+                }
                 this.updateDelivery('послезавтра');
 
                 this.commentWidget = new CommentWidget(this.htmlElement, {

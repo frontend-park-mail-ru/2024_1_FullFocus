@@ -3,11 +3,33 @@
     flex-direction: column;
     gap: 20px;
 }
+.product-info__to-cart-card-old-price{
+    color: var(--color-secondary);
+    text-decoration: line-through;
+    text-decoration-color: var(--color-secondary);
+}
+
+.product-info__to-cart-card-old-price-and-sale{
+    margin-bottom: 32px;
+    margin-top: 5px;
+}
+
+.product-info__to-cart-card-new-price{
+    margin-right: 6px;
+    border-radius: 8px;
+    color: #fff;
+    padding: 2px 8px;
+}
 
 .product-info__picture {
     width: 300px;
     height: 300px;
     border-radius: 32px;
+}
+
+.product-info__to-cart-card-sale{
+    color: var(--color-error-normal);
+    margin-left: 6px;
 }
 
 .product-info__main-info-section {
@@ -43,7 +65,7 @@
 .product-info__to-cart-card-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 32px;
+
 }
 
 .product-info__to-cart-card-bottom-section {

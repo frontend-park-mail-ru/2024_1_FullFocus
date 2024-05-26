@@ -1,11 +1,16 @@
 export interface IProductResponse {
     id: number;
     name: string;
-    price: number;
     imgSrc: string;
     seller: string;
     rating: number;
     amount: number;
+    "oldPrice": number,
+    "description": string,
+    "categories": string[]
+    "benefitType": string,
+    "benefitValue": number,
+    "newPrice": number
 }
 
 export interface IProductResponseRecommendation {
