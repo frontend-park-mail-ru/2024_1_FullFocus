@@ -9,4 +9,5 @@ export interface LinkProps {
     direction?: 'vertical' | 'horizontal';
     imgName?: string;
     style?: LinkStyle;
+    textSize?: 'header' | 'text';
 }

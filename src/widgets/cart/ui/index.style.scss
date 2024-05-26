@@ -22,6 +22,14 @@
 // Cart info
 .cart__info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-info__info,
+.cart-info__promocodes {
+    flex: 1;
 }
 
 // Cart empty
@@ -54,7 +62,20 @@
         flex-direction: column;
     }
 
+    .cart__info {
+        align-items: start;
+        flex-direction: row-reverse;
+        margin-bottom: 24px;
+    }
+
     .cart__main {
         max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .cart__info {
+        align-items: stretch;
+        flex-direction: column-reverse;
     }
 }

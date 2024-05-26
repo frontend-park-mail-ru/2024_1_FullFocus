@@ -16,7 +16,16 @@ export async function orderRequest(id: number) {
 
 export async function createOrderRequest(
     items: { productId: number; count: number }[],
+    promocodeID?: number,
 ) {
+    if (promocodeID) {
+        return ajaxPost<IOrderCreatedResponse>(ORDER_API_URLS.create, [], {
+            items: items,
+            fromCart: true,
+            promocodeID: promocodeID,
+        });
+    }
+
     return ajaxPost<IOrderCreatedResponse>(ORDER_API_URLS.create, [], {
         items: items,
         fromCart: true,

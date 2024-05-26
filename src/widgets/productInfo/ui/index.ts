@@ -97,6 +97,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         this.addToCartbtn.counterValue = value;
     }
 
+    // eslint-disable-next-line max-lines-per-function
     protected componentDidMount() {
         this.addToCartbtn.btn.htmlElement.addEventListener('click', () => {
             if (!this.inCart) {
@@ -113,6 +114,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                             );
                         }
                     },
+                    () => {},
                     () => {
                         this.addToCartbtn.setLoading();
                     },
@@ -151,6 +153,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                                 }
                             }
                         },
+                        () => {},
                         () => {
                             this.addToCartbtn.setLoading();
                         },
@@ -172,6 +175,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                                 this.counterValue = data.count;
                             }
                         },
+                        () => {},
                         () => {
                             this.addToCartbtn.setLoading();
                         },

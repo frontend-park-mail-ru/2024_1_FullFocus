@@ -12,11 +12,11 @@
 }
 
 .product-card__info {
-    transition: 0.1s;
+    transition: var(--transition-time-normal);
 }
 
 .product-card__img {
-    transition: 0.1s;
+    transition: var(--transition-time-normal);
     border-radius: 5px;
 }
 

@@ -30,7 +30,7 @@
 }
 
 .counter__btn {
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-time-normal);
     height: 100%;
     background-color: #adf2ec;
     border-radius: 8px;

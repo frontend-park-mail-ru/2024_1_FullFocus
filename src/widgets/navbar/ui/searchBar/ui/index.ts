@@ -79,11 +79,10 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
         this.searchResults.htmlElement.addEventListener('click', (e: Event) => {
             e.preventDefault();
-            const targetInit = e.target as Element;
+            const targetInit = e.target as HTMLElement;
             if (
                 targetInit.classList.contains('search-result__to-input-btn') ||
-                targetInit.classList.contains('icon') ||
-                targetInit.classList.contains('icon__path')
+                targetInit.dataset['btnicon'] !== undefined
             ) {
                 // Auto complete
                 const target = targetInit.closest('.search-result');

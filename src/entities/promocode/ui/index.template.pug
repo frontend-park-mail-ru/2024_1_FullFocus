@@ -1,0 +1,12 @@
+case style
+    when 'small'
+        div(class=`promo-card promo-card_small ${className}`)
+            span(class='promo-card__code text_size-small text_weight-bold') #{code}
+            span(class='promo-card__description text_size-small') #{description}
+    when 'full'
+        div(class=`promo-card promo-card_full ${className}` data-code=`${code}`)
+            span(class='promo-card__code text_size-big' data-code=`${code}`) Промокод #{code}
+            span(class='promo-card__description text_size-small' data-code=`${code}`) #{description}
+            div(class='promo-card__timeleft' data-code=`${code}`)
+                span(class='promo-card__timeleft-text text_size-small' data-code=`${code}`) Действителен еще
+                span(class='promo-card__timeleft-days text_size-small text_weight-bold' data-code=`${code}`) #{timeLeft}

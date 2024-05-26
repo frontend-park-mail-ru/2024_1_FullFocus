@@ -115,7 +115,7 @@ export class App extends Component<HTMLDivElement> {
             this.throttledUpdateBadges();
         });
 
-        registerSW();
+        // registerSW();
     }
 
     protected render() {

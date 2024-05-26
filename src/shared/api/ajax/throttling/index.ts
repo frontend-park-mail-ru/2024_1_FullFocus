@@ -1,24 +1,28 @@
 export function throttle<Args>(func: (args?: Args) => void, delay: number) {
     let timeFlag: NodeJS.Timeout = null;
     let lastCall: Args = null;
-    let prevLastCall: Args = null;
+    let debounce = false;
+    // let prevLastCall: Args = null;
 
     return (args?: Args) => {
-        if (timeFlag === null) {
+        const withTimeFlag = timeFlag !== null;
+
+        if (!withTimeFlag) {
+            debounce = false;
             timeFlag = setTimeout(() => {
                 timeFlag = null;
 
-                if (args !== lastCall && lastCall !== null) {
-                    prevLastCall = lastCall;
-                    lastCall = null;
-                    func(prevLastCall);
+                if (debounce) {
+                    debounce = false;
+                    func(lastCall);
                 }
             }, delay);
 
             func(args);
         }
 
-        if (timeFlag !== null) {
+        if (withTimeFlag) {
+            debounce = true;
             lastCall = args;
         }
     };
@@ -26,7 +30,8 @@ export function throttle<Args>(func: (args?: Args) => void, delay: number) {
 
 export function animateLongRequest<Args, Return>(
     request: (args?: Args) => Promise<Return>,
-    callback: (args?: Return) => void,
+    thenFunc: (args?: Return) => void,
+    catchFunc: (args?: Return) => void,
     startAnimation: () => void,
     stopAnimation: () => void,
     animateAfter: number,
@@ -52,17 +57,18 @@ export function animateLongRequest<Args, Return>(
                     if (timeFlag === null) {
                         setTimeout(() => {
                             stopAnimation();
-                            callback(response);
+                            thenFunc(response);
                         }, animateFor);
                     }
 
                     if (timeFlag !== null) {
                         stopAnimation();
-                        callback(response);
+                        thenFunc(response);
                     }
                 })
-                .catch(() => {
+                .catch((response: Return) => {
                     stopAnimation();
+                    catchFunc(response);
                 });
         }
     };

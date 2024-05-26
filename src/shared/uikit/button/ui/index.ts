@@ -57,6 +57,14 @@ export class Button extends Component<HTMLButtonElement, ButtonProps> {
         this.htmlElement.classList.remove('btn_disabled');
     }
 
+    startLoading() {
+        this.htmlElement.classList.add('btn--loading');
+    }
+
+    stopLoading() {
+        this.htmlElement.classList.remove('btn--loading');
+    }
+
     protected render() {
         this.renderTemplate();
 
@@ -73,7 +81,20 @@ export class Button extends Component<HTMLButtonElement, ButtonProps> {
                 'beforeend',
                 this.props.btnIconFunc(),
             );
+            this.markIcons();
         }
+    }
+
+    protected markIcons() {
+        const svgs = this.htmlElement.getElementsByTagName('svg');
+        Array.from(svgs).forEach((element) => {
+            element.dataset['btnicon'] = '';
+        });
+
+        const paths = this.htmlElement.getElementsByTagName('path');
+        Array.from(paths).forEach((element) => {
+            element.dataset['btnicon'] = '';
+        });
     }
 
     toggle() {
