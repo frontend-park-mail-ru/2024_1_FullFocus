@@ -71,6 +71,11 @@ export async function getAllNotifications() {
         [],
     );
 }
+export async function readNotification(id: string) {
+    return ajaxPost<null>(USER_API_URLS.readNotification, [], {
+        notificationId: id,
+    });
+}
 
 export async function getAllCsat() {
     return ajaxGet<{ id: number; title: string }[]>(USER_API_URLS.allCsat, []);

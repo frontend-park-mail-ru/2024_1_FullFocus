@@ -7,12 +7,25 @@
 }
 
 .notification-card_full {
+    padding: 10px 20px;
     background-color: var(--color-background);
+}
+
+.notification-card_unread {
+    background-color: var(--color-background-dark);
 }
 
 .notification-card__header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.notification-card__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 10px;
 }
 
 .notification-card__was-read-marker > circle {

@@ -12,4 +12,5 @@ export const USER_API_URLS = {
     allCsat: '/api/v1/csat/all',
     csatStat: '/api/v1/csat/',
     getNotificationsAll: '/api/v1/notifications',
+    readNotification: '/api/v1/notifications/read',
 };

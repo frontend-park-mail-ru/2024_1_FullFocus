@@ -14,6 +14,13 @@ export class List<ListItem extends Component<Element>> extends Component<
         this.items = {};
     }
 
+    protected render() {
+        this.renderTemplate();
+        if (this.props.gap) {
+            this.htmlElement.style.gap = this.props.gap;
+        }
+    }
+
     renderItems(
         items: ((parent: Element) => { item: ListItem; id: string })[],
     ) {
@@ -21,8 +28,7 @@ export class List<ListItem extends Component<Element>> extends Component<
 
         if (items.length !== 0) {
             items.forEach((createItem) => {
-                const { id, item } = createItem(this.htmlElement);
-                this.items[id] = item;
+                this.pushItem(createItem);
             });
         }
 
@@ -31,12 +37,22 @@ export class List<ListItem extends Component<Element>> extends Component<
         }
     }
 
+    pushItem(createItem: (parent: Element) => { item: ListItem; id: string }) {
+        const { id, item } = createItem(this.htmlElement);
+        this.items[id] = item;
+    }
+
     clear() {
         Object.values(this.items).forEach((item) => {
             item.destroy();
         });
         this.items = {};
         this.htmlElement.innerText = '';
+    }
+
+    setEmptyText() {
+        this.clear();
+        this.htmlElement.innerText = this.props.emptyText;
     }
 
     itemById(id: string): ListItem {

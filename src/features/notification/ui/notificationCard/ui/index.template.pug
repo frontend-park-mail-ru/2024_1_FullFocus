@@ -1,18 +1,21 @@
 if style == 'info'
      div(class=`notification-card ${className} text`) Статус заказа 
           span(class='notification-card__link-container')
-          .
-               был изменен на 
-          span(class='notification-card__status')
+          |  был изменен на 
+          span(class='notification-card__status text_weight-semibold')
 else 
-     div(class=`notification-card ${className}`)
+     - var unreadClass = ''
+     if !wasRead
+          - unreadClass = 'notification-card_unread'
+
+     div(class=`notification-card notification-card_full ${className} ${unreadClass}`)
           div(class='notification-card__header')
                span(class='text_weight-bold') Изменен статус заказа
                if !wasRead
-                    svg(class='notification-card__was-read-marker' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none")
-                         circle(cx="6" cy="6" r="6" fill="#FF0400")
-          div(class='notification-card__message') Статус заказа 
-               span(class='notification-card__link-container')
-               .
-                    был изменен на 
-               span(class='notification-card__status')
+                    include index.unread.pug
+          div(class='notification-card__main') 
+               div(class='notification-card__message text_size-small') Статус заказа 
+                    span(class='notification-card__link-container')
+                    |  был изменен на 
+                    span(class='notification-card__status text_weight-semibold')
+               div(class='text_secondary-xs') #{time}

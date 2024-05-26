@@ -168,6 +168,12 @@ body {
     font-weight: var(--font-weight-bold);
 }
 
+.text_secondary-xs {
+    color: var(--color-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+}
+
 .text {
     font-family: var(--font-family-main-text);
     color: black;

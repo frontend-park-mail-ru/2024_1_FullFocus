@@ -54,9 +54,7 @@ export class ProfileNavbar extends Component<
                 .then(() => {
                     this.props.navigateToMain();
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
+                .catch(() => {});
         });
     }
 

@@ -4,13 +4,13 @@ import { OrderStatus } from '../model';
 export function formatStatus(orderStatus: OrderStatus) {
     switch (orderStatus) {
         case 'created':
-            return 'Создан';
+            return '"Создан"';
         case 'cancelled':
-            return 'Отменен';
+            return '"Отменен"';
         case 'ready':
-            return 'Доставлен';
+            return '"Доставлен"';
         default:
-            return '';
+            return '"Отменен"';
     }
 }
 
