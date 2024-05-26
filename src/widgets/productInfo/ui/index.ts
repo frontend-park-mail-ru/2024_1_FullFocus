@@ -2,12 +2,17 @@ import './index.style.scss';
 import productInfoTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProductInfoProps } from './index.types';
-import { productByIdRequest } from '@/entities/product/api';
+import {
+    BenefitType,
+    getSaleByBenefitType,
+    productByIdRequest,
+} from '@/entities/product';
 import { Rating } from '@/shared/uikit/starRating';
 import { addToCart, deleteFromCart } from '@/entities/cart/api';
 import { CommentWidget } from './comment';
 import { AddToCartBtn } from '@/entities/productsSection/ui/productsList/ui';
 import { animateLongRequest } from '@/shared/api/ajax/throttling';
+import { toast } from '@/shared/uikit/toast';
 
 export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     protected commentWidget: CommentWidget;
@@ -16,9 +21,11 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     protected amount: number;
     protected addToCart: (id: number) => void;
     protected removeFromCart: (id: number) => void;
+    protected addError: (header: string, text: string) => void;
 
     constructor(parent: Element, props: ProductInfoProps) {
         super(parent, productInfoTmpl, props);
+        this.addError = toast().addError;
     }
 
     protected updatePicture(src: string) {
@@ -73,6 +80,37 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         ).innerText = `${price} ₽`;
     }
 
+    protected updatePriceAndSale(
+        oldPrice: number,
+        newPrice: number,
+        benefitType: BenefitType,
+        benefitValue: number,
+    ) {
+        const sale = getSaleByBenefitType(oldPrice, benefitType, benefitValue);
+
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-old-price',
+            )[0] as HTMLDivElement
+        ).innerText = `${oldPrice} ₽`;
+
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-new-price',
+            )[0] as HTMLDivElement
+        ).innerText = `${newPrice} ₽`;
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-sale',
+            )[0] as HTMLDivElement
+        ).innerText = `-${sale} %`;
+        (
+            this.htmlElement.getElementsByClassName(
+                'product-info__to-cart-card-new-price',
+            )[0] as HTMLDivElement
+        ).style.backgroundColor = '#10c44c';
+    }
+
     protected updateDelivery(deliveryDate: string) {
         (
             this.htmlElement.getElementsByClassName(
@@ -113,8 +151,14 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                                 }),
                             );
                         }
+
+                        if (status !== 200) {
+                            this.noAuthMsg();
+                        }
                     },
-                    () => {},
+                    () => {
+                        this.errorMsg();
+                    },
                     () => {
                         this.addToCartbtn.setLoading();
                     },
@@ -152,8 +196,14 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                                     this.counterValue = data.count;
                                 }
                             }
+
+                            if (status !== 200) {
+                                this.noAuthMsg();
+                            }
                         },
-                        () => {},
+                        () => {
+                            this.errorMsg();
+                        },
                         () => {
                             this.addToCartbtn.setLoading();
                         },
@@ -174,6 +224,10 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                             if (status === 200) {
                                 this.counterValue = data.count;
                             }
+
+                            if (status !== 200) {
+                                this.noAuthMsg();
+                            }
                         },
                         () => {},
                         () => {
@@ -189,6 +243,14 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 }
             },
         );
+    }
+
+    protected noAuthMsg() {
+        this.addError('Ошибка', 'Сначала вам необходимо авторизоваться!');
+    }
+
+    protected errorMsg() {
+        this.addError('Ошибка', 'Что-то пошло не так');
     }
 
     private updateNavbar() {
@@ -218,7 +280,16 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 this.updateName(data.name);
                 this.updateSeller(data.seller);
                 this.updateRating(data.rating);
-                this.updatePrice(data.price);
+                if (data.newPrice == 0) {
+                    this.updatePrice(data.oldPrice);
+                } else {
+                    this.updatePriceAndSale(
+                        data.oldPrice,
+                        data.newPrice,
+                        data.benefitType,
+                        data.benefitValue,
+                    );
+                }
                 this.updateDelivery('послезавтра');
 
                 this.commentWidget = new CommentWidget(this.htmlElement, {

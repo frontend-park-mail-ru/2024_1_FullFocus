@@ -8,17 +8,17 @@ import { animateLongRequest } from '@/shared/api/ajax/throttling';
 import { DropDown } from '@/shared/uikit/dropdown';
 import { Promocode } from '@/entities/promocode/api/index.types';
 
-function renderItem(
-    parent: Element,
-    promocode: Promocode,
-) {
+function renderItem(parent: Element, promocode: Promocode) {
     return new PromocodeCard(parent, {
         className: `$code-[${promocode.code}]`,
         id: promocode.id,
         style: 'full',
         code: promocode.code,
         description: promocode.description,
-        timeLeft: promocode.timeLeft.split(' ')[0]+' '+promocode.timeLeft.split(' ')[1],
+        timeLeft:
+            promocode.timeLeft.split(' ')[0] +
+            ' ' +
+            promocode.timeLeft.split(' ')[1],
     });
 }
 
@@ -99,33 +99,35 @@ export async function useGetPromocodeCardByCode(code: string) {
     }
 }
 
-export function useGetAllPromocodes(){
-    return promocodesAll().then(({ status, data }) => {
-        const promocodes: Array<
-            (parent: Element) => {
-                item: PromocodeCard;
-                id: string;
-            }
-        > = [];
-        if (status === 200) {
-            data.forEach((promocode) => {
-                promocodes.push((parent: Element) => {
-                    const id = promocode.id.toString();
-                    return {
-                        item: renderItem(parent, promocode),
-                        id: id,
-                    };
+export function useGetAllPromocodes() {
+    return promocodesAll()
+        .then(({ status, data }) => {
+            const promocodes: Array<
+                (parent: Element) => {
+                    item: PromocodeCard;
+                    id: string;
+                }
+            > = [];
+            if (status === 200) {
+                data.forEach((promocode) => {
+                    promocodes.push((parent: Element) => {
+                        const id = promocode.id.toString();
+                        return {
+                            item: renderItem(parent, promocode),
+                            id: id,
+                        };
+                    });
                 });
-            });
-        }
-        return promocodes;
-    }).catch(() => {
-        const promocodes: Array<
-            (parent: Element) => {
-                item: PromocodeCard;
-                id: string;
             }
-        > = [];
-        return promocodes;
+            return promocodes;
+        })
+        .catch(() => {
+            const promocodes: Array<
+                (parent: Element) => {
+                    item: PromocodeCard;
+                    id: string;
+                }
+            > = [];
+            return promocodes;
         });
 }

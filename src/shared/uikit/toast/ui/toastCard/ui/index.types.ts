@@ -1,6 +1,6 @@
 import { Component } from '@/shared/@types/index.component';
 
-export type CardType = 'normal' | 'error';
+export type CardType = 'normal' | 'error' | 'success';
 
 export type ToastCardProps<T extends Component<Element>> = {
     className: string;

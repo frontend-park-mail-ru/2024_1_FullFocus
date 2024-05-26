@@ -3,7 +3,7 @@ import './index.style.scss';
 import cartInfoTmpl from './index.template.pug';
 import { CartInfoProps } from './index.types';
 import { Button } from '@/shared/uikit/button';
-import { BenefitType } from '@/entities/promocode';
+import { BenefitType } from '@/entities/product';
 import { Discount } from './discount';
 import { formatQuantity } from '@/entities/order/lib';
 

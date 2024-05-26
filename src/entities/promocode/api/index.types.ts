@@ -1,6 +1,6 @@
-export type BenefitType = 'percentage';
-
-export type PromocodeById = {
+export type PromocodeById<
+    BenefitType = 'percentSale' | 'priceSale' | 'finalPrice',
+> = {
     id: number;
     description: string;
     minSumGive: number;
@@ -10,14 +10,18 @@ export type PromocodeById = {
     ttl: 240;
 };
 
-export type PromocodeActivationInfo = {
+export type PromocodeActivationInfo<
+    BenefitType = 'percentSale' | 'priceSale' | 'finalPrice',
+> = {
     id: number;
     min_sum_activation: number;
     benefit_type: BenefitType;
     value: number;
 };
 
-export type Promocode = {
+export type Promocode<
+    BenefitType = 'percentSale' | 'priceSale' | 'finalPrice',
+> = {
     id: number;
     description: string;
     code: string;

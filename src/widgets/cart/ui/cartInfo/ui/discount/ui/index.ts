@@ -2,7 +2,7 @@ import './index.style.scss';
 import discountTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { DiscountProps } from './index.types';
-import { BenefitType } from '@/entities/promocode';
+import { BenefitType } from '@/entities/product';
 
 export class Discount extends Component<HTMLDivElement, DiscountProps> {
     protected discountSumElement: HTMLDivElement;
