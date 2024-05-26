@@ -60,15 +60,20 @@ export async function useGetNotificationsList() {
                             .push(notification.id.toString());
                     }
 
+                    const payload = JSON.parse(notification.payload) as {
+                        data: {
+                            orderID: number;
+                            oldStatus: string;
+                            newStatus: string;
+                        };
+                    };
                     notificationsByDate.get(date).push((parent: Element) => {
                         return {
                             item: new NotificationCard(parent, {
                                 className: `notification-card-[${notification.id}]`,
-                                status: notification.payload
-                                    .newStatus as OrderStatus,
+                                status: payload.data.newStatus as OrderStatus,
                                 id: notification.id.toString(),
-                                orderID:
-                                    notification.payload.orderID.toString(),
+                                orderID: payload.data.orderID.toString(),
                                 style: 'full',
                                 time: time,
                                 wasRead: notification.readStatus,

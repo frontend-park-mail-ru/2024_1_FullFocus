@@ -10,6 +10,7 @@ import { createOrderRequest } from '@/entities/order';
 import { ProductCard } from '@/entities/product';
 import { CartItem } from '@/entities/cart';
 import { CartPromocodes } from './promocode';
+import { toast } from '@/shared/uikit/toast';
 
 export class Cart extends Component<HTMLDivElement, CartProps> {
     protected cartItemsSection: CartItemsSection;
@@ -20,9 +21,13 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
     protected cartPromocodes: CartPromocodes;
     protected orderOptions: OrderOptions;
     protected promocodeId: number;
+    protected addError: (header: string, text: string) => void;
+    protected addSuccess: (header: string, text: string) => void;
 
     constructor(parent: Element, props: CartProps) {
         super(parent, cartTmpl, props);
+        this.addError = toast().addError;
+        this.addSuccess = toast().addSuccess;
     }
 
     protected render() {
@@ -108,13 +113,32 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
                             this.props.navigateToOrderPage({
                                 id: data.orderID.toString(),
                             });
+                            this.addSuccess(
+                                'Заказ успешно формлен!',
+                                data.newPromocodeID
+                                    ? 'Вам добавлен новый промокод!'
+                                    : '',
+                            );
+                        }
+
+                        if (status !== 200) {
+                            this.errorToast();
                         }
                     })
-                    .catch(() => {});
+                    .catch(() => {
+                        this.errorToast();
+                    });
             },
             navigateToMainPage: this.props.navigateToMainPage,
             navigateToOrderPage: this.props.navigateToOrderPage,
         });
+    }
+
+    protected errorToast() {
+        this.addError(
+            'Ошибка',
+            'Что-то пошло не так, попробуйте сделать это позже',
+        );
     }
 
     protected renderCartPromocodes() {
