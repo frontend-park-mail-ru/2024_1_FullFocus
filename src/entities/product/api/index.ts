@@ -1,13 +1,15 @@
 import { ajaxGet } from '@/shared/api';
 import {
-    IProductResponse, IProductResponseRecommendation,
+    IOneProductResponse,
+    IProductResponse,
+    IProductResponseRecommendation,
     ProductByCategoriesResponse,
     ProductsBySearchResponse,
-    Suggestions
+    Suggestions,
 } from './index.types';
 import { PRODUCTS_API_URL } from './index.constants';
 
-export type { IProductResponse } from './index.types';
+export type { IProductResponse, BenefitType } from './index.types';
 
 export async function productsRequest(page: number, limit: number) {
     return ajaxGet<{ productCards: Array<IProductResponse> }>(
@@ -21,12 +23,16 @@ export async function productsRequest(page: number, limit: number) {
 
 export async function productsRequestRecommendation() {
     return ajaxGet<{ productCards: Array<IProductResponseRecommendation> }>(
-        PRODUCTS_API_URL.getRecommendations, [],
+        PRODUCTS_API_URL.getRecommendations,
+        [],
     );
 }
 
 export async function productByIdRequest(id: string) {
-    return ajaxGet<IProductResponse>(PRODUCTS_API_URL.getProductById + id, []);
+    return ajaxGet<IOneProductResponse>(
+        PRODUCTS_API_URL.getProductById + id,
+        [],
+    );
 }
 
 // TODO move to productssection?

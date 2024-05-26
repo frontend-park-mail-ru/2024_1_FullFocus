@@ -1,4 +1,4 @@
-import { BenefitType } from '@/entities/promocode';
+import { BenefitType } from '@/entities/product';
 
 export interface CartInfoProps {
     className: string;

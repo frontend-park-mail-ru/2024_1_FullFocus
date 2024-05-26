@@ -6,8 +6,6 @@ import {
     PromocodeById,
 } from './index.types';
 
-export type { BenefitType } from './index.types';
-
 /**
  * id - unique type of promocode
  * code - promocode with a certain type given to a user

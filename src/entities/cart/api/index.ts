@@ -2,8 +2,8 @@ import { ajaxGet, ajaxPost } from '@/shared/api';
 import { CART_API_URLS } from './index.constants';
 import { ICartData } from './index.types';
 
-export async function cartRequest() {
-    return ajaxGet<ICartData>(CART_API_URLS.getCart, []);
+export async function cartRequest<BenefitType>() {
+    return ajaxGet<ICartData<BenefitType>>(CART_API_URLS.getCart, []);
 }
 
 export async function addToCart(productId: number) {

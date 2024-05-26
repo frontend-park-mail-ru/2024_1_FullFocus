@@ -3,11 +3,11 @@ export type BenefitType = 'percentSale' | 'priceSale' | 'finalPrice';
 export interface IProductResponse {
     id: number;
     name: string;
-    price: number;
     imgSrc: string;
     seller: string;
     rating: number;
     amount: number;
+    price: number;
 }
 
 export interface IProductResponseRecommendation {
@@ -23,7 +23,7 @@ export interface IProductResponseRecommendation {
     amount: number;
 }
 
-export interface IOneProductResponseR {
+export interface IOneProductResponse {
     id: number;
     name: string;
     oldPrice: number;

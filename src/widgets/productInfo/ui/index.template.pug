@@ -9,7 +9,11 @@ div(class=`${className} product-info`)
                 div(class="product-info__product-rating-stars") 
             div(class="product-info__to-cart-card")
                 div(class="product-info__to-cart-card-header header header_h5") Стоимость:
-                    span(class="product-info__to-cart-card-price") 6500
+                    span(class="product-info__to-cart-card-price")
+                div(class="product-info__to-cart-card-old-price-and-sale")
+                    span(class=`product-info__to-cart-card-new-price header header_h5` style=`${stylePrice}`)
+                    span(class="product-info__to-cart-card-old-price")
+                    span(class="product-info__to-cart-card-sale")
                 div(class="product-info__to-cart-card-bottom-section")
                     div(class="product-info__to-cart-button-container") 
                     div(class="product-info__to-cart-card-delivery-date text text_weight-bold") доставка послезавтра

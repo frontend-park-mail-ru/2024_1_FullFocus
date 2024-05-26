@@ -28,6 +28,9 @@ function getToast() {
             addError: (header: string, text: string) => {
                 toast.addMessage(header, text, 'error');
             },
+            addSuccess: (header: string, text: string) => {
+                toast.addMessage(header, text, 'success');
+            },
         };
     };
 }

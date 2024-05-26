@@ -14,24 +14,27 @@
     box-sizing: border-box;
 }
 
-.promo-card_full{
+.promo-card_full {
     padding: 15px;
-    flex: 1;
     background-color: var(--color-background-dark);
     display: flex;
     flex-direction: column;
     width: 200px;
 }
 
-.promo-card__timeleft{
+.promo-card_full:hover {
+    cursor: pointer;
+}
+
+.promo-card__timeleft {
     display: flex;
     flex-direction: row;
 }
 
-.promo-card__timeleft-days{
+.promo-card__timeleft-days {
     margin-left: 3px;
 }
 
-.promo-card__description{
+.promo-card__description_full {
     margin-top: 10px;
 }

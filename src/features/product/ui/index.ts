@@ -1,15 +1,21 @@
-import { ProductCard, productsRequest } from '@/entities/product';
+import {
+    ProductCard,
+    getSaleByBenefitType,
+    productsRequest,
+} from '@/entities/product';
 import {
     IProductResponse,
-    productsRequestCategory, productsRequestRecommendation,
-    productsRequestSearch
+    productsRequestCategory,
+    productsRequestRecommendation,
+    productsRequestSearch,
 } from '@/entities/product/api';
 import { ProductsSectionItem } from '@/entities/productsSection';
 import { IProductResponseRecommendation } from '@/entities/product/api/index.types';
 
-function renderItem(product: IProductResponse | IProductResponseRecommendation, parent: Element) {
-
-
+function renderItem(
+    product: IProductResponse | IProductResponseRecommendation,
+    parent: Element,
+) {
     if ('oldPrice' in product && product.oldPrice) {
         const psi = new ProductsSectionItem<ProductCard>(parent, {
             className: 'product-section-recommendation-item-' + product.id,
@@ -25,7 +31,11 @@ function renderItem(product: IProductResponse | IProductResponseRecommendation, 
                 src: product.imgSrc,
                 style: 'vertical',
                 rating: product.rating,
-                sale: product.benefitValue
+                sale: getSaleByBenefitType(
+                    product.oldPrice,
+                    product.benefitType,
+                    product.benefitValue,
+                ),
             });
             return { product: productCard, id: productCard.id };
         });
@@ -146,7 +156,6 @@ export async function useGetProductCardsSearch(
             return [];
         });
 }
-
 
 export async function useGetProductCardsRecommendation() {
     return productsRequestRecommendation()

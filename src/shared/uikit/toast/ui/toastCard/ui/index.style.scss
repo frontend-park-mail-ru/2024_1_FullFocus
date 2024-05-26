@@ -93,3 +93,19 @@
 .close-btn_error:hover {
     color: var(--color-error-light);
 }
+
+// Success
+.toast-card_success {
+    background-color: var(--color-green-bg);
+    border-color: var(--color-green-normal);
+}
+
+.close-btn_success {
+    background-color: var(--color-green-bg);
+    transition: 200ms color;
+    color: var(--color-green-normal);
+}
+
+.close-btn_success:hover {
+    color: var(--color-green-light);
+}

@@ -5,41 +5,38 @@ import { ProfilePromocodesInfoProps } from './index.types';
 import { useGetAllPromocodes } from '@/features/promocodes';
 import { List } from '@/shared/uikit/list';
 import { PromocodeCard } from '@/entities/promocode';
-
+import { toast } from '@/shared/uikit/toast';
 
 export class ProfilePromocodesInfo extends Component<
     HTMLDivElement,
     ProfilePromocodesInfoProps
 > {
     protected promocodes: List<PromocodeCard>;
-
-    protected componentDidMount(){
-        // @ts-ignore
-        void navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
-            if (result.state === "granted" || result.state === "prompt") {
-
-                this.promocodes.htmlElement.addEventListener(
-                    'click', (e)=>{
-                        const target = e.target as HTMLElement
-                        if (target.dataset['code']!=undefined){
-                            navigator.clipboard.writeText(target.dataset['code']).then(
-                                () => {
-                                    /* clipboard successfully set */
-                                },
-                                () => {
-                                    /* clipboard write failed */
-                                },
-                            );
-                        }
-                    }
-                )
-            }
-        });
-
-    };
+    protected addToast: (header: string, text: string) => void;
 
     constructor(parent: Element, props: ProfilePromocodesInfoProps) {
         super(parent, profilePromocodesInfoTmpl, props);
+        this.addToast = toast().addSuccess;
+    }
+
+    protected componentDidMount() {
+        this.promocodes.htmlElement.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            const code = target.dataset['code'];
+            if (code !== undefined) {
+                navigator.clipboard.writeText(code).then(
+                    () => {
+                        this.addToast(
+                            'Успешно!',
+                            `Промокод ${code} скопирован`,
+                        );
+                    },
+                    () => {
+                        /* clipboard write failed */
+                    },
+                );
+            }
+        });
     }
 
     protected render() {
@@ -51,18 +48,17 @@ export class ProfilePromocodesInfo extends Component<
             )[0],
             { className: 'promocodes-results', wrap: true },
         );
-        useGetAllPromocodes().then(
-            (items) => {
+        useGetAllPromocodes()
+            .then((items) => {
                 if (items.length > 0) {
                     this.promocodes.renderItems(items);
-                } else{
-                    this.htmlElement.innerText = 'Промиков не имеем'
+                } else {
+                    this.htmlElement.innerText = 'Промиков не имеем';
                 }
                 this.componentDidMount();
-            }
-        ).catch(() => {
-            this.htmlElement.innerText = 'Что-то пошло не так'
-        });
-
+            })
+            .catch(() => {
+                this.htmlElement.innerText = 'Что-то пошло не так';
+            });
     }
 }

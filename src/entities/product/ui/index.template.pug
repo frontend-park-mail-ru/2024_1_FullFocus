@@ -8,7 +8,7 @@ a(class=`${className} text product-card product-card_` + modifier href=`/product
     img(class="product-card__img product-card__img_" + modifier src=`${src}`  data-link alt="img")
     div(class="product-card__info product-card__info_" + modifier data-link )
         div(class="product-card__info-top" data-link )
-            if oldPrice != undefined
+            if sale
                 div(class="product-card__info-top-prices")
                     span(class="product-card__info-new-cost text_size-big text_weight-bold" data-link ) #{price} ₽
                     span(class="product-card__info-old-cost text_secondary text_size-small line-through" data-link ) #{oldPrice} ₽

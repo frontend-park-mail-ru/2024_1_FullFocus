@@ -4,6 +4,9 @@ case style
     when 'error'
         - styleModifier = 'toast-card_error'
         - buttonStyleModifier = 'close-btn_error'
+    when 'success'
+        - styleModifier = 'toast-card_success'
+        - buttonStyleModifier = 'close-btn_success'
 
 output(class=`${className} toast-card ${styleModifier}` data-id=`${id}`)
     div(class="toast-card__header")
