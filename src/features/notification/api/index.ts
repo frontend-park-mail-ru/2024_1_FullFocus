@@ -4,12 +4,19 @@ import { BACKEND_WS_URL } from '@/shared/api/config/index.constants';
 export type { NotificationMessage } from './index.types';
 
 export type CentrifugoMessage = {
-    method: string;
-    params: {
-        data: {
-            [name: string]: string;
+    push: {
+        channel: string;
+        pub: {
+            data: {
+                data: {
+                    [name: string]: string;
+                };
+                type: string;
+            };
         };
     };
+    method: string;
+    params: object;
 };
 
 function createNotificationWS(url: string) {
@@ -44,7 +51,7 @@ function createNotificationWS(url: string) {
 
             callbacks.forEach((callback) => {
                 console.log(callback);
-                callback(message.params.data);
+                callback(message.push.pub.data.data);
             });
         };
 
