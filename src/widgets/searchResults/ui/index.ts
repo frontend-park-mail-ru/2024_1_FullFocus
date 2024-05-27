@@ -24,7 +24,7 @@ export class SearchResults extends Component<
             this.curretnQuery = query;
         }
 
-        useGetProductCardsSearch(query, 1, 12, sortId)
+        useGetProductCardsSearch(query, 1, 15, sortId)
             .then((cards) => {
                 this.productsList.loadProducts(cards);
             })
