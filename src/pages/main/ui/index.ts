@@ -11,7 +11,7 @@ import { ProductsSectionRecommendation } from '@/widgets/productsSectionRecommen
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
-    protected productsSectionRecommendation: ProductsSectionRecommendation
+    protected productsSectionRecommendation: ProductsSectionRecommendation;
     protected iframe: HTMLIFrameElement;
     protected productsCategories: CategoriesList;
     protected removeIframe: () => void;

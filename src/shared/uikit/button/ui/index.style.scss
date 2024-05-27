@@ -53,6 +53,9 @@ $btn-default-bg-color: #fff;
     .btn_xs {
         height: var(--btn-height-xs);
         font-size: 14px;
+        .btn__icon > svg {
+            height: var(--btn-height-xs);
+        }
     }
 }
 

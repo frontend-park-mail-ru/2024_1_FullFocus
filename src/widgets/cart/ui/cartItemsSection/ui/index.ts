@@ -107,6 +107,7 @@ export class CartItemsSection extends Component<
                 type: 'button',
                 btnStyle: 'white',
                 btnText: 'очистить',
+                size: 'no-padding',
             },
         );
 

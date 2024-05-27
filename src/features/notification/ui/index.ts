@@ -27,6 +27,13 @@ export const getNotificationCards = () => {
             ws.removeCallback(NOTIFICATION_CALLBACK_NAME);
             ws.close();
         },
+        isConnected: () => {
+            return ws.isConnected();
+        },
+
+        retryConnection: () => {
+            ws.retryConnection();
+        },
     };
 };
 
@@ -42,6 +49,7 @@ export async function useGetNotificationsList() {
                     })[]
                 >();
                 const unreadIdsByDate = new Map<string, string[]>();
+                let totalUnread = 0;
 
                 data.forEach((notification) => {
                     const { time, date } = formatFullDate(
@@ -57,6 +65,7 @@ export async function useGetNotificationsList() {
                         unreadIdsByDate
                             .get(date)
                             .push(notification.id.toString());
+                        totalUnread++;
                     }
 
                     const payload = JSON.parse(notification.payload) as {
@@ -88,6 +97,7 @@ export async function useGetNotificationsList() {
                         notificationsByDate: notificationsByDate,
                         unreadIdsByDate: unreadIdsByDate,
                         wrap: false,
+                        totalUnread: totalUnread,
                     });
                 };
             }
