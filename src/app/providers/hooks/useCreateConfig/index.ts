@@ -7,7 +7,6 @@ import { UserLogged } from '@/widgets/navbar';
 import { Profile } from '@/pages/profile';
 import { CartPage } from '@/pages/cart';
 import { Page404 } from '@/pages/404';
-import { CommentPage } from '@/pages/comment';
 import { SearchPage } from '@/pages/search';
 import { LinkStyle } from '@/shared/uikit/link';
 import { CategoryPage } from '@/pages/category';
@@ -266,7 +265,7 @@ export function createConfig() {
                     mobileIconTmpl: cartIconTmpl,
                 },
                 router: {
-                    navigation: ['main', 'profile-orders'],
+                    navigation: ['main', 'profile-order'],
                     component: (
                         parent: Element,
                         params: { [name: string]: string },
@@ -310,12 +309,24 @@ export function createConfig() {
                             },
                         },
                         order: {
-                            url: '/order',
+                            url: '/order/{id}',
                             renderChild: (
                                 profilePage: Profile,
                                 params: { [name: string]: string },
                             ) => {
                                 profilePage.changePage('oneOrder', params);
+                            },
+                        },
+                        promocodes: {
+                            url: '/promocodes',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('promocodes');
+                            },
+                        },
+                        notifcations: {
+                            url: '/notifications',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('notifications');
                             },
                         },
                     },
@@ -325,19 +336,6 @@ export function createConfig() {
                     text: 'Профиль',
                     iconTmpl: userIconTmpl,
                     mobileIconTmpl: userIconTmpl,
-                },
-            },
-            comment: {
-                url: '/comment',
-                logged: 'both',
-                router: {
-                    navigation: ['main'],
-                    component: (
-                        parent: Element,
-                        params: { [name: string]: string },
-                    ) => {
-                        return new CommentPage(parent, params);
-                    },
                 },
             },
         },

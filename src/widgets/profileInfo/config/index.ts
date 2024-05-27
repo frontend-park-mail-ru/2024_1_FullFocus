@@ -1,7 +1,9 @@
+import { ProfileNotifications } from '../ui/notifications';
 import { ProfileOneOrderInfo } from '../ui/oneOrderInfo';
 import { ProfileOrdersInfo } from '../ui/ordersInfo/ui';
 import { ProfileMainInfo } from '../ui/profileMainInfo/ui';
 import { IProps, profileInfoConfig } from './index.types';
+import { ProfilePromocodesInfo } from '@/widgets/profileInfo/ui/promocodeInfo/ui';
 
 export const PROFILE_PAGES: profileInfoConfig = {
     info: {
@@ -31,5 +33,25 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 orderId: props.orderId,
             });
         },
+    },
+    promocodes: {
+        href: '/profile/promocodes',
+        text: 'Промокоды',
+        getComponent: (parent: Element, props: IProps) => {
+            return new ProfilePromocodesInfo(parent, {
+                className: props.className,
+            });
+        },
+        metaDataName: 'promocodesAvailable',
+    },
+    notifications: {
+        href: '/profile/notifications',
+        text: 'Уведомления',
+        getComponent: (parent: Element, props: IProps) => {
+            return new ProfileNotifications(parent, {
+                className: props.className,
+            });
+        },
+        metaDataName: 'unreadNotifications',
     },
 };

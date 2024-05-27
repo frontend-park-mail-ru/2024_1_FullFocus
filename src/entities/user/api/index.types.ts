@@ -11,3 +11,19 @@ export interface IUpdateProfileBody {
     email: string;
     phoneNumber: string;
 }
+
+export interface IMainUserInfoResponse {
+    fullName: string;
+    cartItemsAmount: number;
+    avatarName: string;
+    unreadNotifications: number;
+    promocodesAvailable: number;
+}
+
+export type NotificationResponse = {
+    id: number;
+    readStatus: boolean;
+    createdAt: string;
+    type: string;
+    payload: string;
+};

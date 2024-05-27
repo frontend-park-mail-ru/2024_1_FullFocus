@@ -3,8 +3,19 @@
     gap: 14px;
 }
 
+.profile-info__navbar {
+    flex-basis: 400px;
+}
+
 .profile-info__page {
+    height: fit-content;
     flex: 1;
+}
+
+@media (width <= 1280px) {
+    .profile-info__navbar {
+        flex-basis: 300px;
+    }
 }
 
 @media (width <= 1024px) {

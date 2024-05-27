@@ -1,1 +1,5 @@
-div(class=`${className}`) #{name}
+case textSize
+    when 'header'
+        div(class=`${className} header header_h6`) #{name}
+    default
+        div(class=`${className} text`) #{name}

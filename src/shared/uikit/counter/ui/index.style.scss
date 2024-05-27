@@ -1,18 +1,28 @@
 .counter {
     display: flex;
-    width: 175px;
     justify-content: space-between;
     gap: 10px;
     align-items: center;
-    height: 40px;
+    height: var(--btn-height-sm);
+}
+
+.counter_bg {
+    height: var(--btn-height-bg);
+}
+
+.counter_sm,
+.counter_xs {
+    height: var(--btn-height-sm);
 }
 
 .counter__data {
     flex: 1;
+    max-width: 80px;
     border: 2px solid #b3bcc5;
     background-color: white;
     border-radius: 8px;
     height: 100%;
+    padding: 0 16px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,8 +30,7 @@
 }
 
 .counter__btn {
-    transition: background-color 0.2s;
-    width: 40px;
+    transition: background-color var(--transition-time-normal);
     height: 100%;
     background-color: #adf2ec;
     border-radius: 8px;
@@ -31,18 +40,31 @@
     border: none;
 }
 
+.counter__btn_bg {
+    width: var(--btn-height-bg);
+}
+
+.counter__btn_sm,
+.counter__btn_xs {
+    width: var(--btn-height-sm);
+}
+
+.counter_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .counter__btn:hover {
     cursor: pointer;
     background-color: #bcfcf6;
 }
 
 @media (max-width: 475px) {
-    .counter {
-        height: 30px;
-        width: 130px;
+    .counter_xs {
+        height: var(--btn-height-xs);
     }
 
-    .counter__btn {
-        width: 30px;
+    .counter__btn_xs {
+        width: var(--btn-height-xs);
     }
 }

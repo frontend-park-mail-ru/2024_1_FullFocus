@@ -4,10 +4,10 @@ import { ProductCard } from '@/entities/product';
 import { getProfilePicture } from '@/entities/user/api';
 
 function renderItem(comment: IComment, parent: Element, src: string) {
-    if (src===''){
+    if (src === '') {
         const Card = new CommentCard(parent, {
             className: 'comment-section_' + comment.reviewID.toString(),
-            avatar: "/public/default-profile-pic.png",
+            avatar: '/public/default-profile-pic.png',
             name: comment.profileName,
             advantages: comment.advanatages,
             disadvantages: comment.disadvantages,
@@ -39,20 +39,18 @@ export async function useGetCommentCards(
     ProductID: string,
 ) {
     return commentRequest(lastReviewID, limit, ProductID)
-        .then(({ status, data }) => {
+        .then(async ({ status, data }) => {
             const comments: Array<(parent: Element) => CommentCard> = [];
             if (status === 200) {
-                data.forEach((comment) => {
-                    UseGetProfilePicture(comment.profileAvatar).then(
-                        (src) => {
-                            comments.push((parent: Element) => {
-                                return renderItem(comment, parent, src);
-                            });
-                        }
-                    ).catch(() => {
+                for (const comment of data) {
+                    const avatar = await UseGetProfilePicture(
+                        comment.profileAvatar,
+                    );
 
+                    comments.push((parent: Element) => {
+                        return renderItem(comment, parent, avatar);
                     });
-                });
+                }
             }
             return comments;
         })
@@ -62,19 +60,13 @@ export async function useGetCommentCards(
         });
 }
 
-export async function UseGetProfilePicture(
-    id: string
-){
+export async function UseGetProfilePicture(id: string) {
     let imgSrc = '';
     if (id.length != 0) {
-        const profilePicture = await getProfilePicture(
-            id,
-        );
+        const profilePicture = await getProfilePicture(id);
         if (profilePicture.status === 200) {
             imgSrc = URL.createObjectURL(profilePicture.data);
         }
     }
-    return imgSrc
+    return imgSrc;
 }
-
-

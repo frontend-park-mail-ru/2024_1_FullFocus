@@ -8,10 +8,6 @@
     src: url('./shared/fonts/Montserrat-VariableFont_wght.ttf');
 }
 
-$color-green-normal: #157f1f;
-$color-green-light: #1fc130;
-$color-green-lighter: #3ee04e;
-
 $border-radius-default: 32px;
 
 :root {
@@ -19,12 +15,40 @@ $border-radius-default: 32px;
     --color-primary-dark: #3a817c;
     --color-primary-light: #68e7dd;
     --color-error-normal: #ff0400;
-    --color-error-light: #ff3633;
+    --color-error-light: #ff5451;
+    --color-error-bg: #ffe5e4;
+    --color-green-normal: #157f1f;
+    --color-green-light: #1fc130;
+    --color-green-lighter: #3ee04e;
+    --color-green-bg: #e6fde8;
     --color-secondary: #808080;
-    --color-background: #efefef;
+    --color-background: #f2f6f9;
+    --color-background-dark: #e2e6e9;
+    --color-background-darker: #d2d6d9;
 
-    --btn-height-sm: 50px;
+    --border-radius-md: 16px;
+    --border-radius-sm: 8px;
+
+    --btn-height-bg: 50px;
+    --btn-height-sm: 40px;
     --btn-height-xs: 30px;
+
+    --font-family-main-text: 'Open Sans', sans-serif;
+
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --font-size-normal: 1rem;
+    --font-size-sm: 0.9rem;
+    --font-size-xs: 0.8rem;
+
+    --transition-time-normal: 150ms;
+    --transition-time-slower: 200ms;
+
+    --z-index-on-top: 100;
 }
 
 $breakpoint-2xl: 1546px;
@@ -46,11 +70,6 @@ body,
 
 .full-height {
     height: 100%;
-    box-sizing: border-box;
-}
-
-.page {
-    padding-top: 24px;
     box-sizing: border-box;
 }
 
@@ -77,13 +96,18 @@ body,
     box-sizing: border-box;
 }
 
+.page {
+    padding-top: 24px;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     background-color: var(--color-background);
 }
 
 .border_radius-sm {
-    border-radius: 8px;
+    border-radius: var(--border-radius-sm);
 }
 
 .border_bottom-radius-sm {
@@ -92,6 +116,10 @@ body {
 
 .box-shadow {
     box-shadow: #aeaeae 0px 0px 6px;
+}
+
+.color_green {
+    color: var(--color-green-normal);
 }
 
 /* Header styles */
@@ -144,15 +172,21 @@ body {
 /* Text style */
 .text_secondary {
     color: var(--color-secondary);
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-bold);
+}
+
+.text_secondary-xs {
+    color: var(--color-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
 }
 
 .text {
-    font-family: 'Open Sans', sans-serif;
+    font-family: var(--font-family-main-text);
     color: black;
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     text-decoration: none;
 }
 
@@ -160,24 +194,32 @@ body {
     font-size: 1rem;
 }
 
+.text_size-big {
+    font-size: 1.1rem;
+}
+
 .text_size-small {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.text_size-xs {
+    font-size: var(--font-size-xs);
 }
 
 .text_weight-light {
-    font-weight: 300;
+    font-weight: var(--font-weight-light);
 }
 
 .text_weight-regular {
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
 }
 
 .text_weight-semibold {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .text_weight-bold {
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
 }
 
 @media (max-width: $breakpoint-2xl) {
@@ -223,10 +265,6 @@ body {
 
     .section-padding {
         padding: $section-padding-xs;
-    }
-
-    .text {
-        font-size: 0.9rem;
     }
 
     .header_h1 {

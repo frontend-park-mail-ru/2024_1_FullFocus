@@ -12,6 +12,7 @@ import {
 } from '@/features/search';
 import { isClickOut } from '@/shared/lib/clickOut';
 import { insertDarkOverlay } from '@/shared/lib/darkOverlay';
+import { throttle } from '@/shared/api/ajax/throttling';
 
 export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     protected searchBtn: Button;
@@ -20,6 +21,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     protected searchResults: List<SearchSuggestion>;
     protected overlay: HTMLDivElement;
     protected form: HTMLFormElement;
+    protected throttledRenderSuggestions: (input: string) => void;
     protected focus: boolean;
     protected currentPromise: Promise<
         ((parent: Element) => {
@@ -34,6 +36,10 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected componentDidMount() {
         // TODO remove listener
+        this.throttledRenderSuggestions = throttle(
+            (input) => this.renderSuggestions(input),
+            1000,
+        );
 
         // Searchbar focused
         this.inputField.htmlElement.addEventListener('focus', (e: Event) => {
@@ -61,7 +67,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             }
 
             if (inputData !== '') {
-                this.renderSuggestions(inputData);
+                this.throttledRenderSuggestions(inputData);
             }
         });
 
@@ -73,11 +79,10 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
         this.searchResults.htmlElement.addEventListener('click', (e: Event) => {
             e.preventDefault();
-            const targetInit = e.target as Element;
+            const targetInit = e.target as HTMLElement;
             if (
                 targetInit.classList.contains('search-result__to-input-btn') ||
-                targetInit.classList.contains('icon') ||
-                targetInit.classList.contains('icon__path')
+                targetInit.dataset['btnicon'] !== undefined
             ) {
                 // Auto complete
                 const target = targetInit.closest('.search-result');
@@ -147,9 +152,8 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
     protected renderSuggestions(input: string) {
         this.clearBtn.show();
-        this.currentPromise = useGetSearchSuggestions(input);
-        this.currentPromise
-            .then((items) => {
+        useGetSearchSuggestions(input)
+            ?.then((items) => {
                 if (items.length > 0) {
                     this.searchResults.renderItems(items);
                 }

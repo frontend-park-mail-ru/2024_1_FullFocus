@@ -1,13 +1,15 @@
 import { ajaxGet } from '@/shared/api';
 import {
+    IOneProductResponse,
     IProductResponse,
+    IProductResponseRecommendation,
     ProductByCategoriesResponse,
     ProductsBySearchResponse,
     Suggestions,
 } from './index.types';
 import { PRODUCTS_API_URL } from './index.constants';
 
-export type { IProductResponse } from './index.types';
+export type { IProductResponse, BenefitType } from './index.types';
 
 export async function productsRequest(page: number, limit: number) {
     return ajaxGet<{ productCards: Array<IProductResponse> }>(
@@ -19,61 +21,62 @@ export async function productsRequest(page: number, limit: number) {
     );
 }
 
+export async function productsRequestRecommendation() {
+    return ajaxGet<Array<IProductResponseRecommendation>>(
+        PRODUCTS_API_URL.getRecommendations,
+        [],
+    );
+}
+
 export async function productByIdRequest(id: string) {
-    return ajaxGet<IProductResponse>(PRODUCTS_API_URL.getProductById + id, []);
+    return ajaxGet<IOneProductResponse>(
+        PRODUCTS_API_URL.getProductById + id,
+        [],
+    );
 }
 
 // TODO move to productssection?
 
 // TODO page limit from function args
-export async function productsRequestCategory(categoryId: number, sortId: number) {
-    if (isNaN(sortId)) {
-        return ajaxGet<ProductByCategoriesResponse>(
-            PRODUCTS_API_URL.getProductsCategory + categoryId.toString(),
-            [
-                { key: 'page', value: '1' },
-                { key: 'limit', value: '10' },
-            ],
-        );
+export async function productsRequestCategory(
+    categoryId: number,
+    sortId: string,
+) {
+    const queryParams = [
+        { key: 'page', value: '1' },
+        { key: 'limit', value: '15' },
+    ];
+
+    if (sortId) {
+        queryParams.push({ key: 'sortID', value: sortId });
     }
 
     return ajaxGet<ProductByCategoriesResponse>(
         PRODUCTS_API_URL.getProductsCategory + categoryId.toString(),
-        [
-            { key: 'page', value: '1' },
-            { key: 'limit', value: '10' },
-            { key: 'sortID', value: sortId.toString() },
-        ],
+        queryParams,
     );
-
 }
 
 export async function productsRequestSearch(
     query: string,
     page: number,
     limit: number,
-    sortId: number
+    sortId?: string,
 ) {
-    if (isNaN(sortId)){
-        return ajaxGet<ProductsBySearchResponse>(
-            PRODUCTS_API_URL.getProductsBySearch,
-            [
-                { key: 'query', value: query },
-                { key: 'page', value: page.toString() },
-                { key: 'limit', value: limit.toString() },
-            ],
-        );
+    const queryParams = [
+        { key: 'query', value: query },
+        { key: 'page', value: page.toString() },
+        { key: 'limit', value: limit.toString() },
+    ];
+
+    if (sortId) {
+        queryParams.push({ key: 'sortID', value: sortId });
     }
+
     return ajaxGet<ProductsBySearchResponse>(
         PRODUCTS_API_URL.getProductsBySearch,
-        [
-            { key: 'query', value: query },
-            { key: 'page', value: page.toString() },
-            { key: 'limit', value: limit.toString() },
-            { key: 'sortID', value: sortId.toString()}
-        ],
+        queryParams,
     );
-
 }
 
 export async function suggestionRequest(query: string) {

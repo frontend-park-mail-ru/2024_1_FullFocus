@@ -9,6 +9,8 @@ import { OrderOptions } from './orderOptions';
 import { createOrderRequest } from '@/entities/order';
 import { ProductCard } from '@/entities/product';
 import { CartItem } from '@/entities/cart';
+import { CartPromocodes } from './promocode';
+import { toast } from '@/shared/uikit/toast';
 
 export class Cart extends Component<HTMLDivElement, CartProps> {
     protected cartItemsSection: CartItemsSection;
@@ -16,10 +18,16 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
     protected cartMainParent: HTMLDivElement;
     protected emptyInfo: HTMLDivElement;
     protected cartInfo: CartInfo;
+    protected cartPromocodes: CartPromocodes;
     protected orderOptions: OrderOptions;
+    protected promocodeId: number;
+    protected addError: (header: string, text: string) => void;
+    protected addSuccess: (header: string, text: string) => void;
 
     constructor(parent: Element, props: CartProps) {
         super(parent, cartTmpl, props);
+        this.addError = toast().addError;
+        this.addSuccess = toast().addSuccess;
     }
 
     protected render() {
@@ -64,6 +72,15 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
         })[],
         total: number,
     ) {
+        this.renderCartItemsSection();
+        this.renderCartInfo();
+        this.renderCartPromocodes();
+
+        this.cartItemsSection.renderCartItems(cartItems);
+        this.cartInfo.updateCartInfo(cost, total);
+    }
+
+    protected renderCartItemsSection() {
         this.cartItemsSection = new CartItemsSection(this.cartMainParent, {
             className: 'cart__cart-items',
             clearCartCallback: () => {
@@ -81,20 +98,60 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
                 );
             },
         });
+    }
 
+    protected renderCartInfo() {
         this.cartInfo = new CartInfo(this.cartInfoParent, {
             className: 'cart-info__info',
             orderCreatedCallback: () => {
-                createOrderRequest(this.cartItemsSection.cartInfo)
-                    .then(() => {
-                        this.props.navigateToOrderPage();
+                createOrderRequest(
+                    this.cartItemsSection.cartInfo,
+                    this.promocodeId,
+                )
+                    .then(({ status, data }) => {
+                        if (status === 200) {
+                            this.props.navigateToOrderPage({
+                                id: data.orderID.toString(),
+                            });
+                            this.addSuccess(
+                                'Заказ успешно создан!',
+                                data.newPromocodeID
+                                    ? 'Вам добавлен новый промокод!'
+                                    : '',
+                            );
+                        }
+
+                        if (status !== 200) {
+                            this.errorToast();
+                        }
                     })
-                    .catch(() => {});
+                    .catch(() => {
+                        this.errorToast();
+                    });
             },
             navigateToMainPage: this.props.navigateToMainPage,
             navigateToOrderPage: this.props.navigateToOrderPage,
         });
-        this.cartItemsSection.renderCartItems(cartItems);
-        this.cartInfo.updateCartInfo(cost, total);
+    }
+
+    protected errorToast() {
+        this.addError(
+            'Ошибка',
+            'Что-то пошло не так, попробуйте сделать это позже',
+        );
+    }
+
+    protected renderCartPromocodes() {
+        this.cartPromocodes = new CartPromocodes(this.cartInfoParent, {
+            className: 'cart-info__promocodes',
+            promocodeUsedCallback: (id, minSum, benefitType, value) => {
+                this.promocodeId = id;
+                this.cartInfo.applyDiscount(minSum, benefitType, value);
+            },
+            promocodeCanceledCallback: () => {
+                this.promocodeId = null;
+                this.cartInfo.removeDiscount();
+            },
+        });
     }
 }

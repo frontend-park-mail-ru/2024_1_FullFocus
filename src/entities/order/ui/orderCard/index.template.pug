@@ -1,10 +1,7 @@
 div(class=`${className} order-card`)
     div(class="order-card__info-left")
-        div(class="text") Заказ номер
-        div(class="order-card__order-id") 
-            a(class="link" href=`${orderHref}`) #{id}
+        div(class="header header_h5") Заказ от #{orderData}
     div(class="order-card__info-right")
         div(class="order-card__order-sum")
             span(class="text text_size-small") оплачено 
-            span(class="text text_weight-semibold") #{sum}₽
-        div(class="order-card__order-status") #{status}
+            span(class="header header_h5") #{sum}₽

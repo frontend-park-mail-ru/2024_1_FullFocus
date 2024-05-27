@@ -1,0 +1,8 @@
+.toast {
+    position: fixed;
+    z-index: var(--z-index-on-top);
+    inset-block-end: 0;
+    right: 1vh;
+    bottom: 1vh;
+    display: grid;
+}

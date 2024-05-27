@@ -5,7 +5,12 @@ import {
     ajaxPost,
     fetchPicture,
 } from '@/shared/api';
-import { IUpdateProfileBody, IUserResponse } from './index.types';
+import {
+    IMainUserInfoResponse,
+    IUpdateProfileBody,
+    IUserResponse,
+    NotificationResponse,
+} from './index.types';
 
 export async function checkAuthRequest() {
     return ajaxGet(USER_API_URLS.checkAuth, null);
@@ -33,6 +38,10 @@ export async function getUserData() {
     return ajaxGet<IUserResponse>(USER_API_URLS.userData, []);
 }
 
+export async function getMainUserData() {
+    return ajaxGet<IMainUserInfoResponse>(USER_API_URLS.mainUserInfo, []);
+}
+
 export async function updateProfile(body: IUpdateProfileBody) {
     return ajaxPost<null>(USER_API_URLS.updateProfile, [], {
         fullName: body.fullName,
@@ -53,6 +62,18 @@ export async function sendCsatData(quesiontId: number, rate: number) {
     return ajaxPost<null>(USER_API_URLS.sendCsat, [], {
         pollID: quesiontId,
         rate: rate,
+    });
+}
+
+export async function getAllNotifications() {
+    return ajaxGet<NotificationResponse[]>(
+        USER_API_URLS.getNotificationsAll,
+        [],
+    );
+}
+export async function readNotification(id: number) {
+    return ajaxPost<null>(USER_API_URLS.readNotification, [], {
+        notificationId: id,
     });
 }
 

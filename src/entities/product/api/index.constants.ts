@@ -4,4 +4,5 @@ export const PRODUCTS_API_URL = {
     getProductsCategory: '/api/v1/public/products/category/',
     getProductsBySearch: '/api/v1/public/products/search',
     getSuggestions: '/api/public/v1/suggest',
+    getRecommendations: '/api/promo/public/v1',
 };

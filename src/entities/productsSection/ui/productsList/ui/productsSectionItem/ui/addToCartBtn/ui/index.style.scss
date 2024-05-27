@@ -1,0 +1,23 @@
+.add-to-cart-item__to-cart-btn {
+    width: 100%;
+}
+
+.add-to-cart-item--loading {
+    position: relative;
+}
+
+.add-to-cart-item--loading::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 8px solid transparent;
+    border-top-color: var(--color-background-dark);
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}

@@ -85,13 +85,19 @@ export class Router {
                         }
 
                         // Slug params
-                        if (
-                            this.pages[pageName].slugParamName &&
-                            slug !== undefined
-                        ) {
+                        const isSlugOk =
+                            (this.pages[pageName].slugParamName !== undefined &&
+                                slug !== undefined) ||
+                            this.pages[pageName].slugParamName === undefined;
+
+                        if (isSlugOk) {
                             this.params[this.pages[pageName].slugParamName] =
                                 slug;
                             this.withParams = true;
+                        }
+
+                        if (!isSlugOk) {
+                            this.activePage = PAGE_404;
                         }
                     } else {
                         this.activePage = PAGE_404;
@@ -210,7 +216,8 @@ export class Router {
             getComponent: getComponent,
             renderChild: renderChild,
             update: update,
-            rawPage: this.pages[basePage].rawPage,
+            rawPage:
+                basePage !== PAGE_404 ? this.pages[basePage].rawPage : false,
         };
     }
 }

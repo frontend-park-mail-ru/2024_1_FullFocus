@@ -1,0 +1,1 @@
+export { Discount } from './ui';

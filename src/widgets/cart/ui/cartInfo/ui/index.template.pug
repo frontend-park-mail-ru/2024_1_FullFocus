@@ -1,12 +1,15 @@
 div(class=`${className} cart-info section`)
     div(class="cart-info__header")
         div(class="header header_h4") Ваша корзина
-        div(class="text_size-normal text_weight-bold")
-            span(class="cart-info__total-items") #{total}
-            span  товаров
+        div(class="cart-info__subheader cart-info__total-items") #{total}
+    
     div(class="cart-info__money-info")
-        span Общая стоимость 
-        span(class="text_weight-bold") 
-            span(class="cart-info__total-sum") #{cost} 
-            span  ₽
+        div(class="cart-info__info-item") Товары
+            span(class="text_weight-bold cart-info__products-cost") #{cost}
+        div(class="cart-info__info-item") Доставка
+            span(class="text_weight-bold color_green") Бесплатно
+
+    div(class="cart-info__total cart-info__info-item header header_h4") Итого 
+        span(class="cart-info__total-cost") #{cost} ₽
+        
     div(class="cart-info__confirm-btn-block")

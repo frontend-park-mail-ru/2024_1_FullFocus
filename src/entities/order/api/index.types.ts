@@ -1,4 +1,4 @@
-type OrderStatus = 'created' | 'cancelled' | 'ready';
+import { OrderStatus } from '../model';
 
 interface IOrderProduct {
     id: number;
@@ -22,4 +22,9 @@ export interface IOrderInfoResponse {
     itemsCount: number;
     status: OrderStatus;
     createdAt: string;
+}
+
+export interface IOrderCreatedResponse {
+    orderID: number;
+    newPromocodeID: number;
 }

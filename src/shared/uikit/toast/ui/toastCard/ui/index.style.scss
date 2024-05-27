@@ -1,0 +1,111 @@
+// Base styles
+.toast-card {
+    width: 356px;
+    margin-bottom: 10px;
+    border-radius: var(--border-radius-sm);
+    border-width: 2px;
+    padding: 10px 10px 20px 16px;
+    box-sizing: border-box;
+    border-style: solid;
+
+    --_travel-distance: 5vh;
+
+    animation:
+        fade-in 0.3s ease,
+        slide-in 0.3s ease;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(var(--_travel-distance, 10px));
+    }
+}
+
+.toast-card__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.toast-card__header-text {
+    flex: 1;
+}
+
+.toast-card__header-text:hover {
+    cursor: default;
+}
+
+.toast-card__message {
+    padding-right: var(--btn-height-xs);
+}
+
+.close-btn {
+    height: var(--btn-height-xs);
+    padding: 0;
+    border-radius: 8px;
+    outline: none;
+    border: 0;
+}
+
+.close-btn:hover {
+    cursor: pointer;
+}
+
+.close-btn__svg {
+    width: var(--btn-height-xs);
+    height: var(--btn-height-xs);
+}
+
+// Basic
+.toast-card_basic {
+    background-color: white;
+    border-color: var(--color-background-darker);
+}
+
+.close-btn_basic {
+    background-color: white;
+    transition: 200ms color;
+    color: var(--color-background-darker);
+}
+
+.close-btn_basic:hover {
+    color: var(--color-primary-normal);
+}
+
+// Error
+.toast-card_error {
+    background-color: var(--color-error-bg);
+    border-color: var(--color-error-normal);
+}
+
+.close-btn_error {
+    background-color: var(--color-error-bg);
+    transition: 200ms color;
+    color: var(--color-error-normal);
+}
+
+.close-btn_error:hover {
+    color: var(--color-error-light);
+}
+
+// Success
+.toast-card_success {
+    background-color: var(--color-green-bg);
+    border-color: var(--color-green-normal);
+}
+
+.close-btn_success {
+    background-color: var(--color-green-bg);
+    transition: 200ms color;
+    color: var(--color-green-normal);
+}
+
+.close-btn_success:hover {
+    color: var(--color-green-light);
+}

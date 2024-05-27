@@ -7,14 +7,7 @@ export interface ProductProps {
     src: string;
     name: string;
     price: number;
+    rating?: number;
+    oldPrice?: number;
+    sale?: number;
 }
-
-/*
- * export interface ProductProps {
- *     className: string;
- *     style: ProductCardType;
- *     src: string;
- *     name: string;
- *     price: number;
- * }
- */

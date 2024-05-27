@@ -5,4 +5,7 @@ export interface IProduct {
     imgLink: string;
     category: string;
     description: string;
+    oldPrice?: string;
+    benefitValue?: string;
+    benefitType?: string;
 }

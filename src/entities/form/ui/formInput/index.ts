@@ -15,6 +15,7 @@ export interface FormInputProps {
     errorBlockClassName: string;
     validate?: boolean;
     initialValue?: string;
+    size?: 'xs' | 'sm' | 'bg';
 }
 
 export class FormInput extends Component<HTMLDivElement, FormInputProps> {
@@ -48,6 +49,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
             name: this.props.name,
             status: this.props.status,
             initialValue: this.props.initialValue,
+            size: this.props.size,
         });
 
         if (this.props.type === 'password') {
@@ -55,6 +57,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
                 type: 'button',
                 className: 'hide-show-password-btn',
                 btnStyle: 'white',
+                size: this.props.size,
             });
 
             const btn = btnItem.htmlElement;
@@ -75,7 +78,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
         this.errorBlock = new EmptyContainer(this.htmlElement, {
             className:
                 this.props.errorBlockClassName +
-                ' text_size-small text_weight-semibold',
+                ' text_size-xs text_weight-semibold',
         });
 
         this.errorBlock.htmlElement.hidden = true;

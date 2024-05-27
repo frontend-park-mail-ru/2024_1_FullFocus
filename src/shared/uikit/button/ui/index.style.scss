@@ -7,15 +7,38 @@ $btn-default-bg-color: #fff;
     border: 0;
     outline: none;
 
-    .icon {
-        width: 32px;
-        height: 32px;
+    color: #000;
+    font-family: var(--font-family-main-text);
+    font-size: var(--font-size-normal);
+    font-weight: 400;
+    padding-block: 0;
+}
+
+.btn__icon > svg {
+    width: 32px;
+    height: 32px;
+}
+
+.btn_bg {
+    height: var(--btn-height-bg);
+    .btn__icon > svg {
+        height: var(--btn-height-bg);
     }
 }
 
 .btn_sm,
 .btn_xs {
     height: var(--btn-height-sm);
+    .btn__icon > svg {
+        height: var(--btn-height-sm);
+    }
+}
+
+.btn_xs-only {
+    height: var(--btn-height-xs);
+    .btn__icon > svg {
+        height: var(--btn-height-xs);
+    }
 }
 
 .btn:hover {
@@ -26,19 +49,9 @@ $btn-default-bg-color: #fff;
     cursor: pointer;
 }
 
-.btn__text {
-    color: #000;
-    font-family: 'Open Sans';
-    font-size: 16px;
-    font-weight: 400;
-}
-
 @media (max-width: 475px) {
     .btn_xs {
         height: var(--btn-height-xs);
-    }
-
-    .btn__text {
         font-size: 14px;
     }
 }
@@ -46,16 +59,9 @@ $btn-default-bg-color: #fff;
 // Bright button
 .btn_bright {
     background-color: var(--color-primary-normal);
-    transition: background-color 0.2s;
-    .btn__text {
-        color: white;
-        font-weight: 700;
-    }
-
-    .icon__path {
-        transition: stroke 0.2s;
-        stroke: #fff;
-    }
+    transition: background-color var(--transition-time-normal);
+    color: white;
+    font-weight: 700;
 }
 
 .btn_bright:hover {
@@ -76,15 +82,9 @@ $btn-default-bg-color: #fff;
 .btn_white-with-bg {
     border-radius: 8px;
     width: 50px;
-    transition: background-color 0.2s;
-    .btn__text {
-        color: #c0c3c5;
-        font-weight: 700;
-    }
-    .icon__path {
-        transition: stroke 0.2s;
-        stroke: #c0c3c5;
-    }
+    transition: background-color var(--transition-time-normal);
+    color: #c0c3c5;
+    font-weight: 700;
 }
 
 .btn_white-with-bg:hover {
@@ -94,14 +94,14 @@ $btn-default-bg-color: #fff;
 // Green button
 .btn_green {
     background-color: $color-green-normal;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-time-normal);
 }
 
 .btn_green:hover {
     background-color: $color-green-light;
 }
 
-.btn_green .btn__text {
+.btn_green {
     color: white;
     font-weight: 700;
 }
@@ -114,25 +114,40 @@ $btn-default-bg-color: #fff;
 // White button
 .btn_white {
     background-color: #fff;
-    transition: color 0.2s;
-    .btn__text {
-        color: #c0c3c5;
-        font-weight: 700;
-    }
-
-    .icon__path {
-        transition: stroke 0.2s;
-        stroke: #c0c3c5;
-    }
+    transition: color var(--transition-time-normal);
+    color: #c0c3c5;
+    font-weight: 700;
 }
 
 .btn_white:hover {
-    .btn__text {
-        color: var(--color-primary-normal);
-        font-weight: 700;
-    }
+    color: var(--color-primary-normal);
+    font-weight: 700;
+}
 
-    .icon__path {
-        stroke: var(--color-primary-normal);
+.btn--loading {
+    position: relative;
+}
+
+.btn--loading {
+    .btn__icon,
+    .btn__text {
+        visibility: hidden;
+        opacity: 0;
     }
+}
+
+.btn--loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 4px solid transparent;
+    border-top-color: var(--color-background-dark);
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
 }

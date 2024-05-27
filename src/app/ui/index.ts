@@ -5,12 +5,18 @@ import { Page, Router } from './../providers';
 import { Navbar } from '@/widgets/navbar';
 import { getConfig } from './../providers';
 import { registerSW } from '../providers/serviceWorker';
+import { getMainUserData } from '@/entities/user/api';
+import { throttle } from '@/shared/api/ajax/throttling';
+import { getNotificationCards } from '@/features/notification';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
-    private page: Component<Element>;
-    private activePageName: string;
-    private contentElement: HTMLDivElement;
+    protected page: Component<Element>;
+    protected activePageName: string;
+    protected contentElement: HTMLDivElement;
+    protected throttledUpdateBadges: () => void;
+    protected throttledUserInfo: typeof getMainUserData;
+    protected closeNotificationWS: () => void;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
     navbar: Navbar;
@@ -61,14 +67,78 @@ export class App extends Component<HTMLDivElement> {
             this.navbar.updateNavbar(name, isLogged);
             this.mobileNavbar.updateNavbar(name, isLogged);
         }
+
+        if (isLogged) {
+            this.updateNavbarBadges();
+        }
     }
 
-    private componentDidMount() {
-        this.htmlElement.addEventListener('click', (e: Event) => {
-            const classList = (e.target as HTMLElement).classList;
-            if (classList.contains('link-item')) {
+    protected updateNavbarBadges() {
+        getMainUserData()
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    // Update cart icon badges
+                    const totalCartItems = data.cartItemsAmount;
+                    this.navbar.updateBadge('cart', totalCartItems.toString());
+                    this.mobileNavbar.updateBadge(
+                        'cart',
+                        totalCartItems.toString(),
+                    );
+
+                    if (totalCartItems > 0) {
+                        this.navbar.showBadge('cart');
+                        this.mobileNavbar.showBadge('cart');
+                    }
+
+                    if (totalCartItems <= 0) {
+                        this.navbar.hideBadge('cart');
+                        this.mobileNavbar.hideBadge('cart');
+                    }
+
+                    // Update profile icon badges
+                    const totalProfileMsgs =
+                        data.unreadNotifications + data.promocodesAvailable;
+                    this.navbar.updateBadge(
+                        'profile',
+                        totalProfileMsgs.toString(),
+                    );
+                    this.mobileNavbar.updateBadge(
+                        'profile',
+                        totalProfileMsgs.toString(),
+                    );
+
+                    if (totalProfileMsgs > 0) {
+                        this.navbar.showBadge('profile');
+                        this.mobileNavbar.showBadge('profile');
+                    }
+
+                    if (totalProfileMsgs <= 0) {
+                        this.navbar.hideBadge('profile');
+                        this.mobileNavbar.hideBadge('profile');
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+
+    protected componentDidMount() {
+        document.addEventListener('click', (e: Event) => {
+            const target = e.target as HTMLElement;
+            if (
+                target.tagName.toLowerCase() === 'a' ||
+                target.dataset['link'] !== undefined
+            ) {
                 this.router.handleLinkClick(e);
             }
+        });
+
+        this.throttledUpdateBadges = throttle(
+            () => this.updateNavbarBadges(),
+            1000,
+        );
+
+        this.contentElement.addEventListener('updatenavbar', () => {
+            this.throttledUpdateBadges();
         });
 
         registerSW();
@@ -107,6 +177,8 @@ export class App extends Component<HTMLDivElement> {
                 type: 'mobile',
             },
         );
+
+        this.closeNotificationWS = getNotificationCards().close;
 
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);

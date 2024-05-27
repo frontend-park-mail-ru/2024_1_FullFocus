@@ -4,6 +4,7 @@ import { InputType } from '@/shared/uikit/input';
 export interface FormProps {
     className: string;
     submitText: string;
+    size?: 'xs' | 'sm' | 'bg';
 }
 
 export type Inputs = {
@@ -22,4 +23,5 @@ export interface IFormField {
     inputClassName: string;
     validate?: boolean;
     initialValue?: string;
+    size?: 'xs' | 'sm' | 'bg';
 }

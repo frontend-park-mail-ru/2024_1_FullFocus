@@ -1,0 +1,40 @@
+.promo-card {
+    border-radius: var(--border-radius-sm);
+}
+
+.promo-card_small {
+    border-radius: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.promo-card_full {
+    padding: 15px;
+    background-color: var(--color-background-dark);
+    display: flex;
+    flex-direction: column;
+    flex: 250px;
+}
+
+.promo-card_full:hover {
+    cursor: pointer;
+}
+
+.promo-card__timeleft {
+    display: flex;
+    flex-direction: row;
+}
+
+.promo-card__timeleft-days {
+    margin-left: 3px;
+}
+
+.promo-card__description_full {
+    margin-top: 10px;
+}

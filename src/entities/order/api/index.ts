@@ -1,4 +1,8 @@
-import { IOrderResponse, IOrderInfoResponse } from './index.types';
+import {
+    IOrderResponse,
+    IOrderInfoResponse,
+    IOrderCreatedResponse,
+} from './index.types';
 import { ajaxGet, ajaxPost } from '@/shared/api';
 import { ORDER_API_URLS } from './index.constants';
 
@@ -12,8 +16,17 @@ export async function orderRequest(id: number) {
 
 export async function createOrderRequest(
     items: { productId: number; count: number }[],
+    promocodeID?: number,
 ) {
-    return ajaxPost<{ orderID: number }>(ORDER_API_URLS.create, [], {
+    if (promocodeID) {
+        return ajaxPost<IOrderCreatedResponse>(ORDER_API_URLS.create, [], {
+            items: items,
+            fromCart: true,
+            promocodeID: promocodeID,
+        });
+    }
+
+    return ajaxPost<IOrderCreatedResponse>(ORDER_API_URLS.create, [], {
         items: items,
         fromCart: true,
     });

@@ -1,58 +1,147 @@
-import productsSectionTmpl from './index.template.pug';
 import './index.style.scss';
 import { Component } from '@/shared/@types/index.component';
 import { ProductsListProps } from './index.types';
 import { ProductsSectionItem } from './productsSectionItem';
-import { addToCart } from '@/entities/cart/api';
+import { addToCart, deleteFromCart } from '@/entities/cart/api';
 import { List } from '@/shared/uikit/list';
+import { isCounterClicked } from '@/shared/uikit/counter';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
+import { toast } from '@/shared/uikit/toast';
 
-export { ProductsSectionItem } from './productsSectionItem';
+export { ProductsSectionItem, AddToCartBtn } from './productsSectionItem';
 
 export class ProductsList<
     ProductCardType extends Component<Element>,
-> extends Component<HTMLDivElement, ProductsListProps> {
-    protected list: List<ProductsSectionItem<ProductCardType>>;
+> extends List<ProductsSectionItem<ProductCardType>> {
+    protected navigateToCart: () => void;
     protected listener: (e: Event) => void;
+    protected addErrorMsg: (header: string, text: string) => void;
 
     constructor(parent: Element, props: ProductsListProps) {
-        super(parent, productsSectionTmpl, props);
+        super(parent, {
+            className: props.className,
+            wrap: true,
+            emptyText: 'товары отсутствуют',
+        });
+        this.addErrorMsg = toast().addError;
     }
 
+    protected noAuthError() {
+        this.addErrorMsg('Ошибка', 'Сначала вам необходимо авторизоваться!');
+    }
+
+    // eslint-disable-next-line max-lines-per-function
     protected componentDidMount() {
+        // eslint-disable-next-line max-lines-per-function
         this.listener = (e: Event) => {
             const target = e.target as HTMLElement;
             if (
                 target.tagName.toLowerCase() === 'button' ||
                 target.classList.contains('btn__text')
             ) {
-                const id = Number(target.dataset.id);
-                if (this.productCardById(id).inCart) {
-                    this.props.navigateToCart();
-                    // console.log('to cart!');
-                }
-
+                const item = target.closest('.products-section-item');
+                const id = Number((item as HTMLElement).dataset.id);
                 if (!this.productCardById(id).inCart) {
-                    addToCart(id)
-                        .then(({ status }) => {
+                    this.productCardById(id).setDisabled();
+                    animateLongRequest(
+                        addToCart,
+                        ({ status, data }) => {
                             if (status === 200) {
-                                this.productCardById(id).setInCart();
+                                if (status === 200) {
+                                    this.productCardById(id).setInCart(
+                                        data.count,
+                                    );
+                                    this.updateNavbar();
+                                }
                             }
-                        })
-                        .catch(() => {});
+                            if (status !== 200) {
+                                this.noAuthError();
+                            }
+                        },
+                        () => {},
+                        () => {
+                            this.productCardById(id).setLoading();
+                        },
+                        () => {
+                            this.productCardById(id).removeLoading();
+                            this.productCardById(id).setEnabled();
+                        },
+                        500,
+                        1000,
+                    )(id);
+                }
+            }
+            if (isCounterClicked(target)) {
+                const counterBtn = target.closest('.counter__btn');
+                const item = target.closest('.products-section-item');
+                const id = Number((item as HTMLElement).dataset.id);
+                const action = (counterBtn as HTMLElement).dataset.action;
+                if (action === 'minus') {
+                    this.productCardById(id).setDisabled();
+                    animateLongRequest(
+                        deleteFromCart,
+                        ({ status, data }) => {
+                            if (status === 200) {
+                                if (data.count === 0) {
+                                    this.productCardById(id).setNotInCart();
+                                    this.updateNavbar();
+                                }
+                                if (data.count !== 0) {
+                                    this.productCardById(id).counterValue =
+                                        data.count;
+                                }
+                            }
+                        },
+                        () => {},
+                        () => {
+                            this.productCardById(id).setLoading();
+                        },
+                        () => {
+                            this.productCardById(id).removeLoading();
+                            this.productCardById(id).setEnabled();
+                        },
+                        500,
+                        1000,
+                    )(id);
+                }
+                if (action === 'plus') {
+                    this.productCardById(id).setDisabled();
+                    animateLongRequest(
+                        addToCart,
+                        ({ status, data }) => {
+                            if (status === 200) {
+                                this.productCardById(id).counterValue =
+                                    data.count;
+                            }
+                        },
+                        () => {},
+                        () => {
+                            this.productCardById(id).setLoading();
+                        },
+                        () => {
+                            this.productCardById(id).removeLoading();
+                            this.productCardById(id).setEnabled();
+                        },
+                        500,
+                        1000,
+                    )(id);
                 }
             }
         };
+
         this.htmlElement.addEventListener('click', this.listener);
+    }
+
+    private updateNavbar() {
+        this.htmlElement.dispatchEvent(
+            new Event('updatenavbar', {
+                bubbles: true,
+            }),
+        );
     }
 
     protected render() {
         this.renderTemplate();
-
-        this.list = new List(this.htmlElement, {
-            className: 'products-list__products',
-            wrap: true,
-            emptyText: 'товары отсутсвуют',
-        });
 
         this.componentDidMount();
     }
@@ -63,15 +152,11 @@ export class ProductsList<
             id: string;
         })[],
     ): void {
-        this.list.renderItems(products);
+        this.renderItems(products);
     }
 
     productCardById(id: number) {
-        return this.list.itemById(id.toString());
-    }
-
-    clear() {
-        this.list.clear();
+        return this.itemById(id.toString());
     }
 
     destroy(): void {

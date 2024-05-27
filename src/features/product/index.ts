@@ -1,1 +1,1 @@
-export { useGetProductCards } from './ui';
+export { useGetProductCards, useGetProductCardsRecommendation } from './ui';
