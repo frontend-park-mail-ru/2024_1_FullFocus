@@ -17,6 +17,8 @@ export class App extends Component<HTMLDivElement> {
     protected throttledUpdateBadges: () => void;
     protected throttledUserInfo: typeof getMainUserData;
     protected closeNotificationWS: () => void;
+    protected restartNotifications: () => void;
+    protected areNotificationsWorking: () => boolean;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
     navbar: Navbar;
@@ -69,8 +71,34 @@ export class App extends Component<HTMLDivElement> {
         }
 
         if (isLogged) {
+            this.checkConnection();
             this.updateNavbarBadges();
         }
+    }
+
+    protected checkConnection() {
+        if (!this.isWsInited) {
+            this.initWS();
+        }
+
+        if (!this.areNotificationsWorking()) {
+            this.restartNotifications();
+        }
+    }
+
+    protected isWsInited() {
+        return (
+            this.closeNotificationWS !== undefined &&
+            this.restartNotifications !== undefined &&
+            this.areNotificationsWorking !== undefined
+        );
+    }
+
+    protected initWS() {
+        const notifications = getNotificationCards();
+        this.closeNotificationWS = notifications.close;
+        this.restartNotifications = notifications.retryConnection;
+        this.areNotificationsWorking = notifications.isConnected;
     }
 
     protected updateNavbarBadges() {
@@ -177,8 +205,6 @@ export class App extends Component<HTMLDivElement> {
                 type: 'mobile',
             },
         );
-
-        this.closeNotificationWS = getNotificationCards().close;
 
         Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
             this.navbar.addLink(name, logged, props);

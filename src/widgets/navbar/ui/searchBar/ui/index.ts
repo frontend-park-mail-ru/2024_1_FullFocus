@@ -173,7 +173,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
         this.inputField = new Input(searchBar, {
             className: 'searchbar__input',
-            placeholder: 'поиск',
+            placeholder: 'поиск на Bizon',
             type: 'text',
             name: 'searchbar-input',
             status: 'notValidated',
@@ -183,6 +183,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             className: 'searchbar__clear-btn',
             type: 'button',
             btnStyle: 'white',
+            size: 'xs',
         });
 
         this.clearBtn.hide();

@@ -59,3 +59,10 @@
         display: none;
     }
 }
+
+@media (max-width: 475px) {
+    .searchbar__input {
+        height: var(--btn-height-xs);
+        font-size: var(--font-size-normal);
+    }
+}
