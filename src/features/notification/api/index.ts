@@ -26,6 +26,10 @@ function createNotificationWS(url: string) {
         ws = new WebSocket(BACKEND_WS_URL + url);
     };
 
+    const isConnected = () => {
+        return ws.readyState === ws.OPEN;
+    };
+
     return () => {
         if (!ws) {
             create();
@@ -58,6 +62,16 @@ function createNotificationWS(url: string) {
         return {
             close: () => {
                 ws?.close();
+            },
+
+            isConnected: () => {
+                return isConnected();
+            },
+
+            retryConnection: () => {
+                if (ws.readyState === ws.CLOSED) {
+                    create();
+                }
             },
 
             addCallback: (

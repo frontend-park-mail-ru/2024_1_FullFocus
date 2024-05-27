@@ -139,3 +139,13 @@ $dropdown-width: 340px;
         width: 100%;
     }
 }
+
+@media (max-width: 475px) {
+    .dropdown_with-border {
+        padding: 4px 14px;
+    }
+
+    .dropdown__toggler-icon {
+        height: 10px;
+    }
+}

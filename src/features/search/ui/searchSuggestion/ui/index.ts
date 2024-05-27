@@ -26,6 +26,7 @@ export class SearchSuggestion extends Component<
                 className: 'search-result__to-input-btn',
                 type: 'button',
                 btnStyle: 'whiteWithBg',
+                size: 'xs',
             });
             this.toInputBtn.htmlElement.dataset.text = this.props.text;
         }

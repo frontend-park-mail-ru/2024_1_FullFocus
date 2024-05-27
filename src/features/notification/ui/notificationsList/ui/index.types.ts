@@ -8,5 +8,6 @@ export type NotificationsListProps = {
         string,
         ((parent: Element) => { item: NotificationCard; id: string })[]
     >;
+    totalUnread?: number;
     unreadIdsByDate?: Map<string, string[]>;
 };
