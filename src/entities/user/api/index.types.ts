@@ -16,6 +16,8 @@ export interface IMainUserInfoResponse {
     fullName: string;
     cartItemsAmount: number;
     avatarName: string;
+    unreadNotifications: number;
+    promocodesAvailable: number;
 }
 
 export type NotificationResponse = {

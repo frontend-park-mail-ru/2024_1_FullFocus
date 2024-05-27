@@ -12,6 +12,17 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    .link-with-bg {
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .badge_top-right {
+        top: 14px;
+        right: 8px;
+    }
 }
 
 @media (width <= 1024px) {

@@ -1,1 +1,1 @@
-export const NOTIFICATION_URL = '';
+export const NOTIFICATION_URL = '/notifications/connect';

@@ -28,6 +28,11 @@ export class NotificationCard extends Component<
         readNotification(this.props.id)
             .then(() => {
                 this.props.wasRead = true;
+                this.htmlElement.dispatchEvent(
+                    new Event('notificationread', {
+                        bubbles: true,
+                    }),
+                );
             })
             .catch(() => {});
     }
@@ -37,11 +42,6 @@ export class NotificationCard extends Component<
             this.htmlElement.addEventListener('mouseenter', () => {
                 if (!this.props.wasRead) {
                     this.setWasRead();
-                    this.htmlElement.dispatchEvent(
-                        new Event('notificationread', {
-                            bubbles: true,
-                        }),
-                    );
                 }
             });
         }

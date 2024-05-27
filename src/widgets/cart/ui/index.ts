@@ -114,7 +114,7 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
                                 id: data.orderID.toString(),
                             });
                             this.addSuccess(
-                                'Заказ успешно формлен!',
+                                'Заказ успешно создан!',
                                 data.newPromocodeID
                                     ? 'Вам добавлен новый промокод!'
                                     : '',

@@ -26,12 +26,6 @@
     flex-direction: column;
     gap: 20px;
 }
-
-.cart-info__info,
-.cart-info__promocodes {
-    flex: 1;
-}
-
 // Cart empty
 .cart__empty-info {
     text-align: center;
@@ -66,10 +60,15 @@
         align-items: start;
         flex-direction: row-reverse;
         margin-bottom: 24px;
+        flex: 1;
     }
 
     .cart__main {
         max-width: 100%;
+    }
+
+    .cart-info__promocodes {
+        flex: 1;
     }
 }
 

@@ -77,6 +77,7 @@ export class App extends Component<HTMLDivElement> {
         getMainUserData()
             .then(({ status, data }) => {
                 if (status === 200) {
+                    // Update cart icon badges
                     const totalCartItems = data.cartItemsAmount;
                     this.navbar.updateBadge('cart', totalCartItems.toString());
                     this.mobileNavbar.updateBadge(
@@ -92,6 +93,28 @@ export class App extends Component<HTMLDivElement> {
                     if (totalCartItems <= 0) {
                         this.navbar.hideBadge('cart');
                         this.mobileNavbar.hideBadge('cart');
+                    }
+
+                    // Update profile icon badges
+                    const totalProfileMsgs =
+                        data.unreadNotifications + data.promocodesAvailable;
+                    this.navbar.updateBadge(
+                        'profile',
+                        totalProfileMsgs.toString(),
+                    );
+                    this.mobileNavbar.updateBadge(
+                        'profile',
+                        totalProfileMsgs.toString(),
+                    );
+
+                    if (totalProfileMsgs > 0) {
+                        this.navbar.showBadge('profile');
+                        this.mobileNavbar.showBadge('profile');
+                    }
+
+                    if (totalProfileMsgs <= 0) {
+                        this.navbar.hideBadge('profile');
+                        this.mobileNavbar.hideBadge('profile');
                     }
                 }
             })
@@ -118,7 +141,7 @@ export class App extends Component<HTMLDivElement> {
             this.throttledUpdateBadges();
         });
 
-        // registerSW();
+        registerSW();
     }
 
     protected render() {

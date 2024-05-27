@@ -5,6 +5,7 @@ import { ProfileInfoProps } from './index.types';
 import { ProfileNavbar } from './profileNavbar';
 import { PROFILE_PAGES } from '../config';
 import { IProps } from '../config/index.types';
+import { getMainUserData } from '@/entities/user/api';
 
 export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
     protected activePage: string;
@@ -32,7 +33,51 @@ export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
                 orderId: orderId,
                 profileChangedCallback: changedProfileCallback,
             });
+
+            this.updateNabarBadges();
         }
+    }
+
+    protected componentDidMount() {
+        this.htmlElement.addEventListener('updatenavbar', () => {
+            this.updateNabarBadges();
+        });
+    }
+
+    protected updateNabarBadges() {
+        getMainUserData()
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    const unreadNotifications = data.unreadNotifications;
+                    this.navbar.updateBadge(
+                        'notifications',
+                        unreadNotifications.toString(),
+                    );
+
+                    if (unreadNotifications > 0) {
+                        this.navbar.showBadge('notifications');
+                    }
+
+                    if (unreadNotifications <= 0) {
+                        this.navbar.hideBadge('notifications');
+                    }
+
+                    const promocodes = data.promocodesAvailable;
+                    this.navbar.updateBadge(
+                        'promocodes',
+                        promocodes.toString(),
+                    );
+
+                    if (promocodes > 0) {
+                        this.navbar.showBadge('promocodes');
+                    }
+
+                    if (promocodes <= 0) {
+                        this.navbar.hideBadge('promocodes');
+                    }
+                }
+            })
+            .catch(() => {});
     }
 
     protected render() {
@@ -68,5 +113,7 @@ export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
         );
 
         this.navbar.updateNavbar();
+
+        this.componentDidMount();
     }
 }
