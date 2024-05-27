@@ -53,7 +53,7 @@ export class ProfilePromocodesInfo extends Component<
                 if (items.length > 0) {
                     this.promocodes.renderItems(items);
                 } else {
-                    this.htmlElement.innerText = 'Промиков не имеем';
+                    this.htmlElement.innerText = 'У вас нет доступных промокодов';
                 }
                 this.componentDidMount();
             })
