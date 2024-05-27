@@ -1,5 +1,5 @@
 import { getAllNotifications } from '@/entities/user/api';
-import { NotificationMessage, getWS } from './../api';
+import { getWS } from './../api';
 import { NOTIFICATION_CALLBACK_NAME } from './index.constants';
 import { NotificationCard } from './notificationCard/ui';
 import { OrderStatus } from '@/entities/order/model';
@@ -9,13 +9,12 @@ import { NotificationsList } from './notificationsList';
 
 export { NotificationCard } from './notificationCard/ui';
 
-const productStatusChanged = (message: MessageEvent<string>) => {
-    const data = JSON.parse(message.data) as NotificationMessage;
+const productStatusChanged = (message: { [name: string]: string }) => {
     toast().addMessageCustom('Статус заказа изменен', (parent: Element) => {
         return new NotificationCard(parent, {
             className: 'toast__notification-card',
-            orderID: data.data.id.toString(),
-            status: data.data.status as OrderStatus,
+            orderID: message.id,
+            status: message.status as OrderStatus,
         });
     });
 };

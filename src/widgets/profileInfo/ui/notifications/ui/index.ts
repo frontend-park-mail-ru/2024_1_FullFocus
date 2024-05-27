@@ -28,6 +28,11 @@ export class ProfileNotifications extends Component<
                 if (!this.notificationsList.areUnread) {
                     this.destroyReadAllBtn();
                 }
+                this.htmlElement.dispatchEvent(
+                    new Event('updatenavbar', {
+                        bubbles: true,
+                    }),
+                );
             });
         }
     }

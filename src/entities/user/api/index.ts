@@ -71,7 +71,7 @@ export async function getAllNotifications() {
         [],
     );
 }
-export async function readNotification(id: string) {
+export async function readNotification(id: number) {
     return ajaxPost<null>(USER_API_URLS.readNotification, [], {
         notificationId: id,
     });

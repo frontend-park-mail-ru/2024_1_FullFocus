@@ -17,6 +17,7 @@ export type PromocodeActivationInfo<
     min_sum_activation: number;
     benefit_type: BenefitType;
     value: number;
+    description: string;
 };
 
 export type Promocode<

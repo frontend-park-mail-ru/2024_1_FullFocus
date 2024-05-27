@@ -42,6 +42,7 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 className: props.className,
             });
         },
+        metaDataName: 'promocodesAvailable',
     },
     notifications: {
         href: '/profile/notifications',
@@ -51,5 +52,6 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 className: props.className,
             });
         },
+        metaDataName: 'unreadNotifications',
     },
 };

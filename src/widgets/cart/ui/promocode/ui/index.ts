@@ -134,8 +134,8 @@ export class CartPromocodes extends Component<
                     this.setWithCode(data.card);
                     this.props.promocodeUsedCallback(
                         data.activationInfo.id,
-                        data.activationInfo.minSumActivation,
-                        data.activationInfo.benefitType,
+                        data.activationInfo['min_sum_activation'],
+                        data.activationInfo['benefit_type'],
                         data.activationInfo.value,
                     );
                 }
@@ -178,10 +178,11 @@ export class CartPromocodes extends Component<
                                 resolve({
                                     confirmed: true,
                                     id: data.activationInfo.id,
-                                    minSum: data.activationInfo
-                                        .minSumActivation,
+                                    minSum: data.activationInfo[
+                                        'min_sum_activation'
+                                    ],
                                     benefitType:
-                                        data.activationInfo.benefitType,
+                                        data.activationInfo['benefit_type'],
                                     value: data.activationInfo.value,
                                 });
                             },

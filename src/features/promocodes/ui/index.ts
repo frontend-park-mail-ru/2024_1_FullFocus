@@ -1,7 +1,6 @@
 import {
     PromocodeCard,
     promocodeActivationInfo,
-    promocodeById,
     promocodesAll,
 } from '@/entities/promocode';
 import { animateLongRequest } from '@/shared/api/ajax/throttling';
@@ -79,20 +78,17 @@ export function useGetPromocodesDropdown(parent: Element, className: string) {
 export async function useGetPromocodeCardByCode(code: string) {
     const response = await promocodeActivationInfo(code);
     if (response.status === 200) {
-        const responseDetailed = await promocodeById(response.data.id);
-        if (responseDetailed.status === 200) {
-            return {
-                activationInfo: responseDetailed.data,
-                card: (parent: Element, className: string) =>
-                    new PromocodeCard(parent, {
-                        className: className,
-                        id: responseDetailed.data.id,
-                        style: 'small',
-                        code: code,
-                        description: responseDetailed.data.description,
-                    }),
-            };
-        }
+        return {
+            activationInfo: response.data,
+            card: (parent: Element, className: string) =>
+                new PromocodeCard(parent, {
+                    className: className,
+                    id: response.data.id,
+                    style: 'small',
+                    code: code,
+                    description: response.data.description,
+                }),
+        };
     }
     if (response.status !== 200) {
         return null;
