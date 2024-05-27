@@ -12,5 +12,5 @@ Frontend проекта Ozon команды FullFocus
 [Хасбулат Абдуллин](https://github.com/Yakwilik) - Backend  
 
 ## Сссылки
-[Деплой](http://62.233.46.235/)  
+[Деплой](https://bizonshop.site)
 [Репозиторий Бэкенда](https://github.com/go-park-mail-ru/2024_1_FullFocus)
