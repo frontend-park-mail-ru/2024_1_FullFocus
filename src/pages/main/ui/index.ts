@@ -44,25 +44,19 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected render() {
         this.renderTemplate();
 
-        this.productsCategories = new CategoriesList(
-            this.htmlElement.getElementsByClassName('categories')[0],
-            {
-                className: 'categories__categories-list',
-            },
-        );
+        this.productsCategories = new CategoriesList(this.htmlElement, {
+            className: 'categories',
+        });
 
-        this.productsSection = new ProductsSection(
-            this.htmlElement.getElementsByClassName('products')[0],
-            {
-                className: 'products-section-popular',
-                navigateToCart: this.props.navigateToCart,
-            },
-        );
+        this.productsSection = new ProductsSection(this.htmlElement, {
+            className: 'products',
+            navigateToCart: this.props.navigateToCart,
+        });
 
         this.productsSectionRecommendation = new ProductsSectionRecommendation(
-            this.htmlElement.getElementsByClassName('recommendations')[0],
+            this.htmlElement,
             {
-                className: 'products-section-recommendation',
+                className: 'promo',
                 navigateToCart: this.props.navigateToCart,
             },
         );

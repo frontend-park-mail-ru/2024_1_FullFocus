@@ -33,15 +33,18 @@
         padding-bottom: 61px;
     }
 
-    .mobile-navbar-container {
-        display: block;
-    }
-
     .csat-main {
         display: none;
     }
 
     .navbar-container {
-        height: 66px;
+        height: 60px;
+        padding: 0;
+    }
+
+    .mobile-navbar-container {
+        padding: 12px 0 4px 0;
+        display: block;
+        height: auto;
     }
 }

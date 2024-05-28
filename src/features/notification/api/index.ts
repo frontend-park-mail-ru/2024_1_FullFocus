@@ -76,7 +76,7 @@ function createNotificationWS(url: string) {
 
             addCallback: (
                 name: string,
-                callback: (message: { [name: string]: string }) => void,
+                callback: (message?: { [name: string]: string }) => void,
             ) => {
                 callbacks.set(name, callback);
             },

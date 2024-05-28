@@ -8,10 +8,10 @@ $btn-default-bg-color: #fff;
     outline: none;
 
     color: #000;
+    padding-block: 0;
     font-family: var(--font-family-main-text);
     font-size: var(--font-size-normal);
-    font-weight: 400;
-    padding-block: 0;
+    font-weight: var(--font-weight-regular);
 }
 
 .btn__icon > svg {
@@ -56,6 +56,10 @@ $btn-default-bg-color: #fff;
         .btn__icon > svg {
             height: var(--btn-height-xs);
         }
+    }
+
+    .btn {
+        font-size: var(--font-size-sm);
     }
 }
 

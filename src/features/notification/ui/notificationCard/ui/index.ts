@@ -6,6 +6,7 @@ import { Link } from '@/shared/uikit/link';
 import { formatStatus } from '@/entities/order';
 import { closeToastWrapper } from '@/shared/uikit/toast/ui';
 import { readNotification } from '@/entities/user/api';
+import { BACKEND_URL } from '@/shared/api/config/index.constants';
 
 export class NotificationCard extends Component<
     HTMLDivElement,
@@ -67,7 +68,7 @@ export class NotificationCard extends Component<
                     className: 'notification-card__link',
                     text: this.props.orderID,
                     style: 'primary',
-                    href: 'profile/order/' + this.props.orderID,
+                    href: BACKEND_URL + '/profile/order/' + this.props.orderID,
                 },
             ),
         );

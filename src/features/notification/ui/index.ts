@@ -14,7 +14,7 @@ const productStatusChanged = (message: { [name: string]: string }) => {
         return new NotificationCard(parent, {
             className: 'toast__notification-card',
             orderID: message.id,
-            status: message.status as OrderStatus,
+            status: message.newStatus as OrderStatus,
         });
     });
 };
