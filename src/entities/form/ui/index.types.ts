@@ -5,6 +5,7 @@ export interface FormProps {
     className: string;
     submitText: string;
     size?: 'xs' | 'sm' | 'bg';
+    style?: 'whiteWithBg' | 'bright' | 'green' | 'white' | 'red';
 }
 
 export type Inputs = {
@@ -22,6 +23,7 @@ export interface IFormField {
     className: string;
     inputClassName: string;
     validate?: boolean;
+    header?: boolean;
     initialValue?: string;
     size?: 'xs' | 'sm' | 'bg';
 }

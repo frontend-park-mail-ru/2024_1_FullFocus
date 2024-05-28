@@ -7,11 +7,13 @@ import {
     validatePassword,
     validatePhoneNumber,
     validateMaxInputLength,
-    validateMark
+    validateMark,
 } from '@/shared/lib/validate';
+import { validateRepeatPassword } from '@/shared/lib/validate/core';
 
 export type { FormData } from './index.types';
 
+// eslint-disable-next-line max-lines-per-function
 export function parseForm(form: Form): FormData {
     const formData: FormData = {
         isValid: true,
@@ -45,6 +47,28 @@ export function parseForm(form: Form): FormData {
                         formData.inputs[name].value,
                     );
                     break;
+                case 'repeatPassword':
+                    if (formData.inputs['password'] !== undefined) {
+                        const isPasswordError =
+                            formData.inputs['password'].error !== null;
+                        if (!isPasswordError) {
+                            formData.inputs[name].error =
+                                validateRepeatPassword(
+                                    formData.inputs['password'].value,
+                                    formData.inputs[name].value,
+                                );
+                            if (formData.inputs[name].error !== null) {
+                                formData.inputs['password'].error = '';
+                                form.inputItems['password'].setInValid();
+                            }
+                        }
+
+                        if (isPasswordError) {
+                            formData.inputs[name].error = '';
+                            form.inputItems[name].setInValid();
+                        }
+                    }
+                    break;
                 case 'advantages':
                     formData.inputs[name].error = validateMaxInputLength(
                         formData.inputs[name].value,
@@ -73,12 +97,12 @@ export function parseForm(form: Form): FormData {
             }
         }
 
-        if (formData.inputs[name].error != null) {
+        if (formData.inputs[name].error !== null) {
             formData.isValid = false;
             input.addError(formData.inputs[name].error);
         }
 
-        if (formData.inputs[name].error == null) {
+        if (formData.inputs[name].error === null) {
             input.clearErrors();
             input.setValid();
         }

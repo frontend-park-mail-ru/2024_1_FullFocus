@@ -7,17 +7,21 @@ import { EditProfileDialog } from './editProfileDialog';
 import { ChangePicture } from './changePicture';
 import { useGetProfileInfo } from '@/features/profile/api';
 import { Button, getEditBtn } from '@/shared/uikit/button';
+import { UserInfo } from './profileInfo';
 
 export class ProfileMainInfo extends Component<
     HTMLDivElement,
     ProfileMainInfoProps
 > {
-    protected fullName: HTMLDivElement;
     protected editBtn: Button;
-    protected phoneNumber: HTMLDivElement;
-    protected email: HTMLDivElement;
+    protected fullNameData: string;
+    protected phoneNumberData: string;
+    protected emailData: string;
     protected listener: (e: Event) => void;
+    protected mainInfoElement: HTMLDivElement;
     protected dialog: EditProfileDialog;
+    protected profileUpdatedListener: (e: CustomEvent) => void;
+    protected userInfo: UserInfo;
     protected changePicture: ChangePicture;
 
     constructor(parent: Element, props: ProfileMainInfoProps) {
@@ -26,13 +30,24 @@ export class ProfileMainInfo extends Component<
 
     protected componentDidMount() {
         this.listener = () => {
-            this.dialog.htmlElement.showModal();
+            const isUserInfo = this.userInfo !== null;
+
+            if (isUserInfo) {
+                this.renderUpdateProfileInfo();
+            }
+
+            if (!isUserInfo) {
+                this.renderProfileInfo();
+            }
         };
         this.editBtn.htmlElement.addEventListener('click', this.listener);
     }
 
     protected render() {
         this.renderTemplate();
+
+        this.dialog = null;
+        this.userInfo = null;
 
         this.editBtn = getEditBtn(
             this.htmlElement.getElementsByClassName(
@@ -45,16 +60,8 @@ export class ProfileMainInfo extends Component<
             },
         );
 
-        this.fullName = this.htmlElement.getElementsByClassName(
-            'profile-main-info__full-name',
-        )[0] as HTMLDivElement;
-
-        this.phoneNumber = this.htmlElement.getElementsByClassName(
-            'profile-main-info__phone-number',
-        )[0] as HTMLDivElement;
-
-        this.email = this.htmlElement.getElementsByClassName(
-            'profile-main-info__email',
+        this.mainInfoElement = this.htmlElement.getElementsByClassName(
+            'profile-main-info__user-data',
         )[0] as HTMLDivElement;
 
         this.changePicture = new ChangePicture(
@@ -73,22 +80,12 @@ export class ProfileMainInfo extends Component<
 
         useGetProfileInfo()
             .then((response) => {
-                this.dialog = new EditProfileDialog(this.htmlElement, {
-                    className: 'profile-main-info__edit-dialog',
-                    profileChangedCallback: () => {
-                        this.update();
-                        if (this.props.profileChangedCallback) {
-                            this.props.profileChangedCallback();
-                        }
-                    },
-                    fullName: response.fullName,
-                    email: response.email,
-                    phoneNumber: response.phoneNumber,
-                });
+                this.fullNameData = response.fullName;
+                this.phoneNumberData = response.phoneNumber;
+                this.emailData = response.email;
 
-                this.fullName.innerText = response.fullName;
-                this.phoneNumber.innerText = response.phoneNumber;
-                this.email.innerText = response.email;
+                this.renderProfileInfo();
+
                 this.changePicture.pictureSrc =
                     response.pictureSrc === ''
                         ? '/public/default-profile-pic.png'
@@ -97,5 +94,50 @@ export class ProfileMainInfo extends Component<
             .catch(() => {});
 
         this.componentDidMount();
+    }
+
+    protected renderProfileInfo() {
+        if (this.dialog !== null) {
+            this.dialog.htmlElement.removeEventListener(
+                'profileupdated',
+                this.profileUpdatedListener,
+            );
+            this.dialog.destroy();
+            this.dialog = null;
+        }
+        this.userInfo = new UserInfo(this.mainInfoElement, {
+            className: 'profile-info__main-info',
+            fullName: this.fullNameData,
+            phoneNumber: this.phoneNumberData,
+            email: this.emailData,
+        });
+    }
+
+    protected renderUpdateProfileInfo() {
+        this.userInfo?.destroy();
+        this.userInfo = null;
+        this.dialog = new EditProfileDialog(this.mainInfoElement, {
+            className: 'profile-main-info__edit-dialog',
+            profileChangedCallback: (
+                fullName: string,
+                email: string,
+                phoneNumber: string,
+            ) => {
+                this.fullNameData = fullName;
+                this.emailData = email;
+                this.phoneNumberData = phoneNumber;
+                this.renderProfileInfo();
+                if (this.props.profileChangedCallback) {
+                    this.props.profileChangedCallback();
+                }
+            },
+            fullName: this.fullNameData,
+            email: this.emailData,
+            phoneNumber: this.phoneNumberData,
+        });
+        this.dialog.htmlElement.addEventListener(
+            'profileupdated',
+            this.profileUpdatedListener,
+        );
     }
 }

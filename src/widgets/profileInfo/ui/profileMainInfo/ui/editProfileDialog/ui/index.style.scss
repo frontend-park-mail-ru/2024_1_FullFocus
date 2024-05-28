@@ -1,22 +1,28 @@
-.edit-dialog__btn-close {
-    width: 32px;
-    height: 32px;
-}
+// .edit-dialog__btn-close {
+//     width: 32px;
+//     height: 32px;
+// }
 
-.edit-dialog__upper {
-    margin-bottom: 32px;
-}
+// .edit-dialog__upper {
+//     margin-bottom: 32px;
+// }
 
-.edit-dialog {
-    width: 400px;
-    border: none;
+// .edit-dialog {
+//     width: 400px;
+//     border: none;
 
-    .form__inputs {
-        flex-direction: column;
-    }
-}
+//     .form__inputs {
+//         flex-direction: column;
+//     }
+// }
 
-.edit-dialog__header-line {
+// .edit-dialog__header-line {
+//     display: flex;
+//     justify-content: space-between;
+// }
+
+.user-data {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
 }

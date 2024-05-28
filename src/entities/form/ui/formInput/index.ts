@@ -2,7 +2,7 @@ import './index.style.scss';
 import formInputTmpl from './index.template.pug';
 import { Input, InputType, InputStatus } from '@/shared/uikit/input';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
-import { getEyeBtn } from '@/shared/uikit/button';
+import { Button, getExitBtn, getEyeBtn } from '@/shared/uikit/button';
 import { Component } from '@/shared/@types/index.component';
 
 export interface FormInputProps {
@@ -14,6 +14,7 @@ export interface FormInputProps {
     status: InputStatus;
     errorBlockClassName: string;
     validate?: boolean;
+    header?: boolean;
     initialValue?: string;
     size?: 'xs' | 'sm' | 'bg';
 }
@@ -22,6 +23,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
     props: FormInputProps;
     input: Input;
     protected errorBlock: EmptyContainer;
+    protected clearBtn: Button;
     protected inputBlock: HTMLDivElement;
 
     constructor(parent: Element, props: FormInputProps) {
@@ -35,8 +37,37 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
         return true;
     }
 
+    protected componentDidMount() {
+        if (this.clearBtn) {
+            this.input.htmlElement.addEventListener('input', () => {
+                if (this.input.inputValue !== this.props.initialValue) {
+                    this.showClearBtn();
+                }
+
+                if (this.input.inputValue === this.props.initialValue) {
+                    this.hideClearBtn();
+                }
+            });
+
+            this.clearBtn.htmlElement.addEventListener('click', () => {
+                this.hideClearBtn();
+                this.input.inputValue = this.props.initialValue;
+            });
+        }
+    }
+
     protected render() {
+        this.props.header = this.props.header ?? false;
+
         this.renderTemplate();
+
+        if (this.props.header) {
+            (
+                this.htmlElement.getElementsByClassName(
+                    'input-header',
+                )[0] as HTMLDivElement
+            ).innerText = this.props.placeholder;
+        }
 
         this.inputBlock = this.htmlElement.getElementsByClassName(
             'input-block',
@@ -44,7 +75,7 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
 
         this.input = new Input(this.inputBlock, {
             className: this.props.inputClassName,
-            placeholder: this.props.placeholder,
+            placeholder: this.props.header ? '' : this.props.placeholder,
             type: this.props.type,
             name: this.props.name,
             status: this.props.status,
@@ -75,6 +106,16 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
             });
         }
 
+        if (this.props.initialValue && this.props.type !== 'password') {
+            this.clearBtn = getExitBtn(this.inputBlock, {
+                className: 'clear-btn',
+                type: 'button',
+                size: 'xs-only',
+                btnStyle: 'white',
+            });
+            this.hideClearBtn();
+        }
+
         this.errorBlock = new EmptyContainer(this.htmlElement, {
             className:
                 this.props.errorBlockClassName +
@@ -82,6 +123,18 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
         });
 
         this.errorBlock.htmlElement.hidden = true;
+
+        this.componentDidMount();
+    }
+
+    protected hideClearBtn() {
+        this.clearBtn.hide();
+        this.clearBtn.setDisabled();
+    }
+
+    protected showClearBtn() {
+        this.clearBtn.show();
+        this.clearBtn.setEnabled();
     }
 
     addError(error: string) {
