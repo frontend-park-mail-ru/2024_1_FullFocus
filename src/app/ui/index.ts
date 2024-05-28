@@ -71,17 +71,19 @@ export class App extends Component<HTMLDivElement> {
         }
 
         if (isLogged) {
+            console.log('isLogged');
             this.checkConnection();
             this.updateNavbarBadges();
         }
     }
 
     protected checkConnection() {
-        if (!this.isWsInited) {
+        if (!this.isWsInited()) {
             this.initWS();
         }
 
         if (!this.areNotificationsWorking()) {
+            console.log('restart');
             this.restartNotifications();
         }
     }
@@ -95,6 +97,7 @@ export class App extends Component<HTMLDivElement> {
     }
 
     protected initWS() {
+        console.log('init ws');
         const notifications = getNotificationCards();
         this.closeNotificationWS = notifications.close;
         this.restartNotifications = notifications.retryConnection;

@@ -2,7 +2,7 @@ import './index.style.scss';
 import profileNotificationsTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { ProfileNotificationsProps } from './index.types';
-import { useGetNotificationsList } from '@/features/notification';
+import { getWS, useGetNotificationsList } from '@/features/notification';
 import { NotificationsList } from '@/features/notification/ui/notificationsList';
 import { Button } from '@/shared/uikit/button';
 
@@ -35,6 +35,16 @@ export class ProfileNotifications extends Component<
                 );
             });
         }
+
+        getWS().addCallback('updatenotifications', () => {
+            this.updateNotifications()
+                .then(() => {
+                    this.htmlElement.dispatchEvent(
+                        new Event('updatenavbar', { bubbles: true }),
+                    );
+                })
+                .catch(() => {});
+        });
     }
 
     protected destroyReadAllBtn() {
@@ -44,8 +54,20 @@ export class ProfileNotifications extends Component<
 
     protected render() {
         this.renderTemplate();
-        useGetNotificationsList()
+        this.updateNotifications()
+            .then(() => {
+                this.componentDidMount();
+            })
+            .catch(() => {});
+    }
+
+    protected async updateNotifications() {
+        return useGetNotificationsList()
             .then((list) => {
+                if (this.notificationsList) {
+                    this.notificationsList.destroy();
+                }
+
                 this.notificationsList = list(
                     this.htmlElement,
                     'profile-notifications__notifications',
@@ -65,8 +87,6 @@ export class ProfileNotifications extends Component<
                         },
                     );
                 }
-
-                this.componentDidMount();
             })
             .catch(() => {});
     }

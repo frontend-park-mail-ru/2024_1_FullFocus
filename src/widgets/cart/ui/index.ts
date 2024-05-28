@@ -59,7 +59,12 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
     }
 
     protected renderEmpty() {
-        this.cartInfoParent.classList.add('display_none');
+        this.cartInfo?.destroy();
+        this.cartInfo = null;
+        this.cartItemsSection?.destroy();
+        this.cartItemsSection = null;
+        this.cartPromocodes?.destroy();
+        this.cartPromocodes = null;
         this.cartMainParent.classList.add('display_none');
         this.emptyInfo.classList.remove('display_none');
     }

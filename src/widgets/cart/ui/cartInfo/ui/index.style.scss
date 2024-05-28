@@ -32,3 +32,19 @@
     }
     margin-top: 20px;
 }
+
+@media (max-width: 475px) {
+    .cart-info__header {
+        margin-bottom: 14px;
+    }
+
+    .cart-info__money-info {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .cart-info__total {
+        padding-top: 10px;
+        padding-bottom: 16px;
+    }
+}

@@ -28,6 +28,14 @@
 }
 
 @media (width <= 1024px) {
+    .link-with-bg {
+        border-radius: 0;
+    }
+
+    .profile-navbar__links > .with-top-right + .with-top-right {
+        border-top: 1px solid var(--color-background-darker);
+    }
+
     .profile-navbar__links {
         width: 100%;
         box-sizing: border-box;
@@ -41,6 +49,14 @@
         .link-item.link_active {
             background-color: white;
             font-weight: 600;
+        }
+    }
+}
+
+@media (max-width: 475px) {
+    .profile-navbar__links {
+        .badge_top-right {
+            top: 8px;
         }
     }
 }

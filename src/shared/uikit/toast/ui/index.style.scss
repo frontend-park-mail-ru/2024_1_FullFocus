@@ -6,3 +6,10 @@
     bottom: 1vh;
     display: grid;
 }
+
+@media (max-width: 475px) {
+    .toast {
+        bottom: 60px;
+        left: 1vh;
+    }
+}

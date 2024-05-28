@@ -32,6 +32,8 @@ $border-radius-default: 32px;
     --btn-height-bg: 50px;
     --btn-height-sm: 40px;
     --btn-height-xs: 30px;
+    --btn-height-xs: 30px;
+    --btn-height-xxs: 20px;
 
     --font-family-main-text: 'Open Sans', sans-serif;
 
@@ -46,6 +48,7 @@ $border-radius-default: 32px;
     --font-size-normal: 1rem;
     --font-size-sm: 0.9rem;
     --font-size-xs: 0.8rem;
+    --font-size-xxs: 0.7rem;
 
     --transition-time-normal: 150ms;
     --transition-time-slower: 200ms;
@@ -291,5 +294,17 @@ body {
 
     .header_h6 {
         font-size: 1.1rem;
+    }
+
+    .text {
+        font-size: var(--font-size-sm);
+    }
+
+    .text_size-small {
+        font-size: var(--font-size-xs);
+    }
+
+    .text_size-xs {
+        font-size: var(--font-size-xxs);
     }
 }
