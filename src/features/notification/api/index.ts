@@ -62,6 +62,7 @@ function createNotificationWS(url: string) {
         return {
             close: () => {
                 ws?.close();
+                ws = undefined;
             },
 
             isConnected: () => {
