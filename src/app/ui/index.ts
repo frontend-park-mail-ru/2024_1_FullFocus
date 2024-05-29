@@ -75,6 +75,12 @@ export class App extends Component<HTMLDivElement> {
             this.checkConnection();
             this.updateNavbarBadges();
         }
+
+        if (!isLogged) {
+            if (this.areNotificationsWorking()) {
+                this.closeNotificationWS();
+            }
+        }
     }
 
     protected checkConnection() {
