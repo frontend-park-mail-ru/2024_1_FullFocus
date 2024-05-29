@@ -13,7 +13,7 @@ const productStatusChanged = (message: { [name: string]: string }) => {
     toast().addMessageCustom('Статус заказа изменен', (parent: Element) => {
         return new NotificationCard(parent, {
             className: 'toast__notification-card',
-            orderID: message.id,
+            orderID: message.orderID,
             status: message.newStatus as OrderStatus,
         });
     });
