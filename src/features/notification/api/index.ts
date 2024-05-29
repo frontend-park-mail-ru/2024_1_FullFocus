@@ -51,6 +51,9 @@ function createNotificationWS(url: string) {
     };
 
     const isConnected = () => {
+        if (!ws) {
+            return false;
+        }
         return ws.readyState === ws.OPEN || ws.readyState === ws.CONNECTING;
     };
 
