@@ -22,23 +22,13 @@ export type CentrifugoMessage = {
 function createNotificationWS(url: string) {
     let ws: WebSocket | undefined;
 
+    const callbacks = new Map<
+        string,
+        (message: { [name: string]: string }) => void
+    >();
+
     const create = () => {
         ws = new WebSocket(BACKEND_WS_URL + url);
-    };
-
-    const isConnected = () => {
-        return ws.readyState === ws.OPEN || ws.readyState === ws.CONNECTING;
-    };
-
-    return () => {
-        if (!ws) {
-            create();
-        }
-
-        const callbacks = new Map<
-            string,
-            (message: { [name: string]: string }) => void
-        >();
 
         ws.onopen = () => {
             console.log(ws);
@@ -58,6 +48,16 @@ function createNotificationWS(url: string) {
                 callback(message.push.pub.data.data);
             });
         };
+    };
+
+    const isConnected = () => {
+        return ws.readyState === ws.OPEN || ws.readyState === ws.CONNECTING;
+    };
+
+    return () => {
+        if (!ws) {
+            create();
+        }
 
         return {
             close: () => {
