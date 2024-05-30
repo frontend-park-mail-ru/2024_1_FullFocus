@@ -23,7 +23,7 @@ export function validatePassword(password: string): string | null {
 }
 
 export function validateEmail(password: string): string | null {
-    if (!/^[a-zA-Z0-9_]{1,16}@(mail|gmail|yandex)\.(com|ru)$/.test(password)) {
+    if (!/^[a-zA-Z0-9_.]{1,16}@(mail|gmail|yandex)\.(com|ru)$/.test(password)) {
         return 'почта введена в неверном формате';
     }
     return null;
@@ -32,6 +32,16 @@ export function validateEmail(password: string): string | null {
 export function validatePhoneNumber(password: string): string | null {
     if (!/^[0-9]{11}$/.test(password)) {
         return 'номер телефона должен состоять из ровно 11 цифр';
+    }
+    return null;
+}
+
+export function validateRepeatPassword(
+    password: string,
+    repeatPassword: string,
+): string | null {
+    if (password !== repeatPassword) {
+        return 'пароли должны совпадать';
     }
     return null;
 }
@@ -51,7 +61,11 @@ export function validateMaxInputLength(sequence: string): string | null {
 }
 
 export function validateMark(sequence: string): string | null {
-    if (parseInt(sequence) < 1 || parseInt(sequence) > 5 || isNaN(parseInt(sequence))) {
+    if (
+        parseInt(sequence) < 1 ||
+        parseInt(sequence) > 5 ||
+        isNaN(parseInt(sequence))
+    ) {
         return 'поле должно быть цифрой от 1 до 5';
     }
 

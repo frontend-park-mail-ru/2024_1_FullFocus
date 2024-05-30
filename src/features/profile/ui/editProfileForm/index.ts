@@ -10,7 +10,7 @@ interface EditProfileFormProps {
 
 export class EditProfileForm extends Form {
     constructor(parent: Element, props: EditProfileFormProps) {
-        super(parent, 'edit-profile-form', 'Изменить');
+        super(parent, 'edit-profile-form', 'Сохранить', 'xs', 'white');
         Object.entries(EDIT_PROFILE_FORM_FIELDS).forEach(([name, data]) => {
             this.addInputBlock({
                 name: data.name,
@@ -20,6 +20,8 @@ export class EditProfileForm extends Form {
                 inputClassName: data.inputClassName,
                 validate: data.validate,
                 initialValue: props[name],
+                header: true,
+                size: 'xs',
             });
         });
     }

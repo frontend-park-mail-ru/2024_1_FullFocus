@@ -16,10 +16,36 @@
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
+}
 
+.profile-main-info__user-data {
+    flex: 1;
+    max-width: 500px;
+}
+
+@media (max-width: 1546px) {
     .profile-main-info__user-data {
-        display: flex;
-        flex-direction: column;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .profile-main-info__user-data {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .profile-main-info__user-data {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-main-info__user-data {
+        max-width: none;
+    }
+    .profile-main-info__main-info {
         gap: 20px;
     }
 }
@@ -33,8 +59,4 @@
     .profile-main-info__change-picture-container {
         align-self: center;
     }
-
-    // .profile-main-info__edit-icon {
-    //     display: none;
-    // }
 }

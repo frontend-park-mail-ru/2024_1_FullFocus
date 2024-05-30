@@ -75,17 +75,23 @@ export class App extends Component<HTMLDivElement> {
             this.checkConnection();
             this.updateNavbarBadges();
         }
+
+        if (!isLogged) {
+            if (this.areNotificationsWorking()) {
+                this.closeNotificationWS();
+            }
+        }
     }
 
     protected checkConnection() {
-        if (!this.isWsInited()) {
+        if (!this.isWsInited() || !this.areNotificationsWorking()) {
             this.initWS();
         }
 
-        if (!this.areNotificationsWorking()) {
-            console.log('restart');
-            this.restartNotifications();
-        }
+        // if (!this.areNotificationsWorking()) {
+        //     console.log('restart');
+        //     this.restartNotifications();
+        // }
     }
 
     protected isWsInited() {

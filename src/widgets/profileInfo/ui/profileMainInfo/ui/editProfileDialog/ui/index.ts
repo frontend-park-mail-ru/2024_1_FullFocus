@@ -3,12 +3,12 @@ import dialogTmpl from './index.template.pug';
 import { Component } from '@/shared/@types/index.component';
 import { EditProfileDialogProps } from './index.types';
 import { EditProfileForm } from '@/features/profile';
-import { Button, getExitBtn } from '@/shared/uikit/button';
+import { Button } from '@/shared/uikit/button';
 import { parseForm } from '@/entities/form';
 import { updateProfile } from '@/entities/user/api';
 
 export class EditProfileDialog extends Component<
-    HTMLDialogElement,
+    HTMLDivElement,
     EditProfileDialogProps
 > {
     protected errorElement: HTMLDivElement;
@@ -22,23 +22,6 @@ export class EditProfileDialog extends Component<
     }
 
     protected componentDidMount() {
-        this.htmlElement.addEventListener('click', (e) => {
-            const dialogDimensions = this.htmlElement.getBoundingClientRect();
-            if (
-                e.clientX < dialogDimensions.left ||
-                e.clientX > dialogDimensions.right ||
-                e.clientY < dialogDimensions.top ||
-                e.clientY > dialogDimensions.bottom
-            ) {
-                this.htmlElement.close();
-            }
-        });
-        this.closeListener = (e: Event) => {
-            e.preventDefault();
-            this.htmlElement.close();
-        };
-        this.closeBtn.htmlElement.addEventListener('click', this.closeListener);
-
         this.submitListener = (e: SubmitEvent) => {
             e.preventDefault();
             const formData = parseForm(this.formObj);
@@ -52,9 +35,12 @@ export class EditProfileDialog extends Component<
                     .then((response) => {
                         this.formObj.setNotReadonly();
                         if (response.status === 200) {
-                            this.htmlElement.close();
                             if (this.props.profileChangedCallback) {
-                                this.props.profileChangedCallback();
+                                this.props.profileChangedCallback(
+                                    formData.inputs['fullName'].value,
+                                    formData.inputs['email'].value,
+                                    formData.inputs['phoneNumber'].value,
+                                );
                             }
                         }
 
@@ -86,18 +72,6 @@ export class EditProfileDialog extends Component<
         this.errorElement = this.htmlElement.getElementsByClassName(
             'edit-dialog__error',
         )[0] as HTMLDivElement;
-
-        this.closeBtn = getExitBtn(
-            this.htmlElement.getElementsByClassName(
-                'edit-dialog__btn-close',
-            )[0],
-            {
-                className: 'edit-dialog__btn-close',
-                btnStyle: 'white',
-                btnText: 'X',
-                type: 'button',
-            },
-        );
 
         this.componentDidMount();
     }
