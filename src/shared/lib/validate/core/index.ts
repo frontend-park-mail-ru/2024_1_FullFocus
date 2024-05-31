@@ -30,7 +30,7 @@ export function validateEmail(password: string): string | null {
 }
 
 export function validatePhoneNumber(password: string): string | null {
-    if (!/^[0-9]{11}$/.test(password)) {
+    if (password.length !== 0 && !/^[0-9]{11}$/.test(password)) {
         return 'номер телефона должен состоять из ровно 11 цифр';
     }
     return null;

@@ -40,6 +40,10 @@
 }
 
 .profile-main-info__main-info--loading {
+    .profile-main-info__login-info {
+        display: none;
+    }
+
     margin: auto;
     box-sizing: border-box;
     padding: 10px;

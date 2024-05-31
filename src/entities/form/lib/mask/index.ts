@@ -8,11 +8,11 @@ export function formatPhoneNumberMask(phoneNumber: string) {
     let formatted = '';
 
     const x = unformatPhoneNumber(phoneNumber).match(
-        /(7)+(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/,
+        /(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/,
     );
 
     if (x === null) {
-        formatted = '+7';
+        formatted = '';
     } else {
         formatted = !x[3]
             ? '+7' + (x[2] ? x[2] : '')
