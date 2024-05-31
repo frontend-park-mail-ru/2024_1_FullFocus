@@ -22,8 +22,11 @@ export function validatePassword(password: string): string | null {
     return null;
 }
 
-export function validateEmail(password: string): string | null {
-    if (!/^[a-zA-Z0-9_.]{1,16}@(mail|gmail|yandex)\.(com|ru)$/.test(password)) {
+export function validateEmail(email: string): string | null {
+    if (
+        email.length > 0 &&
+        !/^[a-zA-Z0-9_.]{1,16}@(mail|gmail|yandex)\.(com|ru)$/.test(email)
+    ) {
         return 'почта введена в неверном формате';
     }
     return null;
