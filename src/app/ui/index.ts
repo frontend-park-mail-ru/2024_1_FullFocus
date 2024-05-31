@@ -7,7 +7,7 @@ import { getConfig } from './../providers';
 import { registerSW } from '../providers/serviceWorker';
 import { getMainUserData } from '@/entities/user/api';
 import { throttle } from '@/shared/api/ajax/throttling';
-import { getNotificationCards } from '@/features/notification';
+import { getNotificationCards, getWS } from '@/features/notification';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
@@ -101,6 +101,9 @@ export class App extends Component<HTMLDivElement> {
         this.closeNotificationWS = notifications.close;
         this.restartNotifications = notifications.retryConnection;
         this.areNotificationsWorking = notifications.isConnected;
+        getWS().addCallback('navbar', () => {
+            this.updateNavbarBadges();
+        });
     }
 
     protected updateNavbarBadges() {

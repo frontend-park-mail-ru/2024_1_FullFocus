@@ -6,6 +6,7 @@ import { Link, LinkProps } from '@/shared/uikit/link';
 import { Button } from '@/shared/uikit/button';
 import { useLogoutUser } from '@/features/auth';
 import { WithBadge, withCenterRightBadge } from '@/shared/uikit/badge';
+import { getWS } from '@/features/notification';
 
 export class ProfileNavbar extends Component<
     HTMLDivElement,
