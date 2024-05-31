@@ -24,6 +24,11 @@ export class ProfileNotifications extends Component<
             this.readAllBtn.htmlElement.addEventListener('click', () => {
                 this.notificationsList.readAll();
                 this.destroyReadAllBtn();
+                this.htmlElement.dispatchEvent(
+                    new Event('updatenavbar', {
+                        bubbles: true,
+                    }),
+                );
             });
             this.htmlElement.addEventListener('notificationread', () => {
                 if (!this.notificationsList.areUnread) {
