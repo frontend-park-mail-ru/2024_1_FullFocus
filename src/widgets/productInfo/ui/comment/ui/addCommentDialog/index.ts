@@ -44,6 +44,7 @@ export class AddCommentDialog extends Component<
         }).onfinish = () => {
             this.htmlElement.style.height = this.height;
             this.htmlElement.style.opacity = '1';
+            this.htmlElement.style.overflow = 'auto';
             this.opened = true;
             document.getElementsByTagName('body')[0].style.overflow = 'hidden';
             this.overlay.addEventListener('click', (e) => {
@@ -57,6 +58,7 @@ export class AddCommentDialog extends Component<
 
     close() {
         this.overlay.remove();
+        this.htmlElement.style.overflow = '';
         this.htmlElement.animate([{ height: 0, opacity: 0 }], {
             duration: 300,
             easing: 'ease',

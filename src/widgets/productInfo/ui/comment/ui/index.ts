@@ -104,7 +104,8 @@ export class CommentWidget extends Component<
                             className: 'page-widget__bottom',
                             btnText: 'Оставить отзыв',
                             type: 'button',
-                            btnStyle: 'bright',
+                            btnStyle: 'white',
+                            size: 'sm',
                         },
                     );
                     this.listener = () => {
