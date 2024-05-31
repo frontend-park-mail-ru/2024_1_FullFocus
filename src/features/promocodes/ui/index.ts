@@ -67,7 +67,7 @@ export function useGetPromocodesDropdown(parent: Element, className: string) {
             () => {
                 dropdown.stopLoading();
             },
-            500,
+            200,
             500,
         )();
     });

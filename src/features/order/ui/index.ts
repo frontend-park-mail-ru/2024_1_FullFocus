@@ -10,19 +10,23 @@ export async function useGetAllOrdersCards() {
             const orderCards: ((
                 parent: Element,
                 orderHref: string,
-            ) => OrderCard)[] = [];
+            ) => { id: string; item: OrderCard })[] = [];
             if (status === 200) {
                 data.forEach((order) => {
                     orderCards.push((parent: Element, orderHref: string) => {
-                        return new OrderCard(parent, {
-                            className: 'order-' + order.id.toString(),
-                            id: order.id,
-                            sum: order.sum,
-                            total: order.itemsCount,
-                            status: order.status,
-                            orderHref: orderHref + '/' + order.id.toString(),
-                            orderData: order.createdAt,
-                        });
+                        return {
+                            id: order.id.toString(),
+                            item: new OrderCard(parent, {
+                                className: 'order-' + order.id.toString(),
+                                id: order.id,
+                                sum: order.sum,
+                                total: order.itemsCount,
+                                status: order.status,
+                                orderHref:
+                                    orderHref + '/' + order.id.toString(),
+                                orderData: order.createdAt,
+                            }),
+                        };
                     });
                 });
                 return orderCards;

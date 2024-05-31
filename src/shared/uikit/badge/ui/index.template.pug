@@ -1,6 +1,9 @@
 - var badgeClass = "badge " + className
-if position == "top-right"
-    - badgeClass = badgeClass + " badge_top-right"
+case position
+    when "top-right"
+        - badgeClass = badgeClass + " badge_top-right"
+    when "center-right"
+        - badgeClass = badgeClass + " badge_center-right"
 case color
     when "red"
         - badgeClass = badgeClass + " badge_red"

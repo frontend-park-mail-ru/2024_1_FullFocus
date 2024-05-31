@@ -8,6 +8,7 @@ import { addComment } from '@/features/comment/api';
 import { addCommentDialogProps } from './index.types';
 import { RatingInput } from '@/shared/uikit/starRatingInput';
 import { isClickOut } from '@/shared/lib/clickOut';
+import { insertDarkOverlay } from '@/shared/lib/darkOverlay';
 
 export class AddCommentDialog extends Component<
     HTMLDialogElement,
@@ -19,21 +20,72 @@ export class AddCommentDialog extends Component<
     protected closeListener: (e: Event) => void;
     protected submitListener: (e: SubmitEvent) => void;
     protected starsRating: RatingInput;
+    protected overlay: HTMLDivElement;
+    protected opened: boolean;
+    protected onResize: () => void;
+    protected height: string;
 
     constructor(parent: Element, props: addCommentDialogProps) {
         super(parent, dialogTmpl, props);
+        this.opened = false;
+    }
+
+    open() {
+        this.overlay = insertDarkOverlay(this.parent);
+        this.height =
+            window.screen.width > 475
+                ? '50%'
+                : window.screen.height > 650
+                  ? '574px'
+                  : '100%';
+        this.htmlElement.animate([{ height: this.height, opacity: 1 }], {
+            duration: 300,
+            easing: 'ease',
+        }).onfinish = () => {
+            this.htmlElement.style.height = this.height;
+            this.htmlElement.style.opacity = '1';
+            this.opened = true;
+            document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+            this.overlay.addEventListener('click', (e) => {
+                if (isClickOut(this.htmlElement, e)) {
+                    this.close();
+                }
+            });
+            window.addEventListener('resize', this.onResize);
+        };
+    }
+
+    close() {
+        this.overlay.remove();
+        this.htmlElement.animate([{ height: 0, opacity: 0 }], {
+            duration: 300,
+            easing: 'ease',
+        }).onfinish = () => {
+            document.getElementsByTagName('body')[0].style.overflow = '';
+            this.htmlElement.style.height = '0';
+            this.htmlElement.style.opacity = '0';
+            this.opened = false;
+            window.removeEventListener('resize', this.onResize);
+        };
     }
 
     protected componentDidMount() {
-        this.htmlElement.addEventListener('click', (e) => {
-            if (isClickOut(this.htmlElement, e)) {
-                this.htmlElement.close();
+        this.onResize = () => {
+            const height =
+                window.screen.width > 475
+                    ? '50%'
+                    : window.screen.height > 650
+                      ? '574px'
+                      : '100%';
+            if (this.height !== height) {
+                this.height = height;
+                this.htmlElement.style.height = this.height;
             }
-        });
+        };
 
         this.closeListener = (e: Event) => {
             e.preventDefault();
-            this.htmlElement.close();
+            this.close();
         };
         this.closeBtn.htmlElement.addEventListener('click', this.closeListener);
 
@@ -81,7 +133,7 @@ export class AddCommentDialog extends Component<
 
         this.starsRating = new RatingInput(
             this.htmlElement.getElementsByClassName(
-                'add-dialog__form-place',
+                'add-dialog__stars-place',
             )[0],
             {
                 className: 'add-dialog__stars-rating',

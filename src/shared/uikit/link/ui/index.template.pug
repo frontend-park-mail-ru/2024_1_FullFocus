@@ -19,6 +19,9 @@ else
         when "btn"
             - linkClass = linkClass + ' link-btn'
             - linkIconClass = linkIconClass + ' link-with-icon__icon_link-btn'
+        when 'no-style'
+            - linkClass = linkClass + ' link-no-style'
+            - linkIconClass = linkIconClass + ' link-with-icon__icon_link'
         default
             - linkClass = linkClass + ' link'
             - linkIconClass = linkIconClass + ' link-with-icon__icon_link'

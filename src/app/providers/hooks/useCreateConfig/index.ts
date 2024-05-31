@@ -13,7 +13,8 @@ import { CategoryPage } from '@/pages/category';
 import { ProductPage } from '@/pages/product';
 import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
-import { cartIconTmpl, userIconTmpl } from './linkIcons';
+import { cartIconTmpl } from './linkIcons';
+import { userIcon } from '@/shared/icons';
 import { mobileHomeIconTmpl, mobileLoginIconTmpl } from './mobileIcons';
 
 interface ConfigItem {
@@ -36,6 +37,7 @@ interface ConfigItem {
         pages: {
             [name: string]: {
                 url: string;
+                text?: string;
                 renderChild: (
                     pageComponent: Component<Element>,
                     params?: { [name: string]: string },
@@ -255,6 +257,68 @@ export function createConfig() {
                     },
                 },
             },
+            profile: {
+                url: '/profile',
+                logged: 'logged',
+                router: {
+                    navigation: ['main'],
+                    component: (
+                        parent: Element,
+                        params: { [name: string]: string },
+                        navigateToMain: () => void,
+                    ) => {
+                        return new Profile(parent, navigateToMain);
+                    },
+                },
+                children: {
+                    default: 'info',
+                    pages: {
+                        info: {
+                            text: 'Учетные данные',
+                            url: '/info',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('info');
+                            },
+                        },
+                        orders: {
+                            text: 'Мои заказы',
+                            url: '/orders',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('orders');
+                            },
+                        },
+                        order: {
+                            url: '/order/{id}',
+                            renderChild: (
+                                profilePage: Profile,
+                                params: { [name: string]: string },
+                            ) => {
+                                profilePage.changePage('oneOrder', params);
+                            },
+                        },
+                        promocodes: {
+                            text: 'Промокоды',
+                            url: '/promocodes',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('promocodes');
+                            },
+                        },
+                        notifications: {
+                            text: 'Уведомления',
+                            url: '/notifications',
+                            renderChild: (profilePage: Profile) => {
+                                profilePage.changePage('notifications');
+                            },
+                        },
+                    },
+                },
+                navbarLink: {
+                    className: 'navbar-link-profile',
+                    text: 'Профиль',
+                    iconTmpl: userIcon,
+                    mobileIconTmpl: userIcon,
+                },
+            },
             cart: {
                 url: '/cart',
                 logged: 'logged',
@@ -278,64 +342,6 @@ export function createConfig() {
                             navigateToOrderPage,
                         );
                     },
-                },
-            },
-            profile: {
-                url: '/profile',
-                logged: 'logged',
-                router: {
-                    navigation: ['main'],
-                    component: (
-                        parent: Element,
-                        params: { [name: string]: string },
-                        navigateToMain: () => void,
-                    ) => {
-                        return new Profile(parent, navigateToMain);
-                    },
-                },
-                children: {
-                    default: 'info',
-                    pages: {
-                        info: {
-                            url: '/info',
-                            renderChild: (profilePage: Profile) => {
-                                profilePage.changePage('info');
-                            },
-                        },
-                        orders: {
-                            url: '/orders',
-                            renderChild: (profilePage: Profile) => {
-                                profilePage.changePage('orders');
-                            },
-                        },
-                        order: {
-                            url: '/order/{id}',
-                            renderChild: (
-                                profilePage: Profile,
-                                params: { [name: string]: string },
-                            ) => {
-                                profilePage.changePage('oneOrder', params);
-                            },
-                        },
-                        promocodes: {
-                            url: '/promocodes',
-                            renderChild: (profilePage: Profile) => {
-                                profilePage.changePage('promocodes');
-                            },
-                        },
-                        notifcations: {
-                            url: '/notifications',
-                            renderChild: (profilePage: Profile) => {
-                                profilePage.changePage('notifications');
-                            },
-                        },
-                    },
-                },
-                navbarLink: {
-                    className: 'navbar-link-profile',
-                    text: 'Профиль',
-                    iconTmpl: userIconTmpl,
-                    mobileIconTmpl: userIconTmpl,
                 },
             },
         },

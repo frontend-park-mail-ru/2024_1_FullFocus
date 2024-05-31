@@ -5,6 +5,7 @@ import { ProductsSectionRecommendationProps } from './index.types';
 import { Component } from '@/shared/@types/index.component';
 import { ProductCard } from '@/entities/product';
 import { ProductsList } from '@/entities/productsSection/ui/productsList';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProductsSectionRecommendation extends Component<
     HTMLDivElement,
@@ -26,14 +27,24 @@ export class ProductsSectionRecommendation extends Component<
             navigateToCart: this.props.navigateToCart,
         });
 
-        useGetProductCardsRecommendation()
-            .then((products) => {
+        animateLongRequest(
+            useGetProductCardsRecommendation,
+            (products) => {
                 this.productsList.loadProducts(products);
-            })
-            .catch(() => {
+            },
+            () => {
                 this.productsList.clear();
                 this.productsSection.innerText = 'что-то пошло не так';
-            });
+            },
+            () => {
+                this.productsList.setLoading('180px');
+            },
+            () => {
+                this.productsList.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 
     destroy(): void {

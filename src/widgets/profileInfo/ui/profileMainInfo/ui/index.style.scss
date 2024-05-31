@@ -23,6 +23,74 @@
     max-width: 500px;
 }
 
+.profile-main-info__main-info--loading {
+    margin: auto;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 200px; /* change height to see repeat-y behavior */
+    width: 100%;
+
+    background-image: linear-gradient(
+            100deg,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0) 80%
+        ),
+        linear-gradient(lightgray 20px, transparent 0),
+        linear-gradient(lightgray 20px, transparent 0),
+        linear-gradient(lightgray 20px, transparent 0),
+        linear-gradient(lightgray 20px, transparent 0),
+        radial-gradient(
+            circle 100px at 100px 100px,
+            lightgray 99%,
+            transparent 0
+        );
+
+    background-repeat: repeat-y;
+
+    background-size:
+        50px 200px,
+        calc(100% - 220px) 200px,
+        calc(100% - 220px) 200px,
+        calc(100% - 220px) 200px,
+        calc(100% - 220px) 200px,
+        200px 200px;
+
+    background-position:
+        0 20px,
+        0 20px,
+        0 60px,
+        0 100px,
+        0 140px,
+        100% 0;
+
+    animation: shine-section-profile-info 1s infinite;
+}
+
+@keyframes shine-section-profile-info {
+    to {
+        background-position:
+            calc(100% - 220px) 20px,
+            0 20px,
+            0 60px,
+            0 100px,
+            0 140px,
+            100% 0;
+    }
+}
+
+@keyframes shine-section-profile-info_mobile {
+    to {
+        background-position:
+            100% 220px,
+            0 220px,
+            0 260px,
+            0 300px,
+            0 340px,
+            center 10px;
+    }
+}
+
 @media (max-width: 1546px) {
     .profile-main-info__user-data {
         max-width: 400px;
@@ -58,5 +126,49 @@
 
     .profile-main-info__change-picture-container {
         align-self: center;
+    }
+
+    .profile-main-info__main-info--loading {
+        margin: auto;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 370px; /* change height to see repeat-y behavior */
+        width: 100%;
+
+        background-image: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 80%
+            ),
+            linear-gradient(lightgray 20px, transparent 0),
+            linear-gradient(lightgray 20px, transparent 0),
+            linear-gradient(lightgray 20px, transparent 0),
+            linear-gradient(lightgray 20px, transparent 0),
+            radial-gradient(
+                circle 100px at 100px 100px,
+                lightgray 99%,
+                transparent 0
+            );
+
+        background-repeat: no-repeat;
+
+        background-size:
+            50px 200px,
+            100% 200px,
+            100% 200px,
+            100% 200px,
+            100% 200px,
+            200px 200px;
+
+        background-position:
+            0 220px,
+            0 220px,
+            0 260px,
+            0 300px,
+            0 340px,
+            center 10px;
+
+        animation: shine-section-profile-info_mobile 1s infinite;
     }
 }

@@ -66,3 +66,12 @@
 .input_valid:focus:hover {
     border-color: rgb(0, 225, 0);
 }
+
+.input_readonly {
+    opacity: 0.5;
+}
+
+.input_readonly:hover {
+    pointer-events: none;
+    border-color: var(--color-background-darker);
+}

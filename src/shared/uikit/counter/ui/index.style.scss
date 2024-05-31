@@ -59,6 +59,26 @@
     background-color: #bcfcf6;
 }
 
+.counter--loading {
+    position: relative;
+}
+
+.counter--loading::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 8px solid transparent;
+    border-top-color: var(--color-background-dark);
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
 @media (max-width: 475px) {
     .counter_xs {
         height: var(--btn-height-xs);

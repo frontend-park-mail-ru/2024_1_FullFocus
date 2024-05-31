@@ -31,7 +31,6 @@ function createNotificationWS(url: string) {
         ws = new WebSocket(BACKEND_WS_URL + url);
 
         ws.onopen = () => {
-            console.log(ws);
             ws.send(JSON.stringify({ connect: { name: 'js' }, id: 1 }));
         };
 
@@ -44,7 +43,6 @@ function createNotificationWS(url: string) {
             }
 
             callbacks.forEach((callback) => {
-                console.log(callback);
                 callback(message.push.pub.data.data);
             });
         };

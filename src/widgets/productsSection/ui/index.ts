@@ -5,6 +5,7 @@ import { ProductsSectionProps } from './index.types';
 import { Component } from '@/shared/@types/index.component';
 import { ProductCard } from '@/entities/product';
 import { ProductsList } from '@/entities/productsSection/ui/productsList';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProductsSection extends Component<
     HTMLDivElement,
@@ -33,14 +34,26 @@ export class ProductsSection extends Component<
             navigateToCart: this.props.navigateToCart,
         });
 
-        useGetProductCards(1, 12)
-            .then((products) => {
+        animateLongRequest(
+            () => {
+                return useGetProductCards(1, 12);
+            },
+            (products) => {
                 this.productsList.loadProducts(products);
-            })
-            .catch(() => {
+            },
+            () => {
                 this.productsList.clear();
                 this.productsSection.innerText = 'что-то пошло не так';
-            });
+            },
+            () => {
+                this.productsList.setLoading();
+            },
+            () => {
+                this.productsList.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 
     destroy(): void {

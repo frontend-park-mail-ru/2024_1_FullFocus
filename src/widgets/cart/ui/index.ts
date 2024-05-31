@@ -11,6 +11,7 @@ import { ProductCard } from '@/entities/product';
 import { CartItem } from '@/entities/cart';
 import { CartPromocodes } from './promocode';
 import { toast } from '@/shared/uikit/toast';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class Cart extends Component<HTMLDivElement, CartProps> {
     protected cartItemsSection: CartItemsSection;
@@ -45,17 +46,41 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
             'cart__empty-info',
         )[0] as HTMLDivElement;
 
-        useGetUserCart()
-            .then(({ cost, cartItems, total }) => {
+        animateLongRequest(
+            useGetUserCart,
+            ({ cost, cartItems, total }) => {
                 if (cartItems.length === 0) {
                     this.renderEmpty();
                 }
 
                 if (cartItems.length !== 0) {
+                    this.renderCartInfo();
+                    this.renderCartPromocodes();
+                    this.renderCartItemsSection();
                     this.renderWithItems(cost, cartItems, total);
                 }
-            })
-            .catch(() => {});
+            },
+            () => {},
+            () => {
+                this.renderCartItemsSection();
+                this.renderCartInfo();
+                this.renderCartPromocodes();
+                this.cartPromocodes.setDisabled();
+                this.cartInfo.startLoading();
+                this.cartInfo.setDisabled();
+                this.cartItemsSection.startLoading();
+                this.cartItemsSection.setDisabled();
+            },
+            () => {
+                this.cartInfo?.stopLoading();
+                this.cartInfo?.setEnabled();
+                this.cartItemsSection?.stopLoading();
+                this.cartItemsSection?.setEnabled();
+                this.cartPromocodes?.setEnabled();
+            },
+            150,
+            1000,
+        )();
     }
 
     protected renderEmpty() {
@@ -77,15 +102,14 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
         })[],
         total: number,
     ) {
-        this.renderCartItemsSection();
-        this.renderCartInfo();
-        this.renderCartPromocodes();
-
         this.cartItemsSection.renderCartItems(cartItems);
         this.cartInfo.updateCartInfo(cost, total);
     }
 
     protected renderCartItemsSection() {
+        if (this.cartItemsSection) {
+            return;
+        }
         this.cartItemsSection = new CartItemsSection(this.cartMainParent, {
             className: 'cart__cart-items',
             clearCartCallback: () => {
@@ -106,6 +130,9 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
     }
 
     protected renderCartInfo() {
+        if (this.cartInfo) {
+            return;
+        }
         this.cartInfo = new CartInfo(this.cartInfoParent, {
             className: 'cart-info__info',
             orderCreatedCallback: () => {
@@ -147,6 +174,9 @@ export class Cart extends Component<HTMLDivElement, CartProps> {
     }
 
     protected renderCartPromocodes() {
+        if (this.cartPromocodes) {
+            return;
+        }
         this.cartPromocodes = new CartPromocodes(this.cartInfoParent, {
             className: 'cart-info__promocodes',
             promocodeUsedCallback: (id, minSum, benefitType, value) => {

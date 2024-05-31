@@ -15,6 +15,8 @@
     padding: 8px 0;
     height: 86px;
     box-sizing: border-box;
+    position: sticky;
+    top: 0;
 }
 
 .mobile-navbar-container {
@@ -25,6 +27,7 @@
     box-sizing: border-box;
     position: fixed;
     bottom: 0;
+    top: auto;
     display: none;
 }
 

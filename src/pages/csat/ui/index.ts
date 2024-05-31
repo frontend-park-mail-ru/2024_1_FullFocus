@@ -10,9 +10,7 @@ export class CsatPage extends Component<HTMLDivElement, CsatProps> {
     }
 
     protected componentDidMount() {
-        this.csatModal.htmlElement.addEventListener('iframeclose', () => {
-            console.log('csat');
-        });
+        this.csatModal.htmlElement.addEventListener('iframeclose', () => {});
     }
 
     protected render() {

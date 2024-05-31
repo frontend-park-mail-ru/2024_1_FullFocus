@@ -97,7 +97,7 @@ export class CommentWidget extends Component<
                         },
                     );
                     this.listener = () => {
-                        this.dialog.htmlElement.showModal();
+                        this.dialog.open();
                     };
                     this.btn.htmlElement.addEventListener(
                         'click',

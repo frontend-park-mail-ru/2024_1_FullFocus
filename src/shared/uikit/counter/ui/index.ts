@@ -98,4 +98,12 @@ export class Counter extends Component<HTMLDivElement, CounterProps> {
         this.htmlElement.classList.remove('display_none');
         this.htmlElement.classList.add('counter');
     }
+
+    startLoading() {
+        this.htmlElement.classList.add('counter--loading');
+    }
+
+    stopLoading() {
+        this.htmlElement.classList.remove('counter--loading');
+    }
 }

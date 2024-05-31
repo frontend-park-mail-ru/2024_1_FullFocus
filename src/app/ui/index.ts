@@ -71,7 +71,6 @@ export class App extends Component<HTMLDivElement> {
         }
 
         if (isLogged) {
-            console.log('isLogged');
             this.checkConnection();
             this.updateNavbarBadges();
         }
@@ -87,11 +86,6 @@ export class App extends Component<HTMLDivElement> {
         if (!this.isWsInited() || !this.areNotificationsWorking()) {
             this.initWS();
         }
-
-        // if (!this.areNotificationsWorking()) {
-        //     console.log('restart');
-        //     this.restartNotifications();
-        // }
     }
 
     protected isWsInited() {
@@ -103,7 +97,6 @@ export class App extends Component<HTMLDivElement> {
     }
 
     protected initWS() {
-        console.log('init ws');
         const notifications = getNotificationCards();
         this.closeNotificationWS = notifications.close;
         this.restartNotifications = notifications.retryConnection;
@@ -138,6 +131,16 @@ export class App extends Component<HTMLDivElement> {
                     this.navbar.updateBadge(
                         'profile',
                         totalProfileMsgs.toString(),
+                    );
+                    this.navbar.updateBadge(
+                        'profile',
+                        data.unreadNotifications.toString(),
+                        'notifications',
+                    );
+                    this.navbar.updateBadge(
+                        'profile',
+                        data.promocodesAvailable.toString(),
+                        'promocodes',
                     );
                     this.mobileNavbar.updateBadge(
                         'profile',
@@ -215,9 +218,11 @@ export class App extends Component<HTMLDivElement> {
             },
         );
 
-        Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
-            this.navbar.addLink(name, logged, props);
-        });
+        Object.entries(navbarConfig).forEach(
+            ([name, { props, logged, children }]) => {
+                this.navbar.addLink(name, logged, props, undefined, children);
+            },
+        );
 
         Object.entries(mobileNavbarConfig).forEach(
             ([name, { props, logged }]) => {

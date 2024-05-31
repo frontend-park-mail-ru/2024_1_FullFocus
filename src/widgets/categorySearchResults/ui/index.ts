@@ -5,6 +5,7 @@ import { CategorySearchResultsProps } from './index.types';
 import { useGetProductCardsCategory } from '@/features/product/ui';
 import { ProductsList } from '@/entities/productsSection';
 import { ProductCard } from '@/entities/product';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class CategorySearchResults extends Component<
     HTMLDivElement,
@@ -23,18 +24,30 @@ export class CategorySearchResults extends Component<
             this.header.innerText = `Поиск по категории`;
         }
 
-        useGetProductCardsCategory(categoryId, sortId)
-            .then(({ products, category }) => {
+        animateLongRequest(
+            () => {
+                return useGetProductCardsCategory(categoryId, sortId);
+            },
+            ({ products, category }) => {
                 this.productsList.loadProducts(products);
                 if (this.currentCategory !== categoryId) {
                     this.header.innerText += ` ${category}`;
                     this.currentCategory = categoryId;
                 }
-            })
-            .catch(() => {
+            },
+            () => {
                 this.productsList.clear();
                 this.header.innerText = `Что-то пошло не так`;
-            });
+            },
+            () => {
+                this.productsList.setLoading('700px');
+            },
+            () => {
+                this.productsList.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 
     clear() {

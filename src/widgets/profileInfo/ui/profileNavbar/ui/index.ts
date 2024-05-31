@@ -5,7 +5,7 @@ import { ProfileNavbarProps } from './index.types';
 import { Link, LinkProps } from '@/shared/uikit/link';
 import { Button } from '@/shared/uikit/button';
 import { useLogoutUser } from '@/features/auth';
-import { WithBadge, withTopRightBadge } from '@/shared/uikit/badge';
+import { WithBadge, withCenterRightBadge } from '@/shared/uikit/badge';
 
 export class ProfileNavbar extends Component<
     HTMLDivElement,
@@ -38,7 +38,7 @@ export class ProfileNavbar extends Component<
         )[0];
         Object.entries(this.linkProps).forEach(
             ([name, { props, badgeText }]) => {
-                this.navbarItems[name] = withTopRightBadge(
+                this.navbarItems[name] = withCenterRightBadge(
                     (parent: Element) => {
                         return new Link(parent, props);
                     },

@@ -5,6 +5,7 @@ import { ProfileNavbarProps } from './index.types';
 import { Link } from '@/shared/uikit/link';
 import { getCategories } from '@/entities/productsSection';
 import { DropDown } from '@/shared/uikit/dropdown';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class CategoriesList extends Component<
     HTMLDivElement,
@@ -14,9 +15,20 @@ export class CategoriesList extends Component<
     protected categories: { [id: number]: string };
     protected navbarItems: { [id: number]: Link };
     protected categoriesDropDown: DropDown<Link>;
+    protected categoriesContainer: HTMLDivElement;
 
     constructor(parent: Element, props: ProfileNavbarProps) {
         super(parent, navbarTmplFunc, props);
+    }
+
+    protected setLoading() {
+        this.categoriesContainer.classList.add('categories-list--loading');
+        this.categoriesDropDown.startLoading();
+    }
+
+    protected removeLoading() {
+        this.categoriesContainer.classList.remove('categories-list--loading');
+        this.categoriesDropDown.stopLoading();
     }
 
     protected render() {
@@ -33,13 +45,15 @@ export class CategoriesList extends Component<
             border: false,
         });
 
-        getCategories()
-            .then(({ status, data }) => {
+        this.categoriesContainer = this.htmlElement.getElementsByClassName(
+            'categories-list__categories-container',
+        )[0] as HTMLDivElement;
+
+        animateLongRequest(
+            getCategories,
+            ({ status, data }) => {
                 if (status === 200) {
-                    const categoriesList =
-                        this.htmlElement.getElementsByClassName(
-                            'categories-list',
-                        )[0];
+                    const categoriesList = this.categoriesContainer;
                     data.forEach((category) => {
                         this.categories[category.id] = category.name;
                         this.navbarItems[category.id] = new Link(
@@ -71,8 +85,17 @@ export class CategoriesList extends Component<
                         this.props.categoriesLoadedCallback();
                     }
                 }
-            })
-            .catch(() => {});
+            },
+            () => {},
+            () => {
+                this.setLoading();
+            },
+            () => {
+                this.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 
     clearActive() {

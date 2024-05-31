@@ -1,3 +1,9 @@
+import {
+    profileNotificationsTmpl,
+    profileOrdersTmpl,
+    profilePromocodesTmpl,
+    userIcon,
+} from '@/shared/icons';
 import { ProfileNotifications } from '../ui/notifications';
 import { ProfileOneOrderInfo } from '../ui/oneOrderInfo';
 import { ProfileOrdersInfo } from '../ui/ordersInfo/ui';
@@ -15,6 +21,7 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 profileChangedCallback: props.profileChangedCallback,
             });
         },
+        icon: userIcon,
     },
     orders: {
         href: '/profile/orders',
@@ -24,6 +31,7 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 className: props.className,
             });
         },
+        icon: profileOrdersTmpl,
     },
     oneOrder: {
         href: '/profile/order',
@@ -42,6 +50,7 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 className: props.className,
             });
         },
+        icon: profilePromocodesTmpl,
         metaDataName: 'promocodesAvailable',
     },
     notifications: {
@@ -52,6 +61,7 @@ export const PROFILE_PAGES: profileInfoConfig = {
                 className: props.className,
             });
         },
+        icon: profileNotificationsTmpl,
         metaDataName: 'unreadNotifications',
     },
 };

@@ -4,6 +4,7 @@ import { Input, InputType, InputStatus } from '@/shared/uikit/input';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { Button, getExitBtn, getEyeBtn } from '@/shared/uikit/button';
 import { Component } from '@/shared/@types/index.component';
+import { unformatPhoneNumber, usePhoneNumberMask } from '../../lib';
 
 export interface FormInputProps {
     className: string;
@@ -37,21 +38,31 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
         return true;
     }
 
+    protected restoreInitialValue() {
+        this.input.inputValue = this.props.initialValue;
+        if (this.props.name === 'phoneNumber') usePhoneNumberMask(this.input);
+    }
+
     protected componentDidMount() {
         if (this.clearBtn) {
             this.input.htmlElement.addEventListener('input', () => {
-                if (this.input.inputValue !== this.props.initialValue) {
+                const currentValue =
+                    this.props.name === 'phoneNumber'
+                        ? unformatPhoneNumber(this.input.inputValue)
+                        : this.input.inputValue;
+
+                if (currentValue !== this.props.initialValue) {
                     this.showClearBtn();
                 }
 
-                if (this.input.inputValue === this.props.initialValue) {
+                if (currentValue === this.props.initialValue) {
                     this.hideClearBtn();
                 }
             });
 
             this.clearBtn.htmlElement.addEventListener('click', () => {
                 this.hideClearBtn();
-                this.input.inputValue = this.props.initialValue;
+                this.restoreInitialValue();
             });
         }
     }
@@ -94,7 +105,6 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
             const btn = btnItem.htmlElement;
 
             btn.addEventListener('click', () => {
-                // const target = e.target as HTMLButtonElement;
                 if (this.props.type === 'password') {
                     this.props.type = 'text';
                     btnItem.toggle();
@@ -103,6 +113,18 @@ export class FormInput extends Component<HTMLDivElement, FormInputProps> {
                     btnItem.toggle();
                 }
                 this.input.htmlElement.type = this.props.type;
+            });
+        }
+
+        if (this.props.name === 'phoneNumber') {
+            if (this.props.initialValue) {
+                this.restoreInitialValue();
+            }
+            if (!this.props.initialValue) {
+                this.input.inputValue = '+7';
+            }
+            this.htmlElement.addEventListener('input', () => {
+                usePhoneNumberMask(this.input);
             });
         }
 

@@ -10,6 +10,7 @@ import {
     validateMark,
 } from '@/shared/lib/validate';
 import { validateRepeatPassword } from '@/shared/lib/validate/core';
+import { unformatPhoneNumber } from '../mask';
 
 export type { FormData } from './index.types';
 
@@ -19,6 +20,7 @@ export function parseForm(form: Form): FormData {
         isValid: true,
         inputs: {},
     };
+    // eslint-disable-next-line max-lines-per-function
     Object.entries(form.inputItems).forEach(([name, input]) => {
         formData.inputs[name] = {
             value: input.input.inputValue,
@@ -43,6 +45,9 @@ export function parseForm(form: Form): FormData {
                     );
                     break;
                 case 'phoneNumber':
+                    formData.inputs[name].value = unformatPhoneNumber(
+                        formData.inputs[name].value,
+                    );
                     formData.inputs[name].error = validatePhoneNumber(
                         formData.inputs[name].value,
                     );

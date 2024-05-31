@@ -1,18 +1,19 @@
 div(class=`${className} profile-one-order-info`)
     div(class="profile-one-order-info__back-link-container") 
-    div(class="profile-one-order-info__header header header_h3") 
-        span Заказ №#{orderId} 
-    div(class="profile-one-order-info__subheader text_size-small") 
-    div(class="profile-one-order-info__main-info main-info")
-        div(class="main-info__line") Товары
-            span(class="main-info__products-cost text_weight-bold") 0
-        div(class="main-info__line") Доставка
-            span(class="main-info__products-delivery text_weight-bold") Бесплатно
-        div(class="main-info__line main-info__discount-line") Скидка
-            span(class="main-info__discount text_weight-bold") 0
-        div(class="main-info__line text_weight-bold text_size-big") Общая стоимость
-            span(class="main-info__products-total-cost") 0
-    div(class="profile-one-order-info__products-info products-info")
-        div(class="products-info__header header header_h4") Товары в заказе 
-            span(class="products-info__total-items")
-        div(class="products-info__products")
+    div(class="profile-one-order-info__order-details")
+        div(class="profile-one-order-info__header header header_h3") 
+            span Заказ №#{orderId} 
+        div(class="profile-one-order-info__subheader text_size-small") 
+        div(class="profile-one-order-info__main-info main-info")
+            div(class="main-info__line") Товары
+                span(class="main-info__products-cost text_weight-bold") 
+            div(class="main-info__line") Доставка
+                span(class="main-info__products-delivery text_weight-bold") Бесплатно
+            div(class="main-info__line main-info__discount-line") Скидка
+                span(class="main-info__discount text_weight-bold") 
+            div(class="main-info__line text_weight-bold text_size-big") Общая стоимость
+                span(class="main-info__products-total-cost") 
+        div(class="profile-one-order-info__products-info products-info")
+            div(class="products-info__header header header_h4") Товары в заказе 
+                span(class="products-info__total-items")
+            div(class="products-info__products")

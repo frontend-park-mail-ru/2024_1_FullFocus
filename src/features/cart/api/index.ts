@@ -18,7 +18,7 @@ export async function useGetUserCart() {
         products.forEach((product) => {
             cartItems.push((parent: Element) => {
                 const item = new CartItem<ProductCard>(parent, {
-                    className: 'cart-item-' + product.name,
+                    className: 'cart-item-' + product.productId.toString(),
                 });
 
                 item.insertProduct((parent: Element) => {
