@@ -303,6 +303,12 @@
         height: auto;
         aspect-ratio: 1;
     }
+
+    .product-info_with-discount {
+        .product-info__to-cart-card-price {
+            font-size: var(--font-size-h4);
+        }
+    }
 }
 
 @media (max-width: 280px) {

@@ -36,7 +36,7 @@ export class AddCommentDialog extends Component<
             window.screen.width > 475
                 ? '50%'
                 : window.screen.height > 650
-                  ? '574px'
+                  ? '584px'
                   : '100%';
         this.htmlElement.animate([{ height: this.height, opacity: 1 }], {
             duration: 300,
@@ -75,7 +75,7 @@ export class AddCommentDialog extends Component<
                 window.screen.width > 475
                     ? '50%'
                     : window.screen.height > 650
-                      ? '574px'
+                      ? '584px'
                       : '100%';
             if (this.height !== height) {
                 this.height = height;

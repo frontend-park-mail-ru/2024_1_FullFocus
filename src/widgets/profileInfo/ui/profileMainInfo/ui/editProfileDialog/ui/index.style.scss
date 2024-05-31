@@ -21,8 +21,24 @@
 //     justify-content: space-between;
 // }
 
-.user-data {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.edit-profile-form {
+    .form__inputs {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+    }
+    .input-block-container {
+        width: 256px;
+    }
+}
+
+@media (max-width: 1546px) {
+    .edit-profile-form {
+        .form__inputs {
+            flex-direction: column;
+        }
+        .input-block-container {
+            width: auto;
+        }
+    }
 }

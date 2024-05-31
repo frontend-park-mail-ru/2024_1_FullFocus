@@ -128,21 +128,8 @@ export class App extends Component<HTMLDivElement> {
                     // Update profile icon badges
                     const totalProfileMsgs =
                         data.unreadNotifications + data.promocodesAvailable;
+
                     this.navbar.updateBadge(
-                        'profile',
-                        totalProfileMsgs.toString(),
-                    );
-                    this.navbar.updateBadge(
-                        'profile',
-                        data.unreadNotifications.toString(),
-                        'notifications',
-                    );
-                    this.navbar.updateBadge(
-                        'profile',
-                        data.promocodesAvailable.toString(),
-                        'promocodes',
-                    );
-                    this.mobileNavbar.updateBadge(
                         'profile',
                         totalProfileMsgs.toString(),
                     );
@@ -156,6 +143,38 @@ export class App extends Component<HTMLDivElement> {
                         this.navbar.hideBadge('profile');
                         this.mobileNavbar.hideBadge('profile');
                     }
+
+                    this.navbar.updateBadge(
+                        'profile',
+                        data.unreadNotifications.toString(),
+                        'notifications',
+                    );
+
+                    if (data.unreadNotifications > 0) {
+                        this.navbar.showBadge('profile', 'notifications');
+                    }
+
+                    if (data.unreadNotifications <= 0) {
+                        this.navbar.hideBadge('profile', 'notifications');
+                    }
+
+                    this.navbar.updateBadge(
+                        'profile',
+                        data.promocodesAvailable.toString(),
+                        'promocodes',
+                    );
+
+                    if (data.promocodesAvailable > 0) {
+                        this.navbar.showBadge('profile', 'promocodes');
+                    }
+
+                    if (data.promocodesAvailable <= 0) {
+                        this.navbar.hideBadge('profile', 'promocodes');
+                    }
+                    this.mobileNavbar.updateBadge(
+                        'profile',
+                        totalProfileMsgs.toString(),
+                    );
                 }
             })
             .catch(() => {});

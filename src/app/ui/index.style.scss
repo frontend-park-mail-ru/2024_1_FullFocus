@@ -2,6 +2,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-top: 86px;
 }
 
 .content {
@@ -15,8 +16,9 @@
     padding: 8px 0;
     height: 86px;
     box-sizing: border-box;
-    position: sticky;
+    position: fixed;
     top: 0;
+    z-index: 1;
 }
 
 .mobile-navbar-container {
@@ -28,6 +30,7 @@
     position: fixed;
     bottom: 0;
     top: auto;
+    z-index: 0;
     display: none;
 }
 
@@ -38,6 +41,10 @@
 
     .csat-main {
         display: none;
+    }
+
+    .app {
+        margin-top: 60px;
     }
 
     .navbar-container {

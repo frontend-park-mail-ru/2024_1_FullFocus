@@ -57,6 +57,14 @@ export class ProfileMainInfo extends Component<
             .classList.remove('profile-main-info__main-info--loading');
     }
 
+    protected updateLogin(login: string) {
+        (
+            this.htmlElement.getElementsByClassName(
+                'profile-main-info__login',
+            )[0] as HTMLDivElement
+        ).innerText = login;
+    }
+
     protected render() {
         this.renderTemplate();
 
@@ -81,12 +89,6 @@ export class ProfileMainInfo extends Component<
         animateLongRequest(
             useGetProfileInfo,
             (response) => {
-                if (
-                    response.email.length <= 0 ||
-                    response.fullName.length <= 0 ||
-                    response.phoneNumber.length <= 0
-                )
-                    return;
                 this.fullNameData = response.fullName;
                 this.phoneNumberData = response.phoneNumber;
                 this.emailData = response.email;
@@ -104,6 +106,8 @@ export class ProfileMainInfo extends Component<
                         },
                     },
                 );
+
+                this.updateLogin(response.login);
 
                 this.renderProfileInfo();
 

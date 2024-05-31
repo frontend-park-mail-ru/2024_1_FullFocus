@@ -1,3 +1,9 @@
-.products-section-recommendation__products-list{
-  margin-top: 15px;
+.products-section-recommendation {
+    overflow: hidden;
+}
+
+.products-section-recommendation__products-list {
+    margin-top: 15px;
+    flex-wrap: nowrap;
+    overflow: auto;
 }
