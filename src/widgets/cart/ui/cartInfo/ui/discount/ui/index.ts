@@ -42,8 +42,9 @@ export class Discount extends Component<HTMLDivElement, DiscountProps> {
             this.discountSumElement.classList.remove(
                 'discount__discount-sum_no-discount',
             );
-            this.currentDiscountSum =
-                this.props.currentSum * (this.props.value / 100);
+            this.currentDiscountSum = Math.round(
+                this.props.currentSum * (this.props.value / 100),
+            );
             this.props.discountSum = `-${this.currentDiscountSum} ₽`;
         }
 
