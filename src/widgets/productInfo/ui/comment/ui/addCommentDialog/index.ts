@@ -113,7 +113,7 @@ export class AddCommentDialog extends Component<
                         .then((response) => {
                             this.formObj.setNotReadonly();
                             if (response.status === 201) {
-                                this.htmlElement.close();
+                                this.close();
                                 this.props.addProductCallback();
                             }
 
