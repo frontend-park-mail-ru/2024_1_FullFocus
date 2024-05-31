@@ -15,6 +15,7 @@ import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
 import { cartIconTmpl } from './linkIcons';
 import { userIcon } from '@/shared/icons';
+import './logo.jp';
 import { mobileHomeIconTmpl, mobileLoginIconTmpl } from './mobileIcons';
 
 interface ConfigItem {
@@ -86,7 +87,7 @@ export function createConfig() {
                 navbarLink: {
                     className: 'navbar-link-main',
                     text: 'Главная',
-                    imgName: '/public/logo.png',
+                    imgName: '/public/logo.jpg',
                     mobileIconTmpl: mobileHomeIconTmpl,
                 },
                 router: {

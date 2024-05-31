@@ -14,6 +14,10 @@
     text-decoration: none;
 }
 
+.link-img__img {
+    height: 50px;
+}
+
 // Link primary
 .link-primary {
     @extend .link;
