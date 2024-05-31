@@ -5,7 +5,6 @@ import './index.style.scss';
 import { CommentCard } from '@/entities/comment/ui';
 import { Button } from '@/shared/uikit/button';
 import { useGetCommentCards } from '@/features/comment/ui';
-import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { AddCommentDialog } from './addCommentDialog';
 import { useCheckUserLogin } from '@/features/auth';
 import { animateLongRequest } from '@/shared/api/ajax/throttling';
@@ -60,17 +59,21 @@ export class CommentWidget extends Component<
             },
             (comments: ((parent: Element) => CommentCard)[]) => {
                 if (comments.length === 0) {
-                    const emptyCommentDiv = new EmptyContainer(
+                    (
                         this.htmlElement.getElementsByClassName(
                             'comment-widget__comments',
-                        )[0],
-                        {
-                            className: 'comment-widget__commentsEMPTY',
-                        },
-                    );
-                    emptyCommentDiv.htmlElement.innerText =
-                        'Будьте первым, кто оставит комментарий!';
+                        )[0] as HTMLDivElement
+                    ).innerText = 'Будьте первым, кто оставит комментарий!';
                 }
+
+                if (comments.length !== 0) {
+                    (
+                        this.htmlElement.getElementsByClassName(
+                            'comment-widget__comments',
+                        )[0] as HTMLDivElement
+                    ).innerText = '';
+                }
+
                 for (let i = 0; i < comments.length; i++) {
                     const commentCard = comments[i](
                         this.htmlElement.getElementsByClassName(
