@@ -78,7 +78,7 @@ export class ProfileNotifications extends Component<
                     'profile-notifications__notifications',
                 );
 
-                if (this.notificationsList.areUnread) {
+                if (this.notificationsList.areUnread && !this.readAllBtn) {
                     this.readAllBtn = new Button(
                         this.htmlElement.getElementsByClassName(
                             'profile-notifications__subheader',
