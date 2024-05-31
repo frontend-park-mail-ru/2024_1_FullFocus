@@ -15,7 +15,7 @@ import { CsatPage } from '@/pages/csat/ui';
 import { CsatDataPage } from '@/pages/csatData';
 import { cartIconTmpl } from './linkIcons';
 import { userIcon } from '@/shared/icons';
-import './logo.jp';
+import './logo.jpg';
 import { mobileHomeIconTmpl, mobileLoginIconTmpl } from './mobileIcons';
 
 interface ConfigItem {
