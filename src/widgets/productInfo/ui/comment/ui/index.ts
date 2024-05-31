@@ -8,6 +8,7 @@ import { useGetCommentCards } from '@/features/comment/ui';
 import { EmptyContainer } from '@/shared/uikit/emptyContainer';
 import { AddCommentDialog } from './addCommentDialog';
 import { useCheckUserLogin } from '@/features/auth';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class CommentWidget extends Component<
     HTMLDivElement,
@@ -49,12 +50,15 @@ export class CommentWidget extends Component<
             comment.destroy();
         });
         this.commentsColumn = [];
-        useGetCommentCards(
-            0, // Number(this.props.params["limit"])
-            5, // Number(this.props.params["lastReviewID"])
-            this.props.productID,
-        )
-            .then((comments: ((parent: Element) => CommentCard)[]) => {
+        animateLongRequest(
+            () => {
+                return useGetCommentCards(
+                    0, // Number(this.props.params["limit"])
+                    5, // Number(this.props.params["lastReviewID"])
+                    this.props.productID,
+                );
+            },
+            (comments: ((parent: Element) => CommentCard)[]) => {
                 if (comments.length === 0) {
                     const emptyCommentDiv = new EmptyContainer(
                         this.htmlElement.getElementsByClassName(
@@ -75,10 +79,17 @@ export class CommentWidget extends Component<
                     );
                     this.commentsColumn[i] = commentCard;
                 }
-            })
-            .catch((error) => {
-                console.error('Ошибка при загрузке комментариев:', error);
-            });
+            },
+            () => {},
+            () => {
+                this.startLoading();
+            },
+            () => {
+                this.stopLoading();
+            },
+            150,
+            1500,
+        )();
     }
 
     renderBtn() {
@@ -106,6 +117,14 @@ export class CommentWidget extends Component<
                 }
             })
             .catch(() => {});
+    }
+
+    startLoading() {
+        this.htmlElement.classList.add('comment-widget--loading');
+    }
+
+    stopLoading() {
+        this.htmlElement.classList.remove('comment-widget--loading');
     }
 
     protected render() {
