@@ -3,3 +3,5 @@ export {
     useGetNotificationsList,
     NotificationCard,
 } from './ui';
+
+export { getWS } from './api';

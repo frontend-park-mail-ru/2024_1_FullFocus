@@ -11,7 +11,7 @@ import { ProductsSectionRecommendation } from '@/widgets/productsSectionRecommen
 
 export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected productsSection: ProductsSection;
-    protected productsSectionRecommendation: ProductsSectionRecommendation
+    protected productsSectionRecommendation: ProductsSectionRecommendation;
     protected iframe: HTMLIFrameElement;
     protected productsCategories: CategoriesList;
     protected removeIframe: () => void;
@@ -44,25 +44,19 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
     protected render() {
         this.renderTemplate();
 
-        this.productsCategories = new CategoriesList(
-            this.htmlElement.getElementsByClassName('categories')[0],
-            {
-                className: 'categories__categories-list',
-            },
-        );
+        this.productsCategories = new CategoriesList(this.htmlElement, {
+            className: 'categories',
+        });
 
-        this.productsSection = new ProductsSection(
-            this.htmlElement.getElementsByClassName('products')[0],
-            {
-                className: 'products-section-popular',
-                navigateToCart: this.props.navigateToCart,
-            },
-        );
+        this.productsSection = new ProductsSection(this.htmlElement, {
+            className: 'products',
+            navigateToCart: this.props.navigateToCart,
+        });
 
         this.productsSectionRecommendation = new ProductsSectionRecommendation(
-            this.htmlElement.getElementsByClassName('recommendations')[0],
+            this.htmlElement,
             {
-                className: 'products-section-recommendation',
+                className: 'promo',
                 navigateToCart: this.props.navigateToCart,
             },
         );
@@ -75,15 +69,17 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
                     .then((response) => {
                         if (response) {
                             setTimeout(() => {
-                                const data = createIframe(
-                                    this.htmlElement,
-                                    'csat-main',
-                                    `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
-                                    450,
-                                    202,
-                                );
-                                this.iframe = data.component;
-                                this.removeIframe = data.remove;
+                                if (response.data !== undefined) {
+                                    const data = createIframe(
+                                        this.htmlElement,
+                                        'csat-main',
+                                        `/csat?question_id=${response.data[0].id}&title=${response.data[0].title}`,
+                                        450,
+                                        202,
+                                    );
+                                    this.iframe = data.component;
+                                    this.removeIframe = data.remove;
+                                }
                             }, 1500);
                         }
                     })

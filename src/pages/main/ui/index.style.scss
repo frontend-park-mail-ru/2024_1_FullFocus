@@ -1,29 +1,40 @@
 .main-page {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-areas:
+        'categories promo'
+        'categories products';
     gap: 14px;
+    grid-template-columns: max-content;
 }
 
-.products{
-   margin-top: 10px;
+.products {
+    grid-area: products;
 }
 
 .categories {
-    min-width: 300px;
+    width: 300px;
+    height: fit-content;
+    position: sticky;
+    top: 110px;
+    grid-area: categories;
+    box-sizing: border-box;
 }
 
-.categories__categories-list {
-    position: sticky;
-    top: 10px;
+.promo {
+    grid-area: promo;
 }
 
 @media (width <= 1024px) {
     .main-page {
-        flex-direction: column;
+        grid-template-areas:
+            'promo'
+            'categories'
+            'products';
+        grid-template-columns: auto;
     }
 
     .categories {
         width: 100%;
-        min-width: none;
+        position: static;
     }
 }

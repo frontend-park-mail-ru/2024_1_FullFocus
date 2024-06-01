@@ -1,9 +1,14 @@
 - var sizeClass = 'dropdown_sm'
+- var itemsSizeClass = 'dropdown_sm'
 case size
     when 'xs'
         - sizeClass = 'dropdown_xs'
+        - itemsSizeClass = 'dropdown_xs'
     when 'fill'
         - sizeClass = 'dropdown_fill'
+        - itemsSizeClass = 'dropdown_fill'
+if (!defaultText)
+    - sizeClass = 'dropdown_fill'
 
 - var borderClass = ''
 if border
@@ -20,4 +25,4 @@ div(class=`${className} dropdown dropdown_hidden ` + sizeClass)
             div(class="dropdown__toggler dropdown__toggler_icon-right")
         else
             div(class="dropdown__toggler dropdown__toggler_icon-left")
-    div(class="dropdown__items border_radius-sm box-shadow")
+    div(class="dropdown__items border_radius-sm box-shadow " + itemsSizeClass)

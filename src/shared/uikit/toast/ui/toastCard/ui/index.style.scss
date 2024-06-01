@@ -61,6 +61,25 @@
     width: var(--btn-height-xs);
     height: var(--btn-height-xs);
 }
+@media (max-width: 475px) {
+    .toast-card {
+        padding: 4px 8px 8px 8px;
+        width: 100%;
+    }
+
+    .close-btn {
+        height: var(--btn-height-xxs);
+    }
+
+    .close-btn__svg {
+        width: var(--btn-height-xxs);
+        height: var(--btn-height-xxs);
+    }
+
+    .toast-card__header {
+        margin-bottom: 2px;
+    }
+}
 
 // Basic
 .toast-card_basic {

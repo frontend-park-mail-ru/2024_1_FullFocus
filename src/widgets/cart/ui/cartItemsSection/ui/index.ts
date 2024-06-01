@@ -7,6 +7,7 @@ import { ProductCard } from '@/entities/product';
 import { Button } from '@/shared/uikit/button';
 import { clearCart } from '@/entities/cart/api';
 import { addToCart, deleteFromCart } from '@/entities/cart/api';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class CartItemsSection extends Component<
     HTMLDivElement,
@@ -15,8 +16,12 @@ export class CartItemsSection extends Component<
     protected cartItems: { [id: number]: CartItem<ProductCard> };
     protected clearBtn: Button;
     protected totalUniqueItems: number;
+    protected cartItemsElement: HTMLDivElement;
     protected clearCartListener: (e: Event) => void;
     protected counterActionListener: (e: Event) => void;
+    protected deleteFromCartAnimated: (id: number) => void;
+    protected addToCartAnimated: (id: number) => void;
+    protected enabled: boolean;
 
     /**
      * Constructor for ProductsSection
@@ -26,16 +31,76 @@ export class CartItemsSection extends Component<
         super(parent, cartItemsSectionTempl, props);
         this.cartItems = [];
         this.totalUniqueItems = 0;
+        this.cartItemsElement = this.htmlElement.getElementsByClassName(
+            'cart-items-section__cart-items',
+        )[0] as HTMLDivElement;
+        this.enabled = true;
+
+        this.deleteFromCartAnimated = (id: number) => {
+            const counter = this.getItemById(id).counterComponent;
+            counter.setDisabled();
+            animateLongRequest(
+                () => {
+                    return deleteFromCart(id);
+                },
+                ({ data }) => {
+                    if (data.count === 0) {
+                        this.removeItemById(id);
+                        this.updateNavbar();
+                    }
+                    if (data.count !== 0) {
+                        this.getItemById(id).counterValue = data.count;
+                    }
+
+                    this.props.removeItemCallback(id);
+                },
+                () => {},
+                () => {
+                    counter.startLoading();
+                },
+                () => {
+                    counter.stopLoading();
+                    counter.setEnabled();
+                },
+                150,
+                1000,
+            )();
+        };
+
+        this.addToCartAnimated = (id: number) => {
+            const counter = this.getItemById(id).counterComponent;
+            counter.setDisabled();
+            animateLongRequest(
+                () => {
+                    return addToCart(id);
+                },
+                ({ data }) => {
+                    this.getItemById(id).counterValue = data.count;
+                    this.props.addItemCallback(id);
+                },
+                () => {},
+                () => {
+                    counter.startLoading();
+                },
+                () => {
+                    counter.stopLoading();
+                    counter.setEnabled();
+                },
+                150,
+                1000,
+            )();
+        };
     }
 
     protected componentDidMount() {
         this.clearCartListener = () => {
+            if (!this.enabled) return;
+            this.clearCart();
             clearCart()
                 .then(({ status }) => {
                     if (status === 200) {
-                        this.clearCart();
-                        this.props.clearCartCallback();
                         this.updateNavbar();
+                        this.props.clearCartCallback();
                     }
                 })
                 .catch(() => {});
@@ -47,6 +112,7 @@ export class CartItemsSection extends Component<
         );
 
         this.counterActionListener = (e: Event) => {
+            if (!this.enabled) return;
             let target = e.target as HTMLElement;
             if (
                 target.classList.contains('counter__minus') ||
@@ -59,27 +125,10 @@ export class CartItemsSection extends Component<
                 const id = Number(target.parentElement.dataset.productid);
                 const action = target.dataset.action;
                 if (action === 'minus') {
-                    deleteFromCart(id)
-                        .then(({ data }) => {
-                            if (data.count === 0) {
-                                this.removeItemById(id);
-                                this.updateNavbar();
-                            }
-                            if (data.count !== 0) {
-                                this.getItemById(id).counterValue = data.count;
-                            }
-
-                            this.props.removeItemCallback(id);
-                        })
-                        .catch(() => {});
+                    this.deleteFromCartAnimated(id);
                 }
                 if (action === 'plus') {
-                    addToCart(id)
-                        .then(({ data }) => {
-                            this.getItemById(id).counterValue = data.count;
-                            this.props.addItemCallback(id);
-                        })
-                        .catch(() => {});
+                    this.addToCartAnimated(id);
                 }
             }
         };
@@ -107,6 +156,7 @@ export class CartItemsSection extends Component<
                 type: 'button',
                 btnStyle: 'white',
                 btnText: 'очистить',
+                size: 'no-padding',
             },
         );
 
@@ -114,11 +164,7 @@ export class CartItemsSection extends Component<
     }
 
     protected emptyCartMessage() {
-        (
-            this.htmlElement.getElementsByClassName(
-                'cart-items-section__cart-items',
-            )[0] as HTMLDivElement
-        ).innerText = 'корзина пуста';
+        this.cartItemsElement.innerText = 'корзина пуста';
     }
 
     get cartInfo() {
@@ -127,6 +173,28 @@ export class CartItemsSection extends Component<
             t.push({ productId: Number(id), count: item.currentCounterValue });
         });
         return t;
+    }
+
+    setDisabled() {
+        this.clearBtn.setDisabled();
+        this.enabled = false;
+    }
+
+    setEnabled() {
+        this.clearBtn.setEnabled();
+        this.enabled = true;
+    }
+
+    startLoading() {
+        this.cartItemsElement.classList.add(
+            'cart-items-section__cart-items--loading',
+        );
+    }
+
+    stopLoading() {
+        this.cartItemsElement.classList.remove(
+            'cart-items-section__cart-items--loading',
+        );
     }
 
     getItemById(id: number) {
@@ -160,11 +228,8 @@ export class CartItemsSection extends Component<
         }
 
         if (cartItems.length !== 0) {
-            const parent = this.htmlElement.getElementsByClassName(
-                'cart-items-section__cart-items',
-            )[0];
             cartItems.forEach((createItem) => {
-                const { card, id } = createItem(parent);
+                const { card, id } = createItem(this.cartItemsElement);
                 this.cartItems[id] = card;
                 this.totalUniqueItems++;
             });

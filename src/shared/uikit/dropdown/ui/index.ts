@@ -18,12 +18,14 @@ export class DropDown<
     protected htmlItemsSection: HTMLDivElement;
     protected wasOpened: boolean;
     protected status: 'opened' | 'closed';
+    protected enabled: boolean;
 
     constructor(parent: Element, props: DropDownProps) {
         super(parent, dropDownTmpl, props);
         this.items = {};
         this.status = 'closed';
         this.wasOpened = false;
+        this.enabled = true;
     }
 
     startLoading() {
@@ -112,6 +114,16 @@ export class DropDown<
         this.wasOpened = false;
     }
 
+    setDisabled() {
+        this.htmlElement.classList.add('dropdown_disabled');
+        this.enabled = false;
+    }
+
+    setEnabled() {
+        this.htmlElement.classList.remove('dropdown_disabled');
+        this.enabled = true;
+    }
+
     set mainText(text: string) {
         if (this.props.defaultText) {
             this.htmlMainText.innerText = text;
@@ -132,6 +144,8 @@ export class DropDown<
 
     protected componentDidMount() {
         this.htmlElement.addEventListener('click', () => {
+            if (!this.enabled) return;
+
             this.toggle();
             if (this.props.dispatchOpenEvent && !this.wasOpened) {
                 this.htmlElement.dispatchEvent(

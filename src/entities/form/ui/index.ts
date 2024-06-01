@@ -22,10 +22,14 @@ export class Form extends Component<HTMLFormElement, FormProps> {
         parent: Element,
         className: string,
         submitText: string = 'Submit',
+        size?: 'xs' | 'sm' | 'bg',
+        style?: 'whiteWithBg' | 'bright' | 'green' | 'white' | 'red',
     ) {
         super(parent, formTmpl, {
             className: className,
             submitText,
+            size: size ?? 'bg',
+            style: style ?? 'bright',
         });
 
         this.inputItems = {};
@@ -46,6 +50,8 @@ export class Form extends Component<HTMLFormElement, FormProps> {
             inputClassName: params.inputClassName,
             name: params.name,
             status: 'notValidated',
+            header: params.header,
+            size: params.size,
             validate: params.validate,
             initialValue: params.initialValue,
             errorBlockClassName:
@@ -72,7 +78,8 @@ export class Form extends Component<HTMLFormElement, FormProps> {
             type: 'submit',
             className: 'btn-submit',
             btnText: this.props.submitText,
-            btnStyle: 'bright',
+            size: this.props.size,
+            btnStyle: this.props.style,
         });
     }
 

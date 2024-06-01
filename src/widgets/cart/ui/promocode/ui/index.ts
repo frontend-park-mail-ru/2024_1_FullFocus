@@ -105,6 +105,14 @@ export class CartPromocodes extends Component<
         this.state = 'WITH_CODE';
     }
 
+    setDisabled() {
+        this?.newCode.setDisabled();
+    }
+
+    setEnabled() {
+        this?.newCode.setEnabled();
+    }
+
     // User clicked on 'confirm' or 'cancel' button
     protected userDecided(response: AksCodeResponse) {
         this.removeConfirmation();

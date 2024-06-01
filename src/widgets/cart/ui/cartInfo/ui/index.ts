@@ -75,6 +75,18 @@ export class CartInfo extends Component<HTMLDivElement, CartInfoProps> {
         this.updateCartInfo();
     }
 
+    startLoading() {
+        this.costElement.classList.add('cart-info--loading');
+        this.totalCostElement.classList.add('cart-info--loading');
+        this.totalElement.classList.add('cart-info--loading');
+    }
+
+    stopLoading() {
+        this.costElement.classList.remove('cart-info--loading');
+        this.totalCostElement.classList.remove('cart-info--loading');
+        this.totalElement.classList.remove('cart-info--loading');
+    }
+
     removeDiscount() {
         this.discount.destroy();
         this.discount = null;

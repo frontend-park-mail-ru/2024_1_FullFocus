@@ -1,0 +1,18 @@
+.user-data {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.user-data__item {
+    flex: 1;
+}
+
+@media (max-width: 1546px) {
+    .user-data {
+        flex-direction: column;
+    }
+    .user-data__item {
+        width: auto;
+    }
+}

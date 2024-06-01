@@ -12,5 +12,6 @@ export interface profileInfoConfig {
         text?: string;
         getComponent: (parent: Element, props: IProps) => Component<Element>;
         metaDataName?: string;
+        icon?: () => string;
     };
 }

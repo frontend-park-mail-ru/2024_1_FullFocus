@@ -6,13 +6,36 @@ import { Badge } from '@/shared/uikit/badge';
 import { Link } from '@/shared/uikit/link';
 import { formatBadge } from '../../lib';
 import { formatDate } from '@/shared/lib/date';
+import { OrderStatus } from '../../model';
 
 export class OrderCard extends Component<HTMLDivElement, OrderCardProps> {
     protected statusBadge: Badge;
+    protected currentStatus: OrderStatus;
     protected orderLink: Link;
 
     constructor(parent: Element, props: OrderCardProps) {
         super(parent, orderCardTmpl, props);
+    }
+
+    changeStatus(newStatus: OrderStatus) {
+        if (this.currentStatus === newStatus) {
+            return;
+        }
+
+        if (this.statusBadge !== undefined) {
+            this.statusBadge.destroy();
+            this.statusBadge = undefined;
+        }
+
+        this.statusBadge = formatBadge(
+            this.htmlElement.getElementsByClassName(
+                'order-card__info-right',
+            )[0],
+            'order-card__order-status',
+            newStatus,
+        );
+
+        this.currentStatus = newStatus;
     }
 
     protected render() {
@@ -29,14 +52,7 @@ export class OrderCard extends Component<HTMLDivElement, OrderCardProps> {
                 style: 'primary',
             },
         );
-        // this.orderLink.htmlElement.classList.add('text_size-small');
 
-        this.statusBadge = formatBadge(
-            this.htmlElement.getElementsByClassName(
-                'order-card__info-right',
-            )[0],
-            'order-card__order-status',
-            this.props.status,
-        );
+        this.changeStatus(this.props.status);
     }
 }

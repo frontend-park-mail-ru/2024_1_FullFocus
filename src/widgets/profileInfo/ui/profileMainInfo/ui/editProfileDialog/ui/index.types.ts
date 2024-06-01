@@ -3,5 +3,9 @@ export interface EditProfileDialogProps {
     fullName: string;
     email: string;
     phoneNumber: string;
-    profileChangedCallback?: () => void;
+    profileChangedCallback?: (
+        fullName: string,
+        email: string,
+        phoneNumber: string,
+    ) => void;
 }

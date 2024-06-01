@@ -7,7 +7,7 @@ import { getConfig } from './../providers';
 import { registerSW } from '../providers/serviceWorker';
 import { getMainUserData } from '@/entities/user/api';
 import { throttle } from '@/shared/api/ajax/throttling';
-import { getNotificationCards } from '@/features/notification';
+import { getNotificationCards, getWS } from '@/features/notification';
 
 export class App extends Component<HTMLDivElement> {
     router: Router;
@@ -17,6 +17,8 @@ export class App extends Component<HTMLDivElement> {
     protected throttledUpdateBadges: () => void;
     protected throttledUserInfo: typeof getMainUserData;
     protected closeNotificationWS: () => void;
+    protected restartNotifications: () => void;
+    protected areNotificationsWorking: () => boolean;
     pages: { [name: string]: Page };
     headerElement: HTMLDivElement;
     navbar: Navbar;
@@ -69,8 +71,39 @@ export class App extends Component<HTMLDivElement> {
         }
 
         if (isLogged) {
+            this.checkConnection();
             this.updateNavbarBadges();
         }
+
+        if (!isLogged) {
+            if (this.areNotificationsWorking()) {
+                this.closeNotificationWS();
+            }
+        }
+    }
+
+    protected checkConnection() {
+        if (!this.isWsInited() || !this.areNotificationsWorking()) {
+            this.initWS();
+        }
+    }
+
+    protected isWsInited() {
+        return (
+            this.closeNotificationWS !== undefined &&
+            this.restartNotifications !== undefined &&
+            this.areNotificationsWorking !== undefined
+        );
+    }
+
+    protected initWS() {
+        const notifications = getNotificationCards();
+        this.closeNotificationWS = notifications.close;
+        this.restartNotifications = notifications.retryConnection;
+        this.areNotificationsWorking = notifications.isConnected;
+        getWS().addCallback('navbar', () => {
+            this.updateNavbarBadges();
+        });
     }
 
     protected updateNavbarBadges() {
@@ -98,11 +131,8 @@ export class App extends Component<HTMLDivElement> {
                     // Update profile icon badges
                     const totalProfileMsgs =
                         data.unreadNotifications + data.promocodesAvailable;
+
                     this.navbar.updateBadge(
-                        'profile',
-                        totalProfileMsgs.toString(),
-                    );
-                    this.mobileNavbar.updateBadge(
                         'profile',
                         totalProfileMsgs.toString(),
                     );
@@ -116,6 +146,38 @@ export class App extends Component<HTMLDivElement> {
                         this.navbar.hideBadge('profile');
                         this.mobileNavbar.hideBadge('profile');
                     }
+
+                    this.navbar.updateBadge(
+                        'profile',
+                        data.unreadNotifications.toString(),
+                        'notifications',
+                    );
+
+                    if (data.unreadNotifications > 0) {
+                        this.navbar.showBadge('profile', 'notifications');
+                    }
+
+                    if (data.unreadNotifications <= 0) {
+                        this.navbar.hideBadge('profile', 'notifications');
+                    }
+
+                    this.navbar.updateBadge(
+                        'profile',
+                        data.promocodesAvailable.toString(),
+                        'promocodes',
+                    );
+
+                    if (data.promocodesAvailable > 0) {
+                        this.navbar.showBadge('profile', 'promocodes');
+                    }
+
+                    if (data.promocodesAvailable <= 0) {
+                        this.navbar.hideBadge('profile', 'promocodes');
+                    }
+                    this.mobileNavbar.updateBadge(
+                        'profile',
+                        totalProfileMsgs.toString(),
+                    );
                 }
             })
             .catch(() => {});
@@ -178,11 +240,11 @@ export class App extends Component<HTMLDivElement> {
             },
         );
 
-        this.closeNotificationWS = getNotificationCards().close;
-
-        Object.entries(navbarConfig).forEach(([name, { props, logged }]) => {
-            this.navbar.addLink(name, logged, props);
-        });
+        Object.entries(navbarConfig).forEach(
+            ([name, { props, logged, children }]) => {
+                this.navbar.addLink(name, logged, props, undefined, children);
+            },
+        );
 
         Object.entries(mobileNavbarConfig).forEach(
             ([name, { props, logged }]) => {

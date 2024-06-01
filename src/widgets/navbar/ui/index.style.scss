@@ -102,3 +102,30 @@
         }
     }
 }
+
+.navbar__private {
+    height: 46px;
+}
+
+.navbar-link-with-children {
+    height: 100%;
+}
+
+.navbar-dropdown {
+    .dropdown__items {
+        margin-top: 0;
+        width: 200px;
+        top: -14px;
+        right: -70px;
+    }
+}
+
+.link-navbar-dropdown {
+    display: block;
+}
+
+.link-navbar-dropdown::after {
+    content: '';
+    inset: 0;
+    position: absolute;
+}

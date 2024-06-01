@@ -27,3 +27,12 @@
     background-color: #efefef;
     cursor: pointer;
 }
+
+@media (max-width: 475px) {
+    .search-result__result-name {
+        font-size: var(--font-size-normal);
+    }
+    .search-result__icon {
+        font-size: var(--font-size-h6);
+    }
+}

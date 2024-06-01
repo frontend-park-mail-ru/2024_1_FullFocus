@@ -11,6 +11,7 @@ import { Badge } from '@/shared/uikit/badge';
 import { formatBadge } from '@/entities/order';
 import { formatDate } from '@/shared/lib/date';
 import { OrderStatus } from '@/entities/order/model';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProfileOneOrderInfo extends Component<
     HTMLDivElement,
@@ -18,25 +19,24 @@ export class ProfileOneOrderInfo extends Component<
 > {
     protected backLink: Link;
     protected statusBadge: Badge;
+    protected sum: HTMLDivElement;
+    protected sumWithoutDiscount: HTMLDivElement;
+    protected discount: HTMLDivElement;
+    protected totalProducts: HTMLDivElement;
+    protected date: HTMLDivElement;
+    protected status: HTMLDivElement;
+    protected productsSection: HTMLDivElement;
     protected products: ProductInOrderCard<ProductCard>[];
     constructor(parent: Element, props: ProfileOneOrderInfoProps) {
         super(parent, profileOrdersInfoTmpl, props);
     }
 
     protected renderSum(sum: number) {
-        (
-            this.htmlElement.getElementsByClassName(
-                'main-info__products-total-cost',
-            )[0] as HTMLDivElement
-        ).innerText = `${sum} ₽`;
+        this.sum.innerText = `${sum} ₽`;
     }
 
     protected renderSumWithoutDiscount(sumWithoutDiscount: number) {
-        (
-            this.htmlElement.getElementsByClassName(
-                'main-info__products-cost',
-            )[0] as HTMLDivElement
-        ).innerText = `${sumWithoutDiscount} ₽`;
+        this.sumWithoutDiscount.innerText = `${sumWithoutDiscount} ₽`;
     }
 
     protected renderDiscount(discount: number) {
@@ -45,11 +45,7 @@ export class ProfileOneOrderInfo extends Component<
         )[0] as HTMLDivElement;
 
         if (discount > 0) {
-            (
-                this.htmlElement.getElementsByClassName(
-                    'main-info__discount',
-                )[0] as HTMLDivElement
-            ).innerText = `-${discount} ₽`;
+            this.discount.innerText = `-${discount} ₽`;
             discountElement.classList.remove('display_none');
             discountElement.classList.add('main-info__line');
         }
@@ -61,26 +57,16 @@ export class ProfileOneOrderInfo extends Component<
     }
 
     protected renderTotalProducsts(total: number) {
-        (
-            this.htmlElement.getElementsByClassName(
-                'products-info__total-items',
-            )[0] as HTMLDivElement
-        ).innerText = total.toString();
+        this.totalProducts.innerText = total.toString();
     }
 
     protected renderDate(createdAt: string) {
-        (
-            this.htmlElement.getElementsByClassName(
-                'profile-one-order-info__subheader',
-            )[0] as HTMLDivElement
-        ).innerText = 'от ' + formatDate(createdAt);
+        this.date.innerText = 'от ' + formatDate(createdAt);
     }
 
     protected renderStatus(status: OrderStatus) {
         this.statusBadge = formatBadge(
-            this.htmlElement.getElementsByClassName(
-                'profile-one-order-info__header',
-            )[0],
+            this.status,
             'profile-one-order-info__status',
             status,
         );
@@ -89,18 +75,66 @@ export class ProfileOneOrderInfo extends Component<
     protected renderProducts(
         products: ((parent: Element) => ProductInOrderCard<ProductCard>)[],
     ) {
-        const productsSection = this.htmlElement.getElementsByClassName(
-            'products-info__products',
-        )[0] as HTMLDivElement;
-
         products.forEach((getProduct) => {
-            this.products.push(getProduct(productsSection));
+            this.products.push(getProduct(this.productsSection));
         });
     }
 
-    protected render() {
-        this.renderTemplate();
+    startLoading() {
+        this.sum.classList.add('main-info--loading');
+        this.sumWithoutDiscount.classList.add('main-info--loading');
+        this.discount.classList.add('main-info--loading');
+        this.date.classList.add('main-info--loading');
+        this.productsSection.classList.add('main-info-products--loading');
+    }
 
+    stopLoading() {
+        this.sum.classList.remove('main-info--loading');
+        this.sumWithoutDiscount.classList.remove('main-info--loading');
+        this.discount.classList.remove('main-info--loading');
+        this.date.classList.remove('main-info--loading');
+        this.productsSection.classList.remove('main-info-products--loading');
+    }
+
+    protected initSections() {
+        this.sum = this.htmlElement.getElementsByClassName(
+            'main-info__products-total-cost',
+        )[0] as HTMLDivElement;
+
+        this.sumWithoutDiscount = this.htmlElement.getElementsByClassName(
+            'main-info__products-cost',
+        )[0] as HTMLDivElement;
+
+        this.discount = this.htmlElement.getElementsByClassName(
+            'main-info__discount',
+        )[0] as HTMLDivElement;
+
+        this.date = this.htmlElement.getElementsByClassName(
+            'profile-one-order-info__subheader',
+        )[0] as HTMLDivElement;
+
+        this.totalProducts = this.htmlElement.getElementsByClassName(
+            'products-info__total-items',
+        )[0] as HTMLDivElement;
+
+        this.status = this.htmlElement.getElementsByClassName(
+            'profile-one-order-info__header',
+        )[0] as HTMLDivElement;
+
+        this.productsSection = this.htmlElement.getElementsByClassName(
+            'products-info__products',
+        )[0] as HTMLDivElement;
+    }
+
+    protected errorMsg() {
+        (
+            this.htmlElement.getElementsByClassName(
+                'profile-one-order-info__order-details',
+            )[0] as HTMLDivElement
+        ).innerText = 'Что-то пошло не так';
+    }
+
+    protected addBackBtn() {
         this.backLink = getBackLink(
             this.htmlElement.getElementsByClassName(
                 'profile-one-order-info__back-link-container',
@@ -112,19 +146,32 @@ export class ProfileOneOrderInfo extends Component<
                 style: 'primary',
             },
         );
+    }
+
+    protected render() {
+        this.renderTemplate();
+
+        this.initSections();
+
+        this.addBackBtn();
 
         this.products = [];
 
-        useGetOrder(this.props.orderId)
-            .then(
-                ({
-                    sum,
-                    sumWithoutDiscount,
-                    discount,
-                    status,
-                    products,
-                    createdAt,
-                }) => {
+        animateLongRequest(
+            () => {
+                return useGetOrder(this.props.orderId);
+            },
+            ({
+                sum,
+                sumWithoutDiscount,
+                discount,
+                status,
+                products,
+                createdAt,
+            }) => {
+                const isOk = sum > 0;
+
+                if (isOk) {
                     this.renderSum(sum);
                     this.renderSumWithoutDiscount(sumWithoutDiscount);
                     this.renderDiscount(discount);
@@ -132,8 +179,23 @@ export class ProfileOneOrderInfo extends Component<
                     this.renderDate(createdAt);
                     this.renderStatus(status);
                     this.renderProducts(products);
-                },
-            )
-            .catch(() => {});
+                }
+
+                if (!isOk) {
+                    this.errorMsg();
+                }
+            },
+            () => {
+                this.errorMsg();
+            },
+            () => {
+                this.startLoading();
+            },
+            () => {
+                this.stopLoading();
+            },
+            150,
+            1000,
+        )();
     }
 }

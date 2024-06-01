@@ -5,6 +5,7 @@ import { SearchResultsProps } from './index.types';
 import { useGetProductCardsSearch } from '@/features/product/ui';
 import { ProductsList } from '@/entities/productsSection';
 import { ProductCard } from '@/entities/product';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class SearchResults extends Component<
     HTMLDivElement,
@@ -24,14 +25,26 @@ export class SearchResults extends Component<
             this.curretnQuery = query;
         }
 
-        useGetProductCardsSearch(query, 1, 15, sortId)
-            .then((cards) => {
+        animateLongRequest(
+            () => {
+                return useGetProductCardsSearch(query, 1, 15, sortId);
+            },
+            (cards) => {
                 this.productsList.loadProducts(cards);
-            })
-            .catch(() => {
+            },
+            () => {
                 this.productsList.clear();
                 this.header.innerText = `Что-то пошло не так`;
-            });
+            },
+            () => {
+                this.productsList.setLoading('700px');
+            },
+            () => {
+                this.productsList.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 
     get headerHtml() {

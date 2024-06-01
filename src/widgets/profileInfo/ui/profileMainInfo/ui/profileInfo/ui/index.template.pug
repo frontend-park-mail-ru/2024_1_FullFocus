@@ -1,0 +1,19 @@
+div(class=`${className} user-data`)
+    div(class="full-name user-data__item")
+        div(class="text_secondary") Отображаемое имя
+        if fullName.length > 0
+            div(class="text_weight-semibold") #{fullName}
+        else
+            div(class="text_weight-semibold") не указано
+    div(class="phone-number user-data__item")
+        div(class="text_secondary") Номер телефона
+        if phoneNumber.length > 0
+            div(class="text_weight-semibold") #{phoneNumber}
+        else
+            div(class="text_weight-semibold") не указано
+    div(class="email user-data__item")
+        div(class="text_secondary") Почта
+        if email.length > 0
+            div(class="text_weight-semibold") #{email}
+        else
+            div(class="text_weight-semibold") не указано

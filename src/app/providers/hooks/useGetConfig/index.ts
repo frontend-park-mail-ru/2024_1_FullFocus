@@ -10,13 +10,18 @@ export function getConfig() {
     const routerConfig: RouterConfig = { page404: config.page404, pages: {} };
 
     const navbarConfig: {
-        [name: string]: { props: LinkProps; logged: UserLogged };
+        [name: string]: {
+            props: LinkProps;
+            logged: UserLogged;
+            children?: { href: string; text: string; name: string }[];
+        };
     } = {};
 
     const mobileNavbarConfig: {
         [name: string]: { props: LinkProps; logged: UserLogged };
     } = {};
 
+    // eslint-disable-next-line max-lines-per-function
     Object.entries(config.pages).forEach(([name, item]) => {
         const match = item.url.match(/([/\w]+)({(\w+)})?/);
         const url = match.length >= 2 ? match[1] : undefined;
@@ -77,6 +82,22 @@ export function getConfig() {
                     },
                     logged: item.logged,
                 };
+                if (item.children) {
+                    navbarConfig[name].children = [];
+                    Object.entries(item.children.pages).forEach(
+                        ([childName, child]) => {
+                            if (!child.text) {
+                                return;
+                            }
+
+                            navbarConfig[name].children.push({
+                                href: url + child.url,
+                                text: child.text,
+                                name: childName,
+                            });
+                        },
+                    );
+                }
 
                 if (item.navbarLink.mobileIconTmpl) {
                     mobileNavbarConfig[name] = {

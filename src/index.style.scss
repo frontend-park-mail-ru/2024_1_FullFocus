@@ -32,6 +32,8 @@ $border-radius-default: 32px;
     --btn-height-bg: 50px;
     --btn-height-sm: 40px;
     --btn-height-xs: 30px;
+    --btn-height-xs: 30px;
+    --btn-height-xxs: 20px;
 
     --font-family-main-text: 'Open Sans', sans-serif;
 
@@ -41,9 +43,14 @@ $border-radius-default: 32px;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
 
+    --font-size-h4: 1.7rem;
+    --font-size-h5: 1.4rem;
+    --font-size-h6: 1.2rem;
+    --font-size-bg: 1.1rem;
     --font-size-normal: 1rem;
     --font-size-sm: 0.9rem;
     --font-size-xs: 0.8rem;
+    --font-size-xxs: 0.7rem;
 
     --transition-time-normal: 150ms;
     --transition-time-slower: 200ms;
@@ -195,7 +202,7 @@ body {
 }
 
 .text_size-big {
-    font-size: 1.1rem;
+    font-size: var(--font-size-bg);
 }
 
 .text_size-small {
@@ -268,18 +275,38 @@ body {
     }
 
     .header_h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
     }
 
     .header_h2 {
-        font-size: 2.2rem;
-    }
-
-    .header_h3 {
         font-size: 1.8rem;
     }
 
+    .header_h3 {
+        font-size: 1.5rem;
+    }
+
     .header_h4 {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
+    }
+
+    .header_h5 {
+        font-size: 1.2rem;
+    }
+
+    .header_h6 {
+        font-size: 1.1rem;
+    }
+
+    .text {
+        font-size: var(--font-size-sm);
+    }
+
+    .text_size-small {
+        font-size: var(--font-size-xs);
+    }
+
+    .text_size-xs {
+        font-size: var(--font-size-xxs);
     }
 }

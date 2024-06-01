@@ -3,7 +3,7 @@ import { FormField } from '@/entities/form';
 export const EDIT_PROFILE_FORM_FIELDS: { [name: string]: FormField } = {
     fullName: {
         name: 'fullName',
-        text: 'Имя',
+        text: 'Отображаемое имя',
         type: 'text',
         className: 'input-block-fullname',
         inputClassName: 'input-block-fullname__input',

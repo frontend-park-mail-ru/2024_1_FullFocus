@@ -41,6 +41,10 @@ export class CartItem<
         this.counter.counterValue = count;
     }
 
+    get counterComponent() {
+        return this.counter;
+    }
+
     get productPlace() {
         return this.htmlElement.getElementsByClassName('cart-item__product')[0];
     }

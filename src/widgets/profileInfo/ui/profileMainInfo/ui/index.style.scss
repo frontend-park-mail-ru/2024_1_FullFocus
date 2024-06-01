@@ -14,27 +14,192 @@
 
 .profile-main-info__main-info {
     margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-areas:
+        'login picture'
+        'info picture';
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+}
 
+.profile-main-info__change-picture-container {
+    grid-area: picture;
+}
+
+.profile-main-info__user-data {
+    grid-area: info;
+}
+
+.profile-main-info__login-info {
+    font-size: var(--font-size-bg);
+    padding: 10px 0;
+    border-top: 1px var(--color-background-darker) solid;
+    border-bottom: 1px var(--color-background-darker) solid;
+    grid-area: login;
+}
+
+.profile-main-info__main-info--loading {
+    .profile-main-info__login-info {
+        display: none;
+    }
+
+    margin: auto;
+    box-sizing: border-box;
+    padding: 10px;
+    height: 200px; /* change height to see repeat-y behavior */
+    width: 100%;
+
+    background-image: linear-gradient(
+            100deg,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0) 80%
+        ),
+        linear-gradient(lightgray 20px, transparent 0),
+        linear-gradient(lightgray 20px, transparent 0),
+        linear-gradient(lightgray 20px, transparent 0),
+        linear-gradient(lightgray 20px, transparent 0),
+        radial-gradient(
+            circle 100px at 100px 100px,
+            lightgray 99%,
+            transparent 0
+        );
+
+    background-repeat: repeat-y;
+
+    background-size:
+        50px 200px,
+        calc(100% - 220px) 200px,
+        calc(100% - 220px) 200px,
+        calc(100% - 220px) 200px,
+        calc(100% - 220px) 200px,
+        200px 200px;
+
+    background-position:
+        0 20px,
+        0 20px,
+        0 60px,
+        0 100px,
+        0 140px,
+        100% 0;
+
+    animation: shine-section-profile-info 1s infinite;
+}
+
+@keyframes shine-section-profile-info {
+    to {
+        background-position:
+            calc(100% - 220px) 20px,
+            0 20px,
+            0 60px,
+            0 100px,
+            0 140px,
+            100% 0;
+    }
+}
+
+@keyframes shine-section-profile-info_mobile {
+    to {
+        background-position:
+            100% 220px,
+            0 220px,
+            0 260px,
+            0 300px,
+            0 340px,
+            center 10px;
+    }
+}
+
+@media (max-width: 1546px) {
     .profile-main-info__user-data {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .profile-main-info__user-data {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .profile-main-info__user-data {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-main-info__user-data {
+        max-width: none;
+    }
+
+    .profile-main-info__main-info {
+        margin-top: 30px;
+        display: grid;
+        grid-template-areas:
+            'picture' 'login'
+            'info';
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+    }
+
+    .profile-main-info__change-picture-container {
+        justify-self: center;
     }
 }
 
 @media (max-width: 512px) {
     .profile-main-info__main-info {
         flex-direction: column-reverse;
-        gap: 2em;
+        gap: 12px;
     }
 
     .profile-main-info__change-picture-container {
         align-self: center;
     }
 
-    // .profile-main-info__edit-icon {
-    //     display: none;
-    // }
+    .profile-main-info__main-info--loading {
+        margin: auto;
+        box-sizing: border-box;
+        padding: 10px;
+        height: 370px; /* change height to see repeat-y behavior */
+        width: 100%;
+
+        background-image: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 80%
+            ),
+            linear-gradient(lightgray 20px, transparent 0),
+            linear-gradient(lightgray 20px, transparent 0),
+            linear-gradient(lightgray 20px, transparent 0),
+            linear-gradient(lightgray 20px, transparent 0),
+            radial-gradient(
+                circle 100px at 100px 100px,
+                lightgray 99%,
+                transparent 0
+            );
+
+        background-repeat: no-repeat;
+
+        background-size:
+            50px 200px,
+            100% 200px,
+            100% 200px,
+            100% 200px,
+            100% 200px,
+            200px 200px;
+
+        background-position:
+            0 220px,
+            0 220px,
+            0 260px,
+            0 300px,
+            0 340px,
+            center 10px;
+
+        animation: shine-section-profile-info_mobile 1s infinite;
+    }
 }

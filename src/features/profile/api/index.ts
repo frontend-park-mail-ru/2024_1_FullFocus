@@ -22,6 +22,7 @@ export async function useGetProfileInfo() {
             email: userData.data.email,
             phoneNumber: userData.data.phoneNumber,
             pictureSrc: imgSrc,
+            login: userData.data.login,
         };
 
         return profileData;

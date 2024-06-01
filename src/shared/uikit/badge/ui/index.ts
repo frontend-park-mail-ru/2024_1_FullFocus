@@ -12,6 +12,7 @@ export class Badge extends Component<HTMLSpanElement, BadgeProps> {
 
     protected render() {
         this.props.width = this.props.width ?? 'auto';
+        this.props.position = this.props.position ?? 'normal';
         this.renderTemplate();
     }
 

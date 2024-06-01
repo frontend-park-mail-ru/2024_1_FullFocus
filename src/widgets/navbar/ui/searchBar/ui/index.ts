@@ -135,6 +135,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     }
 
     protected performItemSearch(query: string) {
+        this.clearBtn.hide();
         this.clearResults();
         this.hideSuggestions();
         this.props.navigateSearchPage({
@@ -151,16 +152,16 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
     }
 
     protected renderSuggestions(input: string) {
-        this.clearBtn.show();
-        useGetSearchSuggestions(input)
-            ?.then((items) => {
-                if (items.length > 0) {
-                    this.searchResults.renderItems(items);
-                }
-            })
-            .catch(() => {
-                // TODO add ui for this (maybe)
-            });
+        if (this.inputField.inputValue.length > 0) {
+            this.clearBtn.show();
+            useGetSearchSuggestions(input)
+                ?.then((items) => {
+                    if (items.length > 0) {
+                        this.searchResults.renderItems(items);
+                    }
+                })
+                .catch(() => {});
+        }
     }
 
     protected render() {
@@ -173,7 +174,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
 
         this.inputField = new Input(searchBar, {
             className: 'searchbar__input',
-            placeholder: 'поиск',
+            placeholder: 'поиск на Bizon',
             type: 'text',
             name: 'searchbar-input',
             status: 'notValidated',
@@ -183,6 +184,7 @@ export class SearchBar extends Component<HTMLElement, SearchBarProps> {
             className: 'searchbar__clear-btn',
             type: 'button',
             btnStyle: 'white',
+            size: 'xs',
         });
 
         this.clearBtn.hide();

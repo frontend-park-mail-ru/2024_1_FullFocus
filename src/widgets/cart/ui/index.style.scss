@@ -60,14 +60,14 @@
         align-items: start;
         flex-direction: row-reverse;
         margin-bottom: 24px;
-        flex: 1;
     }
 
     .cart__main {
         max-width: 100%;
     }
 
-    .cart-info__promocodes {
+    .cart-info__promocodes,
+    .cart-info__info {
         flex: 1;
     }
 }
