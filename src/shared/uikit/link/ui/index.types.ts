@@ -1,4 +1,4 @@
-export type LinkStyle = 'basic' | 'with-bg' | 'btn' | 'primary';
+export type LinkStyle = 'basic' | 'with-bg' | 'btn' | 'primary' | 'no-style';
 
 export interface LinkProps {
     className: string;

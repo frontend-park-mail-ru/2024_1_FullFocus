@@ -6,6 +6,7 @@ import { ProfileNavbar } from './profileNavbar';
 import { PROFILE_PAGES } from '../config';
 import { IProps } from '../config/index.types';
 import { getMainUserData } from '@/entities/user/api';
+import { getWS } from '@/features/notification';
 
 export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
     protected activePage: string;
@@ -40,6 +41,10 @@ export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
 
     protected componentDidMount() {
         this.htmlElement.addEventListener('updatenavbar', () => {
+            this.updateNabarBadges();
+        });
+
+        getWS().addCallback('profile', () => {
             this.updateNabarBadges();
         });
     }
@@ -98,13 +103,15 @@ export class ProfileInfo extends Component<HTMLDivElement, ProfileInfoProps> {
         );
 
         Object.entries(PROFILE_PAGES).forEach(
-            ([name, { href, text, getComponent }]) => {
+            ([name, { href, text, getComponent, icon }]) => {
                 if (text) {
                     this.navbar.addLink(name, {
                         className: 'profile-page-link-' + name,
                         href: href,
                         text: text,
                         style: 'with-bg',
+                        direction: 'horizontal',
+                        iconTmpl: icon,
                     });
                 }
 

@@ -14,10 +14,7 @@ function renderItem(parent: Element, promocode: Promocode) {
         style: 'full',
         code: promocode.code,
         description: promocode.description,
-        timeLeft:
-            promocode.timeLeft.split(' ')[0] +
-            ' ' +
-            promocode.timeLeft.split(' ')[1],
+        timeLeft: promocode.timeLeft.split(' ')[0],
     });
 }
 
@@ -67,7 +64,7 @@ export function useGetPromocodesDropdown(parent: Element, className: string) {
             () => {
                 dropdown.stopLoading();
             },
-            500,
+            200,
             500,
         )();
     });

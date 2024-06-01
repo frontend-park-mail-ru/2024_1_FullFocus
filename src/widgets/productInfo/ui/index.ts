@@ -28,6 +28,14 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         this.addError = toast().addError;
     }
 
+    protected startLoading() {
+        this.htmlElement.classList.add('product-info--loading');
+    }
+
+    protected stopLoading() {
+        this.htmlElement.classList.remove('product-info--loading');
+    }
+
     protected updatePicture(src: string) {
         (
             this.htmlElement.getElementsByClassName(
@@ -72,6 +80,19 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         );
     }
 
+    protected updateDescription(description: string) {
+        const descriptionElement = this.htmlElement.getElementsByClassName(
+            'product-info__description ',
+        )[0] as HTMLDivElement;
+        if (description.length > 0) {
+            descriptionElement.innerText = description;
+        }
+
+        if (description.length <= 0) {
+            descriptionElement.classList.add('display_none');
+        }
+    }
+
     protected updatePrice(price: number) {
         (
             this.htmlElement.getElementsByClassName(
@@ -81,34 +102,42 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
     }
 
     protected updatePriceAndSale(
-        oldPrice: number,
         newPrice: number,
-        benefitType: BenefitType,
-        benefitValue: number,
+        oldPrice?: number,
+        benefitType?: BenefitType,
+        benefitValue?: number,
     ) {
-        const sale = getSaleByBenefitType(oldPrice, benefitType, benefitValue);
+        if (oldPrice && benefitType && benefitValue) {
+            const sale = getSaleByBenefitType(
+                oldPrice,
+                benefitType,
+                benefitValue,
+            );
+
+            (
+                this.htmlElement.getElementsByClassName(
+                    'product-info__to-cart-card-sale',
+                )[0] as HTMLDivElement
+            ).innerText = `-${sale} %`;
+
+            (
+                this.htmlElement.getElementsByClassName(
+                    'product-info__to-cart-card-old-price',
+                )[0] as HTMLDivElement
+            ).innerText = `${oldPrice} ₽`;
+
+            this.htmlElement
+                .getElementsByClassName(
+                    'product-info__to-cart-card-old-price-and-sale',
+                )[0]
+                .classList.add('product-info_with-discount');
+        }
 
         (
             this.htmlElement.getElementsByClassName(
-                'product-info__to-cart-card-old-price',
-            )[0] as HTMLDivElement
-        ).innerText = `${oldPrice} ₽`;
-
-        (
-            this.htmlElement.getElementsByClassName(
-                'product-info__to-cart-card-new-price',
+                'product-info__to-cart-card-price',
             )[0] as HTMLDivElement
         ).innerText = `${newPrice} ₽`;
-        (
-            this.htmlElement.getElementsByClassName(
-                'product-info__to-cart-card-sale',
-            )[0] as HTMLDivElement
-        ).innerText = `-${sale} %`;
-        (
-            this.htmlElement.getElementsByClassName(
-                'product-info__to-cart-card-new-price',
-            )[0] as HTMLDivElement
-        ).style.backgroundColor = '#10c44c';
     }
 
     protected updateDelivery(deliveryDate: string) {
@@ -211,7 +240,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                             this.addToCartbtn.removeLoading();
                             this.addToCartbtn.setEnabled();
                         },
-                        500,
+                        150,
                         1500,
                     )(id);
                 }
@@ -237,7 +266,7 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                             this.addToCartbtn.removeLoading();
                             this.addToCartbtn.setEnabled();
                         },
-                        500,
+                        150,
                         1500,
                     )(id);
                 }
@@ -271,15 +300,45 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
         this.addToCartbtn.removeLoading();
     }
 
+    protected hide() {
+        this.htmlElement
+            .getElementsByClassName('product-info__main-info-section')[0]
+            .classList.add('product-info__main-info-section_hidden');
+        this.htmlElement
+            .getElementsByClassName('product-info__description-section')[0]
+            .classList.add('display_none');
+    }
+
+    protected show() {
+        this.htmlElement
+            .getElementsByClassName('product-info__main-info-section')[0]
+            .classList.remove('product-info__main-info-section_hidden');
+    }
+
+    protected renderEmpty() {
+        this.htmlElement.innerHTML = '';
+        this.htmlElement.innerText = 'Товар не удалось найти';
+    }
+
     protected render() {
         this.renderTemplate();
+        this.hide();
 
-        productByIdRequest(this.props.productId)
-            .then(({ data }) => {
+        animateLongRequest(
+            () => {
+                return productByIdRequest(this.props.productId);
+            },
+            ({ data }) => {
+                if (!data) {
+                    this.renderEmpty();
+                    return;
+                }
+
                 this.updatePicture(data.imgSrc);
                 this.updateName(data.name);
                 this.updateSeller(data.seller);
                 this.updateRating(data.rating);
+                this.updateDescription(data.description);
                 if (data.newPrice == 0) {
                     this.updatePrice(data.oldPrice);
                 } else {
@@ -317,10 +376,19 @@ export class ProductInfo extends Component<HTMLDivElement, ProductInfoProps> {
                 );
 
                 this.componentDidMount();
-            })
-            .catch(() => {
-                this.htmlElement.innerHTML = '';
-                this.htmlElement.innerText = 'Товар не удалось найти';
-            });
+            },
+            () => {
+                this.renderEmpty();
+            },
+            () => {
+                this.startLoading();
+            },
+            () => {
+                this.show();
+                this.stopLoading();
+            },
+            100,
+            1000,
+        )();
     }
 }

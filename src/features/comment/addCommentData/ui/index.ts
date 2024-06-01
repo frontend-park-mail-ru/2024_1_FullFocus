@@ -20,6 +20,7 @@ export class UseAddCommentData extends Form {
                 inputClassName: data.inputClassName,
                 validate: data.validate,
                 initialValue: props[name],
+                size: 'sm',
             });
         });
     }

@@ -21,6 +21,19 @@ export class List<ListItem extends Component<Element>> extends Component<
         }
     }
 
+    setLoading(height?: string) {
+        if (height === undefined) {
+            height = '500px';
+        }
+        this.htmlElement.style.height = height;
+        this.htmlElement.classList.add('list--loading');
+    }
+
+    removeLoading() {
+        this.htmlElement.style.height = '';
+        this.htmlElement.classList.remove('list--loading');
+    }
+
     renderItems(
         items: ((parent: Element) => { item: ListItem; id: string })[],
     ) {
@@ -53,6 +66,10 @@ export class List<ListItem extends Component<Element>> extends Component<
     setEmptyText() {
         this.clear();
         this.htmlElement.innerText = this.props.emptyText;
+    }
+
+    newEmptyText(text: string) {
+        this.props.emptyText = text;
     }
 
     itemById(id: string): ListItem {

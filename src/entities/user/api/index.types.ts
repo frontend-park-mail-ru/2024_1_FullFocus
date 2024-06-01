@@ -4,6 +4,7 @@ export interface IUserResponse {
     avatarName: string;
     email: string;
     phoneNumber: string;
+    login: string;
 }
 
 export interface IUpdateProfileBody {

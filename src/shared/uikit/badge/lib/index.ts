@@ -23,7 +23,7 @@ export class WithBadge<
                 className: 'with-top-right__badge',
                 color: 'red',
                 text: this.props.badgeText,
-                position: 'top-right',
+                position: this.props.position,
             });
         }
     }
@@ -34,7 +34,7 @@ export class WithBadge<
                 className: 'with-top-right__badge',
                 color: 'red',
                 text: this.props.badgeText,
-                position: 'top-right',
+                position: this.props.position,
             });
         }
 
@@ -70,5 +70,22 @@ export function withTopRightBadge<
         className: className,
         elementToBadge: element,
         badgeText: badgeText,
+        position: 'top-right',
+    });
+}
+
+export function withCenterRightBadge<
+    InnerElement extends Component<Element> = Component<Element>,
+>(
+    element: (parent: Element) => InnerElement,
+    parent: Element,
+    className: string,
+    badgeText: string,
+) {
+    return new WithBadge<InnerElement>(parent, {
+        className: className,
+        elementToBadge: element,
+        badgeText: badgeText,
+        position: 'center-right',
     });
 }

@@ -1,3 +1,7 @@
+.comment-widget__comments {
+    margin-top: 20px;
+}
+
 .comment-widget__info {
     padding-top: 5px;
 }
@@ -20,4 +24,27 @@
     padding: 25px;
     margin-top: 10px;
     font-weight: bold;
+}
+
+.comment-widget--loading {
+    .comment-widget__comments {
+        position: relative;
+        height: 200px;
+    }
+
+    .comment-widget__comments::after {
+        content: '';
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        border: 8px solid transparent;
+        border-top-color: var(--color-background-dark);
+        border-radius: 50%;
+        animation: button-loading-spinner 1s ease infinite;
+    }
 }

@@ -29,10 +29,14 @@ export class Input extends Component<HTMLInputElement, InputProps> {
 
     setReadonly() {
         this.htmlElement.readOnly = true;
+        this.htmlElement.disabled = true;
+        this.htmlElement.classList.add('input_readonly');
     }
 
     setNotReadonly() {
         this.htmlElement.readOnly = false;
+        this.htmlElement.disabled = false;
+        this.htmlElement.classList.remove('input_readonly');
     }
 
     setInvalid(): void {

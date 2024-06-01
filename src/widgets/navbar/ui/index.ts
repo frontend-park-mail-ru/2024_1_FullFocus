@@ -6,7 +6,12 @@ import { NavbarProps } from './index.types';
 import { Link, LinkProps } from '@/shared/uikit/link';
 import { UserLogged } from './index.types';
 import { SearchBar } from './searchBar';
-import { WithBadge, withTopRightBadge } from '@/shared/uikit/badge';
+import {
+    WithBadge,
+    withCenterRightBadge,
+    withTopRightBadge,
+} from '@/shared/uikit/badge';
+import { DropDown } from '@/shared/uikit/dropdown';
 
 export type { UserLogged } from './index.types';
 
@@ -17,14 +22,21 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         pageName: string;
         badgeText?: string;
         props: LinkProps;
+        children?: { href: string; text: string; name: string }[];
     }>;
     protected privateLinkProps: Array<{
         pageName: string;
         needsLogin: boolean;
         badgeText?: string;
         props: LinkProps;
+        children?: { href: string; text: string; name: string }[];
     }>;
-    protected navbarItems: { [name: string]: WithBadge<Link> };
+    protected navbarItems: {
+        [name: string]: {
+            link: WithBadge<Link>;
+            dropdown?: DropDown<WithBadge<Link>>;
+        };
+    };
     protected searchBar: SearchBar;
     protected isUserLogged: boolean;
     protected publicLayoutChanged: boolean;
@@ -49,12 +61,14 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         userLogged: UserLogged,
         props: LinkProps,
         badgeText?: string,
+        children?: { href: string; text: string; name: string }[],
     ) {
         if (userLogged === 'both') {
             this.publicLinkProps.push({
                 pageName: pageName,
                 props: props,
                 badgeText: badgeText,
+                children: children,
             });
             this.publicLayoutChanged = true;
         }
@@ -65,6 +79,7 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
                 props: props,
                 badgeText: badgeText,
                 needsLogin: userLogged === 'logged',
+                children: children,
             });
             this.privateLayoutChanged = true;
         }
@@ -86,9 +101,9 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
 
         if (activePageName in this.navbarItems) {
             if (this.activeItemName) {
-                this.navbarItems[this.activeItemName].inner.deactivate();
+                this.navbarItems[this.activeItemName].link.inner.deactivate();
             }
-            this.navbarItems[activePageName].inner.activate();
+            this.navbarItems[activePageName].link.inner.activate();
             this.activeItemName = activePageName;
         }
     }
@@ -130,32 +145,112 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
 
     protected renderPublic() {
         this.publicLinksElement.innerHTML = '';
-        this.publicLinkProps.forEach(({ pageName, props, badgeText }) => {
-            this.navbarItems[pageName] = withTopRightBadge(
-                (parent: Element) => {
-                    return new Link(parent, props);
-                },
-                this.publicLinksElement,
-                'container-' + props.className,
-                badgeText,
-            );
-        });
+        this.publicLinkProps.forEach(
+            ({ pageName, props, badgeText, children }) => {
+                this.navbarItems[pageName] = {
+                    link: withTopRightBadge(
+                        (parent: Element) => {
+                            return new Link(parent, props);
+                        },
+                        this.publicLinksElement,
+                        'container-' +
+                            props.className +
+                            (children !== undefined
+                                ? ' navbar-link-with-children'
+                                : ''),
+                        badgeText,
+                    ),
+                };
+
+                if (children) {
+                    this.renderChildren(pageName, props.className, children);
+                }
+            },
+        );
     }
 
     protected renderPrivate(isLogged: boolean) {
         this.privateLinksElement.innerHTML = '';
         this.privateLinkProps.forEach(
-            ({ pageName, needsLogin, props, badgeText }) => {
+            ({ pageName, needsLogin, props, badgeText, children }) => {
                 if (needsLogin === isLogged) {
-                    this.navbarItems[pageName] = withTopRightBadge(
-                        (parent: Element) => {
-                            return new Link(parent, props);
-                        },
-                        this.privateLinksElement,
-                        'container-' + props.className,
-                        badgeText,
-                    );
+                    this.navbarItems[pageName] = {
+                        link: withTopRightBadge(
+                            (parent: Element) => {
+                                return new Link(parent, props);
+                            },
+                            this.privateLinksElement,
+                            'container-' +
+                                props.className +
+                                (children !== undefined
+                                    ? ' navbar-link-with-children'
+                                    : ''),
+                            badgeText,
+                        ),
+                    };
+
+                    if (children) {
+                        this.renderChildren(
+                            pageName,
+                            props.className,
+                            children,
+                        );
+                    }
                 }
+            },
+        );
+    }
+
+    protected renderChildren(
+        pageName: string,
+        className: string,
+        children: {
+            href: string;
+            text: string;
+            name: string;
+        }[],
+    ) {
+        this.navbarItems[pageName].dropdown = new DropDown<WithBadge<Link>>(
+            this.navbarItems[pageName].link.htmlElement,
+            {
+                className: 'navbar-dropdown dropdown-' + className,
+                size: 'xs',
+                togglerPlace: 'right',
+            },
+        );
+
+        children.forEach(({ href, text, name }) => {
+            this.navbarItems[pageName].dropdown.addItem((parent: Element) => {
+                return {
+                    id: name,
+                    item: withCenterRightBadge(
+                        (parent: Element) => {
+                            return new Link(parent, {
+                                className: 'link-navbar-dropdown',
+                                style: 'no-style',
+                                href: href,
+                                text: text,
+                            });
+                        },
+                        parent,
+                        'container-' + name,
+                        undefined,
+                    ),
+                };
+            });
+        });
+
+        this.navbarItems[pageName].link.htmlElement.addEventListener(
+            'mouseenter',
+            () => {
+                this.navbarItems[pageName].dropdown.show();
+            },
+        );
+
+        this.navbarItems[pageName].link.htmlElement.addEventListener(
+            'mouseleave',
+            () => {
+                this.navbarItems[pageName].dropdown.hide();
             },
         );
     }
@@ -168,21 +263,45 @@ export class Navbar extends Component<HTMLDivElement, NavbarProps> {
         this.htmlElement.hidden = false;
     }
 
-    updateBadge(pageName: string, badgeText: string) {
+    updateBadge(pageName: string, badgeText: string, childName?: string) {
         if (pageName in this.navbarItems) {
-            this.navbarItems[pageName].updateBadge(badgeText);
+            if (childName) {
+                this.navbarItems[pageName].dropdown
+                    .itemById(childName)
+                    .updateBadge(badgeText);
+            }
+
+            if (!childName) {
+                this.navbarItems[pageName].link.updateBadge(badgeText);
+            }
         }
     }
 
-    hideBadge(pageName: string) {
+    hideBadge(pageName: string, childName?: string) {
         if (pageName in this.navbarItems) {
-            this.navbarItems[pageName].hideBadge();
+            if (childName) {
+                this.navbarItems[pageName].dropdown
+                    .itemById(childName)
+                    .hideBadge();
+            }
+
+            if (!childName) {
+                this.navbarItems[pageName].link.hideBadge();
+            }
         }
     }
 
-    showBadge(pageName: string) {
+    showBadge(pageName: string, childName?: string) {
         if (pageName in this.navbarItems) {
-            this.navbarItems[pageName].showBadge();
+            if (childName) {
+                this.navbarItems[pageName].dropdown
+                    .itemById(childName)
+                    .showBadge();
+            }
+
+            if (!childName) {
+                this.navbarItems[pageName].link.showBadge();
+            }
         }
     }
 }

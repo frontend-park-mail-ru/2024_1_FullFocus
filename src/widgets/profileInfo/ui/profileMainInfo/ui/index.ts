@@ -8,6 +8,8 @@ import { ChangePicture } from './changePicture';
 import { useGetProfileInfo } from '@/features/profile/api';
 import { Button, getEditBtn } from '@/shared/uikit/button';
 import { UserInfo } from './profileInfo';
+import { formatPhoneNumberMask } from '@/entities/form/lib';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProfileMainInfo extends Component<
     HTMLDivElement,
@@ -43,6 +45,26 @@ export class ProfileMainInfo extends Component<
         this.editBtn.htmlElement.addEventListener('click', this.listener);
     }
 
+    startLoading() {
+        this.htmlElement
+            .getElementsByClassName('profile-main-info__main-info')[0]
+            .classList.add('profile-main-info__main-info--loading');
+    }
+
+    stopLoading() {
+        this.htmlElement
+            .getElementsByClassName('profile-main-info__main-info')[0]
+            .classList.remove('profile-main-info__main-info--loading');
+    }
+
+    protected updateLogin(login: string) {
+        (
+            this.htmlElement.getElementsByClassName(
+                'profile-main-info__login',
+            )[0] as HTMLDivElement
+        ).innerText = login;
+    }
+
     protected render() {
         this.renderTemplate();
 
@@ -64,25 +86,28 @@ export class ProfileMainInfo extends Component<
             'profile-main-info__user-data',
         )[0] as HTMLDivElement;
 
-        this.changePicture = new ChangePicture(
-            this.htmlElement.getElementsByClassName(
-                'profile-main-info__change-picture-container',
-            )[0],
-            {
-                className: 'profile-main-info__change-picture',
-                defaultPictureSrc: '/public/default-profile-pic.png',
-                changePictureCallback: () => {
-                    this.update();
-                    this.props.profileChangedCallback;
-                },
-            },
-        );
-
-        useGetProfileInfo()
-            .then((response) => {
+        animateLongRequest(
+            useGetProfileInfo,
+            (response) => {
                 this.fullNameData = response.fullName;
                 this.phoneNumberData = response.phoneNumber;
                 this.emailData = response.email;
+
+                this.changePicture = new ChangePicture(
+                    this.htmlElement.getElementsByClassName(
+                        'profile-main-info__change-picture-container',
+                    )[0],
+                    {
+                        className: 'profile-main-info__change-picture',
+                        defaultPictureSrc: '/public/default-profile-pic.png',
+                        changePictureCallback: () => {
+                            this.update();
+                            this.props.profileChangedCallback;
+                        },
+                    },
+                );
+
+                this.updateLogin(response.login);
 
                 this.renderProfileInfo();
 
@@ -90,10 +115,25 @@ export class ProfileMainInfo extends Component<
                     response.pictureSrc === ''
                         ? '/public/default-profile-pic.png'
                         : response.pictureSrc;
-            })
-            .catch(() => {});
 
-        this.componentDidMount();
+                this.componentDidMount();
+            },
+            () => {
+                (
+                    this.htmlElement.getElementsByClassName(
+                        'profile-main-info__main-info',
+                    )[0] as HTMLDivElement
+                ).innerText = 'Что-то пошло не так';
+            },
+            () => {
+                this.startLoading();
+            },
+            () => {
+                this.stopLoading();
+            },
+            150,
+            1000,
+        )();
     }
 
     protected renderProfileInfo() {
@@ -108,7 +148,7 @@ export class ProfileMainInfo extends Component<
         this.userInfo = new UserInfo(this.mainInfoElement, {
             className: 'profile-info__main-info',
             fullName: this.fullNameData,
-            phoneNumber: this.phoneNumberData,
+            phoneNumber: formatPhoneNumberMask(this.phoneNumberData),
             email: this.emailData,
         });
     }

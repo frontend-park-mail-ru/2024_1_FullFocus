@@ -5,6 +5,7 @@ import { ProfileNotificationsProps } from './index.types';
 import { getWS, useGetNotificationsList } from '@/features/notification';
 import { NotificationsList } from '@/features/notification/ui/notificationsList';
 import { Button } from '@/shared/uikit/button';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProfileNotifications extends Component<
     HTMLDivElement,
@@ -23,6 +24,11 @@ export class ProfileNotifications extends Component<
             this.readAllBtn.htmlElement.addEventListener('click', () => {
                 this.notificationsList.readAll();
                 this.destroyReadAllBtn();
+                this.htmlElement.dispatchEvent(
+                    new Event('updatenavbar', {
+                        bubbles: true,
+                    }),
+                );
             });
             this.htmlElement.addEventListener('notificationread', () => {
                 if (!this.notificationsList.areUnread) {
@@ -37,13 +43,11 @@ export class ProfileNotifications extends Component<
         }
 
         getWS().addCallback('updatenotifications', () => {
-            this.updateNotifications()
-                .then(() => {
-                    this.htmlElement.dispatchEvent(
-                        new Event('updatenavbar', { bubbles: true }),
-                    );
-                })
-                .catch(() => {});
+            this.updateNotifications(() => {
+                this.htmlElement.dispatchEvent(
+                    new Event('updatenavbar', { bubbles: true }),
+                );
+            });
         });
     }
 
@@ -54,16 +58,22 @@ export class ProfileNotifications extends Component<
 
     protected render() {
         this.renderTemplate();
-        this.updateNotifications()
-            .then(() => {
-                this.componentDidMount();
-            })
-            .catch(() => {});
+        this.updateNotifications(() => {
+            this.componentDidMount();
+        });
     }
 
-    protected async updateNotifications() {
-        return useGetNotificationsList()
-            .then((list) => {
+    protected updateNotifications(callback?: () => void) {
+        if (!this.notificationsList) {
+            this.notificationsList = new NotificationsList(this.htmlElement, {
+                className: 'profile-notifications__notifications',
+                wrap: false,
+                emptyText: '',
+            });
+        }
+        animateLongRequest(
+            useGetNotificationsList,
+            (list) => {
                 if (this.notificationsList) {
                     this.notificationsList.destroy();
                 }
@@ -73,7 +83,7 @@ export class ProfileNotifications extends Component<
                     'profile-notifications__notifications',
                 );
 
-                if (this.notificationsList.areUnread) {
+                if (this.notificationsList.areUnread && !this.readAllBtn) {
                     this.readAllBtn = new Button(
                         this.htmlElement.getElementsByClassName(
                             'profile-notifications__subheader',
@@ -87,7 +97,18 @@ export class ProfileNotifications extends Component<
                         },
                     );
                 }
-            })
-            .catch(() => {});
+
+                if (callback) callback();
+            },
+            () => {},
+            () => {
+                this.notificationsList.setLoading('300px');
+            },
+            () => {
+                this.notificationsList.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 }

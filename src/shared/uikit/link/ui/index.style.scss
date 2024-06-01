@@ -9,6 +9,15 @@
     cursor: pointer;
 }
 
+.link-no-style {
+    color: black;
+    text-decoration: none;
+}
+
+.link-img__img {
+    height: 50px;
+}
+
 // Link primary
 .link-primary {
     @extend .link;
@@ -86,6 +95,10 @@
 }
 
 .link-with-icon_horizontal {
+    .link-icon {
+        height: 20px;
+    }
+    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;

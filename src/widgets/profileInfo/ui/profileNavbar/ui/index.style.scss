@@ -14,17 +14,6 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    .link-with-bg {
-        display: inline-block;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .badge_top-right {
-        top: 14px;
-        right: 8px;
-    }
 }
 
 @media (width <= 1024px) {
@@ -32,7 +21,7 @@
         border-radius: 0;
     }
 
-    .profile-navbar__links > .with-top-right + .with-top-right {
+    .profile-navbar__links > .with-badge + .with-badge {
         border-top: 1px solid var(--color-background-darker);
     }
 

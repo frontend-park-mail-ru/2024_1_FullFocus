@@ -6,6 +6,7 @@ import { useGetAllPromocodes } from '@/features/promocodes';
 import { List } from '@/shared/uikit/list';
 import { PromocodeCard } from '@/entities/promocode';
 import { toast } from '@/shared/uikit/toast';
+import { animateLongRequest } from '@/shared/api/ajax/throttling';
 
 export class ProfilePromocodesInfo extends Component<
     HTMLDivElement,
@@ -31,9 +32,7 @@ export class ProfilePromocodesInfo extends Component<
                             `Промокод ${code} скопирован`,
                         );
                     },
-                    () => {
-                        /* clipboard write failed */
-                    },
+                    () => {},
                 );
             }
         });
@@ -48,17 +47,36 @@ export class ProfilePromocodesInfo extends Component<
             )[0],
             { className: 'promocodes-results', wrap: true },
         );
-        useGetAllPromocodes()
-            .then((items) => {
+
+        animateLongRequest(
+            useGetAllPromocodes,
+            (items) => {
                 if (items.length > 0) {
                     this.promocodes.renderItems(items);
                 } else {
-                    this.htmlElement.innerText = 'У вас нет доступных промокодов';
+                    (
+                        this.htmlElement.getElementsByClassName(
+                            'profile-promocodes-info__main-info',
+                        )[0] as HTMLDivElement
+                    ).innerText = 'Пока что у вас нет доступных промокодов';
                 }
                 this.componentDidMount();
-            })
-            .catch(() => {
-                this.htmlElement.innerText = 'Что-то пошло не так';
-            });
+            },
+            () => {
+                (
+                    this.htmlElement.getElementsByClassName(
+                        'profile-promocodes-info__main-info',
+                    )[0] as HTMLDivElement
+                ).innerText = 'Что-то пошло не так';
+            },
+            () => {
+                this.promocodes.setLoading('300px');
+            },
+            () => {
+                this.promocodes.removeLoading();
+            },
+            150,
+            1000,
+        )();
     }
 }

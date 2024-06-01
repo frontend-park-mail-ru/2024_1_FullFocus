@@ -17,6 +17,18 @@ export class NewCode extends Component<HTMLDivElement> {
         super(parent, newCodeTmpl, props);
     }
 
+    setDisabled() {
+        this.submitBtn.setDisabled();
+        this.dropdown.setDisabled();
+        this.input.setReadonly();
+    }
+
+    setEnabled() {
+        this.submitBtn.setEnabled();
+        this.dropdown.setEnabled();
+        this.input.setNotReadonly();
+    }
+
     protected render() {
         this.renderTemplate();
         this.dropdown = useGetPromocodesDropdown(
