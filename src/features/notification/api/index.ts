@@ -3,6 +3,10 @@ import { BACKEND_WS_URL } from '@/shared/api/config/index.constants';
 
 export type { NotificationMessage } from './index.types';
 
+function isPing(message: CentrifugoMessage) {
+    return Object.keys(message).length === 0 && message.constructor === Object;
+}
+
 export type CentrifugoMessage = {
     push: {
         channel: string;
@@ -37,14 +41,16 @@ function createNotificationWS(url: string) {
         ws.onmessage = (event: MessageEvent<string>) => {
             const message = JSON.parse(event.data) as CentrifugoMessage;
 
-            if (message.method === 'ping') {
-                ws.send(JSON.stringify({ method: 'pong', params: {} }));
+            if (isPing(message)) {
+                ws.send(JSON.stringify({}));
                 return;
             }
 
-            callbacks.forEach((callback) => {
-                callback(message.push.pub.data.data);
-            });
+            if (message.push !== undefined) {
+                callbacks.forEach((callback) => {
+                    callback(message.push.pub.data.data);
+                });
+            }
         };
     };
 

@@ -69,7 +69,7 @@ export class Main extends Component<HTMLDivElement, MainPageProps> {
                     .then((response) => {
                         if (response) {
                             setTimeout(() => {
-                                if (!response.data[0]) {
+                                if (response.data !== undefined) {
                                     const data = createIframe(
                                         this.htmlElement,
                                         'csat-main',
